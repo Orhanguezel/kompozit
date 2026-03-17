@@ -1,0 +1,193 @@
+# GitHub Actions — Kompozit CI/CD
+# Triggers on push to main branch
+# Builds karbonkompozit + kompozit_admin_panel + kompozit_backend
+# Deploys via SSH to same VPS as Ensotek
+#
+# Required GitHub Secrets:
+#   VPS_HOST       — server IP
+#   VPS_USER       — SSH user
+#   VPS_KEY        — private SSH key (ed25519)
+
+name: Deploy Kompozit
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-kompozit
+  cancel-in-progress: true
+
+env:
+  NODE_ENV: production
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  # ──────────────────────────────────────────────
+  # 1) Build
+  # ──────────────────────────────────────────────
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # ── Backend ──
+      - name: Install & build kompozit_backend
+        working-directory: kompozit_backend
+        run: |
+          bun install --frozen-lockfile || bun install
+          bun run build
+
+      # ── Frontend (karbonkompozit) ──
+      - name: Install & build karbonkompozit
+        working-directory: karbonkompozit
+        run: |
+          bun install --frozen-lockfile || bun install
+          bun run build
+
+      # ── Admin Panel ──
+      - name: Install & build kompozit_admin_panel
+        working-directory: kompozit_admin_panel
+        run: |
+          bun install --frozen-lockfile || bun install
+          bun run build
+
+      # ── Upload artifacts ──
+      - name: Upload backend artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kompozit-backend-dist
+          path: |
+            kompozit_backend/dist/
+            kompozit_backend/package.json
+            kompozit_backend/ecosystem.config.cjs
+          retention-days: 1
+
+      - name: Upload karbonkompozit artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kompozit-frontend-dist
+          path: |
+            karbonkompozit/.next/standalone/
+            karbonkompozit/.next/static/
+            karbonkompozit/public/
+            karbonkompozit/package.json
+            karbonkompozit/ecosystem.config.cjs
+          retention-days: 1
+
+      - name: Upload admin panel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: kompozit-admin-dist
+          path: |
+            kompozit_admin_panel/.next/standalone/
+            kompozit_admin_panel/.next/static/
+            kompozit_admin_panel/public/
+            kompozit_admin_panel/package.json
+            kompozit_admin_panel/ecosystem.config.cjs
+          retention-days: 1
+
+  # ──────────────────────────────────────────────
+  # 2) Deploy
+  # ──────────────────────────────────────────────
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts 2>/dev/null || true
+
+      - name: Ensure deploy directories exist
+        env:
+          SSH: ssh -o ConnectTimeout=30 -o ServerAliveInterval=15 -i ~/.ssh/deploy_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}
+        run: |
+          $SSH "mkdir -p /var/www/Ensotek/kompozit_backend /var/www/Ensotek/karbonkompozit /var/www/Ensotek/kompozit_admin_panel"
+
+      - name: Deploy kompozit_backend
+        env:
+          SSH: ssh -o ConnectTimeout=30 -o ServerAliveInterval=15 -i ~/.ssh/deploy_key ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}
+          RSYNC_SSH: ssh -o ConnectTimeout=30 -o ServerAliveInterval=15 -i ~/.ssh/deploy_key
+        run: |
+          rsync -avz --delete \
+            --exclude=node_modules --exclude=.env \
+            -e "$RSYNC_SSH" \
+            kompozit-backend-dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/Ensotek/kompozit_backend/
+
+          $SSH "cd /var/www/Ensotek/kompozit_backend && bun install --production --frozen-lockfile || bun install --production"
+
+      - name: Deploy karbonkompozit
+        env:
+          RSYNC_SSH: ssh -o ConnectTimeout=30 -o ServerAliveInterval=15 -i ~/.ssh/deploy_key
+        run: |
+          rsync -avz --delete \
+            --exclude=node_modules --exclude=.env \
+            -e "$RSYNC_SSH" \
+            kompozit-frontend-dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/Ensotek/karbonkompozit/
+
+      - name: Deploy kompozit_admin_panel
+        env:
+          RSYNC_SSH: ssh -o ConnectTimeout=30 -o ServerAliveInterval=15 -i ~/.ssh/deploy_key
+        run: |
+          rsync -avz --delete \
+            --exclude=node_modules --exclude=.env \
+            -e "$RSYNC_SSH" \
+            kompozit-admin-dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/Ensotek/kompozit_admin_panel/
+
+      # ── PM2 restart ──
+      - name: Restart services
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+          timeout: 60s
+          command_timeout: 180s
+          script: |
+            set -e
+
+            echo "=== Kompozit Backend ==="
+            cd /var/www/Ensotek/kompozit_backend
+            if pm2 describe kompozit-backend > /dev/null 2>&1; then
+              pm2 restart kompozit-backend
+            else
+              pm2 start ecosystem.config.cjs
+            fi
+
+            echo "=== Karbonkompozit Frontend ==="
+            cd /var/www/Ensotek/karbonkompozit
+            if pm2 describe karbonkompozit > /dev/null 2>&1; then
+              pm2 restart karbonkompozit
+            else
+              pm2 start ecosystem.config.cjs
+            fi
+
+            echo "=== Kompozit Admin Panel ==="
+            cd /var/www/Ensotek/kompozit_admin_panel
+            if pm2 describe kompozit-admin-panel > /dev/null 2>&1; then
+              pm2 restart kompozit-admin-panel
+            else
+              pm2 start ecosystem.config.cjs
+            fi
+
+            pm2 save
+            echo "=== Health check ==="
+            sleep 3
+            ss -ltnp | grep -E "127\.0\.0\.1:(8186|3020|3004)" || true
