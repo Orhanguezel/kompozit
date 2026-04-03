@@ -107,13 +107,51 @@
 | Faz | Durum | Sorumlu / not |
 |-----|--------|----------------|
 | F0 | Tamam | Karar A + `SITE_SETTINGS_KEYS_CONTRACT.md` + portfolio metadata |
-| F1 | Tamam | Backend + admin + frontend ana sayfa bloklari `site_settings` uzerinden baglandi; Antigravity review ayri |
+| F1 | Kısmen | Dinamik bloklar + `error.tsx`; Antigravity + Claude layout/SSR review bekliyor |
 | F2 | Tamam | Kod+seed+doc; çözüm detay prose iyileştirmesi Cursor’da |
 | F3 | Kısmen | Kategori/DB cleanup + B2B CTA tamam; Antigravity urun karti/gorsel polish bekliyor |
 | F4 | Kısmen | Ana sayfa referans bandı + nav; gerçek logo/izin içeriği + JSON-LD ayrı |
 | F5 | Kısmen | Motion token + odak halkaları + ListingCard + proxy; Antigravity görsel checklist bekliyor |
 | F6 | Tamam | P0/P1 + llms.txt + iletisim FAQ/FAQPage; GEO derin icerik ayri |
 | F7 | Kısmen | Home smoke offline + API modu; locale `error.tsx`; Antigravity son onay ayri |
+
+---
+
+## Sonraki oturum — kalan işler (özet)
+
+Aşağıdaki maddeler üstteki fazlarda `[ ]` olarak duruyor; bir sonraki çalışmada buradan veya ilgili faz başlığından devam edilebilir.
+
+### Antigravity (görsel / UX doğrulama)
+
+- [ ] **F1:** Ana sayfa TR/EN (ve varsa DE) — layout kırılması, okunabilirlik, CTA görünürlüğü.
+- [ ] **F3:** Ürün kartı hover, görseller; `antigravity_plan.md` “Product Showcase”.
+- [ ] **F5:** `antigravity_plan.md` checklist’ini sırayla işaretle (Hero → … → CTA); kod tarafında çoğu madde tamam, görsel onay eksik.
+- [ ] **F6:** Dil değiştirici + URL stratejisi kullanıcı testi.
+- [ ] **F7:** Son görsel onay checklist’i (yayın öncesi).
+
+### İçerik / iş (insan)
+
+- [ ] **F4:** Gerçek müşteri izni olan referanslar; logo/metin kullanım hakları.
+
+### Claude Code (mimari / review)
+
+- [ ] **F1:** PR review — veri yokken SSR davranışı; **layout seviyesi** hata sınırı (isteğe bağlı: kök `app/error.tsx` veya `global-error.tsx` ile `[locale]/layout` fetch hataları).
+- [ ] **F5:** Tasarım vs performans (LCP, CLS) çatışması varsa trade-off notu.
+- [ ] **F6:** Yapılandırılmış özet blokları; derin FAQ (`custom_pages`) veya GEO skill ile içerik genişletmesi.
+
+### Copilot
+
+- [ ] **F5:** Küçük sınıf/tekrar düzenlemeleri (büyük refactor değil).
+
+### Cursor / Codex (isteğe bağlı teknik borç)
+
+- [ ] **F7:** `npm run test:release` — önce standalone çıktı (`output: 'standalone'` + `prepare-standalone` / deploy pipeline ile `.next/standalone` üretimi); ardından `check-release-html.mjs` CI’da koşturulabilir.
+- [ ] **Erişilebilirlik tutarlılığı:** Header / Footer / nav linklerinde ana sayfada kullanılan `focus-visible` halkası standardının geri kalan sayfalara yayılması (Antigravity “tüm etkileşimli UI” iddiası ile hizalama).
+- [ ] **Admin:** `admin_panel` `npm run check` (Biome) mevcut lint/format borcu — build’i bloklamıyor; ayrı oturumda temizlenebilir.
+
+### Repo dışı / senkron
+
+- [ ] Çalışma kopyasında **Syncthing** veya yerel **sync-conflict** / `.tmp` dosyaları varsa temizlik ve tek doğru dosyanın seçilmesi (`docs/`, `frontend/src/app/llms.txt/`, `admin_panel/audit/` vb.).
 
 ---
 
