@@ -1,0 +1,24 @@
+# MOE Kompozit - B2B Composite Manufacturing Solutions
+> Karbon fiber, CTP (Cam Elyaf Takviyeli Plastik) ve hibrit kompozit teknolojilerinde endüstriyel üretim merkezi.
+
+## Core Capabilities
+- **Engineering Excellence**: Specialized in high-performance composite sub-components for Defense, Energy, and Transportation.
+- **Mass Production**: Capacity for municipal landscaping equipment (Planters) and institutional burial products (Coffins).
+- **Industrial Standards**: Manufacturing according to technical specifications, tolerance analysis, and material certification (AS9100 baseline).
+
+## Key Sectors
+- **Landscaping**: Large-scale planters, urban furniture with UV and corrosion resistance.
+- **Storage**: Modular FRP tanks, chemical storage enclosures, and waterproofing solutions.
+- **Defense**: Carbon fiber structural parts, lightweight enclosures for electronic warfare and naval platforms.
+- **Energy**: Wind turbine component maintenance, transformer enclosures, and composite insulators.
+
+## Contact & B2B
+- **Headquarters**: Istanbul, Turkiye.
+- **Technical Inquiries**: offers@moekompozit.com
+- **Website**: https://moekompozit.com
+
+## Documentation Hierarchy
+- /products: Industrial grade product catalog.
+- /solutions: Sector-specific engineering application guides.
+- /about: Manufacturing fleet, quality standards, and corporate history.
+- /contact: Technical response lines and 24h inquiry portal.

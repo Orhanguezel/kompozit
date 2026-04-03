@@ -1,0 +1,145 @@
+import 'server-only';
+
+import { fetchSetting } from '@/i18n/server';
+
+export type HomeHeroContent = {
+  badge: string;
+  title: string;
+  subtitle: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+  workflowLabel: string;
+  workflowTitle: string;
+  workflowBadgeTitle: string;
+  workflowBadgeSubtitle: string;
+};
+
+export type HomeMetricsContent = {
+  items: Array<{ title: string; description: string }>;
+  workflowSteps: Array<{ step: string; title: string; description: string }>;
+  stats: Array<{ value: string; label: string }>;
+};
+
+export type HomeValuePropsContent = {
+  sectionLabel: string;
+  title: string;
+  subtitle: string;
+  items: Array<{ key: string; title: string; description: string }>;
+};
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+
+function asObject(value: unknown): Record<string, unknown> | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  return value as Record<string, unknown>;
+}
+
+function asStringArray(value: unknown): Record<string, unknown>[] {
+  return Array.isArray(value) ? value.filter((item) => item && typeof item === 'object') as Record<string, unknown>[] : [];
+}
+
+function normalizeHero(value: unknown): HomeHeroContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+
+  const hero: HomeHeroContent = {
+    badge: String(source.badge ?? '').trim(),
+    title: String(source.title ?? '').trim(),
+    subtitle: String(source.subtitle ?? '').trim(),
+    primaryCtaLabel: String(source.primaryCtaLabel ?? '').trim(),
+    primaryCtaHref: String(source.primaryCtaHref ?? '').trim(),
+    secondaryCtaLabel: String(source.secondaryCtaLabel ?? '').trim(),
+    secondaryCtaHref: String(source.secondaryCtaHref ?? '').trim(),
+    workflowLabel: String(source.workflowLabel ?? '').trim(),
+    workflowTitle: String(source.workflowTitle ?? '').trim(),
+    workflowBadgeTitle: String(source.workflowBadgeTitle ?? '').trim(),
+    workflowBadgeSubtitle: String(source.workflowBadgeSubtitle ?? '').trim(),
+  };
+
+  return Object.values(hero).every(isNonEmptyString) ? hero : null;
+}
+
+function normalizeMetrics(value: unknown): HomeMetricsContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+
+  const items = asStringArray(source.items)
+    .map((item) => ({
+      title: String(item.title ?? '').trim(),
+      description: String(item.description ?? '').trim(),
+    }))
+    .filter((item) => isNonEmptyString(item.title) && isNonEmptyString(item.description));
+
+  const workflowSteps = asStringArray(source.workflowSteps)
+    .map((item) => ({
+      step: String(item.step ?? '').trim(),
+      title: String(item.title ?? '').trim(),
+      description: String(item.description ?? '').trim(),
+    }))
+    .filter(
+      (item) =>
+        isNonEmptyString(item.step) &&
+        isNonEmptyString(item.title) &&
+        isNonEmptyString(item.description),
+    );
+
+  const stats = asStringArray(source.stats)
+    .map((item) => ({
+      value: String(item.value ?? '').trim(),
+      label: String(item.label ?? '').trim(),
+    }))
+    .filter((item) => isNonEmptyString(item.value) && isNonEmptyString(item.label));
+
+  if (items.length !== 3 || workflowSteps.length !== 3 || stats.length !== 2) return null;
+
+  return { items, workflowSteps, stats };
+}
+
+function normalizeValueProps(value: unknown): HomeValuePropsContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+
+  const sectionLabel = String(source.sectionLabel ?? '').trim();
+  const title = String(source.title ?? '').trim();
+  const subtitle = String(source.subtitle ?? '').trim();
+  const items = asStringArray(source.items)
+    .map((item) => ({
+      key: String(item.key ?? '').trim(),
+      title: String(item.title ?? '').trim(),
+      description: String(item.description ?? '').trim(),
+    }))
+    .filter(
+      (item) =>
+        isNonEmptyString(item.key) &&
+        isNonEmptyString(item.title) &&
+        isNonEmptyString(item.description),
+    );
+
+  if (!isNonEmptyString(sectionLabel) || !isNonEmptyString(title) || !isNonEmptyString(subtitle) || items.length < 4) {
+    return null;
+  }
+
+  return { sectionLabel, title, subtitle, items };
+}
+
+export async function fetchHomePageContent(locale: string): Promise<{
+  hero: HomeHeroContent | null;
+  metrics: HomeMetricsContent | null;
+  valueProps: HomeValuePropsContent | null;
+}> {
+  const [heroRow, metricsRow, valuePropsRow] = await Promise.all([
+    fetchSetting('home.hero', locale, { revalidate: 300 }),
+    fetchSetting('home.metrics', locale, { revalidate: 300 }),
+    fetchSetting('home.value_props', locale, { revalidate: 300 }),
+  ]);
+
+  return {
+    hero: normalizeHero(heroRow?.value),
+    metrics: normalizeMetrics(metricsRow?.value),
+    valueProps: normalizeValueProps(valuePropsRow?.value),
+  };
+}
