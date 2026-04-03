@@ -33,7 +33,10 @@ export default async function SolutionsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  const tSol = await getTranslations({ locale, namespace: 'solutions' });
+  const [tSol, tCommon] = await Promise.all([
+    getTranslations({ locale, namespace: 'solutions' }),
+    getTranslations({ locale, namespace: 'common' }),
+  ]);
   const data = await fetchSolutions(locale);
   const items = data && data.length > 0 ? data : getFallbackSolutions(locale);
 
@@ -72,6 +75,7 @@ export default async function SolutionsPage({
                 <ListingCard
                   href={item.slug ? localizedPath(locale, `/solutions/${item.slug}`) : localizedPath(locale, '/offer')}
                   title={item.title}
+                  lineLabel={tCommon('listingEngineeringLine')}
                   description={item.description ?? item.summary}
                   imageSrc={item.image_url ?? item.featured_image}
                   specs={item.specs}

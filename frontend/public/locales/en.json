@@ -46,7 +46,10 @@
     "noResults": "No results found",
     "relatedProducts": "Related Products",
     "relatedGallery": "Related Galleries",
-    "relatedArticles": "Related Articles"
+    "relatedArticles": "Related Articles",
+    "listingEngineeringLine": "Engineering grade",
+    "listingReferenceLine": "Enterprise reference",
+    "listingArticleLine": "Technical insight"
   },
   "home": {
     "hero": {
@@ -263,11 +266,26 @@
     },
     "response": {
       "title": "How We Respond",
+      "accent": "Our commitment",
       "items": {
         "one": "We review your request and clarify technical scope, operating environment, quantity and critical performance expectations.",
         "two": "If needed, we request additional details around material, process, tolerance, drawings or sampling needs.",
         "three": "We then share the right product, sample or quotation path together with a clear lead-time expectation."
       }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "intro": "Short answers about our B2B composite manufacturing and quotation workflow.",
+      "q1": "Is there a minimum order quantity (MOQ)?",
+      "a1": "MOQ depends on part geometry, tooling needs, material and process type. Share drawings or specifications via the contact form and we will assess your project specifically.",
+      "q2": "How long does sample production take?",
+      "a2": "Lead time varies with complexity, finish expectations and existing tooling. After receiving your request we share an indicative timeline and next steps.",
+      "q3": "Which materials do you work with?",
+      "a3": "We support carbon fiber, FRP/GRP, fiberglass and hybrid reinforcement structures for panels, profiles, enclosures and custom industrial parts.",
+      "q4": "Which technical drawing formats do you accept?",
+      "a4": "STEP, IGES, DXF/DWG and PDF specifications are commonly used. You can attach files through the quote or contact flow.",
+      "q5": "Do you support export shipping and logistics?",
+      "a5": "B2B shipments can include export-oriented packaging and documentation; details are aligned per project."
     }
   },
   "offer": {
@@ -334,6 +352,17 @@
           "four": "B2B Project Discipline"
         }
       }
+    },
+    "panels": {
+      "expertiseAccent": "Core capabilities",
+      "processAccent": "Agile workflow",
+      "certAccent": "Authorized operations"
+    },
+    "sidebar": {
+      "partnershipTitle": "Partnership",
+      "partnershipLead": "Ready to initiate a composite project?",
+      "partnershipCta": "Request a technical quote",
+      "sectorsHeading": "Expert sectors"
     }
   },
   "legal": {
@@ -345,5 +374,10 @@
     "defaultTitle": "MOE Kompozit | Carbon Fiber, FRP and Fiberglass Composite Solutions",
     "defaultDescription": "B2B composite solutions in carbon fiber, FRP and fiberglass manufacturing with engineering, sample validation and production planning support.",
     "keywords": "carbon fiber, FRP, fiberglass, composite, industrial manufacturing, custom production"
+  },
+  "error": {
+    "notFoundTitle": "Page Not Found",
+    "notFoundDescription": "The page you are looking for may have been moved, deleted or never existed. You can continue exploring our industrial solutions.",
+    "backToHome": "Back to Home"
   }
 }

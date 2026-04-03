@@ -50,7 +50,7 @@
 
 ## Faz 3 — Ürün genişlemesi ve katalog disiplini
 
-- [ ] **Admin + DB:** Kategori ağacının ürün hatlarına göre düzenlenmesi (gereksiz kategori temizliği).
+- [x] **Admin + DB:** Kategori ağacının ürün hatlarına göre düzenlenmesi (gereksiz kategori temizliği). *(Seed cleanup: kullanilmayan kompozit kategorileri ve alt dallari silmeden pasife ceken `311_kompozit_category_tree_cleanup.sql` eklendi.)*
 - [x] **Frontend:** Ürün listesi / detayda B2B ipuçları — `ProductB2bBanner` (liste), detayda teknik iletişim şeridi + mevcut teklif CTA; metinler `products.b2b.*` fallback + `site_settings` (`products.b2b`) override.
 - [x] **Codex:** Ürün servisinde filtre/etiket ihtiyacı çıktıysa minimal şema veya query genişletmesi.
 - [ ] **Antigravity:** Ürün kartı hover, görseller, `antigravity_plan.md` “Product Showcase” maddeleri.
@@ -69,6 +69,7 @@
 
 - [ ] **Antigravity:** `antigravity_plan.md` checklist’ini sırayla işaretle (Hero → Features → Products → Gallery → Blog → CTA).
 - [ ] **Cursor:** Stil ve bileşen değişikliklerini uygula; motion ve tema token’larına uy (`THEMA.md`, `globals.css`).
+- [x] **Cursor:** `ListingCard` — `lineLabel` + `common.listingEngineeringLine` / `listingReferenceLine` / `listingArticleLine`; mobilde spec şeridi (md+ hover overlay); `focus-visible` halkası; Next.js 16 için yalnızca `src/proxy.ts` (yinelenen `middleware.ts` kaldırıldı).
 - [ ] **Copilot:** Küçük sınıf/tekrar düzenlemeleri (büyük refactor değil).
 - [ ] **Claude Code:** Tasarım kararı ile performans (LCP, CLS) çatışması varsa trade-off notu.
 
@@ -77,7 +78,8 @@
 ## Faz 6 — SEO, GEO ve ihracat dil kalitesi
 
 - [x] **Codex / Cursor:** `frontend/IMPLEMENTATION_PLAN.md` P0/P1 maddeleri (canonical, hreflang, sitemap, gerçek EN içerik). *(Bu turde ek olarak default-locale URL cleanup yapildi: `/` artik kanonik TR kok URL, `localizedPath/localizedUrl` helper'lari `as-needed` stratejisiyle hizalandi, `/->/tr` redirect kaldirildi, language switcher ve footer linkleri guncellendi, metadata helper `author/publisher` sinyali kazandi.)*
-- [ ] **Claude Code veya GEO skill:** `llms.txt`, yapılandırılmış özet blokları, snippet-dostu FAQ (isteğe bağlı `custom_pages`).
+- [x] **Cursor:** Kök `llms.txt` (önceki tur) + iletişim **FAQ** + `FAQPage` JSON-LD.
+- [ ] **Claude Code veya GEO skill:** Yapılandırılmış özet blokları; derin FAQ (`custom_pages`).
 - [ ] **Antigravity:** Dil değiştirici ve URL stratejisi kullanıcı testi.
 
 ---
@@ -87,7 +89,7 @@
 - [x] **Codex:** Birim / smoke test (mevcut `scripts/check-*.mjs` ile uyumlu yeni kontroller). *(Eklendi: `frontend/scripts/check-home-content-flow.mjs` + `npm run test:smoke:home-content`; bu turnde backend servis/bagimlilik eksigi nedeniyle calistirma dogrulamasi yapilamadi.)*
 - [x] **Cursor:** Production build ve tip kontrolü. *(Dogrulandi: `frontend` type-check + build, `admin_panel` build, `backend` build gecti. Not: `admin_panel` `npm run check` mevcut proje genelinde Biome lint/format borcuna takiliyor; build bloklamiyor.)*
 - [ ] **Antigravity:** Son görsel onay checklist’i.
-- [ ] **Claude Code:** Yayın öncesi mimari özet (tek paragraf release note).
+- [x] **Claude Code:** Yayın öncesi mimari özet (tek paragraf release note). *(`frontend/PROGRESS.md` sonuna eklendi.)*
 
 ---
 
@@ -106,10 +108,10 @@
 | F0 | Tamam | Karar A + `SITE_SETTINGS_KEYS_CONTRACT.md` + portfolio metadata |
 | F1 | Tamam | Backend + admin + frontend ana sayfa bloklari `site_settings` uzerinden baglandi; Antigravity review ayri |
 | F2 | Tamam | Kod+seed+doc; çözüm detay prose iyileştirmesi Cursor’da |
-| F3 | Kısmen | B2B CTA şeritleri tamam; kategori/DB + Antigravity ürün kartı bekliyor |
+| F3 | Kısmen | Kategori/DB cleanup + B2B CTA tamam; Antigravity urun karti/gorsel polish bekliyor |
 | F4 | Kısmen | Ana sayfa referans bandı + nav; gerçek logo/izin içeriği + JSON-LD ayrı |
-| F5 | ⬜ | |
-| F6 | Tamam | P0/P1 SEO maddeleri checklist kapsaminda kapatildi; GEO/Antigravity maddeleri ayri |
+| F5 | Kısmen | ListingCard + proxy-only; Antigravity plan checklist bekliyor |
+| F6 | Tamam | P0/P1 + llms.txt + iletisim FAQ/FAQPage; GEO derin icerik ayri |
 | F7 | Kısmen | Smoke script eklendi; ortamda bagimliliklar/backend servis hazir olmadigi icin calistirma bekliyor |
 
 ---

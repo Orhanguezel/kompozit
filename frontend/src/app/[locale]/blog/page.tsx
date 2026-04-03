@@ -107,6 +107,7 @@ export default async function BlogPage({
                   <ListingCard
                     href={post.slug ? localizedPath(locale, `/blog/${post.slug}`) : localizedPath(locale, '/contact')}
                     title={post.title}
+                    lineLabel={t('common.listingArticleLine')}
                     description={post.description}
                     imageSrc={post.image_url}
                     imageAlt={buildMediaAlt({

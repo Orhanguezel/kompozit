@@ -46,7 +46,10 @@
     "noResults": "Sonuç bulunamadı",
     "relatedProducts": "Ilgili Urunler",
     "relatedGallery": "Ilgili Galeriler",
-    "relatedArticles": "Ilgili Yazilar"
+    "relatedArticles": "Ilgili Yazilar",
+    "listingEngineeringLine": "Muhendislik standardi",
+    "listingReferenceLine": "Kurumsal referans",
+    "listingArticleLine": "Teknik icerik"
   },
   "home": {
     "hero": {
@@ -263,11 +266,26 @@
     },
     "response": {
       "title": "Iletisim Sureci",
+      "accent": "Taahhudumuz",
       "items": {
         "one": "Talebinizi inceliyor; teknik kapsam, kullanim ortami, miktar ve kritik performans beklentilerini netlestiriyoruz.",
         "two": "Gerekirse malzeme, proses, tolerans, cizim veya numune ihtiyacina dair ek bilgi talep ediyoruz.",
         "three": "Uygun urun, numune ya da teklif yonlendirmesini acik termin beklentisiyle en kisa surede paylasiyoruz."
       }
+    },
+    "faq": {
+      "title": "Sik sorulan sorular",
+      "intro": "B2B kompozit uretim ve teklif surecimize dair kisa yanitlar.",
+      "q1": "Minimum siparis adedi (MOQ) var mi?",
+      "a1": "MOQ; parca geometrisi, kalip ihtiyaci, malzeme ve proses tipine gore degisir. Teknik cizim veya sartname ile iletisim formundan yazdiginizda proje bazli degerlendiririz.",
+      "q2": "Numune uretimi ne kadar surer?",
+      "a2": "Karmasiklik, yuzey beklentisi ve mevcut kalip durumuna gore degisir. Talebinizi aldiktan sonra kabaca termin araligi ve sonraki adimlari paylasiyoruz.",
+      "q3": "Hangi malzemelerde calisiyorsunuz?",
+      "a3": "Karbon fiber, CTP/FRP, cam elyaf ve hibrit takviye yapilari ile panel, profil, muhafaza ve ozel parca hatlarinda destek veriyoruz.",
+      "q4": "Teknik cizim formatlari neleri kabul edersiniz?",
+      "a4": "STEP, IGES, DXF/DWG ve PDF sartnameler yaygin olarak kullanilir. Dosyalari teklif veya iletisim akisiyla paylasabilirsiniz.",
+      "q5": "Ihracat ve lojistik destegi sunuyor musunuz?",
+      "a5": "B2B sevkiyatlar icin paketleme ve dokumantasyon tarafinda ihracata uygun duzenlemeler yapilabilir; proje bazinda netlestirilir."
     }
   },
   "offer": {
@@ -334,6 +352,17 @@
           "four": "B2B Proje Yonetim Disiplini"
         }
       }
+    },
+    "panels": {
+      "expertiseAccent": "Temel yetkinlikler",
+      "processAccent": "Cevik is akisi",
+      "certAccent": "Yetkili operasyonlar"
+    },
+    "sidebar": {
+      "partnershipTitle": "Is birligi",
+      "partnershipLead": "Kompozit projenizi baslatmaya hazir misiniz?",
+      "partnershipCta": "Teknik teklif talep edin",
+      "sectorsHeading": "Uzman oldugumuz sektorler"
     }
   },
   "legal": {
@@ -345,5 +374,10 @@
     "defaultTitle": "MOE Kompozit | Karbon Fiber, CTP ve Cam Elyaf Kompozit Cozumleri",
     "defaultDescription": "Karbon fiber, CTP ve cam elyaf kompozit uretiminde muhendislik, numune dogrulama ve seri uretim planlamasi odakli B2B cozumler.",
     "keywords": "karbon fiber, CTP, cam elyaf, kompozit, endüstriyel üretim, özel üretim"
+  },
+  "error": {
+    "notFoundTitle": "Sayfa Bulunamadı",
+    "notFoundDescription": "Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir. Endüstriyel çözümlerimize göz atmaya devam edebilirsiniz.",
+    "backToHome": "Ana Sayfaya Dön"
   }
 }

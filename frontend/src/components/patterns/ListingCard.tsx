@@ -15,6 +15,8 @@ type ListingCardProps = {
   specs?: string[];
   category?: string;
   badge?: string;
+  /** Micro-label above title (e.g. localized “Engineering-grade”). Omit to hide the row. */
+  lineLabel?: string;
 };
 
 export function ListingCard({
@@ -29,11 +31,12 @@ export function ListingCard({
   specs,
   category,
   badge,
+  lineLabel,
 }: ListingCardProps) {
   return (
     <Link
       href={href}
-      className="glass-premium glow-hover group block overflow-hidden rounded-[2.5rem] transition-all duration-500 hover:-translate-y-2 border-white/5 bg-white/[0.02]"
+      className="glass-premium glow-hover group block overflow-hidden rounded-[2.5rem] border-white/5 bg-white/[0.02] transition-all duration-500 hover:-translate-y-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
     >
       {imageSrc ? (
         <div className={`relative overflow-hidden bg-[var(--color-border)] ${imageAspectClassName}`}>
@@ -57,31 +60,48 @@ export function ListingCard({
              </div>
           )}
 
-          {/* Specs Overlay - cinematic reveal */}
-          {specs && specs.length > 0 && (
-            <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-               <div className="flex flex-wrap gap-2 mb-8">
-                  {specs.slice(0, 3).map((spec, i) => (
-                    <span key={i} className="glass-premium px-3 py-1 rounded-lg text-[10px] font-bold text-white border-white/10 bg-white/10 backdrop-blur-md">
-                      {spec}
-                    </span>
-                  ))}
-               </div>
+          {/* Specs overlay: hover on md+; touch devices get strip below image */}
+          {specs && specs.length > 0 ? (
+            <div className="absolute inset-0 z-20 hidden flex-col justify-end p-6 opacity-0 translate-y-4 transition-all duration-500 md:flex md:group-hover:translate-y-0 md:group-hover:opacity-100">
+              <div className="mb-8 flex flex-wrap gap-2">
+                {specs.slice(0, 3).map((spec, i) => (
+                  <span
+                    key={i}
+                    className="glass-premium rounded-lg border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md"
+                  >
+                    {spec}
+                  </span>
+                ))}
+              </div>
             </div>
-          )}
+          ) : null}
 
-          <div className="absolute bottom-4 right-4 z-30 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-            <div className="size-12 rounded-2xl bg-brand text-white flex items-center justify-center shadow-2xl border border-white/20">
+          <div className="absolute bottom-4 right-4 z-30 hidden translate-y-4 opacity-0 transition-all delay-100 duration-500 md:block md:group-hover:translate-y-0 md:group-hover:opacity-100">
+            <div className="flex size-12 items-center justify-center rounded-2xl border border-white/20 bg-brand text-white shadow-2xl">
               <ArrowRight className="size-6" />
             </div>
           </div>
         </div>
       ) : null}
-      <div className="p-8">
-        <div className="flex items-center gap-2 mb-3">
-           <Cpu className="size-3 text-brand opacity-60" />
-           <span className="text-[10px] font-bold uppercase tracking-[0.25em] opacity-40">Engineering Grade</span>
+      {imageSrc && specs && specs.length > 0 ? (
+        <div className="flex flex-wrap gap-2 border-t border-white/10 bg-black/25 px-6 py-3 md:hidden">
+          {specs.slice(0, 3).map((spec, i) => (
+            <span
+              key={i}
+              className="rounded-lg border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--color-text-primary)]"
+            >
+              {spec}
+            </span>
+          ))}
         </div>
+      ) : null}
+      <div className="p-8">
+        {lineLabel ? (
+          <div className="mb-3 flex items-center gap-2">
+            <Cpu className="size-3 text-brand opacity-60" aria-hidden />
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] opacity-40">{lineLabel}</span>
+          </div>
+        ) : null}
         <h3 className="text-xl font-bold tracking-tight line-clamp-2 group-hover:text-brand transition-colors duration-300">{title}</h3>
         {description ? (
           <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)] line-clamp-3 opacity-70 group-hover:opacity-100 transition-opacity">

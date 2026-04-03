@@ -173,6 +173,7 @@ export default async function ProductsPage({
                     href={p.slug ? localizedPath(locale, `/products/${p.slug}`) : `${localizedPath(locale, '/offer')}?product=${encodeURIComponent(p.title)}`}
                     title={p.title}
                     description={p.description}
+                    lineLabel={t('common.listingEngineeringLine')}
                     imageSrc={p.image_url}
                     specs={p.specs}
                     category={p.category_name || p.category}

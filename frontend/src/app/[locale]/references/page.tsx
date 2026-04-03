@@ -80,6 +80,7 @@ export default async function ReferencesPage({
                 <ListingCard
                   href={item.website_url || localizedUrl(locale, '/references')}
                   title={item.title}
+                  lineLabel={t('common.listingReferenceLine')}
                   description={item.summary || item.description}
                   imageSrc={absoluteAssetUrl(item.featured_image || item.imageSrc) || undefined}
                   imageAlt={item.featured_image_alt ?? item.title}
