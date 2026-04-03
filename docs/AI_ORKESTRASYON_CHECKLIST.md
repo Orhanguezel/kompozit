@@ -34,7 +34,8 @@
 - [x] **Admin (Codex / Cursor):** JSON validasyonu + önizleme. *(Raw mod: `kompozit__home.*` key’lerinde canlı önizleme ve geçersiz JSON’da kayıt engeli — `admin_panel/src/lib/kompozit-home-settings-admin.ts` + `site-settings-form.tsx`.)*
 - [x] **Frontend (Cursor):** Ana sayfa içeriği `fetchHomePageContent` (`frontend/src/features/site-settings/home.ts`) + `next-intl` fallback; `src/app/[locale]/page.tsx`.*
 - [ ] **Antigravity:** Ana sayfa TR/EN (ve varsa DE) için layout kırılması, okunabilirlik, CTA görünürlüğü kontrolü.
-- [ ] **Claude Code:** PR review — veri yokken SSR davranışı ve hata sınırı.
+- [x] **Cursor:** `[locale]/error.tsx` — sayfa segmenti hatalarında `next-intl` ile TR/EN mesaj, retry + ana sayfa linki. *(Layout fetch hataları kök `error.tsx` ile genişletilebilir.)*
+- [ ] **Claude Code:** PR review — veri yokken SSR davranışı ve layout seviyesi hata sınırı.
 
 ---
 
@@ -86,7 +87,7 @@
 
 ## Faz 7 — Kalite ve yayın
 
-- [x] **Codex:** Birim / smoke test (mevcut `scripts/check-*.mjs` ile uyumlu yeni kontroller). *(Eklendi: `frontend/scripts/check-home-content-flow.mjs` + `npm run test:smoke:home-content`; bu turnde backend servis/bagimlilik eksigi nedeniyle calistirma dogrulamasi yapilamadi.)*
+- [x] **Codex:** Birim / smoke test (mevcut `scripts/check-*.mjs` ile uyumlu yeni kontroller). *(Eklendi: `frontend/scripts/check-home-content-flow.mjs` + `npm run test:smoke:home-content`; API yokken `bun run test:smoke:home-content:offline` — `scripts/fixtures/kompozit-home-site-settings.json` seed ile aynı şekil.)*
 - [x] **Cursor:** Production build ve tip kontrolü. *(Dogrulandi: `frontend` type-check + build, `admin_panel` build, `backend` build gecti. Not: `admin_panel` `npm run check` mevcut proje genelinde Biome lint/format borcuna takiliyor; build bloklamiyor.)*
 - [ ] **Antigravity:** Son görsel onay checklist’i.
 - [x] **Claude Code:** Yayın öncesi mimari özet (tek paragraf release note). *(`frontend/PROGRESS.md` sonuna eklendi.)*
@@ -112,7 +113,7 @@
 | F4 | Kısmen | Ana sayfa referans bandı + nav; gerçek logo/izin içeriği + JSON-LD ayrı |
 | F5 | Kısmen | Motion token + odak halkaları + ListingCard + proxy; Antigravity görsel checklist bekliyor |
 | F6 | Tamam | P0/P1 + llms.txt + iletisim FAQ/FAQPage; GEO derin icerik ayri |
-| F7 | Kısmen | Smoke script eklendi; ortamda bagimliliklar/backend servis hazir olmadigi icin calistirma bekliyor |
+| F7 | Kısmen | Home smoke offline + API modu; locale `error.tsx`; Antigravity son onay ayri |
 
 ---
 

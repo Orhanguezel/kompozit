@@ -11,6 +11,12 @@
     "catalog": "Request Catalog",
     "references": "References"
   },
+  "errors": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred while loading this page. You can try again or return to the home page.",
+    "retry": "Try again",
+    "home": "Home"
+  },
   "footer": {
     "description": "Industrial solutions in carbon fiber, FRP and fiberglass composite manufacturing.",
     "rights": "All rights reserved",

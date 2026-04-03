@@ -11,6 +11,12 @@
     "catalog": "Katalog İste",
     "references": "Referanslar"
   },
+  "errors": {
+    "title": "Bir sorun oluştu",
+    "description": "Bu sayfa yüklenirken beklenmeyen bir hata meydana geldi. Tekrar deneyebilir veya ana sayfaya dönebilirsiniz.",
+    "retry": "Tekrar dene",
+    "home": "Ana sayfa"
+  },
   "footer": {
     "description": "Karbon fiber, CTP ve cam elyaf kompozit uretiminde endustriyel cozumler.",
     "rights": "Tüm hakları saklıdır",

@@ -14,6 +14,7 @@
     "test:release": "node scripts/check-release-html.mjs",
     "test:smoke:admin-content": "node scripts/check-admin-content-flow.mjs",
     "test:smoke:home-content": "node scripts/check-home-content-flow.mjs",
+    "test:smoke:home-content:offline": "node scripts/check-home-content-flow.mjs --offline",
     "test:media": "node scripts/check-media-seo.mjs",
     "audit:media": "node scripts/audit-media-seo.mjs",
     "audit:crawl": "node scripts/crawl-seo-report.mjs",
