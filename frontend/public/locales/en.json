@@ -119,6 +119,7 @@
       "subtitle": "Technical content that explains material choice, process logic and application scenarios in composite projects",
       "sectionLabel": "Expertise",
       "featuredLabel": "Featured Insight",
+      "spotlightBadge": "Featured insight",
       "spotlightTitle": "What Is Carbon Fiber? Properties and Application Areas",
       "spotlightBodyPrimary": "Carbon fiber is a reinforcement material used in composite structures that require high strength, low weight and dimensional stability. It is widely preferred in aerospace, automotive, defense, industrial equipment and custom machine components where lightweighting and durability must work together.",
       "spotlightBodySecondary": "Its theoretical advantages do not translate into field performance unless resin choice, layup structure, finish expectation and production method are aligned correctly. In practice, carbon fiber is not only a material choice but also an application and process decision.",
@@ -133,7 +134,8 @@
       "placeholder": "Your email address",
       "subscribe": "Subscribe",
       "success": "Successfully subscribed!",
-      "error": "An error occurred, please try again."
+      "error": "An error occurred, please try again.",
+      "privacyNote": "Zero spam. Industrial-grade confidentiality."
     }
   },
   "products": {

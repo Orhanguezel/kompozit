@@ -119,6 +119,7 @@
       "subtitle": "Karbon fiber ve kompozit uygulamalarda malzeme, proses ve kullanım senaryolarını açıklayan teknik içerikler",
       "sectionLabel": "Uzmanlık",
       "featuredLabel": "Öne Çıkan İçerik",
+      "spotlightBadge": "Öne çıkan",
       "spotlightTitle": "Karbon Fiber Nedir? Özellikleri ve Kullanım Alanları",
       "spotlightBodyPrimary": "Karbon fiber; yüksek mukavemet, düşük ağırlık ve boyutsal kararlılık gerektiren uygulamalarda öne çıkan kompozit takviye malzemelerinden biridir. Havacılık, otomotiv, savunma, endüstriyel ekipman ve özel makine bileşenlerinde hafiflik ile dayanım dengesini kurmak için tercih edilir.",
       "spotlightBodySecondary": "Doğru reçine sistemi, katman yerleşimi, yüzey beklentisi ve üretim prosesi birlikte ele alınmadığında malzemenin teorik avantajları sahaya aynı ölçüde yansımaz. Bu nedenle karbon fiber seçimi yalnızca malzeme tercihi değil, aynı zamanda uygulama ve proses kararıdır.",
@@ -133,7 +134,8 @@
       "placeholder": "E-posta adresiniz",
       "subscribe": "Abone Ol",
       "success": "Başarıyla abone oldunuz!",
-      "error": "Bir hata oluştu, lütfen tekrar deneyin."
+      "error": "Bir hata oluştu, lütfen tekrar deneyin.",
+      "privacyNote": "Spam yok. Endüstriyel düzeyde gizlilik."
     }
   },
   "products": {

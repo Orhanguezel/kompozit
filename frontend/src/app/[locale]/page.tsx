@@ -205,14 +205,14 @@ export default async function HomePage({
             <div className="motion-fade-up motion-delay-3 mt-10 flex flex-wrap gap-5">
               <Link
                 href={heroApi?.primaryCtaHref ? homeHref(locale, heroApi.primaryCtaHref) : localizedPath(locale, '/products')}
-                className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)]"
               >
                 {heroApi?.primaryCtaLabel ?? t('home.hero.cta')}
                 <ArrowRight className="size-5" />
               </Link>
               <Link
                 href={heroApi?.secondaryCtaHref ? homeHref(locale, heroApi.secondaryCtaHref) : localizedPath(locale, '/offer')}
-                className="glass-premium surface-glass-hover surface-dark-heading inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="glass-premium surface-glass-hover surface-dark-heading inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)]"
               >
                 {heroApi?.secondaryCtaLabel ?? t('home.hero.ctaSecondary')}
               </Link>
@@ -347,7 +347,7 @@ export default async function HomePage({
               action={(
                 <Link
                   href={localizedPath(locale, '/products')}
-                  className="hidden items-center gap-2 text-sm font-bold text-[var(--color-brand)] transition-all hover:gap-3 sm:flex"
+                  className="hidden items-center gap-2 rounded-md text-sm font-bold text-[var(--color-brand)] transition-all hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)] sm:flex"
                 >
                   {t('common.viewAll')} <ArrowRight className="size-4" />
                 </Link>
@@ -395,7 +395,7 @@ export default async function HomePage({
             action={(
               <Link
                 href={localizedPath(locale, '/gallery')}
-                className="hidden items-center gap-2 text-sm font-bold text-[var(--color-brand)] transition-all hover:gap-3 sm:flex"
+                className="hidden items-center gap-2 rounded-md text-sm font-bold text-[var(--color-brand)] transition-all hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] sm:flex"
               >
                 {t('common.viewAll')} <ArrowRight className="size-4" />
               </Link>
@@ -468,7 +468,9 @@ export default async function HomePage({
                       className="object-cover transition-transform duration-1000 hover:scale-105"
                     />
                     <div className="absolute left-6 top-6">
-                       <span className="glass-premium rounded-full px-4 py-1 fontSize-[10px] uppercase font-bold tracking-widest text-brand border-brand/20">Featured Insight</span>
+                      <span className="glass-premium rounded-full border border-brand/20 px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-brand">
+                        {t('home.blog.spotlightBadge')}
+                      </span>
                     </div>
                   </div>
                   <div className="p-8 lg:p-12 flex flex-col justify-center">
@@ -490,7 +492,7 @@ export default async function HomePage({
 
                     <Link
                       href={featuredBlogPost?.slug ? localizedPath(locale, `/blog/${featuredBlogPost.slug}`) : localizedPath(locale, '/blog')}
-                      className="btn-primary shimmer-btn glow-hover mt-10 inline-flex w-fit items-center gap-3 rounded-xl px-8 py-4 font-bold transition-all hover:scale-[1.02]"
+                      className="btn-primary shimmer-btn glow-hover mt-10 inline-flex w-fit items-center gap-3 rounded-xl px-8 py-4 font-bold transition-all hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
                     >
                       {t('blog.readMore')}
                       <ArrowRight className="size-5" />
@@ -507,7 +509,7 @@ export default async function HomePage({
                <div className="h-px flex-1 bg-border/40" />
                <Link
                 href={localizedPath(locale, '/blog')}
-                className="items-center gap-2 text-sm font-bold text-brand hover:underline flex"
+                className="flex items-center gap-2 rounded-md text-sm font-bold text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
               >
                 {t('common.viewAll')} <ArrowRight className="size-4" />
               </Link>
@@ -516,7 +518,7 @@ export default async function HomePage({
               {secondaryBlogPosts.map((post: any, index: number) => (
                 <Reveal key={post.id ?? post.title} delay={120 * (index + 1)}>
                   <article
-                    className="glass-premium glow-hover group h-full flex flex-col rounded-[2rem] p-8 border-white/5 bg-white/[0.02] hover:-translate-y-1 transition-all"
+                    className="glass-premium glow-hover group flex h-full flex-col rounded-[2rem] bg-white/[0.02] p-8 transition-all hover:-translate-y-1 focus-within:ring-2 focus-within:ring-brand focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-bg-muted)]"
                   >
                     <div className="flex-1">
                       <h3 className="text-xl font-bold tracking-tight group-hover:text-brand transition-colors">
@@ -528,7 +530,7 @@ export default async function HomePage({
                     </div>
                     <Link
                       href={post.slug ? localizedPath(locale, `/blog/${post.slug}`) : localizedPath(locale, '/blog')}
-                      className="mt-8 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-brand transition-all hover:gap-3"
+                      className="mt-8 inline-flex items-center gap-2 rounded-md text-[10px] font-bold uppercase tracking-widest text-brand transition-all hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
                     >
                       {t('blog.readMore')}
                       <ArrowRight className="size-4" />
@@ -553,7 +555,7 @@ export default async function HomePage({
             action={(
               <Link
                 href={localizedPath(locale, '/offer')}
-                className="btn-primary shimmer-btn glow-hover mt-10 inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-bold transition-all hover:scale-[1.05]"
+                className="btn-primary shimmer-btn glow-hover mt-10 inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-bold transition-all hover:scale-[1.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)]"
               >
                 {t('common.requestOffer')}
                 <ArrowRight className="size-6" />
@@ -578,8 +580,8 @@ export default async function HomePage({
             <div className="glass-premium p-2 pr-2 rounded-[1.5rem] bg-white/[0.05] border-white/10 max-w-lg mx-auto">
                <NewsletterForm locale={locale} />
             </div>
-            <p className="mt-6 text-[10px] uppercase font-bold tracking-[0.25em] surface-dark-text opacity-40">
-               Zero spam. Industrial level confidentiality.
+            <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.25em] surface-dark-text opacity-40">
+              {t('home.newsletter.privacyNote')}
             </p>
           </Reveal>
         </div>

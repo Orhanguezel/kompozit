@@ -68,7 +68,7 @@
 ## Faz 5 — Premium UI (Antigravity ana lider)
 
 - [ ] **Antigravity:** `antigravity_plan.md` checklist’ini sırayla işaretle (Hero → Features → Products → Gallery → Blog → CTA).
-- [ ] **Cursor:** Stil ve bileşen değişikliklerini uygula; motion ve tema token’larına uy (`THEMA.md`, `globals.css`).
+- [x] **Cursor:** Stil ve bileşen değişikliklerini uygula; motion ve tema token’larına uy (`THEMA.md`, `globals.css`). *(globals.css: `--motion-*` token’ları, `.motion-fade-up` / `.reveal` / stagger; `.motion-delay-5`–`6`; ana sayfa odak halkaları; `MediaOverlayCard` odak; blog rozet + bülten gizlilik metni i18n.)*
 - [x] **Cursor:** `ListingCard` — `lineLabel` + `common.listingEngineeringLine` / `listingReferenceLine` / `listingArticleLine`; mobilde spec şeridi (md+ hover overlay); `focus-visible` halkası; Next.js 16 için yalnızca `src/proxy.ts` (yinelenen `middleware.ts` kaldırıldı).
 - [ ] **Copilot:** Küçük sınıf/tekrar düzenlemeleri (büyük refactor değil).
 - [ ] **Claude Code:** Tasarım kararı ile performans (LCP, CLS) çatışması varsa trade-off notu.
@@ -110,7 +110,7 @@
 | F2 | Tamam | Kod+seed+doc; çözüm detay prose iyileştirmesi Cursor’da |
 | F3 | Kısmen | Kategori/DB cleanup + B2B CTA tamam; Antigravity urun karti/gorsel polish bekliyor |
 | F4 | Kısmen | Ana sayfa referans bandı + nav; gerçek logo/izin içeriği + JSON-LD ayrı |
-| F5 | Kısmen | ListingCard + proxy-only; Antigravity plan checklist bekliyor |
+| F5 | Kısmen | Motion token + odak halkaları + ListingCard + proxy; Antigravity görsel checklist bekliyor |
 | F6 | Tamam | P0/P1 + llms.txt + iletisim FAQ/FAQPage; GEO derin icerik ayri |
 | F7 | Kısmen | Smoke script eklendi; ortamda bagimliliklar/backend servis hazir olmadigi icin calistirma bekliyor |
 

@@ -27,7 +27,7 @@ export function MediaOverlayCard({
   return (
     <Link
       href={href}
-      className={`group relative block overflow-hidden rounded-[2rem] bg-[var(--color-bg-dark)] shadow-xl ${aspectClassName}`}
+      className={`group relative block overflow-hidden rounded-[2rem] bg-[var(--color-bg-dark)] shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)] ${aspectClassName}`}
     >
       <OptimizedImage
         src={src}
