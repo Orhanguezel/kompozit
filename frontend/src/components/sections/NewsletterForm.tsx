@@ -31,7 +31,9 @@ export function NewsletterForm({ locale }: { locale: string }) {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
       <div className="relative flex-1">
+        <label htmlFor="newsletter-email" className="sr-only">Newsletter Email</label>
         <input
+          id="newsletter-email"
           name="email"
           type="email"
           placeholder={t('placeholder')}

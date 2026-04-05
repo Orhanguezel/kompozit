@@ -1,0 +1,73 @@
+# Pull request doğrulama — deploy yok, artifact yok.
+# main'e PR: backend, frontend ve admin_panel paralel derlenir (toplam süre ≈ en yavaş job).
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-kompozit-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_ENV: production
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  backend:
+    name: Backend build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install & build
+        working-directory: backend
+        run: |
+          bun install --frozen-lockfile || bun install
+          bun run build
+
+  frontend:
+    name: Frontend type-check, build & smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install
+        working-directory: frontend
+        run: |
+          bun install --frozen-lockfile || bun install
+      - name: Type-check
+        working-directory: frontend
+        run: bun run type-check
+      - name: Build
+        working-directory: frontend
+        run: bun run build
+      - name: Smoke (offline)
+        working-directory: frontend
+        run: |
+          bun run test:smoke:home-content:offline
+          bun run test:smoke:home-api:offline
+
+  admin:
+    name: Admin panel build
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install & build
+        working-directory: admin_panel
+        run: |
+          bun install --frozen-lockfile || bun install
+          bun run build

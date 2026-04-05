@@ -1,29 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { toast } from 'sonner';
-import { RefreshCcw } from 'lucide-react';
+import * as React from "react";
 
-import { useAdminTranslations, normLocaleTag } from '@/i18n';
-import { usePreferencesStore } from '@/stores/preferences/preferences-provider';
+import { RefreshCcw } from "lucide-react";
+import { toast } from "sonner";
 
-import {
-  useListSiteSettingsAdminQuery,
-  useUpdateSiteSettingAdminMutation,
-} from '@/integrations/hooks';
-
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Switch } from '@/components/ui/switch';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { normLocaleTag, useAdminTranslations } from "@/i18n";
+import { useListSiteSettingsAdminQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
+import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 type LocaleRow = {
   code: string;
@@ -36,7 +25,7 @@ function toShortLocale(v: unknown): string {
 }
 
 function safeStr(v: unknown): string {
-  return v === null || v === undefined ? '' : String(v);
+  return v === null || v === undefined ? "" : String(v);
 }
 
 function normalizeRows(raw: unknown): LocaleRow[] {
@@ -67,40 +56,40 @@ function normalizeRows(raw: unknown): LocaleRow[] {
 }
 
 const TOP_20_LOCALES_PRESET: LocaleRow[] = [
-  { code: 'de', label: 'Deutsch', is_active: true },
-  { code: 'en', label: 'English', is_active: true },
-  { code: 'tr', label: 'Türkçe', is_active: true },
-  { code: 'es', label: 'Español', is_active: false },
-  { code: 'fr', label: 'Français', is_active: false },
-  { code: 'it', label: 'Italiano', is_active: false },
-  { code: 'pt', label: 'Português', is_active: false },
-  { code: 'ru', label: 'Русский', is_active: false },
-  { code: 'ar', label: 'العربية', is_active: false },
-  { code: 'hi', label: 'हिन्दी', is_active: false },
-  { code: 'bn', label: 'বাংলা', is_active: false },
-  { code: 'pa', label: 'ਪੰਜਾਬੀ', is_active: false },
-  { code: 'ja', label: '日本語', is_active: false },
-  { code: 'ko', label: '한국어', is_active: false },
-  { code: 'zh', label: '中文', is_active: false },
-  { code: 'id', label: 'Bahasa Indonesia', is_active: false },
-  { code: 'vi', label: 'Tiếng Việt', is_active: false },
-  { code: 'th', label: 'ไทย', is_active: false },
-  { code: 'nl', label: 'Nederlands', is_active: false },
-  { code: 'pl', label: 'Polski', is_active: false },
+  { code: "de", label: "Deutsch", is_active: true },
+  { code: "en", label: "English", is_active: true },
+  { code: "tr", label: "Türkçe", is_active: true },
+  { code: "es", label: "Español", is_active: false },
+  { code: "fr", label: "Français", is_active: false },
+  { code: "it", label: "Italiano", is_active: false },
+  { code: "pt", label: "Português", is_active: false },
+  { code: "ru", label: "Русский", is_active: false },
+  { code: "ar", label: "العربية", is_active: false },
+  { code: "hi", label: "हिन्दी", is_active: false },
+  { code: "bn", label: "বাংলা", is_active: false },
+  { code: "pa", label: "ਪੰਜਾਬੀ", is_active: false },
+  { code: "ja", label: "日本語", is_active: false },
+  { code: "ko", label: "한국어", is_active: false },
+  { code: "zh", label: "中文", is_active: false },
+  { code: "id", label: "Bahasa Indonesia", is_active: false },
+  { code: "vi", label: "Tiếng Việt", is_active: false },
+  { code: "th", label: "ไทย", is_active: false },
+  { code: "nl", label: "Nederlands", is_active: false },
+  { code: "pl", label: "Polski", is_active: false },
 ];
 
 export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }) {
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
   const t = useAdminTranslations(adminLocale || undefined);
 
-  const appLocalesKey = `${settingPrefix || ''}app_locales`;
+  const appLocalesKey = `${settingPrefix || ""}app_locales`;
   const localesQ = useListSiteSettingsAdminQuery({
-    locale: '*',
+    locale: "*",
     keys: [appLocalesKey],
     limit: 20,
     offset: 0,
-    sort: 'key',
-    order: 'asc',
+    sort: "key",
+    order: "asc",
   });
   const [updateSetting, { isLoading: isSaving }] = useUpdateSiteSettingAdminMutation();
 
@@ -124,13 +113,10 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
     }));
 
     try {
-      await updateSetting({ key: appLocalesKey, locale: '*', value: payload }).unwrap();
-      toast.success(t('admin.siteSettings.locales.saved'));
+      await updateSetting({ key: appLocalesKey, locale: "*", value: payload }).unwrap();
+      toast.success(t("admin.siteSettings.locales.saved"));
     } catch (err: any) {
-      const msg =
-        err?.data?.error?.message ||
-        err?.message ||
-        t('admin.siteSettings.locales.saveError');
+      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.locales.saveError");
       toast.error(msg);
       throw err;
     }
@@ -156,9 +142,9 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
 
     setTouched(true);
     const nextRows: LocaleRow[] = [
-      { code: 'de', label: 'Deutsch', is_active: true },
-      { code: 'en', label: 'English', is_active: true },
-      { code: 'tr', label: 'Türkçe', is_active: true },
+      { code: "de", label: "Deutsch", is_active: true },
+      { code: "en", label: "English", is_active: true },
+      { code: "tr", label: "Türkçe", is_active: true },
     ];
     setRows(nextRows);
 
@@ -190,15 +176,17 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
       <CardHeader className="gap-2">
         <div className="flex items-start justify-between gap-3">
           <div className="space-y-1">
-            <CardTitle className="text-base">{t('admin.siteSettings.locales.title')}</CardTitle>
-            <CardDescription>{t('admin.siteSettings.locales.description')}</CardDescription>
+            <CardTitle className="text-base">{t("admin.siteSettings.locales.title")}</CardTitle>
+            <CardDescription>{t("admin.siteSettings.locales.description")}</CardDescription>
           </div>
 
           <div className="flex items-center gap-2">
             <Badge variant="secondary">
-              {settingPrefix ? `${t('admin.siteSettings.badges.global')} · ${settingPrefix}` : t('admin.siteSettings.badges.global')}
+              {settingPrefix
+                ? `${t("admin.siteSettings.badges.global")} · ${settingPrefix}`
+                : t("admin.siteSettings.badges.global")}
             </Badge>
-            {busy ? <Badge variant="outline">{t('admin.siteSettings.messages.loading')}</Badge> : null}
+            {busy ? <Badge variant="outline">{t("admin.siteSettings.messages.loading")}</Badge> : null}
             <Button
               variant="outline"
               size="icon"
@@ -207,31 +195,32 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
                 try {
                   await localesQ.refetch();
                 } catch {
-                  toast.error(t('admin.siteSettings.messages.error'));
+                  toast.error(t("admin.siteSettings.messages.error"));
                 }
               }}
-              title={t('admin.siteSettings.actions.refresh')}
+              title={t("admin.siteSettings.actions.refresh")}
             >
-              <RefreshCcw className={busy ? 'size-4 animate-spin' : 'size-4'} />
+              <RefreshCcw className={busy ? "size-4 animate-spin" : "size-4"} />
             </Button>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        <div className="rounded-md border border-dashed p-3 text-sm text-muted-foreground">
-          Frontend varsayılan dili artık bu panelden yönetilmiyor. Her proje kendi fallback locale ayarını kendi frontend katmanında belirliyor.
+        <div className="rounded-md border border-dashed p-3 text-muted-foreground text-sm">
+          Frontend varsayılan dili artık bu panelden yönetilmiyor. Her proje kendi fallback locale ayarını kendi
+          frontend katmanında belirliyor.
         </div>
 
         {!rows.length ? (
-          <div className="rounded-md border p-4 text-sm text-muted-foreground">
-            <div className="mb-3">{t('admin.siteSettings.locales.empty')}</div>
+          <div className="rounded-md border p-4 text-muted-foreground text-sm">
+            <div className="mb-3">{t("admin.siteSettings.locales.empty")}</div>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" onClick={onPresetDeEnTr} disabled={busy}>
-                {t('admin.siteSettings.locales.presetDeEnTr')}
+                {t("admin.siteSettings.locales.presetDeEnTr")}
               </Button>
               <Button variant="outline" onClick={onPresetTop20} disabled={busy}>
-                {t('admin.siteSettings.locales.presetTop20')}
+                {t("admin.siteSettings.locales.presetTop20")}
               </Button>
             </div>
           </div>
@@ -239,10 +228,10 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
           <>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" onClick={onPresetDeEnTr} disabled={busy}>
-                {t('admin.siteSettings.locales.presetDeEnTr')}
+                {t("admin.siteSettings.locales.presetDeEnTr")}
               </Button>
               <Button variant="outline" onClick={onPresetTop20} disabled={busy}>
-                {t('admin.siteSettings.locales.presetTop20')}
+                {t("admin.siteSettings.locales.presetTop20")}
               </Button>
             </div>
 
@@ -250,11 +239,9 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-28">{t('admin.siteSettings.locales.table.code')}</TableHead>
-                    <TableHead>{t('admin.siteSettings.locales.table.label')}</TableHead>
-                    <TableHead className="w-28 text-center">
-                      {t('admin.siteSettings.locales.table.active')}
-                    </TableHead>
+                    <TableHead className="w-28">{t("admin.siteSettings.locales.table.code")}</TableHead>
+                    <TableHead>{t("admin.siteSettings.locales.table.label")}</TableHead>
+                    <TableHead className="w-28 text-center">{t("admin.siteSettings.locales.table.active")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

@@ -5,51 +5,52 @@
 // - ✅ No locale select here (single source in CustomPageForm)
 // =============================================================
 
-'use client';
+"use client";
 
-import React from 'react';
-import type { CustomPageFormValues } from './custom-page-form';
+import type React from "react";
 
-import RichContentEditor from '@/app/(main)/admin/_components/common/RichContentEditor';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+import RichContentEditor from "@/app/(main)/admin/_components/common/RichContentEditor";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+
+import type { CustomPageFormValues } from "./custom-page-form";
 
 /* slugify */
 const slugify = (value: string): string => {
-  if (!value) return '';
+  if (!value) return "";
 
   let s = value.trim();
 
   const trMap: Record<string, string> = {
-    ç: 'c',
-    Ç: 'c',
-    ğ: 'g',
-    Ğ: 'g',
-    ı: 'i',
-    I: 'i',
-    İ: 'i',
-    ö: 'o',
-    Ö: 'o',
-    ş: 's',
-    Ş: 's',
-    ü: 'u',
-    Ü: 'u',
+    ç: "c",
+    Ç: "c",
+    ğ: "g",
+    Ğ: "g",
+    ı: "i",
+    I: "i",
+    İ: "i",
+    ö: "o",
+    Ö: "o",
+    ş: "s",
+    Ş: "s",
+    ü: "u",
+    Ü: "u",
   };
 
   s = s
-    .split('')
+    .split("")
     .map((ch) => trMap[ch] ?? ch)
-    .join('');
+    .join("");
 
-  s = s.replace(/ß/g, 'ss').replace(/ẞ/g, 'ss');
+  s = s.replace(/ß/g, "ss").replace(/ẞ/g, "ss");
 
   return s
     .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9\s-]/g, "")
     .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-');
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
 };
 
 type Props = {
@@ -61,9 +62,7 @@ type Props = {
   handleChange: (
     field: keyof CustomPageFormValues,
   ) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  handleCheckboxChange: (
-    field: keyof CustomPageFormValues,
-  ) => (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleCheckboxChange: (field: keyof CustomPageFormValues) => (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const CustomPageMainColumn: React.FC<Props> = ({
@@ -76,6 +75,11 @@ export const CustomPageMainColumn: React.FC<Props> = ({
   handleCheckboxChange,
 }) => {
   const t = useAdminT();
+  const moduleKeyInputId = "custom-page-module-key";
+  const titleInputId = "custom-page-title";
+  const slugInputId = "custom-page-slug";
+  const summaryInputId = "custom-page-summary";
+
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-6">
@@ -85,10 +89,10 @@ export const CustomPageMainColumn: React.FC<Props> = ({
             type="checkbox"
             className="h-4 w-4"
             checked={values.is_published}
-            onChange={handleCheckboxChange('is_published')}
+            onChange={handleCheckboxChange("is_published")}
             disabled={disabled}
           />
-          <span>{t('admin.customPage.form.isPublished')}</span>
+          <span>{t("admin.customPage.form.isPublished")}</span>
         </label>
 
         <label className="flex items-center gap-2 text-sm">
@@ -97,31 +101,35 @@ export const CustomPageMainColumn: React.FC<Props> = ({
             type="checkbox"
             className="h-4 w-4"
             checked={values.featured}
-            onChange={handleCheckboxChange('featured')}
+            onChange={handleCheckboxChange("featured")}
             disabled={disabled}
           />
-          <span>{t('admin.customPage.form.featured')}</span>
+          <span>{t("admin.customPage.form.featured")}</span>
         </label>
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">
-          {t('admin.customPage.form.moduleKey')}
+        <label htmlFor={moduleKeyInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.moduleKey")}
         </label>
         <input
+          id={moduleKeyInputId}
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           value={values.module_key}
-          onChange={handleChange('module_key')}
-          placeholder={t('admin.customPage.form.moduleKeyPlaceholder')}
+          onChange={handleChange("module_key")}
+          placeholder={t("admin.customPage.form.moduleKeyPlaceholder")}
           disabled={disabled}
           required
         />
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">{t('admin.customPage.form.title')}</label>
+        <label htmlFor={titleInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.title")}
+        </label>
         <input
+          id={titleInputId}
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           value={values.title}
@@ -139,8 +147,11 @@ export const CustomPageMainColumn: React.FC<Props> = ({
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">Slug</label>
+        <label htmlFor={slugInputId} className="mb-1 block text-muted-foreground text-xs">
+          Slug
+        </label>
         <input
+          id={slugInputId}
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           value={values.slug}
@@ -155,18 +166,21 @@ export const CustomPageMainColumn: React.FC<Props> = ({
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">{t('admin.customPage.form.summary')}</label>
+        <label htmlFor={summaryInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.summary")}
+        </label>
         <textarea
+          id={summaryInputId}
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           rows={3}
           value={values.summary}
-          onChange={handleChange('summary')}
+          onChange={handleChange("summary")}
           disabled={disabled}
         />
       </div>
 
       <div>
-        <div className="mb-1 text-xs text-muted-foreground">{t('admin.customPage.form.content')}</div>
+        <div className="mb-1 text-muted-foreground text-xs">{t("admin.customPage.form.content")}</div>
         <RichContentEditor
           value={values.content}
           disabled={disabled}

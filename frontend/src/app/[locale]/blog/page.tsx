@@ -2,7 +2,7 @@ import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
-import { API_BASE_URL } from '@/lib/utils';
+import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
@@ -55,8 +55,9 @@ export default async function BlogPage({
   const visiblePosts = posts.length > 0 ? posts : fallbackPosts;
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-muted)] relative overflow-hidden">
-      <div className="surface-dark-shell carbon-mesh absolute inset-0 opacity-[0.03] pointer-events-none" />
+    <div className="min-h-screen bg-[var(--color-carbon)] relative overflow-hidden text-[var(--color-cream)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-carbon)_85%)] opacity-90" aria-hidden />
       
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -109,7 +110,11 @@ export default async function BlogPage({
                     title={post.title}
                     lineLabel={t('common.listingArticleLine')}
                     description={post.description}
-                    imageSrc={post.image_url}
+                    imageSrc={
+                      resolvePublicAssetUrl(post.image_url ?? post.featured_image) ??
+                      post.image_url ??
+                      post.featured_image
+                    }
                     imageAlt={buildMediaAlt({
                       locale,
                       kind: 'blog',

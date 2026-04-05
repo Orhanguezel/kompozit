@@ -3,74 +3,73 @@
 // guezelwebdesign – Brand / Media Settings Tab (GLOBAL '*')
 // =============================================================
 
-'use client';
+"use client";
 
-import React, { useCallback, useMemo } from 'react';
-import Link from 'next/link';
-import { toast } from 'sonner';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+import type React from "react";
+import { useCallback, useMemo } from "react";
 
+import Link from "next/link";
+
+import { toast } from "sonner";
+
+import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  useDeleteSiteSettingAdminMutation,
   useListSiteSettingsAdminQuery,
   useUpdateSiteSettingAdminMutation,
-  useDeleteSiteSettingAdminMutation,
-} from '@/integrations/hooks';
-
-import type { SiteSettingRow, SettingValue } from '@/integrations/shared';
-import { AdminImageUploadField } from '@/app/(main)/admin/_components/common/AdminImageUploadField';
-
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
+} from "@/integrations/hooks";
+import type { SettingValue, SiteSettingRow } from "@/integrations/shared";
 
 /* ----------------------------- constants ----------------------------- */
 
-const GLOBAL_LOCALE = '*' as const;
+const _GLOBAL_LOCALE = "*" as const;
 
 export const SITE_MEDIA_KEYS = [
-  'site_logo',
-  'site_logo_dark',
-  'site_logo_light',
-  'site_favicon',
-  'site_apple_touch_icon',
-  'site_app_icon_512',
-  'site_og_default_image',
+  "site_logo",
+  "site_logo_dark",
+  "site_logo_light",
+  "site_favicon",
+  "site_apple_touch_icon",
+  "site_app_icon_512",
+  "site_og_default_image",
 ] as const;
 
 type MediaKey = (typeof SITE_MEDIA_KEYS)[number];
 
-function isMediaKey(k: string): k is MediaKey {
+function _isMediaKey(k: string): k is MediaKey {
   return (SITE_MEDIA_KEYS as readonly string[]).includes(k);
 }
 
-/** 
+/**
  * Labels are now fetched from i18n: admin.siteSettings.brandMedia.labels.*
  */
 
 const previewConfig: Record<
   MediaKey,
   {
-    aspect: '16x9' | '4x3' | '1x1';
-    fit: 'cover' | 'contain';
+    aspect: "16x9" | "4x3" | "1x1";
+    fit: "cover" | "contain";
   }
 > = {
-  site_logo: { aspect: '4x3', fit: 'contain' },
-  site_logo_dark: { aspect: '4x3', fit: 'contain' },
-  site_logo_light: { aspect: '4x3', fit: 'contain' },
-  site_favicon: { aspect: '1x1', fit: 'contain' },
-  site_apple_touch_icon: { aspect: '1x1', fit: 'contain' },
-  site_app_icon_512: { aspect: '1x1', fit: 'contain' },
-  site_og_default_image: { aspect: '16x9', fit: 'cover' },
+  site_logo: { aspect: "4x3", fit: "contain" },
+  site_logo_dark: { aspect: "4x3", fit: "contain" },
+  site_logo_light: { aspect: "4x3", fit: "contain" },
+  site_favicon: { aspect: "1x1", fit: "contain" },
+  site_apple_touch_icon: { aspect: "1x1", fit: "contain" },
+  site_app_icon_512: { aspect: "1x1", fit: "contain" },
+  site_og_default_image: { aspect: "16x9", fit: "cover" },
 };
 
 /* ----------------------------- helpers ----------------------------- */
 
-const safeStr = (v: unknown) => (v === null || v === undefined ? '' : String(v).trim());
+const safeStr = (v: unknown) => (v === null || v === undefined ? "" : String(v).trim());
 
 function getEditHref(key: string, targetLocale: string) {
-  return `/admin/site-settings/${encodeURIComponent(key)}?locale=${encodeURIComponent(
-    targetLocale,
-  )}`;
+  return `/admin/site-settings/${encodeURIComponent(key)}?locale=${encodeURIComponent(targetLocale)}`;
 }
 
 /**
@@ -80,15 +79,14 @@ function getEditHref(key: string, targetLocale: string) {
  *  - stringified json: "{ "url": "..." }"
  */
 function extractUrlFromSettingValue(v: SettingValue): string {
-  if (v === null || v === undefined) return '';
+  if (v === null || v === undefined) return "";
 
-  if (typeof v === 'string') {
+  if (typeof v === "string") {
     const s = v.trim();
-    if (!s) return '';
+    if (!s) return "";
 
     // JSON gibi görünüyorsa parse et
-    const looksJson =
-      (s.startsWith('{') && s.endsWith('}')) || (s.startsWith('[') && s.endsWith(']'));
+    const looksJson = (s.startsWith("{") && s.endsWith("}")) || (s.startsWith("[") && s.endsWith("]"));
 
     if (looksJson) {
       try {
@@ -104,12 +102,12 @@ function extractUrlFromSettingValue(v: SettingValue): string {
     return s;
   }
 
-  if (typeof v === 'object' && v !== null) {
+  if (typeof v === "object" && v !== null) {
     const url = safeStr((v as any)?.url);
     if (url) return url;
   }
 
-  return '';
+  return "";
 }
 
 /** Save format: JSON object { url } */
@@ -125,15 +123,10 @@ function toMediaValue(url: string): SettingValue {
  */
 function normalizeImageUrl(rawUrl: string): string {
   const url = safeStr(rawUrl);
-  if (!url) return '';
+  if (!url) return "";
 
   // Already a full URL (http, https, data URI)
-  if (
-    url.startsWith('http://') ||
-    url.startsWith('https://') ||
-    url.startsWith('data:') ||
-    url.startsWith('//')
-  ) {
+  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:") || url.startsWith("//")) {
     return url;
   }
 
@@ -148,13 +141,13 @@ function normalizeImageUrl(rawUrl: string): string {
 
   // Try to construct full URL using NEXT_PUBLIC_SITE_URL (public panel URL)
   // This is where storage/assets are served from
-  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-  const base = publicSiteUrl.replace(/\/$/, '');
+  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+  const base = publicSiteUrl.replace(/\/$/, "");
 
   try {
     // If URL starts with /, use it directly (absolute path)
     // Otherwise, assume it's in storage folder
-    const fullUrl = url.startsWith('/') ? `${base}${url}` : `${base}/storage/${url}`;
+    const fullUrl = url.startsWith("/") ? `${base}${url}` : `${base}/storage/${url}`;
 
     /*
     if (typeof window !== 'undefined') {
@@ -162,7 +155,7 @@ function normalizeImageUrl(rawUrl: string): string {
     }
     */
     return fullUrl;
-  } catch (e) {
+  } catch (_e) {
     // console.error('[BrandMediaTab] Failed to normalize URL:', e);
   }
 
@@ -179,30 +172,36 @@ export type BrandMediaTabProps = {
 
 export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPrefix }) => {
   const t = useAdminT();
-  const withPrefix = useCallback((key: MediaKey) => `${settingPrefix || ''}${key}`, [settingPrefix]);
+  const withPrefix = useCallback((key: MediaKey) => `${settingPrefix || ""}${key}`, [settingPrefix]);
   const stripPrefix = useCallback(
     (key: string) => (settingPrefix && key.startsWith(settingPrefix) ? key.slice(settingPrefix.length) : key),
     [settingPrefix],
   );
 
   // We fetch BOTH global '*' and the selected locale to handle overrides
-  const listArgsGlobal = useMemo(() => ({
-    locale: '*',
-    keys: SITE_MEDIA_KEYS.map((key) => withPrefix(key)),
-    sort: 'key' as const,
-    order: 'asc' as const,
-    limit: 200,
-    offset: 0,
-  }), [withPrefix]);
+  const listArgsGlobal = useMemo(
+    () => ({
+      locale: "*",
+      keys: SITE_MEDIA_KEYS.map((key) => withPrefix(key)),
+      sort: "key" as const,
+      order: "asc" as const,
+      limit: 200,
+      offset: 0,
+    }),
+    [withPrefix],
+  );
 
-  const listArgsLocale = useMemo(() => ({
-    locale,
-    keys: SITE_MEDIA_KEYS.map((key) => withPrefix(key)),
-    sort: 'key' as const,
-    order: 'asc' as const,
-    limit: 200,
-    offset: 0,
-  }), [locale, withPrefix]);
+  const listArgsLocale = useMemo(
+    () => ({
+      locale,
+      keys: SITE_MEDIA_KEYS.map((key) => withPrefix(key)),
+      sort: "key" as const,
+      order: "asc" as const,
+      limit: 200,
+      offset: 0,
+    }),
+    [locale, withPrefix],
+  );
 
   const qGlobal = useListSiteSettingsAdminQuery(listArgsGlobal, {
     refetchOnMountOrArgChange: true,
@@ -215,7 +214,8 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
   const [updateSetting, { isLoading: isSaving }] = useUpdateSiteSettingAdminMutation();
   const [deleteSetting, { isLoading: isDeleting }] = useDeleteSiteSettingAdminMutation();
 
-  const busy = qGlobal.isLoading || qGlobal.isFetching || qLocale.isLoading || qLocale.isFetching || isSaving || isDeleting;
+  const busy =
+    qGlobal.isLoading || qGlobal.isFetching || qLocale.isLoading || qLocale.isFetching || isSaving || isDeleting;
 
   const refetchAll = useCallback(async () => {
     // Note: manual refetch is rarely needed because qLocale refetches on arg change,
@@ -223,8 +223,8 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
     await Promise.all([qGlobal.refetch(), qLocale.refetch()]);
   }, [qGlobal.refetch, qLocale.refetch]);
 
-  // ✅ DELETED: Redundant useEffect that caused an infinite re-fetch/re-render loop. 
-  // qLocale already has { locale } in args, so useListSiteSettingsAdminQuery 
+  // ✅ DELETED: Redundant useEffect that caused an infinite re-fetch/re-render loop.
+  // qLocale already has { locale } in args, so useListSiteSettingsAdminQuery
   // with refetchOnMountOrArgChange: true handles the update automatically.
 
   const byKey = useMemo(() => {
@@ -236,8 +236,10 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
 
     // Priority: locale row > global row
     for (const k of SITE_MEDIA_KEYS) {
-      const lRow = lData.find((r) => r && stripPrefix(String(r.key || '')) === k && (r.locale === locale || r.locale === locale.trim()));
-      const gRow = gData.find((r) => r && stripPrefix(String(r.key || '')) === k && r.locale === '*');
+      const lRow = lData.find(
+        (r) => r && stripPrefix(String(r.key || "")) === k && (r.locale === locale || r.locale === locale.trim()),
+      );
+      const gRow = gData.find((r) => r && stripPrefix(String(r.key || "")) === k && r.locale === "*");
       map.set(k, lRow || gRow || null);
     }
 
@@ -252,14 +254,12 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
       try {
         const label = t(`admin.siteSettings.brandMedia.labels.${key}` as any);
         await updateSetting({ key: withPrefix(key), locale, value: toMediaValue(u) }).unwrap();
-        toast.success(t('admin.siteSettings.brandMedia.updated', { label }));
+        toast.success(t("admin.siteSettings.brandMedia.updated", { label }));
         await refetchAll();
       } catch (err: any) {
         const label = t(`admin.siteSettings.brandMedia.labels.${key}` as any);
         toast.error(
-          err?.data?.error?.message ||
-            err?.message ||
-            t('admin.siteSettings.brandMedia.updateError', { label }),
+          err?.data?.error?.message || err?.message || t("admin.siteSettings.brandMedia.updateError", { label }),
         );
       }
     },
@@ -270,15 +270,15 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
     async (key: MediaKey) => {
       const row = byKey.get(key);
       const targetLocale = row?.locale || locale;
-      const ok = window.confirm(t('admin.siteSettings.brandMedia.deleteConfirm', { key, locale: targetLocale }));
+      const ok = window.confirm(t("admin.siteSettings.brandMedia.deleteConfirm", { key, locale: targetLocale }));
       if (!ok) return;
 
       try {
         await deleteSetting({ key: withPrefix(key), locale: targetLocale }).unwrap();
-        toast.success(t('admin.common.deleted', { item: key }));
+        toast.success(t("admin.common.deleted", { item: key }));
         await refetchAll();
       } catch (err: any) {
-        toast.error(err?.data?.error?.message || err?.message || t('admin.siteSettings.brandMedia.deleteError'));
+        toast.error(err?.data?.error?.message || err?.message || t("admin.siteSettings.brandMedia.deleteError"));
       }
     },
     [deleteSetting, refetchAll, t, byKey, locale, withPrefix],
@@ -289,41 +289,31 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
       <CardHeader className="gap-2">
         <div className="flex items-start justify-between gap-2">
           <div className="space-y-1">
-            <CardTitle className="text-base">{t('admin.siteSettings.brandMedia.title')}</CardTitle>
-            <CardDescription>
-              {t('admin.siteSettings.brandMedia.description')}
-            </CardDescription>
+            <CardTitle className="text-base">{t("admin.siteSettings.brandMedia.title")}</CardTitle>
+            <CardDescription>{t("admin.siteSettings.brandMedia.description")}</CardDescription>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary" className="gap-1.5">
               <span className="size-1.5 rounded-full bg-blue-500" />
-              {t('admin.siteSettings.filters.language')}: {locale}
+              {t("admin.siteSettings.filters.language")}: {locale}
             </Badge>
 
             {/* If all displayed media rows are global, and we are on a specific locale, show fallback hint */}
-            {locale !== '*' && Array.from(byKey.values()).every(r => !r || r.locale === '*') && (
-              <Badge variant="outline" className="text-[10px] border-amber-200 bg-amber-50 text-amber-700">
-                {t('admin.siteSettings.messages.usingGlobalFallback')}
+            {locale !== "*" && Array.from(byKey.values()).every((r) => !r || r.locale === "*") && (
+              <Badge variant="outline" className="border-amber-200 bg-amber-50 text-[10px] text-amber-700">
+                {t("admin.siteSettings.messages.usingGlobalFallback")}
               </Badge>
             )}
 
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={refetchAll}
-              disabled={busy}
-            >
-              {t('admin.siteSettings.actions.refresh')}
+            <Button type="button" variant="outline" size="sm" onClick={refetchAll} disabled={busy}>
+              {t("admin.siteSettings.actions.refresh")}
             </Button>
           </div>
         </div>
       </CardHeader>
 
       <CardContent className="space-y-4">
-        {busy && (
-          <Badge variant="secondary">{t('admin.siteSettings.messages.loading')}</Badge>
-        )}
+        {busy && <Badge variant="secondary">{t("admin.siteSettings.messages.loading")}</Badge>}
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SITE_MEDIA_KEYS.map((k) => {
@@ -339,15 +329,17 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
               <Card key={`media_${k}`} className="overflow-hidden">
                 <CardHeader className="p-3 pb-2">
                   <div className="flex items-center justify-between gap-2">
-                    <CardTitle className="text-sm">
-                      {t(`admin.siteSettings.brandMedia.labels.${k}` as any)}
-                    </CardTitle>
+                    <CardTitle className="text-sm">{t(`admin.siteSettings.brandMedia.labels.${k}` as any)}</CardTitle>
                     <div className="flex gap-1">
-                      {row && row.locale !== '*' && (
-                        <Badge variant="default" className="mr-1 text-[10px] h-5">{t('admin.siteSettings.seo.override')}</Badge>
+                      {row && row.locale !== "*" && (
+                        <Badge variant="default" className="mr-1 h-5 text-[10px]">
+                          {t("admin.siteSettings.seo.override")}
+                        </Badge>
                       )}
                       <Button asChild variant="outline" size="sm" className="h-7 px-2 text-xs">
-                        <Link href={getEditHref(withPrefix(k), row?.locale || locale)}>{t('admin.siteSettings.actions.edit')}</Link>
+                        <Link href={getEditHref(withPrefix(k), row?.locale || locale)}>
+                          {t("admin.siteSettings.actions.edit")}
+                        </Link>
                       </Button>
                       <Button
                         type="button"
@@ -357,7 +349,7 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
                         disabled={busy || !hasRow}
                         onClick={() => void deleteRow(k)}
                       >
-                        {t('admin.siteSettings.actions.delete')}
+                        {t("admin.siteSettings.actions.delete")}
                       </Button>
                     </div>
                   </div>
@@ -368,7 +360,7 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
                     label=""
                     bucket="public"
                     folder="site-media"
-                    metadata={{ key: withPrefix(k), scope: 'site_settings', locale: row?.locale || locale }}
+                    metadata={{ key: withPrefix(k), scope: "site_settings", locale: row?.locale || locale }}
                     value={rawUrl}
                     onChange={(nextUrl) => void quickUpload(k, nextUrl)}
                     disabled={busy}
@@ -386,4 +378,4 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
   );
 };
 
-BrandMediaTab.displayName = 'BrandMediaTab';
+BrandMediaTab.displayName = "BrandMediaTab";

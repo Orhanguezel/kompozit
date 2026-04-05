@@ -1,0 +1,45 @@
+# Canlı API smoke — deploy veya staging URL ile ana sayfa uçlarını doğrular.
+# Tetikleme: Actions → "Smoke API (canlı)" → Run workflow → api_base_url girin.
+
+name: Smoke API (canlı)
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_base_url:
+        description: "API kökü (örn. https://api.site.com/api veya http://host:8086/api)"
+        required: true
+        type: string
+
+env:
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  smoke:
+    name: Home API + site_settings
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install frontend
+        working-directory: frontend
+        run: |
+          bun install --frozen-lockfile || bun install
+
+      - name: Run API smoke scripts
+        working-directory: frontend
+        env:
+          SMOKE_API_BASE_URL: ${{ inputs.api_base_url }}
+          NEXT_PUBLIC_API_URL: ${{ inputs.api_base_url }}
+        run: |
+          echo "SMOKE_API_BASE_URL=$SMOKE_API_BASE_URL"
+          bun run test:smoke:home-api
+          bun run test:smoke:home-content

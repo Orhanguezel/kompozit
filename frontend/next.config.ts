@@ -7,6 +7,20 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: 'standalone',
 
+  async rewrites() {
+    const backendBase = (
+      process.env.BACKEND_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      'http://127.0.0.1:8186/api'
+    ).replace(/\/api\/?$/, '');
+
+    return [
+      { source: '/uploads/:path*', destination: `${backendBase}/uploads/:path*` },
+      { source: '/media/:path*',   destination: `${backendBase}/media/:path*` },
+      { source: '/storage/:path*', destination: `${backendBase}/storage/:path*` },
+    ];
+  },
+
   images: {
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -16,12 +30,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'karbonkompozit.com.tr' },
       { protocol: 'https', hostname: 'www.karbonkompozit.com.tr' },
       { protocol: 'https', hostname: 'example.guezelwebdesig.com' },
-      ...(process.env.NODE_ENV === 'development'
-        ? [
-            { protocol: 'http' as const, hostname: 'localhost' },
-            { protocol: 'http' as const, hostname: '127.0.0.1' },
-          ]
-        : []),
+      { protocol: 'http' as const, hostname: 'localhost', port: '8186' },
+      { protocol: 'http' as const, hostname: '127.0.0.1', port: '8186' },
     ],
   },
 
@@ -30,6 +40,7 @@ const nextConfig: NextConfig = {
   },
 
   async headers() {
+    const isProd = process.env.NODE_ENV === 'production';
     return [
       {
         source: '/(.*)',
@@ -39,12 +50,14 @@ const nextConfig: NextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
         ],
       },
-      {
-        source: '/_next/static/(.*)',
-        headers: [
-          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
-        ],
-      },
+      ...(isProd
+        ? [{
+            source: '/_next/static/(.*)',
+            headers: [
+              { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+            ],
+          }]
+        : []),
     ];
   },
 

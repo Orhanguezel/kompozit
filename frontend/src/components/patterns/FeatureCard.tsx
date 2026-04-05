@@ -1,28 +1,28 @@
 import type { ReactNode } from 'react';
 
-export function FeatureCard({
-  icon,
-  title,
-  description,
-  index,
-}: {
-  icon: ReactNode;
+interface FeatureCardProps {
+  icon?: ReactNode;
   title: string;
   description: string;
   index?: number;
-}) {
+}
+
+export function FeatureCard({ title, description, index }: FeatureCardProps) {
+  const paddedIndex = index != null ? String(index + 1).padStart(2, '0') : null;
+
   return (
-    <div className="glass-premium glow-hover group relative overflow-hidden rounded-[2rem] p-8 transition-all hover:-translate-y-1">
-      {index !== undefined && (
-        <span className="absolute -right-4 -top-6 text-[8rem] font-bold opacity-[0.03] select-none pointer-events-none group-hover:opacity-[0.06] transition-opacity">
-          {String(index + 1).padStart(2, '0')}
-        </span>
+    <article className="advantage-home-card group h-full">
+      {paddedIndex && (
+         <div className="mb-6 font-[var(--font-display)] text-[4rem] leading-none text-[var(--color-gold)] opacity-5 transition-opacity group-hover:opacity-10 select-none">
+           {paddedIndex}
+         </div>
       )}
-      <div className="flex size-16 items-center justify-center rounded-2xl bg-brand/10 text-brand border border-brand/20 group-hover:bg-brand group-hover:text-white transition-all duration-500">
-        {icon}
-      </div>
-      <h3 className="mt-6 text-xl font-bold tracking-tight">{title}</h3>
-      <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)] opacity-80">{description}</p>
-    </div>
+      <h3 className="font-[var(--font-display)] text-[1.5rem] font-normal uppercase tracking-[3px] text-[var(--color-cream)] transition-colors group-hover:text-[var(--color-gold)]">
+        {title}
+      </h3>
+      <p className="mt-4 text-[0.95rem] font-light leading-relaxed text-[var(--color-silver)] opacity-80">
+        {description}
+      </p>
+    </article>
   );
 }

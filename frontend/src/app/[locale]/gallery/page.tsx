@@ -2,7 +2,7 @@ import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
-import { API_BASE_URL } from '@/lib/utils';
+import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { MediaOverlayCard } from '@/components/patterns/MediaOverlayCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
@@ -56,11 +56,11 @@ export default async function GalleryPage({
   const visibleGalleries = galleries.length > 0 ? galleries : getFallbackGalleries(locale);
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-muted)] relative overflow-hidden">
-      <div className="surface-dark-shell carbon-mesh absolute inset-0 opacity-[0.03] pointer-events-none" />
+    <main className="relative bg-[var(--carbon)]">
+      <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
       
       <div className="section-py relative z-10">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
             data={jsonld.graph([
               jsonld.collectionPage({
@@ -78,25 +78,27 @@ export default async function GalleryPage({
               }),
             ])}
           />
-          <SectionHeader
-            title={t('gallery.title')}
-            description={t('gallery.description')}
-            label="Visuals"
-            align="left"
-          />
+          
+          <Reveal>
+            <div className="mb-16">
+              <span className="section-label-cc">Portfolio</span>
+              <h1 className="section-title-cc">{t('gallery.title')}</h1>
+              <p className="section-subtitle-cc">{t('gallery.description')}</p>
+            </div>
+          </Reveal>
 
           <div className="mt-12">
-            {galleries.length === 0 && (
-              <div className="glass-premium rounded-[2rem] p-12 text-center border-white/5 bg-white/[0.02] mb-12">
+            {galleries.length === 0 && !visibleGalleries.length && (
+              <div className="border border-[var(--gold)]/10 p-16 text-center bg-[var(--graphite)] mb-12">
                 <SeoIssueBeacon
                   type="soft-404"
                   pathname={localizedPath(locale, '/gallery')}
                   reason="gallery-list-empty"
                 />
-                <p className="text-xl font-bold tracking-tight">
-                  {t('gallery.noGalleries')}
+                <p className="font-display text-[1.8rem] uppercase tracking-[4px] text-[var(--white)]">
+                   {t('gallery.noGalleries')}
                 </p>
-                <p className="mt-4 text-sm text-[var(--color-text-muted)] opacity-70">
+                <p className="mt-6 text-sm font-light text-[var(--silver)] max-w-md mx-auto">
                   {locale === 'en'
                     ? 'Sample project visuals are being processed. Check back for high-definition production stages.'
                     : 'Proje gorselleri uretim hattindan aktariliyor. Yuksek cozunurluklu uretim asamalarimiz yakinda burada olacak.'}
@@ -104,16 +106,9 @@ export default async function GalleryPage({
               </div>
             )}
             
-            <div className="grid gap-6 sm:grid-cols-2 lg:auto-rows-[22rem] lg:grid-cols-3 xl:gap-8">
+            <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-4">
               {visibleGalleries.map((g: any, index: number) => {
-                const bentoClasses = [
-                  'lg:col-span-2 lg:row-span-1', // Wide
-                  'lg:col-span-1 lg:row-span-2', // Tall
-                  'lg:col-span-1 lg:row-span-1', // Square
-                  'lg:col-span-1 lg:row-span-1', // Square
-                  'lg:col-span-2 lg:row-span-1', // Wide
-                ];
-                const gridClass = bentoClasses[index % bentoClasses.length] || '';
+                const isLarge = index === 0 || index === 3;
                 const media = buildMediaAlt({
                    locale,
                    kind: 'gallery-cover',
@@ -123,15 +118,27 @@ export default async function GalleryPage({
                 });
 
                 return (
-                  <Reveal key={g.id ?? g.title} delay={100 * (index % 6)} className={gridClass}>
+                  <Reveal 
+                    key={g.id ?? g.title} 
+                    delay={index * 50} 
+                    className={`grid-item-cc group relative overflow-hidden ${isLarge ? 'lg:row-span-2 h-[450px] lg:h-[900px]' : 'h-[450px]'}`}
+                  >
                     <MediaOverlayCard
                       href={g.slug ? localizedPath(locale, `/gallery/${g.slug}`) : localizedPath(locale, '/gallery')}
-                      src={g.cover_image_url_resolved || g.cover_image || g.imageSrc || GALLERY_PLACEHOLDER_SRC}
+                      src={
+                        resolvePublicAssetUrl(
+                          g.cover_image_url_resolved || g.cover_image || g.imageSrc,
+                        ) ??
+                        g.cover_image_url_resolved ??
+                        g.cover_image ??
+                        g.imageSrc ??
+                        GALLERY_PLACEHOLDER_SRC
+                      }
                       alt={media}
                       title={g.title}
-                      meta={g.image_count != null ? `${g.image_count} ${t('common.viewAll').toLowerCase()}` : undefined}
+                      meta={g.image_count != null ? `${g.image_count} FILES` : undefined}
                       description={g.description}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      sizes="(max-width: 768px) 100vw, 25vw"
                       aspectClassName="h-full w-full"
                     />
                   </Reveal>
@@ -141,6 +148,6 @@ export default async function GalleryPage({
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

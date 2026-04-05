@@ -7,6 +7,7 @@ export const config = {
   // Match all pathnames except for
   // - …/_next (Next.js internals)
   // - …/api (Next.js API routes)
-  // - …/*. (all files with an extension, e.g. favicon.ico)
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  // - …/*.* (files with an extension, e.g. favicon.ico)
+  // - Next.js metadata routes (apple-icon, icon, manifest, robots, sitemap, opengraph-image, twitter-image)
+  matcher: ['/((?!api|_next|apple-icon|icon|manifest|robots|sitemap|opengraph-image|twitter-image|llms\\.txt|.*\\..*).*)'],
 };

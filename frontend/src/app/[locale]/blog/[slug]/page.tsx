@@ -85,143 +85,176 @@ export default async function BlogPostPage({
   const postUrl = localizedUrl(locale, `/blog/${slug}`);
 
   return (
-    <article className="section-py">
-      <div className="mx-auto max-w-3xl px-4 lg:px-8">
-        <JsonLd
-          data={jsonld.graph([
-            ...buildOrganizationSchemaItems(locale, {
-              description: typeof post.description === 'string' ? post.description : undefined,
-              contact: contactInfo,
-              pagePath: `/blog/${slug}`,
-            }),
-            jsonld.article({
-              headline: post.title,
-              description: post.description,
-              image: post.image_url,
-              datePublished: post.created_at,
-              dateModified: post.updated_at,
-              publisher: {
-                name: org.name,
-                logo: org.logo as string | undefined,
-              },
-            }),
-            jsonld.breadcrumb(
-              breadcrumbs.map((item) => ({
-                name: item.label,
-                url: item.href ? localizedUrl(locale, item.href.replace(`/${locale}`, '') || '/') : localizedUrl(locale, `/blog/${slug}`),
-              })),
-            ),
-          ])}
-        />
-        <Breadcrumbs items={breadcrumbs} />
+    <article className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-carbon)_0%,color-mix(in_srgb,var(--color-graphite)_40%,var(--color-carbon))_45%,var(--color-carbon)_100%)] opacity-90" aria-hidden />
 
-        <h1 className="mt-6 text-3xl font-bold lg:text-4xl">{post.title}</h1>
-
-        {post.created_at && (
-          <p className="mt-3 text-sm text-[var(--color-text-secondary)]">
-            {t('blog.publishedAt')}:{' '}
-            {new Date(post.created_at).toLocaleDateString(locale, {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
-          </p>
-        )}
-
-        <div className="relative mt-8 aspect-[16/8] overflow-hidden rounded-[2rem] bg-[var(--color-border)]">
-          <OptimizedImage
-            src={imageSrc}
-            alt={buildMediaAlt({
-              locale,
-              kind: 'blog',
-              title: post.title,
-              alt: post.featured_image_alt,
-              caption: post.description,
-              description: post.description,
-            })}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 896px"
+      <div className="section-py relative z-10">
+        <div className="mx-auto max-w-4xl px-4 lg:px-8">
+          <JsonLd
+            data={jsonld.graph([
+              ...buildOrganizationSchemaItems(locale, {
+                description: typeof post.description === 'string' ? post.description : undefined,
+                contact: contactInfo,
+                pagePath: `/blog/${slug}`,
+              }),
+              jsonld.article({
+                headline: post.title,
+                description: post.description,
+                image: post.image_url,
+                datePublished: post.created_at,
+                dateModified: post.updated_at,
+                publisher: {
+                  name: org.name,
+                  logo: org.logo as string | undefined,
+                },
+              }),
+              jsonld.breadcrumb(
+                breadcrumbs.map((item) => ({
+                  name: item.label,
+                  url: item.href ? localizedUrl(locale, item.href.replace(`/${locale}`, '') || '/') : localizedUrl(locale, `/blog/${slug}`),
+                })),
+              ),
+            ])}
           />
-        </div>
-
-        {content && (
-          <div
-            className="prose prose-theme mt-8 max-w-none"
-            dangerouslySetInnerHTML={{ __html: content }}
+          <Breadcrumbs 
+            items={breadcrumbs} 
+            className="mb-10"
+            olClassName="text-[var(--color-light)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-off-white)]"
           />
-        )}
 
-        <SocialShare
-          url={postUrl}
-          title={post.title}
-          texts={{
-            label: t('blog.share.label'),
-            copyLink: t('blog.share.copyLink'),
-            copied: t('blog.share.copied'),
-            copyError: t('blog.share.copyError'),
-            buttonTitle: t('blog.share.buttonTitle'),
-          }}
-        />
+          <header className="mb-12 space-y-6">
+            <div className="flex items-center gap-3">
+               <div className="h-[2px] w-8 rounded-full bg-[var(--color-gold)]" />
+               <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--color-gold)]">
+                 Technical Insight
+               </span>
+            </div>
+            <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-off-white)] lg:text-7xl uppercase">
+              {post.title}
+            </h1>
+            <div className="flex items-center gap-4 border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-6">
+               {post.created_at && (
+                <p className="text-sm font-light text-[var(--color-silver)]">
+                  {new Date(post.created_at).toLocaleDateString(locale, {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </p>
+               )}
+               <div className="size-1 rounded-full bg-[var(--color-gold)]/40" />
+               <p className="text-sm font-light text-[var(--color-silver)]/60">Expert Content</p>
+            </div>
+          </header>
 
-        <BlogEngagementPanelClient
-          locale={locale}
-          postId={post.id}
-          texts={{
-            title: t('blog.engagement.title'),
-            subtitle: t('blog.engagement.subtitle'),
-            likeButton: t('blog.engagement.likeButton'),
-            emptyTitle: t('blog.engagement.emptyTitle'),
-            emptyText: t('blog.engagement.emptyText'),
-            formLabel: t('blog.engagement.formLabel'),
-            formTitle: t('blog.engagement.formTitle'),
-            formDescription: t('blog.engagement.formDescription'),
-            namePlaceholder: t('blog.engagement.namePlaceholder'),
-            emailPlaceholder: t('blog.engagement.emailPlaceholder'),
-            commentPlaceholder: t('blog.engagement.commentPlaceholder'),
-            moderationNote: t('blog.engagement.moderationNote'),
-            submit: t('blog.engagement.submit'),
-            submitSuccess: t('blog.engagement.submitSuccess'),
-            submitError: t('blog.engagement.submitError'),
-          }}
-          commonTexts={{
-            loading: t('common.loading'),
-            error: t('common.error'),
-          }}
-        />
+          <div className="relative mb-16 aspect-[21/9] overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-graphite)] shadow-2xl">
+            <OptimizedImage
+              src={imageSrc}
+              alt={buildMediaAlt({
+                locale,
+                kind: 'blog',
+                title: post.title,
+                alt: post.featured_image_alt,
+                caption: post.description,
+                description: post.description,
+              })}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 1000px"
+              priority
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-carbon)]/60 to-transparent" />
+          </div>
 
-        <div className="mt-10">
-          <BrandCtaPanel
-            title={t('common.offerCtaTitle')}
-            description={t('common.offerCtaDescription')}
-            action={(
-              <Link
-                href={`${localizedPath(locale, '/offer')}?product=${encodeURIComponent(post.title)}`}
-                className="btn-contrast mt-5 inline-flex items-center gap-2 rounded-lg px-5 py-3 text-sm font-semibold transition-opacity hover:opacity-90"
-              >
-                {t('nav.offer')}
-                <ArrowRight className="size-4" />
-              </Link>
-            )}
-          />
-        </div>
+          {content && (
+            <div
+              className="prose prose-invert prose-lg max-w-none text-[var(--color-silver)] prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-[var(--color-off-white)] prose-a:text-[var(--color-gold)] hover:prose-a:underline md:prose-xl"
+              dangerouslySetInnerHTML={{ __html: content }}
+            />
+          )}
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          <RelatedLinks
-            title={t('common.relatedArticles')}
-            hrefBase={localizedPath(locale, '/blog')}
-            items={related.blogPosts}
-          />
-          <RelatedLinks
-            title={t('common.relatedProducts')}
-            hrefBase={localizedPath(locale, '/products')}
-            items={related.products}
-          />
-          <RelatedLinks
-            title={t('common.relatedGallery')}
-            hrefBase={localizedPath(locale, '/gallery')}
-            items={related.galleries}
-          />
+          <div className="mt-16 border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-10">
+            <SocialShare
+              url={postUrl}
+              title={post.title}
+              texts={{
+                label: t('blog.share.label'),
+                copyLink: t('blog.share.copyLink'),
+                copied: t('blog.share.copied'),
+                copyError: t('blog.share.copyError'),
+                buttonTitle: t('blog.share.buttonTitle'),
+              }}
+            />
+          </div>
+
+          <div className="mt-12">
+            <BlogEngagementPanelClient
+              locale={locale}
+              postId={post.id}
+              texts={{
+                title: t('blog.engagement.title'),
+                subtitle: t('blog.engagement.subtitle'),
+                likeButton: t('blog.engagement.likeButton'),
+                emptyTitle: t('blog.engagement.emptyTitle'),
+                emptyText: t('blog.engagement.emptyText'),
+                formLabel: t('blog.engagement.formLabel'),
+                formTitle: t('blog.engagement.formTitle'),
+                formDescription: t('blog.engagement.formDescription'),
+                namePlaceholder: t('blog.engagement.namePlaceholder'),
+                emailPlaceholder: t('blog.engagement.emailPlaceholder'),
+                commentPlaceholder: t('blog.engagement.commentPlaceholder'),
+                moderationNote: t('blog.engagement.moderationNote'),
+                submit: t('blog.engagement.submit'),
+                submitSuccess: t('blog.engagement.submitSuccess'),
+                submitError: t('blog.engagement.submitError'),
+              }}
+              commonTexts={{
+                loading: t('common.loading'),
+                error: t('common.error'),
+              }}
+            />
+          </div>
+
+          <div className="mt-20 border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-12">
+            <BrandCtaPanel
+              title={t('common.offerCtaTitle')}
+              description={t('common.offerCtaDescription')}
+              action={(
+                <Link
+                  href={`${localizedPath(locale, '/offer')}?product=${encodeURIComponent(post.title)}`}
+                  className="hero-btn-primary shimmer-btn glow-hover"
+                >
+                  {t('nav.offer')}
+                  <ArrowRight className="size-5" />
+                </Link>
+              )}
+            />
+          </div>
+
+          <div className="mt-24 grid gap-8 lg:grid-cols-3">
+             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+              <RelatedLinks
+                title={t('common.relatedArticles')}
+                hrefBase={localizedPath(locale, '/blog')}
+                items={related.blogPosts}
+              />
+             </div>
+             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+              <RelatedLinks
+                title={t('common.relatedProducts')}
+                hrefBase={localizedPath(locale, '/products')}
+                items={related.products}
+              />
+             </div>
+             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+              <RelatedLinks
+                title={t('common.relatedGallery')}
+                hrefBase={localizedPath(locale, '/gallery')}
+                items={related.galleries}
+              />
+             </div>
+          </div>
         </div>
       </div>
     </article>

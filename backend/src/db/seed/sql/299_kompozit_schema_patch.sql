@@ -1,8 +1,9 @@
 -- =============================================================
 -- FILE: 299_kompozit_schema_patch.sql
--- MOE Kompozit — Resmi schema patch
--- - products.item_type => kompozit
--- - gallery tablolari
+-- MOE Kompozit — Gallery tabloları
+-- NOT: products.item_type artık 298_kompozit_base_schema.sql'de
+--      CREATE TABLE sırasında 'kompozit' ENUM değeri dahil olarak
+--      tanımlanır. ALTER kullanılmaz.
 -- =============================================================
 
 SET NAMES utf8mb4;
@@ -10,9 +11,6 @@ SET time_zone = '+00:00';
 SET FOREIGN_KEY_CHECKS = 0;
 
 START TRANSACTION;
-
-ALTER TABLE `products`
-  MODIFY COLUMN `item_type` ENUM('product','sparepart','kompozit') NOT NULL DEFAULT 'product';
 
 CREATE TABLE IF NOT EXISTS `galleries` (
   `id` char(36) NOT NULL,

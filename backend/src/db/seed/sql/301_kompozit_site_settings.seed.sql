@@ -36,7 +36,7 @@ VALUES (
   'kompozit__seo',
   'tr',
   JSON_OBJECT(
-    'site_title',       'MOE Kompozit | Karbon Fiber & CTP Kompozit Üretimi',
+    'site_title',       'MOE Kompozit | Karbon Fiber <em>&</em> CTP Kompozit Üretimi',
     'site_description', 'Karbon fiber, CTP ve cam elyaf kompozit üretiminde endüstriyel çözümler. Özel üretim, yüksek kalite, hızlı teslimat.',
     'keywords',         'karbon fiber, CTP, cam elyaf, kompozit, endüstriyel üretim, özel üretim, MOE Kompozit',
     'og_image',         '',
@@ -74,10 +74,11 @@ VALUES (
   'kompozit__logo',
   '*',
   JSON_OBJECT(
-    'logo_url',         '',
-    'logo_alt',         'MOE Kompozit',
-    'favicon_url',      '',
-    'logo_dark_url',    ''
+    'logo_url',       '/uploads/kompozit/brand/logo-light.png',
+    'logo_alt',       'MOE Kompozit',
+    'favicon_url',    '/uploads/kompozit/brand/favicon-32.png',
+    'logo_dark_url',  '/uploads/kompozit/brand/logo-dark.png',
+    'logo_light_url', '/uploads/kompozit/brand/logo-light.png'
   ),
   NOW(3), NOW(3)
 )
@@ -93,12 +94,36 @@ VALUES (
   'kompozit__site_logo',
   '*',
   JSON_OBJECT(
-    'logo_url',              '',
-    'logo_alt',              'MOE Kompozit',
-    'logo_dark_url',         '',
-    'favicon_url',           '',
-    'apple_touch_icon_url',  ''
+    'logo_url',             '/uploads/kompozit/brand/logo-light.png',
+    'logo_alt',             'MOE Kompozit',
+    'logo_dark_url',        '/uploads/kompozit/brand/logo-dark.png',
+    'logo_light_url',       '/uploads/kompozit/brand/logo-light.png',
+    'favicon_url',          '/uploads/kompozit/brand/favicon-32.png',
+    'apple_touch_icon_url', '/uploads/kompozit/brand/apple-touch-icon.png'
   ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- SITE LOGO LIGHT / DARK — global (locale='*')
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__site_logo_light',
+  '*',
+  JSON_OBJECT('url', '/uploads/kompozit/brand/logo-light.png', 'alt', 'MOE Kompozit'),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__site_logo_dark',
+  '*',
+  JSON_OBJECT('url', '/uploads/kompozit/brand/logo-dark.png', 'alt', 'MOE Kompozit'),
   NOW(3), NOW(3)
 )
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
@@ -112,7 +137,7 @@ VALUES (
   'kompozit__site_favicon',
   '*',
   JSON_OBJECT(
-    'url', '',
+    'url', '/uploads/kompozit/brand/favicon-32.png',
     'alt', 'MOE Kompozit Favicon'
   ),
   NOW(3), NOW(3)
@@ -128,7 +153,7 @@ VALUES (
   'kompozit__site_apple_touch_icon',
   '*',
   JSON_OBJECT(
-    'url', '',
+    'url', '/uploads/kompozit/brand/apple-touch-icon.png',
     'alt', 'MOE Kompozit Apple Touch Icon'
   ),
   NOW(3), NOW(3)
@@ -144,7 +169,7 @@ VALUES (
   'kompozit__site_og_default_image',
   '*',
   JSON_OBJECT(
-    'url', '',
+    'url', '/media/kompozit/karbon-fiber-panel-01.jpg',
     'alt', 'MOE Kompozit OG Default Image'
   ),
   NOW(3), NOW(3)
@@ -161,17 +186,17 @@ VALUES (
   'tr',
   JSON_OBJECT(
     'company_name',     'MOE Kompozit',
-    'address',          '',
-    'city',             '',
+    'address',          'Oruçreis Mah. Tekstilkent Sit. A17 Blok No:41 34235 Esenler / İstanbul, Türkiye',
+    'city',             'İstanbul',
     'country',          'Türkiye',
-    'phone',            '',
+    'phone',            '+90 530 961 94 17',
     'phone_2',          '',
     'email',            'info@karbonkompozit.com.tr',
     'email_2',          '',
     'working_hours',    'Pazartesi - Cuma: 08:00 - 17:00',
     'maps_embed_url',   '',
-    'maps_lat',         '',
-    'maps_lng',         ''
+    'maps_lat',         '41.0225',
+    'maps_lng',         '28.8825'
   ),
   NOW(3), NOW(3)
 )
@@ -187,17 +212,17 @@ VALUES (
   'en',
   JSON_OBJECT(
     'company_name',     'MOE Kompozit',
-    'address',          '',
-    'city',             '',
+    'address',          'Oruçreis District, Tekstilkent Site, A17 Block No:41, 34235 Esenler / Istanbul, Turkey',
+    'city',             'Istanbul',
     'country',          'Turkey',
-    'phone',            '',
+    'phone',            '+90 530 961 94 17',
     'phone_2',          '',
     'email',            'info@karbonkompozit.com.tr',
     'email_2',          '',
     'working_hours',    'Monday - Friday: 08:00 - 17:00',
     'maps_embed_url',   '',
-    'maps_lat',         '',
-    'maps_lng',         ''
+    'maps_lat',         '41.0225',
+    'maps_lng',         '28.8825'
   ),
   NOW(3), NOW(3)
 )
@@ -215,11 +240,15 @@ VALUES (
     'brand_name',       'MOE Kompozit',
     'brand_tagline_tr', 'Endüstriyel Kompozit Çözümler',
     'brand_tagline_en', 'Industrial Composite Solutions',
-    'primary_color',    '#ea580c',
-    'accent_color',     '#fb923c',
-    'dark_color',       '#111827',
-    'font_family',      'Inter',
-    'font_display',     'Syne'
+    'primary_color',    '#c9a96e',
+    'accent_color',     '#dbb978',
+    'dark_color',       '#0a0a0a',
+    'graphite_color',   '#1a1a1a',
+    'steel_color',      '#2a2a2a',
+    'silver_color',     '#8a8a8a',
+    'cream_color',      '#e8e4df',
+    'font_family',      'DM Sans',
+    'font_display',     'Bebas Neue'
   ),
   NOW(3), NOW(3)
 )
@@ -234,16 +263,16 @@ VALUES (
   'kompozit__home.hero',
   'tr',
   JSON_OBJECT(
-    'badge', 'B2B Kompozit Uretim',
-    'title', 'Karbon Fiber, CTP ve Cam Elyaf Kompozit Cozumleri',
-    'subtitle', 'Karbon fiber, CTP ve cam elyaf tabanli kompozit parcalarda muhendislik, numune dogrulama ve seri uretim planlamasini tek bir B2B proje akisi icinde yonetiyoruz.',
-    'primaryCtaLabel', 'Urunleri Kesfet',
+    'badge', 'B2B Kompozit Üretim',
+    'title', 'Karbon Fiber, <em>CTP ve Cam Elyaf</em> Kompozit Çözümleri',
+    'subtitle', 'Karbon fiber, CTP ve cam elyaf tabanlı kompozit parçalarda mühendislik, numune doğrulama ve seri üretim planlamasını tek bir B2B proje akışı içinde yönetiyoruz.',
+    'primaryCtaLabel', 'Ürünleri Keşfet',
     'primaryCtaHref', '/products',
     'secondaryCtaLabel', 'Teklif Al',
     'secondaryCtaHref', '/offer',
-    'workflowLabel', 'Composite Workflow',
-    'workflowTitle', 'Projenize uygun malzeme ve uretim akisi',
-    'workflowBadgeTitle', 'Hizli',
+    'workflowLabel', 'Kompozit İş Akışı',
+    'workflowTitle', 'Projenize uygun <em>malzeme ve üretim</em> akışı',
+    'workflowBadgeTitle', 'Hızlı',
     'workflowBadgeSubtitle', 'Teklif ve planlama'
   ),
   NOW(3), NOW(3)
@@ -260,14 +289,14 @@ VALUES (
   'en',
   JSON_OBJECT(
     'badge', 'B2B Composite Manufacturing',
-    'title', 'Carbon Fiber, FRP and Fiberglass Composite Solutions',
+    'title', 'Carbon Fiber, <em>FRP and Fiberglass</em> Composite Solutions',
     'subtitle', 'We manage engineering alignment, sampling and serial production planning for carbon fiber, FRP and fiberglass-based composite parts within one B2B delivery flow.',
     'primaryCtaLabel', 'Explore Products',
     'primaryCtaHref', '/products',
     'secondaryCtaLabel', 'Request an Offer',
     'secondaryCtaHref', '/offer',
     'workflowLabel', 'Composite Workflow',
-    'workflowTitle', 'Material and production flow aligned with your project',
+    'workflowTitle', 'Material and <em>production flow</em> aligned with your project',
     'workflowBadgeTitle', 'Fast',
     'workflowBadgeSubtitle', 'Quotation and planning'
   ),
@@ -286,20 +315,20 @@ VALUES (
   JSON_OBJECT(
     'items',
     JSON_ARRAY(
-      JSON_OBJECT('title', 'Prototip', 'description', 'Numune, revizyon ve ilk dogrulama asamasi'),
-      JSON_OBJECT('title', 'Seri Uretim', 'description', 'Tekrarlanabilir proses, kalite ve termin takibi'),
-      JSON_OBJECT('title', 'Muhendislik', 'description', 'Malzeme, katman yapisi ve proses secimi destegi')
+      JSON_OBJECT('title', 'Prototip', 'description', 'Numune, revizyon ve ilk doğrulama aşaması'),
+      JSON_OBJECT('title', 'Seri Üretim', 'description', 'Tekrarlanabilir süreç, kalite ve termin takibi'),
+      JSON_OBJECT('title', 'Mühendislik', 'description', 'Malzeme, katman yapısı ve süreç seçimi desteği')
     ),
     'workflowSteps',
     JSON_ARRAY(
-      JSON_OBJECT('step', '01', 'title', 'Teknik gereksinim analizi', 'description', 'Kullanim ortami, olcu, mukavemet, agirlik ve yuzey beklentisini netlestiriyoruz.'),
-      JSON_OBJECT('step', '02', 'title', 'Malzeme ve proses secimi', 'description', 'Karbon fiber, CTP veya cam elyaf katmani ile uygun uretim rotasini belirliyoruz.'),
-      JSON_OBJECT('step', '03', 'title', 'Numune, teklif ve seri uretim gecisi', 'description', 'Numune dogrulama sonrasinda miktar, termin ve kalite gereksinimlerine gore seri uretim planini netlestiriyoruz.')
+      JSON_OBJECT('step', '01', 'title', 'Teknik gereksinim analizi', 'description', 'Kullanım ortamı, ölçü, mukavemet, ağırlık ve yüzey beklentisini netleştiriyoruz.'),
+      JSON_OBJECT('step', '02', 'title', 'Malzeme ve süreç seçimi', 'description', 'Karbon fiber, CTP veya cam elyaf katmanı ile uygun üretim rotasını belirliyoruz.'),
+      JSON_OBJECT('step', '03', 'title', 'Numune, teklif ve seri üretim geçişi', 'description', 'Numune doğrulama sonrasında miktar, termin ve kalite gereksinimlerine göre seri üretim planını netleştiriyoruz.')
     ),
     'stats',
     JSON_ARRAY(
-      JSON_OBJECT('value', '3+', 'label', 'Temel proses adimi'),
-      JSON_OBJECT('value', 'B2B', 'label', 'Proje odakli is birligi')
+      JSON_OBJECT('value', '3+', 'label', 'Temel süreç adımı'),
+      JSON_OBJECT('value', 'B2B', 'label', 'Proje odaklı iş birliği')
     )
   ),
   NOW(3), NOW(3)
@@ -346,15 +375,17 @@ VALUES (
   'kompozit__home.value_props',
   'tr',
   JSON_OBJECT(
-    'sectionLabel', 'Guvenilirlik',
+    'sectionLabel', 'Güvenilirlik',
     'title', 'Neden MOE Kompozit?',
-    'subtitle', 'Malzeme secimi, proses disiplini ve proje iletisimini ayni cizgide yoneten uygulama odakli uretim yaklasimi',
+    'subtitle', 'Malzeme seçimi, süreç disiplini ve proje iletişimini aynı çizgide yöneten uygulama odaklı üretim yaklaşımı',
     'items',
     JSON_ARRAY(
-      JSON_OBJECT('key', 'quality', 'title', 'Yuksek Kalite', 'description', 'Yuzey kalitesi, tolerans ve proses tekrar edilebilirligi odakli uretim akisi'),
-      JSON_OBJECT('key', 'experience', 'title', 'Deneyim', 'description', 'Kompozit uygulama ihtiyaclarini teknik gereksinim seviyesinde okuyabilen ekip'),
-      JSON_OBJECT('key', 'custom', 'title', 'Ozel Uretim', 'description', 'Parca, panel, muhafaza ve tasiyici bilesenlerde proje bazli ozel cozum'),
-      JSON_OBJECT('key', 'delivery', 'title', 'Hizli Teslimat', 'description', 'Numune, revizyon ve teslim planini basindan netlestiren is akisi')
+      JSON_OBJECT('key', 'quality', 'title', 'Yüksek Kalite', 'description', 'Yüzey kalitesi, tolerans ve süreç tekrarlanabilirliği odaklı üretim akışı'),
+      JSON_OBJECT('key', 'experience', 'title', 'Deneyim', 'description', 'Kompozit uygulama ihtiyaçlarını teknik gereksinim seviyesinde okuyabilen ekip'),
+      JSON_OBJECT('key', 'custom', 'title', 'Özel Üretim', 'description', 'Parça, panel, muhafaza ve taşıyıcı bileşenlerde proje bazlı özel çözüm'),
+      JSON_OBJECT('key', 'delivery', 'title', 'Hızlı Teslimat', 'description', 'Numune, revizyon ve teslim planını başından netleştiren iş akışı'),
+      JSON_OBJECT('key', 'innovation', 'title', 'Teknoloji', 'description', 'Vakum infüzyon, RTM ve elle yatırma dahil süreç seçimine mühendislik güdümlü yaklaşım'),
+      JSON_OBJECT('key', 'certification', 'title', 'Kalite Güvencesi', 'description', 'Süreç takip, sapma yönetimi ve seri üretim öncesi numune doğrulama akışı')
     )
   ),
   NOW(3), NOW(3)
@@ -378,8 +409,120 @@ VALUES (
       JSON_OBJECT('key', 'quality', 'title', 'High Quality', 'description', 'Production flow focused on surface quality, tolerance control and repeatable processes'),
       JSON_OBJECT('key', 'experience', 'title', 'Experience', 'description', 'A team that reads composite application needs at the technical requirement level'),
       JSON_OBJECT('key', 'custom', 'title', 'Custom Production', 'description', 'Project-specific solutions for parts, panels, enclosures and structural components'),
-      JSON_OBJECT('key', 'delivery', 'title', 'Fast Delivery', 'description', 'A workflow that clarifies sampling, revisions and delivery planning from the start')
+      JSON_OBJECT('key', 'delivery', 'title', 'Fast Delivery', 'description', 'A workflow that clarifies sampling, revisions and delivery planning from the start'),
+      JSON_OBJECT('key', 'innovation', 'title', 'Technology', 'description', 'Engineering-led approach to process selection including vacuum infusion, RTM and hand lay-up'),
+      JSON_OBJECT('key', 'certification', 'title', 'Quality Assurance', 'description', 'Process tracking, deviation management and pre-production sample validation workflow')
     )
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME STATS BAR — TR
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.stats',
+  'tr',
+  JSON_OBJECT(
+    'items', JSON_ARRAY(
+      JSON_OBJECT('value', '15+',      'label', 'Yıl kompozit deneyimi'),
+      JSON_OBJECT('value', '500+',     'label', 'Teslim edilen proje parçası'),
+      JSON_OBJECT('value', 'AS9100',   'label', 'Hassas üretim standardı'),
+      JSON_OBJECT('value', 'ISO 9001', 'label', 'Süreç ve kalite disiplini')
+    )
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME STATS BAR — EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.stats',
+  'en',
+  JSON_OBJECT(
+    'items', JSON_ARRAY(
+      JSON_OBJECT('value', '15+',      'label', 'Years in composites'),
+      JSON_OBJECT('value', '500+',     'label', 'Project parts delivered'),
+      JSON_OBJECT('value', 'AS9100',   'label', 'Precision manufacturing mindset'),
+      JSON_OBJECT('value', 'ISO 9001', 'label', 'Process and quality discipline')
+    )
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME TESTIMONIAL — TR
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.testimonial',
+  'tr',
+  JSON_OBJECT(
+    'quote',       'B2B projelerimizde kompozit parça üretiminde aradığımız mühendislik disiplini ve tekrarlanabilir kaliteyi MOE ile yakaladık. Numunedn seri üretime geçiş süreci son derece şeffaf yönetildi.',
+    'attribution', 'Proje Müdürü, Savunma Grubu'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME TESTIMONIAL — EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.testimonial',
+  'en',
+  JSON_OBJECT(
+    'quote',       'Having the same team own specification, sampling and production ramp is the decisive advantage in B2B composite programs.',
+    'attribution', 'Engineering partner — defense industry'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME ABOUT — TR
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.about',
+  'tr',
+  JSON_OBJECT(
+    'label',    'Hakkımızda',
+    'title',    'Kompozit Teknolojilerinde <em>Mühendislik</em> Disiplini',
+    'tagline',  'Bilimin zanaatla buluştuğu nokta',
+    'intro',    'Karbon fiberden CTP\'ye kadar tüm kompozit uygulama ihtiyaçlarınızda, tasarımdan seri üretime kadar her aşamada mühendislik odaklı yaklaşımımızla yanınızdayız.',
+    'ctaLabel', 'Daha Fazlası'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME ABOUT — EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.about',
+  'en',
+  JSON_OBJECT(
+    'label',    'About Us',
+    'title',    'Engineering <em>Discipline</em> in Composite Technologies',
+    'tagline',  'Where science meets craftsmanship',
+    'intro',    'From carbon fiber to GRP, we support all your composite application needs with an engineering-led approach from design to serial production.',
+    'ctaLabel', 'Read More'
   ),
   NOW(3), NOW(3)
 )

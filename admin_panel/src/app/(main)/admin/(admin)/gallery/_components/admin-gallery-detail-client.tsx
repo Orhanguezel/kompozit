@@ -1,46 +1,37 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { toast } from 'sonner';
-import { ArrowLeft, Save, RefreshCcw } from 'lucide-react';
+import * as React from "react";
 
-import { useAdminLocales } from '@/app/(main)/admin/_components/common/useAdminLocales';
-import { resolveAdminApiLocale } from '@/i18n/adminLocale';
-import { localeShortClient, localeShortClientOr } from '@/i18n/localeShortClient';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+import { useRouter, useSearchParams } from "next/navigation";
 
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Separator } from '@/components/ui/separator';
+import { ArrowLeft, RefreshCcw, Save } from "lucide-react";
+import { toast } from "sonner";
 
+import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
+import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
+import type { AdminLocaleOption } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
+import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import { resolveAdminApiLocale } from "@/i18n/adminLocale";
+import { localeShortClient, localeShortClientOr } from "@/i18n/localeShortClient";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
-import { AdminJsonEditor } from '@/app/(main)/admin/_components/common/AdminJsonEditor';
-import { AdminImageUploadField } from '@/app/(main)/admin/_components/common/AdminImageUploadField';
-import { GalleryImagesTab } from './gallery-images-tab';
-
-import type {
-  GalleryDto,
-  GalleryUpsertPayload,
-} from '@/integrations/shared';
-import {
-  useGetGalleryAdminQuery,
   useCreateGalleryAdminMutation,
+  useGetGalleryAdminQuery,
   useUpdateGalleryAdminMutation,
-} from '@/integrations/hooks';
+} from "@/integrations/hooks";
+import type { GalleryDto, GalleryUpsertPayload } from "@/integrations/shared";
+
+import { GalleryImagesTab } from "./gallery-images-tab";
 
 function isUuidLike(v?: string) {
   if (!v) return false;
@@ -48,41 +39,41 @@ function isUuidLike(v?: string) {
 }
 
 const normalizeLocale = (v: unknown): string =>
-  String(v ?? '')
+  String(v ?? "")
     .trim()
     .toLowerCase();
 
-const norm = (v: unknown) => String(v ?? '').trim();
+const norm = (v: unknown) => String(v ?? "").trim();
 const toNull = (v: unknown) => {
   const s = norm(v);
   return s || null;
 };
 
-const isTruthyBoolLike = (v: unknown) => v === true || v === 1 || v === '1' || v === 'true';
+const isTruthyBoolLike = (v: unknown) => v === true || v === 1 || v === "1" || v === "true";
 
 function slugify(text: string): string {
   return text
     .toLowerCase()
-    .replace(/[çÇ]/g, 'c')
-    .replace(/[ğĞ]/g, 'g')
-    .replace(/[ıİ]/g, 'i')
-    .replace(/[öÖ]/g, 'o')
-    .replace(/[şŞ]/g, 's')
-    .replace(/[üÜ]/g, 'u')
-    .replace(/[äÄ]/g, 'ae')
-    .replace(/[ß]/g, 'ss')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/(^-|-$)+/g, '');
+    .replace(/[çÇ]/g, "c")
+    .replace(/[ğĞ]/g, "g")
+    .replace(/[ıİ]/g, "i")
+    .replace(/[öÖ]/g, "o")
+    .replace(/[şŞ]/g, "s")
+    .replace(/[üÜ]/g, "u")
+    .replace(/[äÄ]/g, "ae")
+    .replace(/[ß]/g, "ss")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)+/g, "");
 }
 
 function getErrMessage(err: unknown, fallback: string): string {
-  const anyErr = err as any;
-  return (
-    anyErr?.data?.error?.message ||
-    anyErr?.data?.message ||
-    anyErr?.error ||
-    fallback
-  );
+  const errObj = typeof err === "object" && err !== null ? (err as Record<string, unknown>) : null;
+  const data =
+    typeof errObj?.data === "object" && errObj.data !== null ? (errObj.data as Record<string, unknown>) : null;
+  const nestedError =
+    typeof data?.error === "object" && data.error !== null ? (data.error as Record<string, unknown>) : null;
+
+  return String(nestedError?.message || data?.message || errObj?.error || fallback);
 }
 
 type FormValues = {
@@ -110,39 +101,39 @@ const emptyForm = (locale: string): FormValues => ({
   locale,
   is_active: true,
   is_featured: false,
-  display_order: '0',
-  module_key: 'kompozit',
-  source_type: '',
-  source_id: '',
-  cover_image: '',
-  cover_asset_id: '',
-  title: '',
-  slug: '',
-  description: '',
-  cover_image_alt: '',
-  meta_title: '',
-  meta_description: '',
+  display_order: "0",
+  module_key: "kompozit",
+  source_type: "",
+  source_id: "",
+  cover_image: "",
+  cover_asset_id: "",
+  title: "",
+  slug: "",
+  description: "",
+  cover_image_alt: "",
+  meta_title: "",
+  meta_description: "",
   replicate_all_locales: false,
   apply_all_locales: false,
 });
 
 const dtoToForm = (dto: GalleryDto): FormValues => ({
-  id: String((dto as any).id ?? ''),
-  locale: normalizeLocale((dto as any).locale_resolved ?? (dto as any).locale ?? 'de'),
-  is_active: isTruthyBoolLike((dto as any).is_active),
-  is_featured: isTruthyBoolLike((dto as any).is_featured),
-  display_order: String((dto as any).display_order ?? 0),
-  module_key: norm((dto as any).module_key),
-  source_type: norm((dto as any).source_type),
-  source_id: norm((dto as any).source_id),
-  cover_image: norm((dto as any).cover_image),
-  cover_asset_id: norm((dto as any).cover_asset_id),
-  title: norm((dto as any).title),
-  slug: norm((dto as any).slug),
-  description: norm((dto as any).description),
-  cover_image_alt: norm((dto as any).cover_image_alt),
-  meta_title: norm((dto as any).meta_title),
-  meta_description: norm((dto as any).meta_description),
+  id: String(dto.id ?? ""),
+  locale: normalizeLocale(dto.locale_resolved ?? dto.locale ?? "de"),
+  is_active: isTruthyBoolLike(dto.is_active),
+  is_featured: isTruthyBoolLike(dto.is_featured),
+  display_order: String(dto.display_order ?? 0),
+  module_key: norm(dto.module_key),
+  source_type: norm(dto.source_type),
+  source_id: norm(dto.source_id),
+  cover_image: norm(dto.cover_image),
+  cover_asset_id: norm(dto.cover_asset_id),
+  title: norm(dto.title),
+  slug: norm(dto.slug),
+  description: norm(dto.description),
+  cover_image_alt: norm(dto.cover_image_alt),
+  meta_title: norm(dto.meta_title),
+  meta_description: norm(dto.meta_description),
   replicate_all_locales: false,
   apply_all_locales: false,
 });
@@ -152,31 +143,24 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
   const router = useRouter();
   const sp = useSearchParams();
 
-  const isCreateMode = String(id) === 'new';
+  const isCreateMode = String(id) === "new";
 
-  const {
-    localeOptions,
-    defaultLocaleFromDb,
-    loading: localesLoading,
-    fetching: localesFetching,
-  } = useAdminLocales();
+  const { localeOptions, defaultLocaleFromDb, loading: localesLoading, fetching: localesFetching } = useAdminLocales();
 
   const apiLocaleFromDb = React.useMemo(() => {
-    return resolveAdminApiLocale(localeOptions as any, defaultLocaleFromDb, 'de');
+    return resolveAdminApiLocale(localeOptions, defaultLocaleFromDb, "de");
   }, [localeOptions, defaultLocaleFromDb]);
 
   const localeSet = React.useMemo(() => {
-    return new Set(
-      (localeOptions ?? []).map((x: any) => localeShortClient(x.value)).filter(Boolean),
-    );
+    return new Set((localeOptions ?? []).map((locale) => localeShortClient(locale.value)).filter(Boolean));
   }, [localeOptions]);
 
   const urlLocale = React.useMemo(() => {
-    const q = sp?.get('locale');
-    return localeShortClient(q) || '';
+    const q = sp?.get("locale");
+    return localeShortClient(q) || "";
   }, [sp]);
 
-  const [activeLocale, setActiveLocale] = React.useState<string>('');
+  const [activeLocale, setActiveLocale] = React.useState<string>("");
 
   React.useEffect(() => {
     if (!localeOptions || localeOptions.length === 0) return;
@@ -184,7 +168,7 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     setActiveLocale((prev) => {
       const p = localeShortClient(prev);
       const u = localeShortClient(urlLocale);
-      const def = localeShortClientOr(apiLocaleFromDb, 'de');
+      const def = localeShortClientOr(apiLocaleFromDb, "de");
 
       const canUse = (l: string) => !!l && (localeSet.size === 0 || localeSet.has(l));
 
@@ -192,15 +176,15 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
       if (u && canUse(u)) return u;
       if (def && canUse(def)) return def;
 
-      const first = localeShortClient((localeOptions as any)?.[0]?.value);
-      return first || 'de';
+      const first = localeShortClient(localeOptions[0]?.value);
+      return first || "de";
     });
   }, [localeOptions, localeSet, urlLocale, apiLocaleFromDb]);
 
   const queryLocale = React.useMemo(() => {
     const l = localeShortClient(activeLocale);
     if (l && (localeSet.size === 0 || localeSet.has(l))) return l;
-    return localeShortClientOr(apiLocaleFromDb, 'de');
+    return localeShortClientOr(apiLocaleFromDb, "de");
   }, [activeLocale, localeSet, apiLocaleFromDb]);
 
   React.useEffect(() => {
@@ -208,8 +192,8 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     if (!l) return;
     if (l === urlLocale) return;
 
-    const params = new URLSearchParams(sp?.toString() || '');
-    params.set('locale', l);
+    const params = new URLSearchParams(sp?.toString() || "");
+    params.set("locale", l);
 
     if (isCreateMode) {
       router.replace(`/admin/gallery/new?${params.toString()}`);
@@ -217,12 +201,12 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
       router.replace(`/admin/gallery/${encodeURIComponent(String(id))}?${params.toString()}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeLocale]);
+  }, [activeLocale, id, isCreateMode, router.replace, sp?.toString, urlLocale]);
 
   const localesReady = !localesLoading && !localesFetching;
   const hasLocales = (localeOptions?.length ?? 0) > 0;
 
-  const shouldSkipDetail = isCreateMode || !isUuidLike(String(id || '')) || !queryLocale;
+  const shouldSkipDetail = isCreateMode || !isUuidLike(String(id || "")) || !queryLocale;
 
   const {
     data: gallery,
@@ -230,10 +214,7 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     isFetching: isFetchingRef,
     error: refError,
     refetch,
-  } = useGetGalleryAdminQuery(
-    { id: String(id), locale: queryLocale } as any,
-    { skip: shouldSkipDetail } as any,
-  );
+  } = useGetGalleryAdminQuery({ id: String(id), locale: queryLocale }, { skip: shouldSkipDetail });
 
   const [createGallery, createState] = useCreateGalleryAdminMutation();
   const [updateGallery, updateState] = useUpdateGalleryAdminMutation();
@@ -242,14 +223,12 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
   const saving = createState.isLoading || updateState.isLoading;
   const busy = loading || saving;
 
-  const [values, setValues] = React.useState<FormValues>(() =>
-    emptyForm(queryLocale || 'de'),
-  );
+  const [values, setValues] = React.useState<FormValues>(() => emptyForm(queryLocale || "de"));
   const [slugTouched, setSlugTouched] = React.useState(false);
 
   React.useEffect(() => {
     if (isCreateMode) {
-      setValues(emptyForm(queryLocale || 'de'));
+      setValues(emptyForm(queryLocale || "de"));
       return;
     }
     if (gallery) {
@@ -264,11 +243,11 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
 
   const handleLocaleChange = (nextLocaleRaw: string) => {
     const next = normalizeLocale(nextLocaleRaw);
-    const list = (localeOptions ?? []).map((x: any) => localeShortClient(x.value));
-    const resolved = next && list.includes(next) ? next : localeShortClientOr(queryLocale, 'de');
+    const list = (localeOptions ?? []).map((locale) => localeShortClient(locale.value));
+    const resolved = next && list.includes(next) ? next : localeShortClientOr(queryLocale, "de");
 
     if (!resolved) {
-      toast.error(t('admin.gallery.form.localeRequired'));
+      toast.error(t("admin.gallery.form.localeRequired"));
       return;
     }
 
@@ -277,7 +256,7 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
   };
 
   function onCancel() {
-    router.push(`/admin/gallery?locale=${encodeURIComponent(queryLocale || 'de')}`);
+    router.push(`/admin/gallery?locale=${encodeURIComponent(queryLocale || "de")}`);
   }
 
   async function onSubmit(e: React.FormEvent) {
@@ -286,12 +265,12 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
 
     const loc = normalizeLocale(values.locale || queryLocale || apiLocaleFromDb);
     if (!loc || (localeSet.size > 0 && !localeSet.has(localeShortClient(loc)))) {
-      toast.error(t('admin.gallery.formHeader.localeError'));
+      toast.error(t("admin.gallery.formHeader.localeError"));
       return;
     }
 
     if (!values.title.trim() || !values.slug.trim()) {
-      toast.error(t('admin.gallery.formHeader.titleSlugRequired'));
+      toast.error(t("admin.gallery.formHeader.titleSlugRequired"));
       return;
     }
 
@@ -316,44 +295,42 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     try {
       if (isCreateMode) {
         const payload = { ...common, replicate_all_locales: values.replicate_all_locales };
-        const created = await createGallery(payload as any).unwrap();
-        const nextId = String((created as any)?.id ?? '').trim();
+        const created = await createGallery(payload).unwrap();
+        const nextId = String(created?.id ?? "").trim();
 
         if (!isUuidLike(nextId)) {
-          toast.error(t('admin.gallery.formHeader.createdNoId'));
+          toast.error(t("admin.gallery.formHeader.createdNoId"));
           return;
         }
 
-        toast.success(t('admin.gallery.formHeader.created'));
-        router.replace(
-          `/admin/gallery/${encodeURIComponent(nextId)}?locale=${encodeURIComponent(loc)}`,
-        );
+        toast.success(t("admin.gallery.formHeader.created"));
+        router.replace(`/admin/gallery/${encodeURIComponent(nextId)}?locale=${encodeURIComponent(loc)}`);
         router.refresh();
         return;
       }
 
-      const currentId = String((gallery as any)?.id ?? id);
+      const currentId = String(gallery?.id ?? id);
       if (!isUuidLike(currentId)) {
-        toast.error(t('admin.gallery.formHeader.idNotFound'));
+        toast.error(t("admin.gallery.formHeader.idNotFound"));
         return;
       }
 
       const patch = { ...common, apply_all_locales: values.apply_all_locales };
-      await updateGallery({ id: currentId, patch } as any).unwrap();
-      toast.success(t('admin.gallery.formHeader.updated'));
+      await updateGallery({ id: currentId, patch }).unwrap();
+      toast.success(t("admin.gallery.formHeader.updated"));
 
       const short = localeShortClient(loc);
       if (short && short !== queryLocale) setActiveLocale(short);
     } catch (err) {
-      toast.error(getErrMessage(err, t('admin.gallery.formHeader.defaultError')));
+      toast.error(getErrMessage(err, t("admin.gallery.formHeader.defaultError")));
     }
   }
 
   const imageMetadata = React.useMemo(
     () => ({
-      module_key: 'gallery',
+      module_key: "gallery",
       locale: queryLocale,
-      gallery_slug: values.slug || values.title || '',
+      gallery_slug: values.slug || values.title || "",
       ...(values.id ? { gallery_id: values.id } : {}),
     }),
     [queryLocale, values.slug, values.title, values.id],
@@ -364,15 +341,13 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     return (
       <div className="space-y-6">
         <div className="space-y-1">
-          <h1 className="text-lg font-semibold">{t('admin.gallery.formHeader.noLocalesTitle')}</h1>
-          <p className="text-sm text-muted-foreground">
-            {t('admin.gallery.formHeader.noLocalesDescription')}
-          </p>
+          <h1 className="font-semibold text-lg">{t("admin.gallery.formHeader.noLocalesTitle")}</h1>
+          <p className="text-muted-foreground text-sm">{t("admin.gallery.formHeader.noLocalesDescription")}</p>
         </div>
         <Card>
           <CardContent className="flex items-center justify-between pt-6">
-            <Button variant="outline" onClick={() => router.push('/admin/site-settings')}>
-              {t('admin.gallery.formHeader.goToSettings')}
+            <Button variant="outline" onClick={() => router.push("/admin/site-settings")}>
+              {t("admin.gallery.formHeader.goToSettings")}
             </Button>
           </CardContent>
         </Card>
@@ -380,21 +355,20 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     );
   }
 
-  if (!isCreateMode && !isUuidLike(String(id || ''))) {
+  if (!isCreateMode && !isUuidLike(String(id || ""))) {
     return (
       <div className="space-y-6">
         <div className="space-y-1">
-          <h1 className="text-lg font-semibold">{t('admin.gallery.formHeader.invalidIdTitle')}</h1>
-          <p className="text-sm text-muted-foreground">
-            {t('admin.gallery.formHeader.invalidIdDescription')}{' '}
-            <code>{String(id || '-')}</code>
+          <h1 className="font-semibold text-lg">{t("admin.gallery.formHeader.invalidIdTitle")}</h1>
+          <p className="text-muted-foreground text-sm">
+            {t("admin.gallery.formHeader.invalidIdDescription")} <code>{String(id || "-")}</code>
           </p>
         </div>
         <Card>
           <CardContent className="flex items-center justify-between pt-6">
             <Button variant="outline" onClick={onCancel}>
               <ArrowLeft className="mr-2 size-4" />
-              {t('admin.gallery.formHeader.backToList')}
+              {t("admin.gallery.formHeader.backToList")}
             </Button>
           </CardContent>
         </Card>
@@ -406,21 +380,20 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
     return (
       <div className="space-y-6">
         <div className="space-y-1">
-          <h1 className="text-lg font-semibold">{t('admin.gallery.formHeader.notFoundTitle')}</h1>
-          <p className="text-sm text-muted-foreground">
-            {t('admin.gallery.formHeader.notFoundDescription')}{' '}
-            <code>{String(id)}</code>
+          <h1 className="font-semibold text-lg">{t("admin.gallery.formHeader.notFoundTitle")}</h1>
+          <p className="text-muted-foreground text-sm">
+            {t("admin.gallery.formHeader.notFoundDescription")} <code>{String(id)}</code>
           </p>
         </div>
         <Card>
           <CardContent className="flex items-center justify-between pt-6">
             <Button variant="outline" onClick={onCancel}>
               <ArrowLeft className="mr-2 size-4" />
-              {t('admin.gallery.formHeader.backToList')}
+              {t("admin.gallery.formHeader.backToList")}
             </Button>
             <Button variant="outline" onClick={() => refetch()}>
               <RefreshCcw className="mr-2 size-4" />
-              {t('admin.gallery.formHeader.retryButton')}
+              {t("admin.gallery.formHeader.retryButton")}
             </Button>
           </CardContent>
         </Card>
@@ -429,8 +402,8 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
   }
 
   const pageTitle = isCreateMode
-    ? t('admin.gallery.formHeader.createTitle')
-    : (gallery as any)?.title || t('admin.gallery.formHeader.editTitle');
+    ? t("admin.gallery.formHeader.createTitle")
+    : gallery?.title || t("admin.gallery.formHeader.editTitle");
 
   return (
     <div className="space-y-6">
@@ -439,27 +412,25 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
           <div className="flex flex-wrap items-center gap-2">
             <Button variant="outline" onClick={() => router.back()} disabled={busy}>
               <ArrowLeft className="mr-2 size-4" />
-              {t('admin.gallery.formHeader.backButton')}
+              {t("admin.gallery.formHeader.backButton")}
             </Button>
-            <h1 className="text-lg font-semibold">{pageTitle}</h1>
+            <h1 className="font-semibold text-lg">{pageTitle}</h1>
           </div>
-          <p className="text-sm text-muted-foreground">
-            {t('admin.gallery.formHeader.description')}
-          </p>
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <span>{t('admin.gallery.formHeader.activeLocale')}</span>
-            <Badge variant="secondary">{queryLocale || '-'}</Badge>
+          <p className="text-muted-foreground text-sm">{t("admin.gallery.formHeader.description")}</p>
+          <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-sm">
+            <span>{t("admin.gallery.formHeader.activeLocale")}</span>
+            <Badge variant="secondary">{queryLocale || "-"}</Badge>
             {isCreateMode ? <Badge>CREATE</Badge> : <Badge variant="secondary">EDIT</Badge>}
           </div>
         </div>
 
         <div className="flex items-center gap-2">
           <Button variant="outline" onClick={onCancel} disabled={busy}>
-            {t('admin.gallery.formHeader.cancelButton')}
+            {t("admin.gallery.formHeader.cancelButton")}
           </Button>
           <Button form="gallery-form" type="submit" disabled={busy}>
             <Save className="mr-2 size-4" />
-            {t('admin.gallery.formHeader.saveButton')}
+            {t("admin.gallery.formHeader.saveButton")}
           </Button>
         </div>
       </div>
@@ -468,21 +439,17 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
         <Card>
           <CardHeader className="gap-2">
             <CardTitle className="text-base">
-              {isCreateMode
-                ? t('admin.gallery.form.createTitle')
-                : t('admin.gallery.form.editTitle')}
+              {isCreateMode ? t("admin.gallery.form.createTitle") : t("admin.gallery.form.editTitle")}
             </CardTitle>
-            <CardDescription>{t('admin.gallery.form.description')}</CardDescription>
+            <CardDescription>{t("admin.gallery.form.description")}</CardDescription>
           </CardHeader>
 
           <CardContent className="space-y-4">
             <Tabs defaultValue="form">
               <TabsList>
-                <TabsTrigger value="form">{t('admin.gallery.form.formTab')}</TabsTrigger>
-                <TabsTrigger value="json">{t('admin.gallery.form.jsonTab')}</TabsTrigger>
-                {!isCreateMode && (
-                  <TabsTrigger value="images">{t('admin.gallery.form.imagesTab')}</TabsTrigger>
-                )}
+                <TabsTrigger value="form">{t("admin.gallery.form.formTab")}</TabsTrigger>
+                <TabsTrigger value="json">{t("admin.gallery.form.jsonTab")}</TabsTrigger>
+                {!isCreateMode && <TabsTrigger value="images">{t("admin.gallery.form.imagesTab")}</TabsTrigger>}
               </TabsList>
 
               <TabsContent value="json" className="mt-4">
@@ -490,8 +457,8 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                   value={values}
                   disabled={disabled}
                   onChange={(next) => setValues(next as FormValues)}
-                  label={t('admin.gallery.form.jsonLabel')}
-                  helperText={t('admin.gallery.form.jsonHelperText')}
+                  label={t("admin.gallery.form.jsonLabel")}
+                  helperText={t("admin.gallery.form.jsonHelperText")}
                 />
               </TabsContent>
 
@@ -502,23 +469,18 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                     {/* Locale + flags */}
                     <div className="grid gap-4 md:grid-cols-3">
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.localeLabel')}</Label>
+                        <Label>{t("admin.gallery.form.localeLabel")}</Label>
                         <Select
-                          value={normalizeLocale(values.locale) || ''}
+                          value={normalizeLocale(values.locale) || ""}
                           onValueChange={handleLocaleChange}
                           disabled={localeDisabled}
                         >
                           <SelectTrigger>
-                            <SelectValue
-                              placeholder={t('admin.gallery.form.localePlaceholder')}
-                            />
+                            <SelectValue placeholder={t("admin.gallery.form.localePlaceholder")} />
                           </SelectTrigger>
                           <SelectContent>
-                            {(localeOptions ?? []).map((opt: any) => (
-                              <SelectItem
-                                key={`${opt.value}:${opt.label}`}
-                                value={String(opt.value)}
-                              >
+                            {(localeOptions ?? []).map((opt: AdminLocaleOption) => (
+                              <SelectItem key={`${opt.value}:${opt.label}`} value={String(opt.value)}>
                                 {String(opt.label ?? opt.value)}
                               </SelectItem>
                             ))}
@@ -531,28 +493,20 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                           <Checkbox
                             id="gal_is_active"
                             checked={!!values.is_active}
-                            onCheckedChange={(v) =>
-                              setValues((prev) => ({ ...prev, is_active: v === true }))
-                            }
+                            onCheckedChange={(v) => setValues((prev) => ({ ...prev, is_active: v === true }))}
                             disabled={disabled}
                           />
-                          <Label htmlFor="gal_is_active">
-                            {t('admin.gallery.form.activeLabel')}
-                          </Label>
+                          <Label htmlFor="gal_is_active">{t("admin.gallery.form.activeLabel")}</Label>
                         </div>
 
                         <div className="flex items-center gap-2">
                           <Checkbox
                             id="gal_is_featured"
                             checked={!!values.is_featured}
-                            onCheckedChange={(v) =>
-                              setValues((prev) => ({ ...prev, is_featured: v === true }))
-                            }
+                            onCheckedChange={(v) => setValues((prev) => ({ ...prev, is_featured: v === true }))}
                             disabled={disabled}
                           />
-                          <Label htmlFor="gal_is_featured">
-                            {t('admin.gallery.form.featuredLabel')}
-                          </Label>
+                          <Label htmlFor="gal_is_featured">{t("admin.gallery.form.featuredLabel")}</Label>
                         </div>
                       </div>
                     </div>
@@ -562,7 +516,7 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                     {/* title + slug */}
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.titleLabel')}</Label>
+                        <Label>{t("admin.gallery.form.titleLabel")}</Label>
                         <Input
                           value={values.title}
                           onChange={(e) => {
@@ -578,7 +532,7 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                       </div>
 
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.slugLabel')}</Label>
+                        <Label>{t("admin.gallery.form.slugLabel")}</Label>
                         <Input
                           value={values.slug}
                           onFocus={() => setSlugTouched(true)}
@@ -594,36 +548,30 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                     {/* module_key + source */}
                     <div className="grid gap-4 md:grid-cols-3">
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.moduleKeyLabel')}</Label>
+                        <Label>{t("admin.gallery.form.moduleKeyLabel")}</Label>
                         <Input
                           value={values.module_key}
-                          onChange={(e) =>
-                            setValues((prev) => ({ ...prev, module_key: e.target.value }))
-                          }
+                          onChange={(e) => setValues((prev) => ({ ...prev, module_key: e.target.value }))}
                           disabled={disabled}
                           placeholder="kompozit"
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.sourceTypeLabel')}</Label>
+                        <Label>{t("admin.gallery.form.sourceTypeLabel")}</Label>
                         <Input
                           value={values.source_type}
-                          onChange={(e) =>
-                            setValues((prev) => ({ ...prev, source_type: e.target.value }))
-                          }
+                          onChange={(e) => setValues((prev) => ({ ...prev, source_type: e.target.value }))}
                           disabled={disabled}
                           placeholder="product, category..."
                         />
                       </div>
 
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.sourceIdLabel')}</Label>
+                        <Label>{t("admin.gallery.form.sourceIdLabel")}</Label>
                         <Input
                           value={values.source_id}
-                          onChange={(e) =>
-                            setValues((prev) => ({ ...prev, source_id: e.target.value }))
-                          }
+                          onChange={(e) => setValues((prev) => ({ ...prev, source_id: e.target.value }))}
                           disabled={disabled}
                         />
                       </div>
@@ -631,13 +579,11 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
 
                     {/* description */}
                     <div className="space-y-2">
-                      <Label>{t('admin.gallery.form.descriptionLabel')}</Label>
+                      <Label>{t("admin.gallery.form.descriptionLabel")}</Label>
                       <Textarea
                         rows={3}
                         value={values.description}
-                        onChange={(e) =>
-                          setValues((prev) => ({ ...prev, description: e.target.value }))
-                        }
+                        onChange={(e) => setValues((prev) => ({ ...prev, description: e.target.value }))}
                         disabled={disabled}
                       />
                     </div>
@@ -646,35 +592,29 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                     <Separator />
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.metaTitleLabel')}</Label>
+                        <Label>{t("admin.gallery.form.metaTitleLabel")}</Label>
                         <Input
                           value={values.meta_title}
-                          onChange={(e) =>
-                            setValues((p) => ({ ...p, meta_title: e.target.value }))
-                          }
+                          onChange={(e) => setValues((p) => ({ ...p, meta_title: e.target.value }))}
                           disabled={disabled}
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label>{t('admin.gallery.form.imageAltLabel')}</Label>
+                        <Label>{t("admin.gallery.form.imageAltLabel")}</Label>
                         <Input
                           value={values.cover_image_alt}
-                          onChange={(e) =>
-                            setValues((p) => ({ ...p, cover_image_alt: e.target.value }))
-                          }
+                          onChange={(e) => setValues((p) => ({ ...p, cover_image_alt: e.target.value }))}
                           disabled={disabled}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label>{t('admin.gallery.form.metaDescriptionLabel')}</Label>
+                      <Label>{t("admin.gallery.form.metaDescriptionLabel")}</Label>
                       <Textarea
                         rows={2}
                         value={values.meta_description}
-                        onChange={(e) =>
-                          setValues((p) => ({ ...p, meta_description: e.target.value }))
-                        }
+                        onChange={(e) => setValues((p) => ({ ...p, meta_description: e.target.value }))}
                         disabled={disabled}
                       />
                     </div>
@@ -683,54 +623,46 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                   {/* RIGHT */}
                   <div className="space-y-4 lg:col-span-4">
                     <div className="space-y-2">
-                      <Label>{t('admin.gallery.form.displayOrderLabel')}</Label>
+                      <Label>{t("admin.gallery.form.displayOrderLabel")}</Label>
                       <Input
                         type="number"
                         min={0}
                         value={values.display_order}
-                        onChange={(e) =>
-                          setValues((p) => ({ ...p, display_order: e.target.value }))
-                        }
+                        onChange={(e) => setValues((p) => ({ ...p, display_order: e.target.value }))}
                         disabled={disabled}
                       />
                     </div>
 
                     <AdminImageUploadField
-                      label={t('admin.gallery.formImage.coverLabel')}
-                      helperText={t('admin.gallery.formImage.coverHelperText')}
+                      label={t("admin.gallery.formImage.coverLabel")}
+                      helperText={t("admin.gallery.formImage.coverHelperText")}
                       bucket="public"
                       folder="gallery"
                       metadata={imageMetadata}
                       value={norm(values.cover_image)}
-                      onChange={(url) =>
-                        setValues((prev) => ({ ...prev, cover_image: norm(url) }))
-                      }
+                      onChange={(url) => setValues((prev) => ({ ...prev, cover_image: norm(url) }))}
                       disabled={disabled}
                       openLibraryHref="/admin/storage"
-                      onOpenLibraryClick={() => router.push('/admin/storage')}
+                      onOpenLibraryClick={() => router.push("/admin/storage")}
                     />
 
                     <Separator />
 
                     <div className="space-y-3">
-                      <div className="text-sm font-medium">
-                        {t('admin.gallery.form.multiLocaleTitle')}
-                      </div>
+                      <div className="font-medium text-sm">{t("admin.gallery.form.multiLocaleTitle")}</div>
 
                       <div className="flex items-start gap-2">
                         <Checkbox
                           id="gal_replicate_all"
                           checked={!!values.replicate_all_locales}
-                          onCheckedChange={(v) =>
-                            setValues((p) => ({ ...p, replicate_all_locales: v === true }))
-                          }
+                          onCheckedChange={(v) => setValues((p) => ({ ...p, replicate_all_locales: v === true }))}
                           disabled={disabled}
                         />
                         <div className="space-y-1">
                           <Label htmlFor="gal_replicate_all" className="leading-none">
-                            {t('admin.gallery.form.replicateAllLocales')}
+                            {t("admin.gallery.form.replicateAllLocales")}
                           </Label>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-muted-foreground text-xs">
                             <code>replicate_all_locales</code>
                           </p>
                         </div>
@@ -740,16 +672,14 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
                         <Checkbox
                           id="gal_apply_all"
                           checked={!!values.apply_all_locales}
-                          onCheckedChange={(v) =>
-                            setValues((p) => ({ ...p, apply_all_locales: v === true }))
-                          }
+                          onCheckedChange={(v) => setValues((p) => ({ ...p, apply_all_locales: v === true }))}
                           disabled={disabled}
                         />
                         <div className="space-y-1">
                           <Label htmlFor="gal_apply_all" className="leading-none">
-                            {t('admin.gallery.form.applyAllLocales')}
+                            {t("admin.gallery.form.applyAllLocales")}
                           </Label>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-muted-foreground text-xs">
                             <code>apply_all_locales</code>
                           </p>
                         </div>
@@ -762,8 +692,8 @@ export default function AdminGalleryDetailClient({ id }: { id: string }) {
               {!isCreateMode && (
                 <TabsContent value="images" className="mt-4">
                   <GalleryImagesTab
-                    galleryId={String((gallery as any)?.id ?? id)}
-                    locale={queryLocale || 'de'}
+                    galleryId={String(gallery?.id ?? id)}
+                    locale={queryLocale || "de"}
                     disabled={disabled}
                   />
                 </TabsContent>

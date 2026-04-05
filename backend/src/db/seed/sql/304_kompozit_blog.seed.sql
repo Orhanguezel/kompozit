@@ -31,10 +31,10 @@ INSERT INTO `custom_pages`
   `sub_category_id`
 )
 VALUES
-  ('bb010001-5001-4001-9001-bbbbbbbb0001', 'kompozit_blog', 1, 1, 10, 10, '/media/blog-placeholder.svg', NULL, '/media/blog-placeholder.svg', NULL, '[]', '[]', NULL, NULL),
-  ('bb010002-5002-4002-9002-bbbbbbbb0002', 'kompozit_blog', 1, 1, 20, 20, '/media/blog-placeholder.svg', NULL, '/media/blog-placeholder.svg', NULL, '[]', '[]', NULL, NULL),
-  ('bb010003-5003-4003-9003-bbbbbbbb0003', 'kompozit_blog', 1, 0, 30, 30, '/media/blog-placeholder.svg', NULL, '/media/blog-placeholder.svg', NULL, '[]', '[]', NULL, NULL),
-  ('bb010004-5004-4004-9004-bbbbbbbb0004', 'kompozit_blog', 1, 0, 40, 40, '/media/blog-placeholder.svg', NULL, '/media/blog-placeholder.svg', NULL, '[]', '[]', NULL, NULL)
+  ('bb010001-5001-4001-9001-bbbbbbbb0001', 'kompozit_blog', 1, 1, 10, 10, '/uploads/kompozit/karbon-fiber-panel-01.jpg', NULL, '/uploads/kompozit/karbon-fiber-panel-01.jpg', NULL, '[]', '[]', NULL, NULL),
+  ('bb010002-5002-4002-9002-bbbbbbbb0002', 'kompozit_blog', 1, 1, 20, 20, '/uploads/kompozit/karbon-fiber-detay-01.jpg', NULL, '/uploads/kompozit/karbon-fiber-detay-01.jpg', NULL, '[]', '[]', NULL, NULL),
+  ('bb010003-5003-4003-9003-bbbbbbbb0003', 'kompozit_blog', 1, 0, 30, 30, '/uploads/kompozit/karbon-fiber-hammadde-01.jpg', NULL, '/uploads/kompozit/karbon-fiber-hammadde-01.jpg', NULL, '[]', '[]', NULL, NULL),
+  ('bb010004-5004-4004-9004-bbbbbbbb0004', 'kompozit_blog', 1, 0, 40, 40, '/uploads/kompozit/ctp-dokuma-hibrit-01.jpg', NULL, '/uploads/kompozit/ctp-dokuma-hibrit-01.jpg', NULL, '[]', '[]', NULL, NULL)
 ON DUPLICATE KEY UPDATE
   `module_key`   = VALUES(`module_key`),
   `is_published` = VALUES(`is_published`),

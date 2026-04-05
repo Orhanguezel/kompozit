@@ -1,48 +1,33 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { toast } from 'sonner';
-import { Plus, RefreshCcw, Search, Trash2, Pencil, Images } from 'lucide-react';
-import Image from 'next/image';
+import * as React from "react";
 
-import { useAdminLocales } from '@/app/(main)/admin/_components/common/useAdminLocales';
-import { resolveAdminApiLocale } from '@/i18n/adminLocale';
-import { localeShortClient, localeShortClientOr } from '@/i18n/localeShortClient';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Images, Pencil, Plus, RefreshCcw, Search, Trash2 } from "lucide-react";
+import { toast } from "sonner";
 
+import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { resolveAdminApiLocale } from "@/i18n/adminLocale";
+import { localeShortClient, localeShortClientOr } from "@/i18n/localeShortClient";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-
-import type { GalleryDto, GalleryListQueryParams } from '@/integrations/shared';
-import {
+  useDeleteGalleryAdminMutation,
   useListGalleriesAdminQuery,
   useUpdateGalleryAdminMutation,
-  useDeleteGalleryAdminMutation,
-} from '@/integrations/hooks';
+} from "@/integrations/hooks";
+import type { GalleryDto, GalleryListQueryParams } from "@/integrations/shared";
 
-type ActiveFilter = 'all' | 'active' | 'inactive';
+type ActiveFilter = "all" | "active" | "inactive";
 
 type Filters = {
   search: string;
@@ -51,7 +36,7 @@ type Filters = {
   featuredOnly: boolean;
 };
 
-const isTruthyBoolLike = (v: unknown) => v === true || v === 1 || v === '1' || v === 'true';
+const isTruthyBoolLike = (v: unknown) => v === true || v === 1 || v === "1" || v === "true";
 
 function isUuidLike(v?: string) {
   if (!v) return false;
@@ -63,26 +48,21 @@ export default function AdminGalleryClient() {
   const router = useRouter();
   const sp = useSearchParams();
 
-  const {
-    localeOptions,
-    defaultLocaleFromDb,
-    loading: localesLoading,
-    fetching: localesFetching,
-  } = useAdminLocales();
+  const { localeOptions, defaultLocaleFromDb, loading: localesLoading, fetching: localesFetching } = useAdminLocales();
 
   const apiLocale = React.useMemo(() => {
-    return resolveAdminApiLocale(localeOptions as any, defaultLocaleFromDb, 'de');
+    return resolveAdminApiLocale(localeOptions, defaultLocaleFromDb, "de");
   }, [localeOptions, defaultLocaleFromDb]);
 
   const urlLocale = React.useMemo(() => {
-    const q = sp?.get('locale');
-    return localeShortClient(q) || '';
+    const q = sp?.get("locale");
+    return localeShortClient(q) || "";
   }, [sp]);
 
   const [filters, setFilters] = React.useState<Filters>({
-    search: '',
-    activeFilter: 'all',
-    locale: '',
+    search: "",
+    activeFilter: "all",
+    locale: "",
     featuredOnly: false,
   });
 
@@ -92,16 +72,15 @@ export default function AdminGalleryClient() {
     setFilters((prev) => {
       const prevLoc = localeShortClient(prev.locale);
       const urlLoc = localeShortClient(urlLocale);
-      const defLoc = localeShortClientOr(apiLocale, 'de');
+      const defLoc = localeShortClientOr(apiLocale, "de");
 
-      const canUse = (l: string) =>
-        !!l && (localeOptions ?? []).some((x: any) => localeShortClient(x.value) === l);
+      const canUse = (l: string) => !!l && (localeOptions ?? []).some((x) => localeShortClient(x.value) === l);
 
       if (prevLoc && canUse(prevLoc)) return prev;
       if (urlLoc && canUse(urlLoc)) return { ...prev, locale: urlLoc };
       if (defLoc && canUse(defLoc)) return { ...prev, locale: defLoc };
 
-      return { ...prev, locale: localeShortClient((localeOptions as any)?.[0]?.value) || 'de' };
+      return { ...prev, locale: localeShortClient(localeOptions?.[0]?.value) || "de" };
     });
   }, [localeOptions, urlLocale, apiLocale]);
 
@@ -115,40 +94,38 @@ export default function AdminGalleryClient() {
     if (!l) return;
     if (l === urlLocale) return;
 
-    const params = new URLSearchParams(sp?.toString() || '');
-    params.set('locale', l);
+    const params = new URLSearchParams(sp?.toString() || "");
+    params.set("locale", l);
     router.replace(`/admin/gallery?${params.toString()}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters.locale]);
+  }, [filters.locale, router, sp, urlLocale]);
 
   const is_active = React.useMemo(() => {
-    if (filters.activeFilter === 'all') return undefined;
-    return filters.activeFilter === 'active' ? 1 : 0;
+    if (filters.activeFilter === "all") return undefined;
+    return filters.activeFilter === "active" ? 1 : 0;
   }, [filters.activeFilter]);
 
-  const queryParams = React.useMemo(() => {
-    const qp: GalleryListQueryParams = {
+  const queryParams = React.useMemo<GalleryListQueryParams>(() => {
+    return {
       q: filters.search.trim() || undefined,
       locale: effectiveLocale || undefined,
       is_active,
       is_featured: filters.featuredOnly ? 1 : undefined,
       limit: 200,
       offset: 0,
-    } as any;
-    return qp;
+    };
   }, [filters.search, effectiveLocale, is_active, filters.featuredOnly]);
 
-  const listQ = useListGalleriesAdminQuery(queryParams as any, {
+  const listQ = useListGalleriesAdminQuery(queryParams, {
     refetchOnMountOrArgChange: true,
-  } as any);
+  });
 
   const items: GalleryDto[] = React.useMemo(() => {
-    return ((listQ.data as any)?.items ?? []) as GalleryDto[];
+    return listQ.data?.items ?? [];
   }, [listQ.data]);
 
   const total: number = React.useMemo(() => {
-    const t = (listQ.data as any)?.total;
-    return typeof t === 'number' ? t : items.length;
+    const t = listQ.data?.total;
+    return typeof t === "number" ? t : items.length;
   }, [listQ.data, items.length]);
 
   const [updateGallery, updateState] = useUpdateGalleryAdminMutation();
@@ -163,84 +140,90 @@ export default function AdminGalleryClient() {
     deleteState.isLoading;
 
   function onCreate() {
-    const l = localeShortClientOr(effectiveLocale, 'de');
+    const l = localeShortClientOr(effectiveLocale, "de");
     router.push(`/admin/gallery/new?locale=${encodeURIComponent(l)}`);
   }
 
   function onEdit(id: string) {
-    const l = localeShortClientOr(effectiveLocale, 'de');
+    const l = localeShortClientOr(effectiveLocale, "de");
     router.push(`/admin/gallery/${encodeURIComponent(id)}?locale=${encodeURIComponent(l)}`);
   }
 
   async function onToggleActive(item: GalleryDto, next: boolean) {
-    const id = String(item?.id ?? '');
+    const id = String(item?.id ?? "");
     if (!isUuidLike(id)) return;
 
     try {
-      await updateGallery({ id, patch: { is_active: next ? 1 : 0 } } as any).unwrap();
-      toast.success(t('admin.gallery.list.statusUpdated'));
+      await updateGallery({ id, patch: { is_active: next ? 1 : 0 } }).unwrap();
+      toast.success(t("admin.gallery.list.statusUpdated"));
       listQ.refetch();
-    } catch (err: any) {
-      toast.error(
-        err?.data?.error?.message || err?.message || t('admin.gallery.list.statusUpdateError'),
-      );
+    } catch (err: unknown) {
+      const message =
+        typeof err === "object" && err !== null && "data" in err
+          ? ((err as { data?: { error?: { message?: string } } }).data?.error?.message ??
+            t("admin.gallery.list.statusUpdateError"))
+          : t("admin.gallery.list.statusUpdateError");
+      toast.error(message);
     }
   }
 
   async function onToggleFeatured(item: GalleryDto, next: boolean) {
-    const id = String(item?.id ?? '');
+    const id = String(item?.id ?? "");
     if (!isUuidLike(id)) return;
 
     try {
-      await updateGallery({ id, patch: { is_featured: next ? 1 : 0 } } as any).unwrap();
-      toast.success(t('admin.gallery.list.featuredUpdated'));
+      await updateGallery({ id, patch: { is_featured: next ? 1 : 0 } }).unwrap();
+      toast.success(t("admin.gallery.list.featuredUpdated"));
       listQ.refetch();
-    } catch (err: any) {
-      toast.error(
-        err?.data?.error?.message || err?.message || t('admin.gallery.list.statusUpdateError'),
-      );
+    } catch (err: unknown) {
+      const message =
+        typeof err === "object" && err !== null && "data" in err
+          ? ((err as { data?: { error?: { message?: string } } }).data?.error?.message ??
+            t("admin.gallery.list.statusUpdateError"))
+          : t("admin.gallery.list.statusUpdateError");
+      toast.error(message);
     }
   }
 
   async function onDelete(item: GalleryDto) {
-    const id = String(item?.id ?? '');
+    const id = String(item?.id ?? "");
     if (!isUuidLike(id)) return;
 
-    const ok = window.confirm(
-      t('admin.gallery.list.deleteConfirm', { name: String(item?.title ?? 'Galeri') }),
-    );
+    const ok = window.confirm(t("admin.gallery.list.deleteConfirm", { name: String(item?.title ?? "Galeri") }));
     if (!ok) return;
 
     try {
-      await deleteGallery(id as any).unwrap();
-      toast.success(t('admin.gallery.list.deleted'));
+      await deleteGallery(id).unwrap();
+      toast.success(t("admin.gallery.list.deleted"));
       listQ.refetch();
-    } catch (err: any) {
-      toast.error(
-        err?.data?.error?.message || err?.message || t('admin.gallery.list.deleteError'),
-      );
+    } catch (err: unknown) {
+      const message =
+        typeof err === "object" && err !== null && "data" in err
+          ? ((err as { data?: { error?: { message?: string } } }).data?.error?.message ??
+            t("admin.gallery.list.deleteError"))
+          : t("admin.gallery.list.deleteError");
+      toast.error(message);
     }
   }
 
   function resetFilters() {
     setFilters((p) => ({
       ...p,
-      search: '',
-      activeFilter: 'all',
+      search: "",
+      activeFilter: "all",
       featuredOnly: false,
     }));
   }
 
   const showEmpty = !busy && items.length === 0;
 
-  const resolveImg = (item: GalleryDto) =>
-    (item as any).cover_image_url_resolved || item.cover_image || '';
+  const resolveImg = (item: GalleryDto) => item.cover_image_url_resolved || item.cover_image || "";
 
   return (
     <div className="space-y-6">
       <div className="space-y-1">
-        <h1 className="text-lg font-semibold">{t('admin.gallery.header.title')}</h1>
-        <p className="text-sm text-muted-foreground">{t('admin.gallery.header.description')}</p>
+        <h1 className="font-semibold text-lg">{t("admin.gallery.header.title")}</h1>
+        <p className="text-muted-foreground text-sm">{t("admin.gallery.header.description")}</p>
       </div>
 
       {/* Filters */}
@@ -248,23 +231,21 @@ export default function AdminGalleryClient() {
         <CardHeader className="gap-2">
           <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div className="space-y-1">
-              <CardTitle className="text-base">{t('admin.gallery.header.filterLabel')}</CardTitle>
+              <CardTitle className="text-base">{t("admin.gallery.header.filterLabel")}</CardTitle>
               <CardDescription>
-                {t('admin.gallery.header.totalLabel')}{' '}
-                <span className="font-medium">{total}</span> •{' '}
-                {t('admin.gallery.header.activeLocale')}{' '}
-                <Badge variant="secondary">{effectiveLocale || '—'}</Badge>
+                {t("admin.gallery.header.totalLabel")} <span className="font-medium">{total}</span> •{" "}
+                {t("admin.gallery.header.activeLocale")} <Badge variant="secondary">{effectiveLocale || "—"}</Badge>
               </CardDescription>
             </div>
 
             <div className="flex items-center gap-2">
               <Button onClick={onCreate} disabled={busy}>
                 <Plus className="mr-2 size-4" />
-                {t('admin.gallery.header.createButton')}
+                {t("admin.gallery.header.createButton")}
               </Button>
               <Button variant="outline" onClick={() => listQ.refetch()} disabled={busy}>
                 <RefreshCcw className="mr-2 size-4" />
-                {t('admin.gallery.header.refreshButton')}
+                {t("admin.gallery.header.refreshButton")}
               </Button>
             </div>
           </div>
@@ -273,14 +254,14 @@ export default function AdminGalleryClient() {
         <CardContent className="space-y-4">
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             <div className="space-y-2">
-              <Label htmlFor="q">{t('admin.gallery.header.searchLabel')}</Label>
+              <Label htmlFor="q">{t("admin.gallery.header.searchLabel")}</Label>
               <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 size-4 text-muted-foreground" />
                 <Input
                   id="q"
                   value={filters.search}
                   onChange={(e) => setFilters((p) => ({ ...p, search: e.target.value }))}
-                  placeholder={t('admin.gallery.header.searchPlaceholder')}
+                  placeholder={t("admin.gallery.header.searchPlaceholder")}
                   className="pl-9"
                   disabled={busy}
                 />
@@ -288,48 +269,42 @@ export default function AdminGalleryClient() {
             </div>
 
             <div className="space-y-2">
-              <Label>{t('admin.gallery.header.statusLabel')}</Label>
+              <Label>{t("admin.gallery.header.statusLabel")}</Label>
               <Select
                 value={filters.activeFilter}
-                onValueChange={(v) => setFilters((p) => ({ ...p, activeFilter: v as any }))}
+                onValueChange={(v) => setFilters((p) => ({ ...p, activeFilter: v as ActiveFilter }))}
                 disabled={busy}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={t('admin.gallery.header.statusAll')} />
+                  <SelectValue placeholder={t("admin.gallery.header.statusAll")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t('admin.gallery.header.statusAll')}</SelectItem>
-                  <SelectItem value="active">
-                    {t('admin.gallery.header.statusActive')}
-                  </SelectItem>
-                  <SelectItem value="inactive">
-                    {t('admin.gallery.header.statusInactive')}
-                  </SelectItem>
+                  <SelectItem value="all">{t("admin.gallery.header.statusAll")}</SelectItem>
+                  <SelectItem value="active">{t("admin.gallery.header.statusActive")}</SelectItem>
+                  <SelectItem value="inactive">{t("admin.gallery.header.statusInactive")}</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             <div className="space-y-2">
-              <Label>{t('admin.gallery.header.localeLabel')}</Label>
+              <Label>{t("admin.gallery.header.localeLabel")}</Label>
               <Select
-                value={filters.locale || ''}
+                value={filters.locale || ""}
                 onValueChange={(v) => setFilters((p) => ({ ...p, locale: v }))}
                 disabled={busy || (localeOptions?.length ?? 0) === 0}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder={t('admin.gallery.header.localePlaceholder')} />
+                  <SelectValue placeholder={t("admin.gallery.header.localePlaceholder")} />
                 </SelectTrigger>
                 <SelectContent>
-                  {(localeOptions ?? []).map((l: any) => (
+                  {(localeOptions ?? []).map((l) => (
                     <SelectItem key={l.value} value={String(l.value)}>
                       {String(l.label ?? l.value)}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground">
-                {t('admin.gallery.header.localeUrlSync')}
-              </p>
+              <p className="text-muted-foreground text-xs">{t("admin.gallery.header.localeUrlSync")}</p>
             </div>
 
             <div className="flex items-center gap-2 pt-6 md:pt-7">
@@ -338,14 +313,12 @@ export default function AdminGalleryClient() {
                 onCheckedChange={(v) => setFilters((p) => ({ ...p, featuredOnly: !!v }))}
                 disabled={busy}
               />
-              <span className="text-sm text-muted-foreground">
-                {t('admin.gallery.header.featuredOnly')}
-              </span>
+              <span className="text-muted-foreground text-sm">{t("admin.gallery.header.featuredOnly")}</span>
             </div>
 
             <div className="flex items-center gap-2 pt-6 md:pt-7">
               <Button variant="outline" onClick={resetFilters} disabled={busy}>
-                {t('admin.gallery.header.resetButton')}
+                {t("admin.gallery.header.resetButton")}
               </Button>
             </div>
           </div>
@@ -355,15 +328,15 @@ export default function AdminGalleryClient() {
       {/* List */}
       <Card>
         <CardHeader className="gap-2">
-          <CardTitle className="text-base">{t('admin.gallery.list.title')}</CardTitle>
+          <CardTitle className="text-base">{t("admin.gallery.list.title")}</CardTitle>
         </CardHeader>
 
         <CardContent className="space-y-4">
           {listQ.isError ? (
             <div className="rounded-md border p-4 text-sm">
-              {t('admin.gallery.list.loadError')}{' '}
+              {t("admin.gallery.list.loadError")}{" "}
               <Button variant="link" className="px-1" onClick={() => listQ.refetch()}>
-                {t('admin.gallery.header.refreshButton')}
+                {t("admin.gallery.header.refreshButton")}
               </Button>
             </div>
           ) : null}
@@ -374,25 +347,23 @@ export default function AdminGalleryClient() {
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-16" />
-                  <TableHead>{t('admin.gallery.list.titleColumn')}</TableHead>
-                  <TableHead>{t('admin.gallery.list.imagesColumn')}</TableHead>
-                  <TableHead>{t('admin.gallery.list.featuredColumn')}</TableHead>
-                  <TableHead>{t('admin.gallery.list.statusColumn')}</TableHead>
-                  <TableHead className="text-right">
-                    {t('admin.gallery.list.actionsColumn')}
-                  </TableHead>
+                  <TableHead>{t("admin.gallery.list.titleColumn")}</TableHead>
+                  <TableHead>{t("admin.gallery.list.imagesColumn")}</TableHead>
+                  <TableHead>{t("admin.gallery.list.featuredColumn")}</TableHead>
+                  <TableHead>{t("admin.gallery.list.statusColumn")}</TableHead>
+                  <TableHead className="text-right">{t("admin.gallery.list.actionsColumn")}</TableHead>
                 </TableRow>
               </TableHeader>
 
               <TableBody>
                 {items.map((item) => {
-                  const id = String(item?.id ?? '');
-                  const title = String(item?.title ?? '').trim() || '—';
-                  const slug = String(item?.slug ?? '').trim() || '—';
-                  const isActive = isTruthyBoolLike((item as any)?.is_active);
-                  const isFeatured = isTruthyBoolLike((item as any)?.is_featured);
+                  const id = String(item?.id ?? "");
+                  const title = String(item?.title ?? "").trim() || "—";
+                  const slug = String(item?.slug ?? "").trim() || "—";
+                  const isActive = isTruthyBoolLike(item.is_active);
+                  const isFeatured = isTruthyBoolLike(item.is_featured);
                   const img = resolveImg(item);
-                  const imageCount = (item as any)?.image_count ?? 0;
+                  const imageCount = item.image_count ?? 0;
 
                   return (
                     <TableRow key={id}>
@@ -416,7 +387,7 @@ export default function AdminGalleryClient() {
 
                       <TableCell>
                         <div className="font-medium">{title}</div>
-                        <div className="text-xs text-muted-foreground">
+                        <div className="text-muted-foreground text-xs">
                           <code>{slug}</code>
                         </div>
                       </TableCell>
@@ -433,9 +404,7 @@ export default function AdminGalleryClient() {
                             disabled={busy || !isUuidLike(id)}
                           />
                           <Badge variant="secondary">
-                            {isFeatured
-                              ? t('admin.gallery.list.featuredYes')
-                              : t('admin.gallery.list.featuredNo')}
+                            {isFeatured ? t("admin.gallery.list.featuredYes") : t("admin.gallery.list.featuredNo")}
                           </Badge>
                         </div>
                       </TableCell>
@@ -448,13 +417,9 @@ export default function AdminGalleryClient() {
                             disabled={busy || !isUuidLike(id)}
                           />
                           {isActive ? (
-                            <Badge variant="secondary">
-                              {t('admin.gallery.list.activeStatus')}
-                            </Badge>
+                            <Badge variant="secondary">{t("admin.gallery.list.activeStatus")}</Badge>
                           ) : (
-                            <Badge variant="destructive">
-                              {t('admin.gallery.list.inactiveStatus')}
-                            </Badge>
+                            <Badge variant="destructive">{t("admin.gallery.list.inactiveStatus")}</Badge>
                           )}
                         </div>
                       </TableCell>
@@ -468,7 +433,7 @@ export default function AdminGalleryClient() {
                             disabled={busy || !isUuidLike(id)}
                           >
                             <Pencil className="mr-2 size-4" />
-                            {t('admin.gallery.list.editButton')}
+                            {t("admin.gallery.list.editButton")}
                           </Button>
 
                           <Button
@@ -479,7 +444,7 @@ export default function AdminGalleryClient() {
                             disabled={busy || !isUuidLike(id)}
                           >
                             <Trash2 className="mr-2 size-4" />
-                            {t('admin.gallery.list.deleteButton')}
+                            {t("admin.gallery.list.deleteButton")}
                           </Button>
                         </div>
                       </TableCell>
@@ -490,7 +455,7 @@ export default function AdminGalleryClient() {
                 {showEmpty ? (
                   <TableRow>
                     <TableCell colSpan={6} className="py-10 text-center text-muted-foreground">
-                      {t('admin.gallery.list.noRecords')}
+                      {t("admin.gallery.list.noRecords")}
                     </TableCell>
                   </TableRow>
                 ) : null}
@@ -502,39 +467,30 @@ export default function AdminGalleryClient() {
           <div className="rounded-md border md:hidden">
             <div className="divide-y">
               {items.map((item) => {
-                const id = String(item?.id ?? '');
-                const title = String(item?.title ?? '').trim() || '—';
-                const slug = String(item?.slug ?? '').trim() || '—';
-                const isActive = isTruthyBoolLike((item as any)?.is_active);
+                const id = String(item?.id ?? "");
+                const title = String(item?.title ?? "").trim() || "—";
+                const slug = String(item?.slug ?? "").trim() || "—";
+                const isActive = isTruthyBoolLike(item.is_active);
 
                 return (
                   <div key={id} className="p-4">
                     <div className="flex flex-wrap items-center gap-2">
                       <div className="font-medium">{title}</div>
                       {isActive ? (
-                        <Badge variant="secondary">
-                          {t('admin.gallery.list.activeStatus')}
-                        </Badge>
+                        <Badge variant="secondary">{t("admin.gallery.list.activeStatus")}</Badge>
                       ) : (
-                        <Badge variant="destructive">
-                          {t('admin.gallery.list.inactiveStatus')}
-                        </Badge>
+                        <Badge variant="destructive">{t("admin.gallery.list.inactiveStatus")}</Badge>
                       )}
                     </div>
 
-                    <div className="mt-2 text-sm text-muted-foreground">
+                    <div className="mt-2 text-muted-foreground text-sm">
                       <code>{slug}</code>
                     </div>
 
                     <div className="mt-3 flex flex-wrap gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => onEdit(id)}
-                        disabled={busy || !isUuidLike(id)}
-                      >
+                      <Button variant="outline" size="sm" onClick={() => onEdit(id)} disabled={busy || !isUuidLike(id)}>
                         <Pencil className="mr-2 size-4" />
-                        {t('admin.gallery.list.editButton')}
+                        {t("admin.gallery.list.editButton")}
                       </Button>
 
                       <Button
@@ -545,7 +501,7 @@ export default function AdminGalleryClient() {
                         disabled={busy || !isUuidLike(id)}
                       >
                         <Trash2 className="mr-2 size-4" />
-                        {t('admin.gallery.list.deleteButton')}
+                        {t("admin.gallery.list.deleteButton")}
                       </Button>
                     </div>
                   </div>
@@ -553,9 +509,7 @@ export default function AdminGalleryClient() {
               })}
 
               {showEmpty ? (
-                <div className="p-6 text-center text-sm text-muted-foreground">
-                  {t('admin.gallery.list.noRecords')}
-                </div>
+                <div className="p-6 text-center text-muted-foreground text-sm">{t("admin.gallery.list.noRecords")}</div>
               ) : null}
             </div>
           </div>

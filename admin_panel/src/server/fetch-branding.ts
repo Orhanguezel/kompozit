@@ -3,32 +3,29 @@
 // Server-only utility — SSR'da branding config'i backend'den çeker
 // =============================================================
 
-import { DEFAULT_BRANDING, type AdminBrandingConfig } from '@/config/app-config';
+import { type AdminBrandingConfig, DEFAULT_BRANDING } from "@/config/app-config";
 
 /**
  * Backend API base URL (server-side only).
  * PANEL_API_URL > NEXT_PUBLIC_API_URL > fallback
  */
 function getServerApiUrl(): string {
-  const panel = (process.env.PANEL_API_URL || '').trim().replace(/\/+$/, '');
+  const panel = (process.env.PANEL_API_URL || "").trim().replace(/\/+$/, "");
   if (panel) return `${panel}/api`;
 
-  const pub = (process.env.NEXT_PUBLIC_API_URL || '').trim().replace(/\/+$/, '');
+  const pub = (process.env.NEXT_PUBLIC_API_URL || "").trim().replace(/\/+$/, "");
   if (pub) return pub;
 
-  return 'http://127.0.0.1:8186/api';
+  return "http://127.0.0.1:8186/api";
 }
 
 function parseSettingValue(value: unknown): unknown {
-  if (typeof value !== 'string') return value;
+  if (typeof value !== "string") return value;
 
   const trimmed = value.trim();
   if (!trimmed) return value;
 
-  if (
-    (trimmed.startsWith('{') && trimmed.endsWith('}')) ||
-    (trimmed.startsWith('[') && trimmed.endsWith(']'))
-  ) {
+  if ((trimmed.startsWith("{") && trimmed.endsWith("}")) || (trimmed.startsWith("[") && trimmed.endsWith("]"))) {
     try {
       return JSON.parse(trimmed);
     } catch {
@@ -51,7 +48,7 @@ function parseSettingValue(value: unknown): unknown {
 export async function fetchBrandingConfig(): Promise<AdminBrandingConfig> {
   try {
     const base = getServerApiUrl();
-    for (const key of ['kompozit__ui_admin_config', 'ui_admin_config']) {
+    for (const key of ["kompozit__ui_admin_config", "ui_admin_config"]) {
       const res = await fetch(`${base}/site_settings/${key}`, {
         next: { revalidate: 300 },
       });
@@ -69,7 +66,7 @@ export async function fetchBrandingConfig(): Promise<AdminBrandingConfig> {
         ...branding,
         meta: { ...DEFAULT_BRANDING.meta, ...branding.meta },
       };
-    };
+    }
 
     return DEFAULT_BRANDING;
   } catch {

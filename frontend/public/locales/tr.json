@@ -22,12 +22,23 @@
     "rights": "Tüm hakları saklıdır",
     "privacy": "Gizlilik Politikası",
     "terms": "Kullanım Koşulları",
+    "social": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "youtube": "YouTube"
+    },
     "sections": {
-      "explore": "Kesfet",
-      "company": "Sirket",
+      "explore": "Keşfet",
+      "company": "Şirket",
       "legal": "Yasal",
-      "quickLinks": "Hizli Linkler"
-    }
+      "quickLinks": "Hızlı Bağlantılar"
+    },
+    "contact": "İletişim",
+    "address_label": "Adres",
+    "phone_label": "Telefon",
+    "email_label": "E-posta",
+    "hours_label": "Çalışma Saatleri",
+    "designed_by": "Tasarım"
   },
   "common": {
     "loading": "Yükleniyor...",
@@ -50,75 +61,80 @@
     "required": "Zorunlu alan",
     "success": "Başarılı",
     "noResults": "Sonuç bulunamadı",
-    "relatedProducts": "Ilgili Urunler",
-    "relatedGallery": "Ilgili Galeriler",
-    "relatedArticles": "Ilgili Yazilar",
-    "listingEngineeringLine": "Muhendislik standardi",
+    "relatedProducts": "İlgili Ürünler",
+    "relatedGallery": "İlgili Galeriler",
+    "relatedArticles": "İlgili Yazılar",
+    "listingEngineeringLine": "Mühendislik standardı",
     "listingReferenceLine": "Kurumsal referans",
-    "listingArticleLine": "Teknik icerik"
+    "listingArticleLine": "Teknik içerik"
   },
   "home": {
     "hero": {
-      "title": "Karbon Fiber, CTP ve Cam Elyaf Kompozit Cozumleri",
-      "subtitle": "Karbon fiber, CTP ve cam elyaf tabanli kompozit parcalarda muhendislik, numune dogrulama ve seri uretim planlamasini tek bir B2B proje akisi icinde yonetiyoruz.",
+      "title": "Endüstriyel Dünya İçin <em>Mühendislik</em> Sanatı",
+      "subtitle": "Karbon fiber ve ileri kompozit teknolojilerinde, yaratici tasarimi endustriyel disiplinle birlestiriyor; projenizi numuneden seri uretime tasiyoruz.",
       "cta": "Ürünleri Keşfet",
       "ctaSecondary": "Teklif Al",
       "badge": "B2B Kompozit Uretim",
-      "workflowLabel": "Composite Workflow",
-      "workflowTitle": "Projenize uygun malzeme ve uretim akisi",
-      "workflowBadgeTitle": "Hizli",
+      "workflowLabel": "Kompozit İş Akışı",
+      "workflowTitle": "Projenize uygun malzeme ve üretim akışı",
+      "workflowBadgeTitle": "Hızlı",
       "workflowBadgeSubtitle": "Teklif ve planlama",
       "metrics": {
         "prototypeTitle": "Prototip",
-        "prototypeDesc": "Numune, revizyon ve ilk dogrulama asamasi",
-        "productionTitle": "Seri Uretim",
-        "productionDesc": "Tekrarlanabilir proses, kalite ve termin takibi",
-        "engineeringTitle": "Muhendislik",
-        "engineeringDesc": "Malzeme, katman yapisi ve proses secimi destegi"
+        "prototypeDesc": "Numune, revizyon ve ilk doğrulama aşaması",
+        "productionTitle": "Seri Üretim",
+        "productionDesc": "Tekrarlanabilir süreç, kalite ve termin takibi",
+        "engineeringTitle": "Mühendislik",
+        "engineeringDesc": "Malzeme, katman yapısı ve süreç seçimi desteği"
       },
       "steps": {
         "oneTitle": "1. Teknik gereksinim analizi",
-        "oneDesc": "Kullanim ortami, olcu, mukavemet, agirlik ve yuzey beklentisini netlestiriyoruz.",
-        "twoTitle": "2. Malzeme ve proses secimi",
-        "twoDesc": "Karbon fiber, CTP veya cam elyaf katmani ile uygun uretim rotasini belirliyoruz.",
-        "threeTitle": "3. Numune, teklif ve seri uretim gecisi",
-        "threeDesc": "Numune dogrulama sonrasinda miktar, termin ve kalite gereksinimlerine gore seri uretim planini netlestiriyoruz."
+        "oneDesc": "Kullanım ortamı, ölçü, mukavemet, ağırlık ve yüzey beklentisini netleştiriyoruz.",
+        "twoTitle": "2. Malzeme ve süreç seçimi",
+        "twoDesc": "Karbon fiber, CTP veya cam elyaf katmanı ile uygun üretim rotasını belirliyoruz.",
+        "threeTitle": "3. Numune, teklif ve seri üretim geçişi",
+        "threeDesc": "Numune doğrulama sonrasında miktar, termin ve kalite gereksinimlerine göre seri üretim planını netleştiriyoruz."
       },
       "stats": {
         "stepsValue": "3+",
-        "stepsLabel": "Temel proses adimi",
+        "stepsLabel": "Temel süreç adımı",
         "b2bValue": "B2B",
-        "b2bLabel": "Proje odakli is birligi"
-      }
+        "b2bLabel": "Proje odaklı iş birliği"
+      },
+      "scrollHint": "Aşağı kaydır"
     },
     "products": {
-      "title": "Ürülerimiz",
+      "title": "Ürünlerimiz",
       "subtitle": "Mukavemet, hafiflik, kimyasal dayanim ve proses ihtiyacina gore gelistirilen kompozit urun gruplari",
       "sectionLabel": "Çözümler"
     },
     "whyUs": {
       "title": "Neden MOE Kompozit?",
-      "subtitle": "Malzeme secimi, proses disiplini ve proje iletisimini ayni cizgide yoneten uygulama odakli uretim yaklasimi",
+      "subtitle": "Malzeme seçimi, süreç disiplini ve proje iletişimini aynı çizgide yöneten uygulama odaklı üretim yaklaşımı.",
       "sectionLabel": "Güvenilirlik",
       "quality": "Yüksek Kalite",
-      "qualityDesc": "Yuzey kalitesi, tolerans ve proses tekrar edilebilirligi odakli uretim akisi",
+      "qualityDesc": "Yüzey kalitesi, tolerans ve süreç tekrarlanabilirliği odaklı üretim akışı",
       "experience": "Deneyim",
-      "experienceDesc": "Kompozit uygulama ihtiyaclarini teknik gereksinim seviyesinde okuyabilen ekip",
+      "experienceDesc": "Kompozit uygulama ihtiyaçlarını teknik gereksinim seviyesinde okuyabilen ekip",
       "custom": "Özel Üretim",
-      "customDesc": "Parca, panel, muhafaza ve tasiyici bilesenlerde proje bazli ozel cozum",
+      "customDesc": "Parça, panel, muhafaza ve taşıyıcı bileşenlerde proje bazlı özel çözüm",
       "delivery": "Hızlı Teslimat",
-      "deliveryDesc": "Numune, revizyon ve teslim planini basindan netlestiren is akisi"
+      "deliveryDesc": "Numune, revizyon ve teslim planını başından netleştiren iş akışı",
+      "innovation": "Teknoloji",
+      "innovationDesc": "Vakum infüzyon, RTM ve elle yatırma dahil süreç seçimine mühendislik güdümlü yaklaşım",
+      "certification": "Kalite Güvencesi",
+      "certificationDesc": "Süreç takip, sapma yönetimi ve seri üretim öncesi numune doğrulama akışı"
     },
     "gallery": {
       "title": "Galeri",
-      "subtitle": "Uretim altyapimiz, kaliplama sureclerimiz ve tamamlanan uygulamalardan secilen gorseller",
+      "subtitle": "Üretim altyapımız, kalıplama süreçlerimiz ve tamamlanan uygulamalardan seçilen görseller.",
       "sectionLabel": "Görseller"
     },
     "references": {
-      "title": "Guven ve Referanslar",
-      "subtitle": "Kurumsal is akisi, tekrarli tedarik disiplini ve proje sureci yonetimi bekleyen musteriler icin olusturdugumuz is birlikleri",
+      "title": "Güven ve Referanslar",
+      "subtitle": "Kurumsal iş akışı, tekrarlı tedarik disiplini ve proje süreci yönetimi bekleyen müşteriler için oluşturduğumuz iş birlikleri.",
       "sectionLabel": "Referanslar",
-      "cta": "Tum referanslari incele"
+      "cta": "Tüm referansları incele"
     },
     "blog": {
       "title": "Öne Çıkan İçerik",
@@ -130,7 +146,7 @@
       "spotlightBodyPrimary": "Karbon fiber; yüksek mukavemet, düşük ağırlık ve boyutsal kararlılık gerektiren uygulamalarda öne çıkan kompozit takviye malzemelerinden biridir. Havacılık, otomotiv, savunma, endüstriyel ekipman ve özel makine bileşenlerinde hafiflik ile dayanım dengesini kurmak için tercih edilir.",
       "spotlightBodySecondary": "Doğru reçine sistemi, katman yerleşimi, yüzey beklentisi ve üretim prosesi birlikte ele alınmadığında malzemenin teorik avantajları sahaya aynı ölçüde yansımaz. Bu nedenle karbon fiber seçimi yalnızca malzeme tercihi değil, aynı zamanda uygulama ve proses kararıdır.",
       "insightLabel": "Bu yazıda ne var?",
-      "insightText": "Teknik kapsam, uygulama etkisi ve karar verirken dikkat edilmesi gereken noktalar",
+      "insightText": "Teknik kapsam, uygulama etkisi ve karar verirken dikkat edilmesi gereken noktalar hakkında özlü bir bakış açısı.r",
       "archiveLabel": "Diğer İçerikler",
       "archiveSubtitle": "Malzeme seçimi, üretim yöntemi ve uygulama kararlarını destekleyen diğer teknik içerikler"
     },
@@ -142,6 +158,155 @@
       "success": "Başarıyla abone oldunuz!",
       "error": "Bir hata oluştu, lütfen tekrar deneyin.",
       "privacyNote": "Spam yok. Endüstriyel düzeyde gizlilik."
+    },
+    "stats": {
+      "ariaLabel": "İstatistikler",
+      "yoeNumber": "15+",
+      "yoeLabel": "Yıl kompozit deneyimi",
+      "projectsNumber": "500+",
+      "projectsLabel": "Teslim edilen proje parçası",
+      "standardNumber": "AS9100",
+      "standardLabel": "Hassas üretim standardı",
+      "certNumber": "ISO 9001",
+      "certLabel": "Süreç ve kalite disiplini"
+    },
+    "materials": {
+      "sectionLabel": "Malzeme Mimarisi",
+      "title": "Doğru laminat yapısını uygulamanıza göre seçin",
+      "subtitle": "Karbon fiber ve CTP kompozit çözümlerini malzeme, ağırlık, rijitlik ve seri üretim gereksinimine göre konumlandırıyoruz.",
+      "carbon": {
+        "name": "Karbon Fiber",
+        "description": "Yüksek rijitlik, düşük ağırlık ve premium yüzey beklentisi olan muhafaza, panel ve OEM parçalarda tercih edilen performans odaklı yapıdır.",
+        "specs": {
+          "tensile": {
+            "label": "Çekme Mukavemeti",
+            "value": "600–1500 MPa"
+          },
+          "density": {
+            "label": "Yoğunluk",
+            "value": "1,5–1,6 g/cm³"
+          },
+          "modulus": {
+            "label": "Elastisite Modülü",
+            "value": "70–120 GPa"
+          },
+          "thermal": {
+            "label": "Termal Kararlılık",
+            "value": "Yüksek"
+          }
+        }
+      },
+      "frp": {
+        "name": "Cam Elyaf / CTP",
+        "description": "Kimyasal dayanım, saha ömrü ve maliyet dengesi arayan tank, panel, gövde ve dış ortam uygulamaları için çok yönlü kompozit altyapı.",
+        "specs": {
+          "tensile": {
+            "label": "Çekme Mukavemeti",
+            "value": "200–900 MPa"
+          },
+          "density": {
+            "label": "Yoğunluk",
+            "value": "1,8–2,0 g/cm³"
+          },
+          "modulus": {
+            "label": "Elastisite Modülü",
+            "value": "20–45 GPa"
+          },
+          "thermal": {
+            "label": "Termal Kararlılık",
+            "value": "Orta-Yüksek"
+          }
+        }
+      }
+    },
+    "process": {
+      "sectionLabel": "İş Akışı",
+      "title": "Prototipten Seriye",
+      "subtitle": "Numune doğrulama, revizyon ve seri üretim geçişini tek bir koordineli akışla yönetiyoruz.",
+      "steps": {
+        "design": {
+          "title": "Teknik Analiz",
+          "body": "Uygulama gereksinimleri, çalışma koşulları ve malzeme seçimi belirlenir."
+        },
+        "mold": {
+          "title": "Kalıp ve Prototip",
+          "body": "Proje bazlı kalıp tasarımı ve ilk numune üretimi gerçekleştirilir."
+        },
+        "production": {
+          "title": "Üretim",
+          "body": "Vakum infüzyon veya elle yatırma ile tekrarlanabilir seri üretim."
+        },
+        "quality": {
+          "title": "Kalite Kontrol",
+          "body": "Boyutsal kontrol, yüzey kalitesi ve süreç sapma analizi uygulanır."
+        },
+        "delivery": {
+          "title": "Teslimat",
+          "body": "Paketleme, dokümantasyon ve zamanında teslimat planlanır."
+        }
+      }
+    },
+    "industries": {
+      "sectionLabel": "Sektörler",
+      "title": "Hizmet Verdiğimiz Sektörler",
+      "subtitle": "Savunmadan enerjiye, peyzajdan depolamaya geniş bir sektör yelpazesinde kompozit çözümler sunuyoruz.",
+      "items": {
+        "defense": {
+          "title": "Savunma",
+          "description": "Yapısal ve koruyucu kompozit parçalar"
+        },
+        "energy": {
+          "title": "Enerji",
+          "description": "Kimyasal dirençli tank ve panel sistemleri"
+        },
+        "landscaping": {
+          "title": "Peyzaj",
+          "description": "Hafif ve dayanıklı dış mekân çözümleri"
+        },
+        "storage": {
+          "title": "Depolama",
+          "description": "Endüstriyel muhafaza ve gövde bileşenleri"
+        },
+        "custom": {
+          "title": "Özel Proje",
+          "description": "İhtiyaca özel mühendislik tasarımı"
+        }
+      }
+    },
+    "testimonial": {
+      "quote": "B2B projelerimizde kompozit parça üretiminde aradığımız mühendislik disiplini ve tekrarlanabilir kaliteyi MOE ile yakaladık.",
+      "attribution": "Proje Müdürü, Savunma Grubu"
+    },
+    "advantages": {
+      "sectionLabel": "Avantajlar",
+      "title": "Neden Kompozit?",
+      "subtitle": "Geleneksel malzemelerin sınırlarını aşan yüksek performanslı çözümler.",
+      "items": {
+        "performance": {
+          "title": "Yüksek Performans",
+          "description": "Çeliğin dayanımını, alüminyumun hafifliğini bir arada sunan kompozit yapılar endüstriyel uygulamalarda üstün performans sağlar."
+        },
+        "durability": {
+          "title": "Uzun Ömür",
+          "description": "Korozyon ve yorulma direnci sayesinde ağır koşullarda yıllarca güvenilir çalışma ömrü sunar."
+        },
+        "design": {
+          "title": "Tasarım Özgürlüğü",
+          "description": "Karmaşık geometriler ve özel kalıp süreçleriyle standart imalatın ulaşamadığı formlara erişim sağlar."
+        },
+        "thermal": {
+          "title": "Isıl Dayanım",
+          "description": "Yüksek sıcaklık ortamlarında yapısal bütünlüğünü korur; zorlu endüstriyel koşullar için ideal seçimdir."
+        },
+        "longevity": {
+          "title": "Düşük Bakım",
+          "description": "Metal alternatiflere kıyasla minimun bakım gereksinimi ile toplam sahip olma maliyetini önemli ölçüde azaltır."
+        },
+        "sustainability": {
+          "title": "Sürdürülebilirlik",
+          "description": "Hafif yapısı enerji tüketimini düşürür; uzun ürün ömrü atık miktarını azaltarak çevre dostu üretim destekler."
+        }
+      }
     }
   },
   "products": {
@@ -153,51 +318,53 @@
     "noProducts": "Bu kategoride henüz ürün bulunmuyor.",
     "specs": "Teknik Özellikler",
     "requestOffer": "Bu Ürün İçin Teklif Al",
+    "detailEyebrow": "Ürün detayı",
+    "technicalScope": "Teknik Kapsam",
     "solutionCategories": {
-      "planters": "Peyzaj ve Kent Ekipmanlari",
-      "tanks": "Depo ve Tank Cozumleri",
-      "coffin": "Defin Grubu Urunleri",
+      "planters": "Peyzaj ve Kent Ekipmanları",
+      "tanks": "Depo ve Tank Çözümleri",
+      "coffin": "Defin Grubu Ürünleri",
       "custom": "Ozel B2B Imalat"
     },
     "b2b": {
       "catalogEyebrow": "B2B katalog",
-      "catalogTitle": "Seri uretim, ozel olcu ve teknik sartnameye gore parca ihtiyaciniz mi var?",
-      "catalogBody": "Katalogdaki her urun hatti; malzeme, proses, miktar ve termin icin proje bazli degerlendirilir. Teklif ve muhendislik gorusu icin dogrudan iletisime gecebilirsiniz.",
+      "catalogTitle": "Seri üretim, özel ölçü ve teknik şartnameye göre parça ihtiyacınız mı var?",
+      "catalogBody": "Katalogdaki her ürün hattı; malzeme, süreç, miktar ve termin için proje bazlı değerlendirmeye açıktır.",
       "requestQuote": "Teklif talep et",
-      "talkToEngineering": "Muhendislik ile gorus",
-      "detailEyebrow": "Teknik netlestirme",
-      "detailTitle": "Tolerans, yuzey veya uygulama ortami hakkinda sorunuz mu var?",
-      "detailBody": "Bu urun sayfasini referans gostererek iletisim formundan yazin; teknik ekibimiz uygunluk ve alternatif proses secenekleriyle donus yapar.",
+      "talkToEngineering": "Mühendislik ile görüş",
+      "detailEyebrow": "Teknik netleştirme",
+      "detailTitle": "Tolerans, yüzey veya uygulama ortamı hakkında sorunuz mu var?",
+      "detailBody": "Bu ürün sayfasını referans göstererek iletişim formundan yazın; teknik ekibimiz detaylı değerlendirme yapar.",
       "reliability": {
-        "title": "Uretim disiplini",
+        "title": "Üretim disiplini",
         "desc": "Tekrarlanabilir B2B teslim beklentileriyle hizali uretim ve kalite kontrol."
       },
       "engineering": {
-        "title": "Muhendislik destegi",
-        "desc": "Cizim, kalip stratejisi ve malzeme secimi icin uygulama odakli rehberlik."
+        "title": "Mühendislik desteği",
+        "desc": "Çizim, kalıp stratejisi ve malzeme seçimi için uygulama odaklı rehberlik."
       },
       "speed": {
         "title": "Termin odağı",
-        "desc": "Numune, revizyon ve seri uretime gecis icin net kilometre taslari."
+        "desc": "Numune, revizyon ve seri üretime geçiş için net kilometre taşları."
       },
       "logistics": {
-        "title": "Ihracata uygun sevkiyat",
+        "title": "İhracata uygun sevkiyat",
         "desc": "Sinir otesi B2B gonderimlere uygun paketleme ve dokumantasyon."
       }
     }
   },
   "gallery": {
     "title": "Galeri",
-    "description": "Uretim tesisimiz, kaliplama ve montaj sureclerimiz, tamamlanan proje detaylari ve uygulama gorselleri.",
+    "description": "Üretim tesisimiz, kalıplama ve montaj süreçlerimiz, tamamlanan proje detayları ve ürün görselleri.",
     "viewAll": "Tüm Görseller",
     "noGalleries": "Henüz galeri bulunmuyor."
   },
   "references": {
     "title": "Referanslar",
-    "description": "Kurumsal is birlikleri, uygulama tipleri ve tekrarli uretim disiplinimizi yansitan referans seckisi.",
-    "noReferences": "Henuz yayinlanmis referans bulunmuyor.",
-    "viewWebsite": "Web sitesini ac",
-    "viewAll": "Tum referanslari gor",
+    "description": "Kurumsal iş birlikleri, uygulama tipleri ve tekrarlı üretim disiplinimizi yansıtan referanslar.",
+    "noReferences": "Henüz yayınlanmış referans bulunmuyor.",
+    "viewWebsite": "Web sitesini aç",
+    "viewAll": "Tüm referansları gör",
     "trustLabel": "Guven"
   },
   "solutions": {
@@ -209,7 +376,8 @@
     "empty": "Henüz yayınlanmış çözüm sayfası yok. Admin panelden custom_pages ile ekleyebilirsiniz.",
     "ctaOffer": "Projeniz için teklif alın",
     "detailCtaTitle": "Bu çözüm hattı projenize uyuyor mu?",
-    "detailCtaDescription": "Ölçü, miktar, termin ve teknik şartnamenizi paylaşın; mühendislik değerlendirmesi ve teklif için sizi yönlendirelim."
+    "detailCtaDescription": "Ölçü, miktar, termin ve teknik şartnamenizi paylaşın; mühendislik değerlendirmesi ve teklif için sizi yönlendirelim.",
+    "detailHeroEyebrow": "Mühendislik çözümü"
   },
   "blog": {
     "title": "Blog",
@@ -237,7 +405,7 @@
     },
     "share": {
       "label": "Paylaş",
-      "copyLink": "Linki Kopyala",
+      "copyLink": "Bağlantıyı Kopyala",
       "copied": "Blog linki kopyalandı.",
       "copyError": "Link kopyalanamadı.",
       "buttonTitle": "Paylaş:"
@@ -245,7 +413,7 @@
   },
   "contact": {
     "title": "İletişim",
-    "description": "Urun secimi, teknik uygunluk, numune talebi ve proje planlamasi icin ekibimizle iletisime gecin; uygulamaniza uygun malzeme, proses ve termin yolunu birlikte netlestirelim.",
+    "description": "Ürün seçimi, teknik uygunluk, numune talebi ve proje planlaması için ekibimizle iletişime geçin.",
     "label": "Diyalog",
     "officeLabel": "Ofis",
     "features": {
@@ -255,6 +423,7 @@
     },
     "form": {
       "title": "Mesaj Gönderin",
+      "subtitle": "Proje detaylarınızı paylaşmanız yeterli — gerisi bize kalıyor",
       "namePlaceholder": "Adınız Soyadınız",
       "emailPlaceholder": "ornek@firma.com",
       "phonePlaceholder": "+90 5XX XXX XX XX",
@@ -273,39 +442,70 @@
       "hours": "Çalışma Saatleri"
     },
     "response": {
-      "title": "Iletisim Sureci",
-      "accent": "Taahhudumuz",
+      "title": "İletişim Süreci",
+      "accent": "Taahhüdümüz",
       "items": {
-        "one": "Talebinizi inceliyor; teknik kapsam, kullanim ortami, miktar ve kritik performans beklentilerini netlestiriyoruz.",
-        "two": "Gerekirse malzeme, proses, tolerans, cizim veya numune ihtiyacina dair ek bilgi talep ediyoruz.",
-        "three": "Uygun urun, numune ya da teklif yonlendirmesini acik termin beklentisiyle en kisa surede paylasiyoruz."
+        "one": "Talebinizi inceliyoruz; teknik kapsam, kullanım ortamı, miktar ve kritik performans kriterlerini netleştiriyoruz.",
+        "two": "Gerekirse malzeme, süreç, tolerans, çizim veya numune ihtiyacına dair ek bilgi talep ediyoruz.",
+        "three": "Uygun ürün, numune ya da teklif yönlendirmesini açık termin beklentisiyle en kısa sürede iletiyoruz."
       }
     },
+    "homeTeaser": {
+      "title": "Tam proje formu",
+      "body": "İletişim sayfasında çizim, şartname ve miktar beklentilerinizi ekleyin. Ekibimiz teknik kapsam değerlendirmesiyle geri döner.",
+      "cta": "İletişim formunu aç"
+    },
     "faq": {
-      "title": "Sik sorulan sorular",
+      "title": "Sık Sorulan Sorular",
       "intro": "B2B kompozit uretim ve teklif surecimize dair kisa yanitlar.",
-      "q1": "Minimum siparis adedi (MOQ) var mi?",
-      "a1": "MOQ; parca geometrisi, kalip ihtiyaci, malzeme ve proses tipine gore degisir. Teknik cizim veya sartname ile iletisim formundan yazdiginizda proje bazli degerlendiririz.",
-      "q2": "Numune uretimi ne kadar surer?",
-      "a2": "Karmasiklik, yuzey beklentisi ve mevcut kalip durumuna gore degisir. Talebinizi aldiktan sonra kabaca termin araligi ve sonraki adimlari paylasiyoruz.",
-      "q3": "Hangi malzemelerde calisiyorsunuz?",
+      "q1": "Minimum sipariş adedi (MOQ) var mı?",
+      "a1": "MOQ; parça geometrisi, kalıp ihtiyacı, malzeme ve süreç tipine göre değişir. Talebinizi iletin, değerlendirelim.",
+      "q2": "Numune üretimi ne kadar sürer?",
+      "a2": "Karmaşıklık, yüzey beklentisi ve mevcut kalıp durumuna göre değişir. Talebinizi iletince net bir süreç takvimi sunuyoruz.",
+      "q3": "Hangi malzemelerde çalışıyorsunuz?",
       "a3": "Karbon fiber, CTP/FRP, cam elyaf ve hibrit takviye yapilari ile panel, profil, muhafaza ve ozel parca hatlarinda destek veriyoruz.",
-      "q4": "Teknik cizim formatlari neleri kabul edersiniz?",
-      "a4": "STEP, IGES, DXF/DWG ve PDF sartnameler yaygin olarak kullanilir. Dosyalari teklif veya iletisim akisiyla paylasabilirsiniz.",
-      "q5": "Ihracat ve lojistik destegi sunuyor musunuz?",
+      "q4": "Teknik çizim formatları olarak neleri kabul ediyorsunuz?",
+      "a4": "STEP, IGES, DXF/DWG ve PDF şartnameler yaygın olarak kullanılır. Dosyaları teklifle birlikte paylaşabilirsiniz.",
+      "q5": "İhracat ve lojistik desteği sunuyor musunuz?",
       "a5": "B2B sevkiyatlar icin paketleme ve dokumantasyon tarafinda ihracata uygun duzenlemeler yapilabilir; proje bazinda netlestirilir."
     }
   },
   "offer": {
     "title": "Teklif Talebi",
-    "description": "Malzeme tipi, olcu, adet, termin ve uygulama kosullarina gore projenize ozel teklif, proses yonlendirmesi ve uretim yaklasimi olusturalim.",
+    "description": "Malzeme tipi, ölçü, adet, termin ve uygulama koşullarına göre projenize özel teklif alın.",
     "benefits": {
-      "title": "Teklifte Neleri Netlestiriyoruz?",
+      "title": "Teklifte Neleri Netleştiriyoruz?",
       "items": {
         "one": "Malzeme secimi: karbon fiber, CTP, cam elyaf veya hibrit cozumler",
-        "two": "Uretim rotasi: kaliplama, panel, profil, boru ya da ozel parca prosesi",
-        "three": "Miktar, termin, yuzey beklentisi, kalite ve lojistik planlama"
+        "two": "Üretim rotası: kalıplama, panel, profil, boru ya da özel parça süreci",
+        "three": "Miktar, termin, yüzey beklentisi, kalite ve lojistik planlama"
       }
+    },
+    "summary": {
+      "title": "Neden Biz?",
+      "items": {
+        "one": {
+          "title": "Mühendislik Desteği",
+          "body": "Malzeme seçiminden üretim rotasına, toleranslardan yüzey kalitesine kadar teknik gereksinimlerinizi birlikte netleştiriyoruz."
+        },
+        "two": {
+          "title": "Hızlı Prototip",
+          "body": "Numune ve prototip aşamasını kısa sürede tamamlayarak revizyona açık bir süreç sunuyoruz."
+        },
+        "three": {
+          "title": "Seri Üretim",
+          "body": "Onaylanan prototipten tutarlı seri üretime geçiş için ölçeklenebilir bir proses yapısı kuruyoruz."
+        }
+      }
+    },
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "q1": "Teklif süreci ne kadar sürer?",
+      "a1": "Proje detaylarına bağlı olarak teknik incelememizi genellikle 1-3 iş günü içinde tamamlar, ön teklifi iletiyoruz.",
+      "q2": "Küçük miktarlarda sipariş verebilir miyim?",
+      "a2": "Evet. Numune, prototip ve küçük seri üretim taleplerine de yanıt veriyoruz; minimum adet proje türüne göre değerlendiriliyor.",
+      "q3": "Teknik çizim olmadan teklif alabilir miyim?",
+      "a3": "Evet. Teknik çizim olmasa da boyut, kullanım koşulları ve adet bilgisi ile başlayabiliriz; gerekirse teknik çizim sürecinde de destek sağlıyoruz."
     },
     "form": {
       "productInterest": "İlgilenilen Ürün/Hizmet",
@@ -325,53 +525,54 @@
     "intro": "Ekibimiz; hafiflik, dayanim, kimyasal direnc, yuzey kalitesi ve proses verimliligi hedeflerini birlikte degerlendirerek farkli sektorler icin kompozit bilesenler gelistirir.",
     "label": "Kurumsal",
     "sections": {
-      "expertiseTitle": "Uzmanlik Alanlarimiz",
+      "expertiseTitle": "Ne Yapıyoruz",
       "expertiseItems": {
-        "one": "Karbon fiber ve cam elyaf takviyeli ozel urun ve alt bilesen gelistirme",
-        "two": "Panel, profil, kapak, muhafaza ve endustriyel tasiyici parcalar",
-        "three": "Kalip, prototip ve seri uretim gecisi icin proses kurgusu"
+        "one": "Karbon fiber ve cam elyaf takviyeli özel ürün ve alt komponent geliştirme",
+        "two": "Panel, profil, kapak, muhafaza ve endüstriyel taşıyıcı parçalar",
+        "three": "Kalıplama ve prototipten tekrarlanabilir üretime kadar süreç kurulumu"
       },
-      "processTitle": "Calisma Modelimiz",
+      "processTitle": "Nasıl Çalışıyoruz",
       "processItems": {
-        "one": "Teknik ihtiyaci ve kullanim kosullarini netlestirme",
-        "two": "Malzeme ve uretim yontemi secimi",
-        "three": "Numune, revizyon ve seri uretim planlama"
+        "one": "Teknik ihtiyaç ve çalışma koşullarının belirlenmesi",
+        "two": "Doğru malzeme yığını ve üretim yönteminin seçimi",
+        "three": "Numune, revizyon ve üretim aşamalarının planlanması"
       },
-      "sectorsTitle": "Hizmet Verdigimiz Alanlar",
+      "sectorsTitle": "Hizmet Verdiğimiz Sektörler",
       "sectorsItems": {
-        "one": "Makine ve ekipman ureticileri",
-        "two": "Savunma, otomotiv ve rayli sistem tedarik zinciri",
-        "three": "Altyapi, enerji ve ozel proje ekipleri"
+        "one": "Makine ve ekipman üreticileri",
+        "two": "Savunma, otomotiv ve raylı sistem tedarik zincirleri",
+        "three": "Altyapı, enerji ve özel proje ekipleri"
       },
       "stats": {
         "experience": "10+ Yıl",
-        "expLabel": "Sektörel Birikim",
+        "expLabel": "Sektör Deneyimi",
         "projects": "250+ Proje",
-        "projectsLabel": "Tamamlanan Projeler",
+        "projectsLabel": "Başarıyla Teslim Edildi",
         "capacity": "Dinamik Kapasite",
-        "capacityLabel": "Üretim Potansiyeli"
+        "capacityLabel": "Üretim Gücü"
       },
       "certifications": {
         "title": "Kalite ve Standartlar",
         "items": {
-          "one": "ISO 9001:2015 Kalite Yonetim Sistemi",
-          "two": "Teknik Sartname ve Tolerans Uyumlulugu",
-          "three": "Malzeme ve Proses Sertifikasyonu",
-          "four": "B2B Proje Yonetim Disiplini"
+          "one": "ISO 9001:2015 Kalite Yönetimi",
+          "two": "Teknik Uyum ve Toleranslar",
+          "three": "Malzeme ve Süreç Takibi",
+          "four": "B2B Proje Disiplini"
         }
       }
     },
     "panels": {
       "expertiseAccent": "Temel yetkinlikler",
-      "processAccent": "Cevik is akisi",
+      "processAccent": "Çevik iş akışı",
       "certAccent": "Yetkili operasyonlar"
     },
     "sidebar": {
-      "partnershipTitle": "Is birligi",
+      "partnershipTitle": "İş birliği",
       "partnershipLead": "Kompozit projenizi baslatmaya hazir misiniz?",
       "partnershipCta": "Teknik teklif talep edin",
-      "sectorsHeading": "Uzman oldugumuz sektorler"
-    }
+      "sectorsHeading": "Uzman olduğumuz sektörler"
+    },
+    "tagline": "Bilimin zanaatla buluştuğu nokta"
   },
   "legal": {
     "title": "Yasal",

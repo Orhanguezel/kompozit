@@ -1,29 +1,72 @@
-'use client';
+import 'server-only';
 
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+
+import { API_BASE_URL } from '@/lib/utils';
+import { normalizeRichContent } from '@/lib/rich-content';
 import { ContentPageHeader } from '@/components/patterns/ContentPageHeader';
 import { InfoListPanel } from '@/components/patterns/InfoListPanel';
-import { JsonLd, organizationJsonLd, localizedPath, localizedUrl, jsonld } from '@/seo';
+import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl, organizationJsonLd } from '@/seo';
+import { Reveal } from '@/components/motion/Reveal';
 
-export default function AboutPage({
-  params: { locale },
-  page,
-  pageContent,
+async function fetchAboutCustomPage(locale: string) {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/custom_pages/by-slug/${encodeURIComponent('about')}?locale=${locale}`,
+      { next: { revalidate: 300 } },
+    );
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function generateMetadata({
+  params,
 }: {
-  params: { locale: string };
-  page: any;
-  pageContent: string;
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const page = await fetchAboutCustomPage(locale);
+  const t = await getTranslations({ locale, namespace: 'about' });
+  const title = page?.meta_title || page?.title || t('title');
+  const description =
+    page?.meta_description || page?.description || page?.summary || t('description');
+  return buildPageMetadata({
+    locale,
+    pathname: '/about',
+    title,
+    description,
+  });
+}
+
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
 }) {
-  const t = useTranslations();
+  const { locale } = await params;
+  const t = await getTranslations({ locale });
+  const page = await fetchAboutCustomPage(locale);
+  const pageContent = page?.content != null ? normalizeRichContent(page.content) : '';
+  const intro =
+    typeof page?.summary === 'string' && page.summary.trim()
+      ? page.summary
+      : typeof page?.description === 'string' && page.description.trim()
+        ? page.description
+        : t('about.intro');
+  const headerTitle = typeof page?.title === 'string' && page.title.trim() ? page.title : t('about.title');
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-muted)] relative overflow-hidden">
-      <div className="surface-dark-shell carbon-mesh absolute inset-0 opacity-[0.03] pointer-events-none" />
+    <main className="relative bg-[var(--carbon)]">
+      <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
       
       <div className="section-py relative z-10">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
             data={jsonld.graph([
               jsonld.org(
@@ -32,116 +75,145 @@ export default function AboutPage({
                 }),
               ),
               jsonld.aboutPage({
-                name: t('about.title'),
+                name: headerTitle,
                 description: t('about.description'),
                 url: localizedUrl(locale, '/about'),
               }),
             ])}
           />
-          <ContentPageHeader
-            title={page?.title || t('about.title')}
-            description={t('about.description')}
-            label={t('about.label')}
-            features={[
-              t('about.sections.expertiseItems.one'),
-              t('about.sections.expertiseItems.two'),
-              t('about.sections.expertiseItems.three'),
-            ]}
-          />
+          
+          <Reveal>
+            <div className="mb-20">
+              <span className="section-label-cc">{t('about.label')}</span>
+              <h1 className="section-title-cc">{headerTitle}</h1>
+              <p className="section-subtitle-cc">{t('about.description')}</p>
+            </div>
+          </Reveal>
 
-          {/* Stats Bar */}
-          <div className="mt-16 grid gap-4 grid-cols-2 lg:grid-cols-3 mb-20">
-             <div className="glass-premium p-8 rounded-[2rem] border-white/5 bg-white/[0.02] text-center">
-                <p className="text-4xl font-bold tracking-tighter text-brand mb-2">{t('about.sections.stats.experience')}</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">{t('about.sections.stats.expLabel')}</p>
-             </div>
-             <div className="glass-premium p-8 rounded-[2rem] border-white/5 bg-white/[0.02] text-center">
-                <p className="text-4xl font-bold tracking-tighter text-brand mb-2">{t('about.sections.stats.projects')}</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">{t('about.sections.stats.projectsLabel')}</p>
-             </div>
-             <div className="glass-premium p-8 rounded-[2rem] border-white/5 bg-white/[0.02] text-center col-span-2 lg:col-span-1">
-                <p className="text-4xl font-bold tracking-tighter text-brand mb-2">{t('about.sections.stats.capacity')}</p>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-60">{t('about.sections.stats.capacityLabel')}</p>
-             </div>
+          {/* Stats Bar (Industrial Style) */}
+          <div className="industrial-grid-cc mb-24 sm:grid-cols-2 lg:grid-cols-3">
+             <Reveal delay={100} className="grid-item-cc p-12 text-center group">
+               <p className="font-display text-[3.5rem] leading-none text-[var(--gold)] transition-transform group-hover:scale-110">
+                 {t('about.sections.stats.experience')}
+               </p>
+               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
+                 {t('about.sections.stats.expLabel')}
+               </p>
+             </Reveal>
+             <Reveal delay={200} className="grid-item-cc p-12 text-center group">
+               <p className="font-display text-[3.5rem] leading-none text-[var(--gold)] transition-transform group-hover:scale-110">
+                 {t('about.sections.stats.projects')}
+               </p>
+               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
+                 {t('about.sections.stats.projectsLabel')}
+               </p>
+             </Reveal>
+             <Reveal delay={300} className="grid-item-cc p-12 text-center group sm:col-span-2 lg:col-span-1">
+               <p className="font-display text-[3.5rem] leading-none text-[var(--gold)] transition-transform group-hover:scale-110">
+                 {t('about.sections.stats.capacity')}
+               </p>
+               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
+                 {t('about.sections.stats.capacityLabel')}
+               </p>
+             </Reveal>
           </div>
 
-          <div className="grid gap-12 lg:grid-cols-[1fr_minmax(24rem,0.8fr)]">
-            {/* Main Content Rail */}
-            <div className="space-y-16">
-              <section className="prose prose-theme prose-lg max-w-none">
-                <p className="lead font-medium text-[var(--color-text-secondary)] opacity-90 italic border-l-4 border-brand pl-8 py-2">
-                  {page?.intro || t('about.intro')}
-                </p>
-                {pageContent && (
-                   <div dangerouslySetInnerHTML={{ __html: pageContent }} className="mt-12" />
-                )}
-              </section>
+          <div className="grid gap-20 lg:grid-cols-[1fr_350px]">
+            <div className="space-y-20">
+              <Reveal>
+                <section className="prose prose-invert prose-lg max-w-none">
+                  <p className="font-serif text-[1.4rem] font-normal italic leading-snug text-[var(--gold)] border-l-2 border-[var(--gold)]/30 pl-10 py-2">
+                    {intro}
+                  </p>
+                  {pageContent ? (
+                    <div className="mt-16 text-[var(--silver)] font-light leading-relaxed space-y-6" dangerouslySetInnerHTML={{ __html: pageContent }} />
+                  ) : null}
+                </section>
+              </Reveal>
 
-              <div className="grid gap-8 sm:grid-cols-2">
-                <InfoListPanel
-                  title={t('about.sections.expertiseTitle')}
-                  items={[
-                    t('about.sections.expertiseItems.one'),
-                    t('about.sections.expertiseItems.two'),
-                    t('about.sections.expertiseItems.three'),
-                  ]}
-                  accentText="Core Capabilities"
-                />
-                <InfoListPanel
-                  title={t('about.sections.processTitle')}
-                  items={[
-                    t('about.sections.processItems.one'),
-                    t('about.sections.processItems.two'),
-                    t('about.sections.processItems.three'),
-                  ]}
-                  accentText="Agile Workflow"
-                />
+              <div className="grid gap-12 sm:grid-cols-2">
+                <Reveal delay={100}>
+                  <div className="p-10 border border-[var(--gold)]/10 bg-[var(--graphite)] backdrop-blur-sm">
+                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-[var(--white)] mb-8 border-b border-[var(--gold)]/10 pb-4">
+                      {t('about.sections.expertiseTitle')}
+                    </h3>
+                    <ul className="space-y-4">
+                       {[
+                         t('about.sections.expertiseItems.one'),
+                         t('about.sections.expertiseItems.two'),
+                         t('about.sections.expertiseItems.three'),
+                       ].map((item, i) => (
+                         <li key={i} className="flex gap-4 text-sm font-light text-[var(--silver)]">
+                           <span className="text-[var(--gold)] font-bold">◆</span>
+                           {item}
+                         </li>
+                       ))}
+                    </ul>
+                  </div>
+                </Reveal>
+
+                <Reveal delay={200}>
+                  <div className="p-10 border border-[var(--gold)]/10 bg-[var(--graphite)] backdrop-blur-sm">
+                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-[var(--white)] mb-8 border-b border-[var(--gold)]/10 pb-4">
+                      {t('about.sections.processTitle')}
+                    </h3>
+                    <ul className="space-y-4">
+                       {[
+                         t('about.sections.processItems.one'),
+                         t('about.sections.processItems.two'),
+                         t('about.sections.processItems.three'),
+                       ].map((item, i) => (
+                         <li key={i} className="flex gap-4 text-sm font-light text-[var(--silver)]">
+                           <span className="text-[var(--gold)] font-bold">◇</span>
+                           {item}
+                         </li>
+                       ))}
+                    </ul>
+                  </div>
+                </Reveal>
               </div>
-
-               <div className="pt-12 border-t border-white/5">
-                 <InfoListPanel
-                    title={t('about.sections.certifications.title')}
-                    items={Object.values(t.raw('about.sections.certifications.items') as Record<string, string>)}
-                    accentText="Authorized Operations"
-                  />
-               </div>
             </div>
 
-            {/* Sidebar Rail */}
-            <aside className="space-y-8">
-              <div className="sticky top-28 space-y-8">
-                <div className="glass-premium p-8 rounded-[2.5rem] border-brand/20 bg-brand/5">
-                   <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-brand mb-6">Partnership</h3>
-                   <p className="text-2xl font-bold tracking-tight mb-8">Ready to initiate a composite project?</p>
-                   <Link
-                      href={localizedPath(locale, '/contact')}
-                      className="btn-primary shimmer-btn glow-hover flex items-center justify-center gap-3 w-full py-4 rounded-xl font-bold"
-                   >
-                      Request a Technical Quote
-                      <ArrowRight className="size-5" />
-                   </Link>
+            <aside>
+              <Reveal delay={400} className="sticky top-32 space-y-8">
+                <div className="p-10 border border-[var(--gold)]/20 bg-[var(--gold)]/5">
+                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-[var(--gold)] mb-6">
+                    {t('about.sidebar.partnershipTitle')}
+                  </h3>
+                  <p className="font-display text-[1.8rem] leading-tight text-[var(--white)] mb-10">
+                    {t('about.sidebar.partnershipLead')}
+                  </p>
+                  <Link
+                    href={localizedPath(locale, '/contact')}
+                    className="hero-btn-primary shimmer-btn w-full justify-center"
+                  >
+                    {t('about.sidebar.partnershipCta')}
+                    <ArrowRight className="size-5" />
+                  </Link>
                 </div>
 
-                <div className="glass-premium p-8 rounded-[2.5rem] border-white/5 bg-white/[0.02]">
-                   <h3 className="text-sm font-bold uppercase tracking-[0.2em] mb-6">Expert Sectors</h3>
-                   <ul className="space-y-4">
-                      {[
-                        t('about.sections.sectorsItems.one'),
-                        t('about.sections.sectorsItems.two'),
-                        t('about.sections.sectorsItems.three'),
-                      ].map((sector, i) => (
-                        <li key={i} className="flex items-center gap-3 text-sm font-medium opacity-80">
-                           <div className="size-1.5 rounded-full bg-brand" />
-                           {sector}
-                        </li>
-                      ))}
-                   </ul>
+                <div className="p-10 border border-[var(--gold)]/10 bg-[var(--graphite)]">
+                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-[var(--white)] mb-8">
+                    {t('about.sidebar.sectorsHeading')}
+                  </h3>
+                  <ul className="space-y-5">
+                    {[
+                      t('about.sections.sectorsItems.one'),
+                      t('about.sections.sectorsItems.two'),
+                      t('about.sections.sectorsItems.three'),
+                    ].map((sector, i) => (
+                      <li key={i} className="flex items-center gap-4 text-xs font-bold uppercase tracking-[2px] text-[var(--silver)] group transition-colors hover:text-[var(--gold)]">
+                        <div className="size-1.5 bg-[var(--gold)]/40 transition-colors group-hover:bg-[var(--gold)]" />
+                        {sector}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
+              </Reveal>
             </aside>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

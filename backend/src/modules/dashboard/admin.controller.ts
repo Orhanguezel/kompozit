@@ -9,20 +9,23 @@ import { sql } from "drizzle-orm";
 
 // Aşağıdaki import'larda tablo isimlerini proje şemanla eşleştir:
 // İsimler %99 bunlara çok yakın; farklıysa sadece import satırlarını düzeltmen yeterli.
+// Lokal şemalar (routes/project.ts üzerinden sunulan veya farklı şema)
 import { products } from "@/modules/products/schema";
-import { categories } from "@/modules/categories/schema";
-import { subCategories} from "@/modules/subcategories/schema";
-import { contact_messages } from "@/modules/contact/schema";
-import { siteSettings } from "@/modules/siteSettings/schema";
-import { customPages } from "@/modules/customPages/schema";
-import { menuItems } from "@/modules/menuItems/schema";
-import { library } from "@/modules/library/schema";
-import { reviews } from "@/modules/review/schema";
-import { users } from "@/modules/auth/schema";
-import { offersTable } from '@/modules/offer/schema';
 import { storageAssets } from '@/modules/storage/schema';
 import { referencesTable } from '@/modules/references/schema';
 import { galleries } from '@/modules/gallery/schema';
+import { menuItems } from "@/modules/menuItems/schema";
+import { reviews } from "@/modules/review/schema";
+import { offersTable } from '@/modules/offer/schema';
+
+// Shared-backend şemaları
+import { categories } from "@agro/shared-backend/modules/categories/schema";
+import { subCategories } from "@agro/shared-backend/modules/subcategories/schema";
+import { contact_messages } from "@agro/shared-backend/modules/contact/schema";
+import { siteSettings } from "@agro/shared-backend/modules/siteSettings/schema";
+import { customPages } from "@agro/shared-backend/modules/customPages/schema";
+import { library } from "@agro/shared-backend/modules/library/schema";
+import { users } from "@agro/shared-backend/modules/auth/schema";
 
 type DashboardCountItem = {
   key: string;
@@ -30,13 +33,18 @@ type DashboardCountItem = {
   count: number;
 };
 
-// Generic COUNT(*) helper
-async function getCount(table: any): Promise<number> {
-  const rows = await db
-    .select({ c: sql<number>`COUNT(*)` })
-    .from(table)
-    .limit(1);
-  return Number(rows[0]?.c ?? 0);
+// Generic COUNT(*) helper — uses .then/.catch to avoid Bun+Drizzle thenable await issue
+function getCountSafe(table: any, log?: { warn: (o: unknown, m: string) => void }): Promise<number> {
+  return new Promise((resolve) => {
+    db.select({ c: sql<number>`COUNT(*)` })
+      .from(table)
+      .limit(1)
+      .then((rows: any[]) => resolve(Number(rows[0]?.c ?? 0)))
+      .catch((err: unknown) => {
+        log?.warn?.({ err }, "dashboard_count_skip");
+        resolve(0);
+      });
+  });
 }
 
 /**
@@ -63,8 +71,10 @@ export const getDashboardSummaryAdmin: RouteHandler = async (req, reply) => {
       { key: "gallery", label: "Galeri", table: galleries },
     ];
 
-    // Hepsini paralel say
-    const counts = await Promise.all(defs.map((d) => getCount(d.table)));
+    const settled = await Promise.allSettled(
+      defs.map((d) => getCountSafe(d.table, req.log)),
+    );
+    const counts = settled.map((r) => (r.status === "fulfilled" ? r.value : 0));
 
     const items: DashboardCountItem[] = defs.map((d, idx) => ({
       key: d.key,

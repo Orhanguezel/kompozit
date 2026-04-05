@@ -29,6 +29,24 @@ export type HomeValuePropsContent = {
   items: Array<{ key: string; title: string; description: string }>;
 };
 
+/** Bar metrics under hero (`home.stats` site_setting JSON). */
+export type HomeStatsBarContent = {
+  items: Array<{ value: string; label: string }>;
+};
+
+export type HomeAboutContent = {
+  label: string;
+  title: string;
+  tagline: string;
+  intro: string;
+  ctaLabel: string;
+};
+
+export type HomeTestimonialContent = {
+  quote: string;
+  attribution: string;
+};
+
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
@@ -126,20 +144,64 @@ function normalizeValueProps(value: unknown): HomeValuePropsContent | null {
   return { sectionLabel, title, subtitle, items };
 }
 
+function normalizeAbout(value: unknown): HomeAboutContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+  const about: HomeAboutContent = {
+    label: String(source.label ?? '').trim(),
+    title: String(source.title ?? '').trim(),
+    tagline: String(source.tagline ?? '').trim(),
+    intro: String(source.intro ?? '').trim(),
+    ctaLabel: String(source.ctaLabel ?? '').trim(),
+  };
+  return Object.values(about).every(isNonEmptyString) ? about : null;
+}
+
+function normalizeTestimonial(value: unknown): HomeTestimonialContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+  const quote = String(source.quote ?? '').trim();
+  const attribution = String(source.attribution ?? '').trim();
+  return isNonEmptyString(quote) && isNonEmptyString(attribution) ? { quote, attribution } : null;
+}
+
+function normalizeStatsBar(value: unknown): HomeStatsBarContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+
+  const items = asStringArray(source.items)
+    .map((item) => ({
+      value: String(item.value ?? item.number ?? '').trim(),
+      label: String(item.label ?? '').trim(),
+    }))
+    .filter((item) => isNonEmptyString(item.value) && isNonEmptyString(item.label));
+
+  return items.length === 4 ? { items } : null;
+}
+
 export async function fetchHomePageContent(locale: string): Promise<{
   hero: HomeHeroContent | null;
   metrics: HomeMetricsContent | null;
   valueProps: HomeValuePropsContent | null;
+  statsBar: HomeStatsBarContent | null;
+  testimonial: HomeTestimonialContent | null;
+  about: HomeAboutContent | null;
 }> {
-  const [heroRow, metricsRow, valuePropsRow] = await Promise.all([
+  const [heroRow, metricsRow, valuePropsRow, statsBarRow, testimonialRow, aboutRow] = await Promise.all([
     fetchSetting('home.hero', locale, { revalidate: 300 }),
     fetchSetting('home.metrics', locale, { revalidate: 300 }),
     fetchSetting('home.value_props', locale, { revalidate: 300 }),
+    fetchSetting('home.stats', locale, { revalidate: 300 }),
+    fetchSetting('home.testimonial', locale, { revalidate: 300 }),
+    fetchSetting('home.about', locale, { revalidate: 300 }),
   ]);
 
   return {
     hero: normalizeHero(heroRow?.value),
     metrics: normalizeMetrics(metricsRow?.value),
     valueProps: normalizeValueProps(valuePropsRow?.value),
+    statsBar: normalizeStatsBar(statsBarRow?.value),
+    testimonial: normalizeTestimonial(testimonialRow?.value),
+    about: normalizeAbout(aboutRow?.value),
   };
 }

@@ -7,22 +7,24 @@
 // - ✅ App Router paths + no inline styles
 // =============================================================
 
-'use client';
+"use client";
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { toast } from 'sonner';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+import type React from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-import type { CustomPageDto } from '@/integrations/shared';
-import { useLazyListCustomPagesAdminQuery } from '@/integrations/hooks';
+import { toast } from "sonner";
 
-import { AdminJsonEditor } from '@/app/(main)/admin/_components/common/AdminJsonEditor';
-import { AdminLocaleSelect } from '@/app/(main)/admin/_components/common/AdminLocaleSelect';
+import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
+import type { AdminLocaleOption } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
+import { AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { useLazyListCustomPagesAdminQuery } from "@/integrations/hooks";
+import type { CustomPageDto, CustomPageListAdminQueryParams } from "@/integrations/shared";
 
-import type { LocaleOption } from './custom-page-header';
-import { CustomPageMainColumn } from './custom-page-main-column';
-import { CustomPageSidebarColumn } from './custom-page-sidebar-column';
-import { CustomPageFormImageColumn } from './custom-page-form-image-column';
+import { CustomPageFormImageColumn } from "./custom-page-form-image-column";
+import type { LocaleOption } from "./custom-page-header";
+import { CustomPageMainColumn } from "./custom-page-main-column";
+import { CustomPageSidebarColumn } from "./custom-page-sidebar-column";
 
 /* ------------------------------------------------------------- */
 /*  Types                                                        */
@@ -56,7 +58,7 @@ export type CustomPageFormValues = {
 };
 
 export type CustomPageFormProps = {
-  mode: 'create' | 'edit';
+  mode: "create" | "edit";
   initialData?: CustomPageDto;
   initialModuleKey?: string;
   loading: boolean;
@@ -72,31 +74,31 @@ export type CustomPageFormProps = {
   onCancel?: () => void;
 };
 
-export type ContentImageSize = 'sm' | 'md' | 'lg' | 'full';
+export type ContentImageSize = "sm" | "md" | "lg" | "full";
 
 /* ------------------------------------------------------------- */
 /*  Helpers                                                      */
 /* ------------------------------------------------------------- */
 
 const norm = (v: unknown) =>
-  String(v ?? '')
+  String(v ?? "")
     .trim()
     .toLowerCase()
-    .replace('_', '-')
-    .split('-')[0]
+    .replace("_", "-")
+    .split("-")[0]
     .trim();
 
-const getLocaleFromDto = (dto?: CustomPageDto, fallback = 'de') => {
+const getLocaleFromDto = (dto?: CustomPageDto, fallback = "de") => {
   const raw = dto?.locale_resolved ?? fallback;
-  return norm(raw) || norm(fallback) || 'de';
+  return norm(raw) || norm(fallback) || "de";
 };
 
 const buildInitialValues = (
   initial: CustomPageDto | undefined,
   fallbackLocale: string | undefined,
-  initialModuleKey = '',
+  initialModuleKey = "",
 ): CustomPageFormValues => {
-  const safeLocale = norm(fallbackLocale || 'de') || 'de';
+  const safeLocale = norm(fallbackLocale || "de") || "de";
 
   if (!initial) {
     return {
@@ -107,19 +109,19 @@ const buildInitialValues = (
       module_key: initialModuleKey.trim(),
       is_published: false,
       featured: false,
-      title: '',
-      slug: '',
-      content: '',
+      title: "",
+      slug: "",
+      content: "",
 
-      featured_image: '',
-      featured_image_asset_id: '',
-      featured_image_alt: '',
+      featured_image: "",
+      featured_image_asset_id: "",
+      featured_image_alt: "",
 
-      summary: '',
-      meta_title: '',
-      meta_description: '',
+      summary: "",
+      meta_title: "",
+      meta_description: "",
 
-      tags: '',
+      tags: "",
 
       images: [],
       storage_image_ids: [],
@@ -127,9 +129,7 @@ const buildInitialValues = (
   }
 
   const tagsString =
-    Array.isArray(initial.tags) && initial.tags.length
-      ? initial.tags.join(', ')
-      : (initial.tags_raw ?? '');
+    Array.isArray(initial.tags) && initial.tags.length ? initial.tags.join(", ") : (initial.tags_raw ?? "");
 
   const resolvedLocale = getLocaleFromDto(initial, safeLocale);
 
@@ -138,33 +138,31 @@ const buildInitialValues = (
     page_id: initial.id,
 
     locale: resolvedLocale,
-    module_key: initial.module_key ?? '',
+    module_key: initial.module_key ?? "",
     is_published: !!initial.is_published,
     featured: !!initial.featured,
 
-    title: initial.title ?? '',
-    slug: initial.slug ?? '',
-    content: initial.content ?? initial.content_html ?? '',
+    title: initial.title ?? "",
+    slug: initial.slug ?? "",
+    content: initial.content ?? initial.content_html ?? "",
 
-    featured_image: initial.featured_image ?? '',
-    featured_image_asset_id: initial.featured_image_asset_id ?? '',
-    featured_image_alt: initial.featured_image_alt ?? '',
+    featured_image: initial.featured_image ?? "",
+    featured_image_asset_id: initial.featured_image_asset_id ?? "",
+    featured_image_alt: initial.featured_image_alt ?? "",
 
-    summary: initial.summary ?? '',
-    meta_title: initial.meta_title ?? '',
-    meta_description: initial.meta_description ?? '',
+    summary: initial.summary ?? "",
+    meta_title: initial.meta_title ?? "",
+    meta_description: initial.meta_description ?? "",
 
     tags: tagsString,
 
     images: Array.isArray(initial.images) ? initial.images : [],
-    storage_image_ids: Array.isArray(initial.storage_image_ids)
-      ? initial.storage_image_ids
-      : [],
+    storage_image_ids: Array.isArray(initial.storage_image_ids) ? initial.storage_image_ids : [],
   };
 };
 
-const buildContentImageHtml = (url: string, alt = '', size: ContentImageSize = 'lg'): string => {
-  const safeAlt = alt.replace(/"/g, '&quot;');
+const buildContentImageHtml = (url: string, alt = "", size: ContentImageSize = "lg"): string => {
+  const safeAlt = alt.replace(/"/g, "&quot;");
   return `
 <figure class="content-image-block content-image-${size}">
   <img src="${url}" alt="${safeAlt}" loading="lazy" />
@@ -190,40 +188,39 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
   onCancel,
 }) => {
   const t = useAdminT();
-  const safeDefaultLocale = norm(defaultLocale || 'de') || 'de';
+  const safeDefaultLocale = norm(defaultLocale || "de") || "de";
 
   const [values, setValues] = useState<CustomPageFormValues>(
     buildInitialValues(initialData, safeDefaultLocale, initialModuleKey),
   );
 
   const [slugTouched, setSlugTouched] = useState(false);
-  const [activeMode, setActiveMode] = useState<'form' | 'json'>('form');
+  const [activeMode, setActiveMode] = useState<"form" | "json">("form");
 
-  const [contentImagePreview, setContentImagePreview] = useState<string>('');
-  const [contentImageSize, setContentImageSize] = useState<ContentImageSize>('lg');
-  const [manualImageUrl, setManualImageUrl] = useState<string>('');
-  const [manualImageAlt, setManualImageAlt] = useState<string>('');
+  const [contentImagePreview, setContentImagePreview] = useState<string>("");
+  const [contentImageSize, setContentImageSize] = useState<ContentImageSize>("lg");
+  const [manualImageUrl, setManualImageUrl] = useState<string>("");
+  const [manualImageAlt, setManualImageAlt] = useState<string>("");
 
-  const [triggerListPages, { isLoading: isLocaleSwitchLoading }] =
-    useLazyListCustomPagesAdminQuery();
+  const [triggerListPages, { isLoading: isLocaleSwitchLoading }] = useLazyListCustomPagesAdminQuery();
 
   const localeReqSeq = useRef(0);
-  const pendingLocaleRef = useRef<string>('');
+  const pendingLocaleRef = useRef<string>("");
 
   useEffect(() => {
     if (!initialData) {
       setValues(buildInitialValues(undefined, safeDefaultLocale, initialModuleKey));
       setSlugTouched(false);
-      pendingLocaleRef.current = '';
+      pendingLocaleRef.current = "";
       return;
     }
 
     const incomingLocale = getLocaleFromDto(initialData, safeDefaultLocale);
-    const wantedLocale = norm(pendingLocaleRef.current || '');
+    const wantedLocale = norm(pendingLocaleRef.current || "");
 
-    if (mode === 'edit' && wantedLocale && incomingLocale !== wantedLocale) return;
+    if (mode === "edit" && wantedLocale && incomingLocale !== wantedLocale) return;
 
-    pendingLocaleRef.current = '';
+    pendingLocaleRef.current = "";
     setValues(buildInitialValues(initialData, safeDefaultLocale, initialModuleKey));
     setSlugTouched(false);
   }, [initialData, initialModuleKey, safeDefaultLocale, mode]);
@@ -237,17 +234,15 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
   const disabled = loading || saving;
 
   const handleChange =
-    (field: keyof CustomPageFormValues) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    (field: keyof CustomPageFormValues) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const val = e.target.value;
       setValues((prev) => ({ ...prev, [field]: val }) as CustomPageFormValues);
     };
 
-  const handleCheckboxChange =
-    (field: keyof CustomPageFormValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const checked = e.target.checked;
-      setValues((prev) => ({ ...prev, [field]: checked }) as CustomPageFormValues);
-    };
+  const handleCheckboxChange = (field: keyof CustomPageFormValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = e.target.checked;
+    setValues((prev) => ({ ...prev, [field]: checked }) as CustomPageFormValues);
+  };
 
   const handleLocaleChange = async (nextLocaleRaw: string) => {
     const nextLocale = norm(nextLocaleRaw || safeDefaultLocale) || safeDefaultLocale;
@@ -259,7 +254,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
 
     onLocaleChange?.(nextLocale);
 
-    if (mode === 'create' || !initialData) {
+    if (mode === "create" || !initialData) {
       setValues((prev) => ({ ...prev, locale: nextLocale }));
       return;
     }
@@ -276,35 +271,38 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
     setValues((prev) => ({ ...prev, locale: nextLocale }));
 
     try {
-      const res = await triggerListPages({
+      const listQuery: CustomPageListAdminQueryParams = {
         locale: nextLocale || undefined,
         limit: 200,
         offset: 0,
-      } as any).unwrap();
+      };
+      const res = await triggerListPages(listQuery).unwrap();
 
       if (mySeq !== localeReqSeq.current) return;
 
       const items: CustomPageDto[] = res?.items ?? [];
-      const match = items.find((item) => String(item?.id || '') === String(baseId));
+      const match = items.find((item) => String(item?.id || "") === String(baseId));
 
       if (match) {
         const nextValues = buildInitialValues(match, safeDefaultLocale);
         nextValues.locale = nextLocale;
         setValues(nextValues);
         setSlugTouched(false);
-        pendingLocaleRef.current = '';
+        pendingLocaleRef.current = "";
       } else {
-        toast.info(t('admin.customPage.form.localeRecordNotFound'));
+        toast.info(t("admin.customPage.form.localeRecordNotFound"));
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (mySeq !== localeReqSeq.current) return;
-      const status = err?.status ?? err?.originalStatus;
+      const status =
+        typeof err === "object" && err !== null
+          ? ((err as { status?: number; originalStatus?: number }).status ??
+            (err as { status?: number; originalStatus?: number }).originalStatus)
+          : undefined;
       if (status === 400) {
-        toast.info(
-          t('admin.customPage.form.localeRecordNotFound'),
-        );
+        toast.info(t("admin.customPage.form.localeRecordNotFound"));
       } else {
-        toast.error(t('admin.customPage.form.localeLoadFailed'));
+        toast.error(t("admin.customPage.form.localeLoadFailed"));
       }
     }
   };
@@ -314,7 +312,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
     if (disabled) return;
 
     if (!values.title.trim() || !values.slug.trim()) {
-      toast.error(t('admin.customPage.form.titleSlugRequired'));
+      toast.error(t("admin.customPage.form.titleSlugRequired"));
       return;
     }
 
@@ -332,44 +330,42 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
     });
   };
 
-  const localeSelectOptions = useMemo(
+  const localeSelectOptions = useMemo<AdminLocaleOption[]>(
     () => (locales ?? []).map((x) => ({ value: norm(x.value), label: x.label })),
     [locales],
   );
 
   const imageMetadata = useMemo<Record<string, string | number | boolean>>(
     () => ({
-      module_key: 'custom_pages',
+      module_key: "custom_pages",
       locale: values.locale || safeDefaultLocale,
-      page_slug: values.slug || values.title || '',
-      ...(values.page_id || initialData?.id
-        ? { page_id: values.page_id ?? (initialData?.id as string) }
-        : {}),
+      page_slug: values.slug || values.title || "",
+      ...(values.page_id || initialData?.id ? { page_id: values.page_id ?? (initialData?.id as string) } : {}),
     }),
     [values.locale, values.slug, values.title, values.page_id, safeDefaultLocale, initialData?.id],
   );
 
   const handleAddContentImage = (url: string, alt?: string) => {
     if (!url) return;
-    const htmlBlock = buildContentImageHtml(url, alt ?? '', contentImageSize);
+    const htmlBlock = buildContentImageHtml(url, alt ?? "", contentImageSize);
 
     setContentImagePreview(url);
     setValues((prev) => ({
       ...prev,
-      content: (prev.content || '') + '\n\n' + htmlBlock + '\n\n',
+      content: `${prev.content || ""}\n\n${htmlBlock}\n\n`,
     }));
-    toast.success(t('admin.customPage.form.imageAddedToContent'));
+    toast.success(t("admin.customPage.form.imageAddedToContent"));
   };
 
   const handleAddManualImage = () => {
     const url = manualImageUrl.trim();
     if (!url) {
-      toast.error(t('admin.customPage.form.invalidImageUrl'));
+      toast.error(t("admin.customPage.form.invalidImageUrl"));
       return;
     }
     handleAddContentImage(url, manualImageAlt.trim());
-    setManualImageUrl('');
-    setManualImageAlt('');
+    setManualImageUrl("");
+    setManualImageAlt("");
   };
 
   return (
@@ -378,12 +374,10 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
         <div className="border-b p-3">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
-              <div className="text-sm font-semibold">
-                {mode === 'create' ? t('admin.customPage.form.createTitle') : t('admin.customPage.form.editTitle')}
+              <div className="font-semibold text-sm">
+                {mode === "create" ? t("admin.customPage.form.createTitle") : t("admin.customPage.form.editTitle")}
               </div>
-              <div className="text-xs text-muted-foreground">
-                {t('admin.customPage.form.formDescription')}
-              </div>
+              <div className="text-muted-foreground text-xs">{t("admin.customPage.form.formDescription")}</div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
@@ -391,10 +385,10 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                 <button
                   type="button"
                   className={[
-                    'px-3 py-1 text-xs',
-                    activeMode === 'form' ? 'bg-muted font-semibold' : 'bg-background',
-                  ].join(' ')}
-                  onClick={() => setActiveMode('form')}
+                    "px-3 py-1 text-xs",
+                    activeMode === "form" ? "bg-muted font-semibold" : "bg-background",
+                  ].join(" ")}
+                  onClick={() => setActiveMode("form")}
                   disabled={disabled}
                 >
                   Form
@@ -402,10 +396,10 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                 <button
                   type="button"
                   className={[
-                    'px-3 py-1 text-xs',
-                    activeMode === 'json' ? 'bg-muted font-semibold' : 'bg-background',
-                  ].join(' ')}
-                  onClick={() => setActiveMode('json')}
+                    "px-3 py-1 text-xs",
+                    activeMode === "json" ? "bg-muted font-semibold" : "bg-background",
+                  ].join(" ")}
+                  onClick={() => setActiveMode("json")}
                   disabled={disabled}
                 >
                   JSON
@@ -419,27 +413,27 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                   onClick={onCancel}
                   disabled={disabled}
                 >
-                  {t('admin.customPage.form.back')}
+                  {t("admin.customPage.form.back")}
                 </button>
               ) : null}
 
               <button
                 type="submit"
-                className="rounded-md bg-primary px-3 py-1 text-xs text-primary-foreground disabled:opacity-60"
+                className="rounded-md bg-primary px-3 py-1 text-primary-foreground text-xs disabled:opacity-60"
                 disabled={disabled}
               >
                 {saving
-                  ? mode === 'create'
-                    ? t('admin.customPage.form.creating')
-                    : t('admin.customPage.form.saving')
-                  : mode === 'create'
-                    ? t('admin.customPage.form.createBtn')
-                    : t('admin.customPage.form.saveBtn')}
+                  ? mode === "create"
+                    ? t("admin.customPage.form.creating")
+                    : t("admin.customPage.form.saving")
+                  : mode === "create"
+                    ? t("admin.customPage.form.createBtn")
+                    : t("admin.customPage.form.saveBtn")}
               </button>
 
               {loading || isLocaleSwitchLoading ? (
                 <span className="rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
-                  {isLocaleSwitchLoading ? t('admin.customPage.form.switchingLocale') : t('admin.common.loading')}
+                  {isLocaleSwitchLoading ? t("admin.customPage.form.switchingLocale") : t("admin.common.loading")}
                 </span>
               ) : null}
             </div>
@@ -447,13 +441,13 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
         </div>
 
         <div className="p-3">
-          {activeMode === 'json' ? (
+          {activeMode === "json" ? (
             <AdminJsonEditor
               value={values}
               disabled={disabled}
               onChange={(next) => setValues(next as CustomPageFormValues)}
               label="Custom Page JSON"
-              helperText={t('admin.customPage.form.jsonHelperText')}
+              helperText={t("admin.customPage.form.jsonHelperText")}
             />
           ) : (
             <>
@@ -461,18 +455,12 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                 <AdminLocaleSelect
                   value={values.locale}
                   onChange={handleLocaleChange}
-                  options={localeSelectOptions as any}
+                  options={localeSelectOptions}
                   loading={!!localesLoading}
-                  disabled={
-                    disabled ||
-                    (!!localesLoading && !localeSelectOptions.length) ||
-                    isLocaleSwitchLoading
-                  }
-                  label={t('admin.customPage.form.localeLabel')}
+                  disabled={disabled || (!!localesLoading && !localeSelectOptions.length) || isLocaleSwitchLoading}
+                  label={t("admin.customPage.form.localeLabel")}
                 />
-                <div className="mt-1 text-xs text-muted-foreground">
-                  {t('admin.customPage.form.localeHint')}
-                </div>
+                <div className="mt-1 text-muted-foreground text-xs">{t("admin.customPage.form.localeHint")}</div>
               </div>
 
               <div className="grid gap-4 lg:grid-cols-12">
@@ -488,19 +476,15 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                   />
                 </div>
 
-                <div className="lg:col-span-4 space-y-4">
+                <div className="space-y-4 lg:col-span-4">
                   <CustomPageFormImageColumn
                     metadata={imageMetadata}
                     disabled={disabled}
                     featuredImageValue={values.featured_image}
-                    onFeaturedImageChange={(url) =>
-                      setValues((prev) => ({ ...prev, featured_image: url }))
-                    }
+                    onFeaturedImageChange={(url) => setValues((prev) => ({ ...prev, featured_image: url }))}
                     galleryUrls={values.images}
                     onGalleryUrlsChange={(urls) => setValues((prev) => ({ ...prev, images: urls }))}
-                    onSelectAsCover={(url) =>
-                      setValues((prev) => ({ ...prev, featured_image: url }))
-                    }
+                    onSelectAsCover={(url) => setValues((prev) => ({ ...prev, featured_image: url }))}
                   />
 
                   <CustomPageSidebarColumn

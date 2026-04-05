@@ -8,8 +8,8 @@ module.exports = {
     {
       name: 'karbonkompozit',
       cwd: '/var/www/Ensotek/karbonkompozit',
-      script: '/home/orhan/.bun/bin/bun',
-      args: 'run start:standalone',
+      script: 'node',
+      args: '.next/standalone/server.js',
       exec_mode: 'fork',
       instances: 1,
       watch: false,

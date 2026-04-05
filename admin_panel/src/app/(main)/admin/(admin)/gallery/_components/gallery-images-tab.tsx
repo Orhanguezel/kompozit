@@ -1,72 +1,66 @@
-'use client';
+"use client";
 
 // =============================================================
 // FILE: gallery/_components/gallery-images-tab.tsx
 // Gallery Image Management — drag-and-drop reorder, add, edit, delete
 // =============================================================
 
-import * as React from 'react';
-import { toast } from 'sonner';
-import {
-  GripVertical,
-  Plus,
-  Trash2,
-  ImageIcon,
-  Save,
-  X,
-} from 'lucide-react';
+import * as React from "react";
+
+import Image from "next/image";
 
 import {
-  DndContext,
   closestCenter,
+  DndContext,
+  type DragEndEvent,
   KeyboardSensor,
   PointerSensor,
   useSensor,
   useSensors,
-  type DragEndEvent,
-} from '@dnd-kit/core';
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 import {
+  arrayMove,
   SortableContext,
   sortableKeyboardCoordinates,
   useSortable,
   verticalListSortingStrategy,
-  arrayMove,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { GripVertical, ImageIcon, Save, Trash2, X } from "lucide-react";
+import { toast } from "sonner";
 
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Separator } from '@/components/ui/separator';
-import { Spinner } from '@/components/ui/spinner';
-import { AdminImageUploadField } from '@/app/(main)/admin/_components/common/AdminImageUploadField';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
-
-import type { GalleryImageDto, GalleryImageUpsertPayload } from '@/integrations/shared';
+import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
 import {
-  useListGalleryImagesAdminQuery,
   useCreateGalleryImageAdminMutation,
-  useUpdateGalleryImageAdminMutation,
   useDeleteGalleryImageAdminMutation,
+  useListGalleryImagesAdminQuery,
   useReorderGalleryImagesAdminMutation,
-} from '@/integrations/hooks';
+  useUpdateGalleryImageAdminMutation,
+} from "@/integrations/hooks";
+import type { GalleryImageDto, GalleryImageUpsertPayload } from "@/integrations/shared";
 
 /* ------------------------------------------------------------------ */
 
-const norm = (v: unknown) => String(v ?? '').trim();
+const norm = (v: unknown) => String(v ?? "").trim();
 
 function getErrMessage(err: unknown, fallback: string): string {
-  const anyErr = err as any;
-  return (
-    anyErr?.data?.error?.message ||
-    anyErr?.data?.message ||
-    anyErr?.error ||
-    fallback
-  );
+  const typedErr =
+    typeof err === "object" && err !== null
+      ? (err as {
+          data?: { error?: { message?: string }; message?: string };
+          error?: string;
+        })
+      : undefined;
+  return typedErr?.data?.error?.message || typedErr?.data?.message || typedErr?.error || fallback;
 }
 
 /* ------------------------------------------------------------------ */
@@ -82,14 +76,7 @@ interface SortableImageProps {
 }
 
 function SortableImageCard({ image, disabled, onEdit, onDelete, t }: SortableImageProps) {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id: image.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: image.id });
 
   const style: React.CSSProperties = {
     transform: CSS.Transform.toString(transform),
@@ -97,14 +84,10 @@ function SortableImageCard({ image, disabled, onEdit, onDelete, t }: SortableIma
     opacity: isDragging ? 0.6 : 1,
   };
 
-  const imgUrl = image.image_url_resolved || image.image_url || '';
+  const imgUrl = image.image_url_resolved || image.image_url || "";
 
   return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className="flex items-start gap-3 rounded-lg border bg-card p-3"
-    >
+    <div ref={setNodeRef} style={style} className="flex items-start gap-3 rounded-lg border bg-card p-3">
       <button
         type="button"
         className="mt-1 cursor-grab touch-none text-muted-foreground hover:text-foreground"
@@ -117,11 +100,7 @@ function SortableImageCard({ image, disabled, onEdit, onDelete, t }: SortableIma
 
       <div className="size-20 shrink-0 overflow-hidden rounded-md border bg-muted">
         {imgUrl ? (
-          <img
-            src={imgUrl}
-            alt={image.alt || ''}
-            className="size-full object-cover"
-          />
+          <Image src={imgUrl} alt={image.alt || ""} width={80} height={80} className="size-full object-cover" />
         ) : (
           <div className="flex size-full items-center justify-center">
             <ImageIcon className="size-6 text-muted-foreground" />
@@ -131,20 +110,18 @@ function SortableImageCard({ image, disabled, onEdit, onDelete, t }: SortableIma
 
       <div className="min-w-0 flex-1 space-y-1">
         <div className="flex items-center gap-2">
-          <span className="truncate text-sm font-medium">
+          <span className="truncate font-medium text-sm">
             {image.alt || image.caption || `#${image.display_order}`}
           </span>
           {!image.is_active ? (
             <Badge variant="secondary" className="text-xs">
-              {t('admin.gallery.images.inactive')}
+              {t("admin.gallery.images.inactive")}
             </Badge>
           ) : null}
         </div>
-        {image.caption ? (
-          <p className="truncate text-xs text-muted-foreground">{image.caption}</p>
-        ) : null}
-        <p className="text-xs text-muted-foreground">
-          {t('admin.gallery.images.order')}: {image.display_order}
+        {image.caption ? <p className="truncate text-muted-foreground text-xs">{image.caption}</p> : null}
+        <p className="text-muted-foreground text-xs">
+          {t("admin.gallery.images.order")}: {image.display_order}
         </p>
       </div>
 
@@ -220,10 +197,10 @@ function ImageEditForm({
           is_active: values.is_active ? 1 : 0,
         } as GalleryImageUpsertPayload,
       }).unwrap();
-      toast.success(t('admin.gallery.images.updated'));
+      toast.success(t("admin.gallery.images.updated"));
       onClose();
     } catch (err) {
-      toast.error(getErrMessage(err, t('admin.gallery.images.updateError')));
+      toast.error(getErrMessage(err, t("admin.gallery.images.updateError")));
     }
   }
 
@@ -231,9 +208,7 @@ function ImageEditForm({
     <Card className="border-primary/30">
       <CardHeader className="gap-1 pb-3">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-sm">
-            {t('admin.gallery.images.editImage')}
-          </CardTitle>
+          <CardTitle className="text-sm">{t("admin.gallery.images.editImage")}</CardTitle>
           <Button type="button" variant="ghost" size="icon" className="size-7" onClick={onClose}>
             <X className="size-4" />
           </Button>
@@ -242,21 +217,21 @@ function ImageEditForm({
       <CardContent className="space-y-3">
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="space-y-1.5">
-            <Label className="text-xs">{t('admin.gallery.images.altLabel')}</Label>
+            <Label className="text-xs">{t("admin.gallery.images.altLabel")}</Label>
             <Input
               value={values.alt}
               onChange={(e) => setValues((p) => ({ ...p, alt: e.target.value }))}
               disabled={disabled}
-              placeholder={t('admin.gallery.images.altPlaceholder')}
+              placeholder={t("admin.gallery.images.altPlaceholder")}
             />
           </div>
           <div className="space-y-1.5">
-            <Label className="text-xs">{t('admin.gallery.images.captionLabel')}</Label>
+            <Label className="text-xs">{t("admin.gallery.images.captionLabel")}</Label>
             <Input
               value={values.caption}
               onChange={(e) => setValues((p) => ({ ...p, caption: e.target.value }))}
               disabled={disabled}
-              placeholder={t('admin.gallery.images.captionPlaceholder')}
+              placeholder={t("admin.gallery.images.captionPlaceholder")}
             />
           </div>
         </div>
@@ -269,17 +244,17 @@ function ImageEditForm({
             disabled={disabled}
           />
           <Label htmlFor={`img_active_${image.id}`} className="text-xs">
-            {t('admin.gallery.images.activeLabel')}
+            {t("admin.gallery.images.activeLabel")}
           </Label>
         </div>
 
         <div className="flex justify-end gap-2 pt-1">
           <Button type="button" variant="outline" size="sm" onClick={onClose} disabled={disabled}>
-            {t('admin.gallery.images.cancelButton')}
+            {t("admin.gallery.images.cancelButton")}
           </Button>
           <Button type="button" size="sm" onClick={handleSave} disabled={disabled}>
             <Save className="mr-1.5 size-3.5" />
-            {t('admin.gallery.images.saveButton')}
+            {t("admin.gallery.images.saveButton")}
           </Button>
         </div>
       </CardContent>
@@ -300,17 +275,17 @@ interface GalleryImagesTabProps {
 export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled = false }: GalleryImagesTabProps) {
   const t = useAdminT();
 
-  const { data: images, isLoading, isFetching } = useListGalleryImagesAdminQuery(
-    { galleryId, locale },
-    { skip: !galleryId },
-  );
+  const {
+    data: images,
+    isLoading,
+    isFetching,
+  } = useListGalleryImagesAdminQuery({ galleryId, locale }, { skip: !galleryId });
 
   const [createImage, createState] = useCreateGalleryImageAdminMutation();
   const [deleteImage, deleteState] = useDeleteGalleryImageAdminMutation();
   const [reorderImages, reorderState] = useReorderGalleryImagesAdminMutation();
 
-  const busy =
-    isLoading || isFetching || createState.isLoading || deleteState.isLoading || reorderState.isLoading;
+  const busy = isLoading || isFetching || createState.isLoading || deleteState.isLoading || reorderState.isLoading;
   const disabled = parentDisabled || busy;
 
   const [editingImage, setEditingImage] = React.useState<GalleryImageDto | null>(null);
@@ -350,9 +325,9 @@ export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled =
 
     try {
       await reorderImages({ galleryId, ids: newOrder }).unwrap();
-      toast.success(t('admin.gallery.images.reordered'));
+      toast.success(t("admin.gallery.images.reordered"));
     } catch (err) {
-      toast.error(getErrMessage(err, t('admin.gallery.images.reorderError')));
+      toast.error(getErrMessage(err, t("admin.gallery.images.reorderError")));
       setOrderedIds(sortedImages.map((i) => i.id));
     }
   }
@@ -369,26 +344,26 @@ export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled =
           is_active: 1,
         } as GalleryImageUpsertPayload,
       }).unwrap();
-      toast.success(t('admin.gallery.images.added'));
+      toast.success(t("admin.gallery.images.added"));
     } catch (err) {
-      toast.error(getErrMessage(err, t('admin.gallery.images.addError')));
+      toast.error(getErrMessage(err, t("admin.gallery.images.addError")));
     }
   }
 
   async function handleDelete(imageId: string) {
-    if (!confirm(t('admin.gallery.images.deleteConfirm'))) return;
+    if (!confirm(t("admin.gallery.images.deleteConfirm"))) return;
     try {
       await deleteImage({ galleryId, imageId }).unwrap();
-      toast.success(t('admin.gallery.images.deleted'));
+      toast.success(t("admin.gallery.images.deleted"));
       if (editingImage?.id === imageId) setEditingImage(null);
     } catch (err) {
-      toast.error(getErrMessage(err, t('admin.gallery.images.deleteError')));
+      toast.error(getErrMessage(err, t("admin.gallery.images.deleteError")));
     }
   }
 
   const imageMetadata = React.useMemo(
     () => ({
-      module_key: 'gallery',
+      module_key: "gallery",
       gallery_id: galleryId,
       locale,
     }),
@@ -408,14 +383,12 @@ export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled =
       {/* Add image */}
       <Card>
         <CardHeader className="gap-1 pb-3">
-          <CardTitle className="text-sm">{t('admin.gallery.images.addTitle')}</CardTitle>
-          <CardDescription className="text-xs">
-            {t('admin.gallery.images.addDescription')}
-          </CardDescription>
+          <CardTitle className="text-sm">{t("admin.gallery.images.addTitle")}</CardTitle>
+          <CardDescription className="text-xs">{t("admin.gallery.images.addDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           <AdminImageUploadField
-            label={t('admin.gallery.images.uploadLabel')}
+            label={t("admin.gallery.images.uploadLabel")}
             bucket="public"
             folder="gallery"
             metadata={imageMetadata}
@@ -442,20 +415,16 @@ export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled =
       <Card>
         <CardHeader className="gap-1 pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-sm">
-              {t('admin.gallery.images.listTitle')}
-            </CardTitle>
+            <CardTitle className="text-sm">{t("admin.gallery.images.listTitle")}</CardTitle>
             <Badge variant="secondary">{sortedImages.length}</Badge>
           </div>
-          <CardDescription className="text-xs">
-            {t('admin.gallery.images.listDescription')}
-          </CardDescription>
+          <CardDescription className="text-xs">{t("admin.gallery.images.listDescription")}</CardDescription>
         </CardHeader>
         <CardContent>
           {sortedImages.length === 0 ? (
             <div className="flex flex-col items-center gap-2 py-8 text-center text-muted-foreground">
               <ImageIcon className="size-8" />
-              <p className="text-sm">{t('admin.gallery.images.empty')}</p>
+              <p className="text-sm">{t("admin.gallery.images.empty")}</p>
             </div>
           ) : (
             <DndContext

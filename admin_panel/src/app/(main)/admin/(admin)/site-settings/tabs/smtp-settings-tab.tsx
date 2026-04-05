@@ -4,36 +4,34 @@
 // ✅ i18n enabled
 // =============================================================
 
-import React from 'react';
-import { toast } from 'sonner';
-import {
-  useListSiteSettingsAdminQuery,
-  useUpdateSiteSettingAdminMutation,
-} from '@/integrations/hooks';
+import React from "react";
 
-import type { SettingValue, SiteSetting } from '@/integrations/shared';
-import { useAdminTranslations } from '@/i18n';
-import { usePreferencesStore } from '@/stores/preferences/preferences-provider';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Separator } from '@/components/ui/separator';
+import { toast } from "sonner";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { useAdminTranslations } from "@/i18n";
+import { useListSiteSettingsAdminQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
+import type { SettingValue } from "@/integrations/shared";
+import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 export type SmtpSettingsTabProps = {
   locale: string; // UI badge için dursun, GLOBAL tab
 };
 
 const SMTP_KEYS = [
-  'smtp_host',
-  'smtp_port',
-  'smtp_username',
-  'smtp_password',
-  'smtp_from_email',
-  'smtp_from_name',
-  'smtp_ssl',
+  "smtp_host",
+  "smtp_port",
+  "smtp_username",
+  "smtp_password",
+  "smtp_from_email",
+  "smtp_from_name",
+  "smtp_ssl",
 ] as const;
 
 type SmtpKey = (typeof SMTP_KEYS)[number];
@@ -49,18 +47,18 @@ type SmtpForm = {
 };
 
 const EMPTY_FORM: SmtpForm = {
-  smtp_host: '',
-  smtp_port: '',
-  smtp_username: '',
-  smtp_password: '',
-  smtp_from_email: '',
-  smtp_from_name: '',
+  smtp_host: "",
+  smtp_port: "",
+  smtp_username: "",
+  smtp_password: "",
+  smtp_from_email: "",
+  smtp_from_name: "",
   smtp_ssl: false,
 };
 
 function valueToString(v: unknown): string {
-  if (v === null || v === undefined) return '';
-  if (typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean') return String(v);
+  if (v === null || v === undefined) return "";
+  if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") return String(v);
   try {
     return JSON.stringify(v);
   } catch {
@@ -71,10 +69,10 @@ function valueToString(v: unknown): string {
 function toBool(v: unknown): boolean {
   if (v === true) return true;
   if (v === false) return false;
-  if (typeof v === 'number') return v === 1;
-  if (typeof v === 'string') {
+  if (typeof v === "number") return v === 1;
+  if (typeof v === "string") {
     const t = v.trim().toLowerCase();
-    return t === '1' || t === 'true' || t === 'yes' || t === 'on';
+    return t === "1" || t === "true" || t === "yes" || t === "on";
   }
   return false;
 }
@@ -106,13 +104,13 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
     const map = toMap(settings);
     const next: SmtpForm = { ...EMPTY_FORM };
 
-    next.smtp_host = valueToString(map.get('smtp_host')?.value);
-    next.smtp_port = valueToString(map.get('smtp_port')?.value);
-    next.smtp_username = valueToString(map.get('smtp_username')?.value);
-    next.smtp_password = valueToString(map.get('smtp_password')?.value);
-    next.smtp_from_email = valueToString(map.get('smtp_from_email')?.value);
-    next.smtp_from_name = valueToString(map.get('smtp_from_name')?.value);
-    next.smtp_ssl = toBool(map.get('smtp_ssl')?.value);
+    next.smtp_host = valueToString(map.get("smtp_host")?.value);
+    next.smtp_port = valueToString(map.get("smtp_port")?.value);
+    next.smtp_username = valueToString(map.get("smtp_username")?.value);
+    next.smtp_password = valueToString(map.get("smtp_password")?.value);
+    next.smtp_from_email = valueToString(map.get("smtp_from_email")?.value);
+    next.smtp_from_name = valueToString(map.get("smtp_from_name")?.value);
+    next.smtp_ssl = toBool(map.get("smtp_ssl")?.value);
 
     setForm(next);
   }, [settings]);
@@ -120,7 +118,7 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
   const loading = isLoading || isFetching;
   const busy = loading || isSaving;
 
-  const handleChange = (field: Exclude<SmtpKey, 'smtp_ssl'>, value: string) => {
+  const handleChange = (field: Exclude<SmtpKey, "smtp_ssl">, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -131,23 +129,23 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
   const handleSave = async () => {
     try {
       const updates: { key: SmtpKey; value: SettingValue }[] = [
-        { key: 'smtp_host', value: form.smtp_host.trim() },
-        { key: 'smtp_port', value: form.smtp_port.trim() || '' },
-        { key: 'smtp_username', value: form.smtp_username.trim() },
-        { key: 'smtp_password', value: form.smtp_password },
-        { key: 'smtp_from_email', value: form.smtp_from_email.trim() },
-        { key: 'smtp_from_name', value: form.smtp_from_name.trim() },
-        { key: 'smtp_ssl', value: form.smtp_ssl },
+        { key: "smtp_host", value: form.smtp_host.trim() },
+        { key: "smtp_port", value: form.smtp_port.trim() || "" },
+        { key: "smtp_username", value: form.smtp_username.trim() },
+        { key: "smtp_password", value: form.smtp_password },
+        { key: "smtp_from_email", value: form.smtp_from_email.trim() },
+        { key: "smtp_from_name", value: form.smtp_from_name.trim() },
+        { key: "smtp_ssl", value: form.smtp_ssl },
       ];
 
       for (const u of updates) {
-        await updateSetting({ key: u.key, locale: '*', value: u.value }).unwrap();
+        await updateSetting({ key: u.key, locale: "*", value: u.value }).unwrap();
       }
 
-      toast.success(t('admin.siteSettings.smtp.saved'));
+      toast.success(t("admin.siteSettings.smtp.saved"));
       await refetch();
     } catch (err: any) {
-      const msg = err?.data?.error?.message || err?.message || t('admin.siteSettings.smtp.saved');
+      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.smtp.saved");
       toast.error(msg);
     }
   };
@@ -157,14 +155,14 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
       <CardHeader className="gap-2">
         <div className="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-base">{t('admin.siteSettings.smtp.title')}</CardTitle>
-            <CardDescription>{t('admin.siteSettings.smtp.description')}</CardDescription>
+            <CardTitle className="text-base">{t("admin.siteSettings.smtp.title")}</CardTitle>
+            <CardDescription>{t("admin.siteSettings.smtp.description")}</CardDescription>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{t('admin.siteSettings.smtp.badge', { locale: locale || '—' })}</Badge>
+            <Badge variant="secondary">{t("admin.siteSettings.smtp.badge", { locale: locale || "—" })}</Badge>
             <Button type="button" variant="outline" size="sm" onClick={refetch} disabled={busy}>
-              {t('admin.common.refresh')}
+              {t("admin.common.refresh")}
             </Button>
           </div>
         </div>
@@ -173,103 +171,96 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
       <CardContent className="space-y-6">
         {busy && (
           <div>
-            <Badge variant="secondary">{t('admin.common.loading')}</Badge>
+            <Badge variant="secondary">{t("admin.common.loading")}</Badge>
           </div>
         )}
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-12">
           <div className="space-y-2 md:col-span-6">
             <Label htmlFor="smtp-host" className="text-sm">
-              {t('admin.siteSettings.smtp.host')}
+              {t("admin.siteSettings.smtp.host")}
             </Label>
             <Input
               id="smtp-host"
               value={form.smtp_host}
-              onChange={(e) => handleChange('smtp_host', e.target.value)}
-              placeholder={t('admin.siteSettings.smtp.hostPlaceholder')}
+              onChange={(e) => handleChange("smtp_host", e.target.value)}
+              placeholder={t("admin.siteSettings.smtp.hostPlaceholder")}
               disabled={busy}
             />
           </div>
 
           <div className="space-y-2 md:col-span-3">
             <Label htmlFor="smtp-port" className="text-sm">
-              {t('admin.siteSettings.smtp.port')}
+              {t("admin.siteSettings.smtp.port")}
             </Label>
             <Input
               id="smtp-port"
               value={form.smtp_port}
-              onChange={(e) => handleChange('smtp_port', e.target.value)}
-              placeholder={t('admin.siteSettings.smtp.portPlaceholder')}
+              onChange={(e) => handleChange("smtp_port", e.target.value)}
+              placeholder={t("admin.siteSettings.smtp.portPlaceholder")}
               disabled={busy}
             />
           </div>
 
           <div className="flex items-end md:col-span-3">
             <div className="flex items-center space-x-2">
-              <Switch
-                id="smtp-ssl"
-                checked={form.smtp_ssl}
-                onCheckedChange={handleToggleSsl}
-                disabled={busy}
-              />
+              <Switch id="smtp-ssl" checked={form.smtp_ssl} onCheckedChange={handleToggleSsl} disabled={busy} />
               <Label htmlFor="smtp-ssl" className="text-sm">
-                {t('admin.siteSettings.smtp.ssl')}
+                {t("admin.siteSettings.smtp.ssl")}
               </Label>
             </div>
           </div>
 
           <div className="space-y-2 md:col-span-6">
             <Label htmlFor="smtp-username" className="text-sm">
-              {t('admin.siteSettings.smtp.username')}
+              {t("admin.siteSettings.smtp.username")}
             </Label>
             <Input
               id="smtp-username"
               value={form.smtp_username}
-              onChange={(e) => handleChange('smtp_username', e.target.value)}
-              placeholder={t('admin.siteSettings.smtp.usernamePlaceholder')}
+              onChange={(e) => handleChange("smtp_username", e.target.value)}
+              placeholder={t("admin.siteSettings.smtp.usernamePlaceholder")}
               disabled={busy}
             />
           </div>
 
           <div className="space-y-2 md:col-span-6">
             <Label htmlFor="smtp-password" className="text-sm">
-              {t('admin.siteSettings.smtp.password')}
+              {t("admin.siteSettings.smtp.password")}
             </Label>
             <Input
               id="smtp-password"
               type="password"
               value={form.smtp_password}
-              onChange={(e) => handleChange('smtp_password', e.target.value)}
-              placeholder={t('admin.siteSettings.smtp.passwordPlaceholder')}
+              onChange={(e) => handleChange("smtp_password", e.target.value)}
+              placeholder={t("admin.siteSettings.smtp.passwordPlaceholder")}
               disabled={busy}
             />
           </div>
 
           <div className="space-y-2 md:col-span-6">
             <Label htmlFor="smtp-from-email" className="text-sm">
-              {t('admin.siteSettings.smtp.fromEmail')}
+              {t("admin.siteSettings.smtp.fromEmail")}
             </Label>
             <Input
               id="smtp-from-email"
               value={form.smtp_from_email}
-              onChange={(e) => handleChange('smtp_from_email', e.target.value)}
-              placeholder={t('admin.siteSettings.smtp.fromEmailPlaceholder')}
+              onChange={(e) => handleChange("smtp_from_email", e.target.value)}
+              placeholder={t("admin.siteSettings.smtp.fromEmailPlaceholder")}
               disabled={busy}
             />
-            <p className="text-xs text-muted-foreground">
-              {t('admin.siteSettings.smtp.fromEmailHelp')}
-            </p>
+            <p className="text-muted-foreground text-xs">{t("admin.siteSettings.smtp.fromEmailHelp")}</p>
           </div>
 
           <div className="space-y-2 md:col-span-6">
             <Label htmlFor="smtp-from-name" className="text-sm">
-              {t('admin.siteSettings.smtp.fromName')}
+              {t("admin.siteSettings.smtp.fromName")}
             </Label>
             <Input
               id="smtp-from-name"
               value={form.smtp_from_name}
-              onChange={(e) => handleChange('smtp_from_name', e.target.value)}
-              placeholder={t('admin.siteSettings.smtp.fromNamePlaceholder')}
+              onChange={(e) => handleChange("smtp_from_name", e.target.value)}
+              placeholder={t("admin.siteSettings.smtp.fromNamePlaceholder")}
               disabled={busy}
             />
           </div>
@@ -277,13 +268,13 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
 
         <Separator />
 
-        <div className="rounded-lg border border-dashed border-border/70 bg-muted/20 p-4 text-sm text-muted-foreground">
+        <div className="rounded-lg border border-border/70 border-dashed bg-muted/20 p-4 text-muted-foreground text-sm">
           SMTP test aksiyonu kompozit panelden kaldirildi. Bu panelde yalnizca SMTP ayarlarini yonetiyoruz.
         </div>
 
         <div className="mt-3 flex justify-end gap-2 md:justify-end">
           <Button type="button" variant="default" disabled={busy} onClick={handleSave}>
-            {isSaving ? t('admin.common.saving') : t('admin.common.save')}
+            {isSaving ? t("admin.common.saving") : t("admin.common.save")}
           </Button>
         </div>
       </CardContent>

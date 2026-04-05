@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type * as React from "react";
 
 export type LocaleOption = { value: string; label: string };
 export type CategoriesHeaderProps = Record<string, unknown>;

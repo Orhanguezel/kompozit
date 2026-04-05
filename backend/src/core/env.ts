@@ -93,6 +93,19 @@ export const env = {
   PUBLIC_URL: process.env.PUBLIC_URL || 'https://www.ensotek.de',
   FRONTEND_URL: FRONTEND_URL,
 
+  /**
+   * Boş veya tanımsız → `kompozit__` (dotenv’de `KEY=` satırı boş string üretir).
+   * Öneksiz ham anahtarlar için: `SITE_SETTINGS_KEY_PREFIX=.` veya `none`
+   */
+  SITE_SETTINGS_KEY_PREFIX: (() => {
+    const raw = process.env.SITE_SETTINGS_KEY_PREFIX;
+    if (raw === undefined || raw === null) return 'kompozit__';
+    const t = String(raw).trim();
+    if (t === '' || t === '-') return 'kompozit__';
+    if (t === '.' || t.toLowerCase() === 'none') return '';
+    return t;
+  })(),
+
   // ✅ SMTP / Mail (sadece fallback; asıl değerler site_settings.smtp_* ile gelebilir)
   SMTP_HOST: process.env.SMTP_HOST || '',
   SMTP_PORT: toInt(process.env.SMTP_PORT, 465),

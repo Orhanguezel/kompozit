@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // =============================================================
 // FILE: src/app/(main)/admin/(admin)/site-settings/admin-site_settings-detail-client.tsx
@@ -8,120 +8,103 @@
 // - NO bootstrap, shadcn/ui
 // =============================================================
 
-import * as React from 'react';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { toast } from 'sonner';
-import { RefreshCcw } from 'lucide-react';
+import * as React from "react";
 
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
-import type { SiteSetting, SettingValue } from '@/integrations/shared';
+import { RefreshCcw } from "lucide-react";
+import { toast } from "sonner";
+
+import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
+import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useAdminTranslations } from "@/i18n";
 import {
+  useDeleteSiteSettingAdminMutation,
   useGetSiteSettingAdminByKeyQuery,
   useListSiteSettingsAdminQuery,
   useUpdateSiteSettingAdminMutation,
-  useDeleteSiteSettingAdminMutation,
-} from '@/integrations/hooks';
-import { useAdminLocales } from '@/app/(main)/admin/_components/common/useAdminLocales';
-import { useAdminTranslations } from '@/i18n';
-import { usePreferencesStore } from '@/stores/preferences/preferences-provider';
-
-import { SiteSettingsForm } from './site-settings-form';
-import { AdminJsonEditor } from '@/app/(main)/admin/_components/common/AdminJsonEditor';
-import { SeoStructuredForm } from '../tabs/structured/seo-structured-form';
+} from "@/integrations/hooks";
+import type { SettingValue, SiteSetting } from "@/integrations/shared";
+import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 import {
-  ContactInfoStructuredForm,
-  contactFormToObj,
-  contactObjToForm,
-  type ContactInfoFormState,
-} from '../tabs/structured/contact-info-structured-form';
-
-import {
-  SocialsStructuredForm,
-  socialsFormToObj,
-  socialsObjToForm,
-  type SocialsFormState,
-} from '../tabs/structured/socials-structured-form';
-
-import {
-  CompanyProfileStructuredForm,
-  companyFormToObj,
-  companyObjToForm,
-  type CompanyProfileFormState,
-} from '../tabs/structured/company-profile-structured-form';
-
-import {
-  UiHeaderStructuredForm,
-  uiHeaderFormToObj,
-  uiHeaderObjToForm,
-  type UiHeaderFormState,
-} from '../tabs/structured/ui-header-structured-form';
-
-import {
+  type BusinessHoursFormState,
   BusinessHoursStructuredForm,
   businessHoursFormToObj,
   businessHoursObjToForm,
-  type BusinessHoursFormState,
-} from '../tabs/structured/business-hours-structured-form';
+} from "../tabs/structured/business-hours-structured-form";
+import {
+  type CompanyProfileFormState,
+  CompanyProfileStructuredForm,
+  companyFormToObj,
+  companyObjToForm,
+} from "../tabs/structured/company-profile-structured-form";
+import {
+  type ContactInfoFormState,
+  ContactInfoStructuredForm,
+  contactFormToObj,
+  contactObjToForm,
+} from "../tabs/structured/contact-info-structured-form";
+import { SeoStructuredForm } from "../tabs/structured/seo-structured-form";
+import {
+  type SocialsFormState,
+  SocialsStructuredForm,
+  socialsFormToObj,
+  socialsObjToForm,
+} from "../tabs/structured/socials-structured-form";
+import {
+  type UiHeaderFormState,
+  UiHeaderStructuredForm,
+  uiHeaderFormToObj,
+  uiHeaderObjToForm,
+} from "../tabs/structured/ui-header-structured-form";
+import { SiteSettingsForm } from "./site-settings-form";
 
 /* ----------------------------- helpers (same behavior as /pages) ----------------------------- */
 
 const toShortLocale = (v: unknown): string =>
-  String(v || '')
+  String(v || "")
     .trim()
     .toLowerCase()
-    .replace('_', '-')
-    .split('-')[0]
+    .replace("_", "-")
+    .split("-")[0]
     .trim();
 
 function isSeoKey(key: string) {
-  const k = String(key || '')
+  const k = String(key || "")
     .trim()
     .toLowerCase();
-  return k === 'seo' || k === 'site_seo' || k === 'site_meta_default';
+  return k === "seo" || k === "site_seo" || k === "site_meta_default";
 }
 
-const GENERAL_KEYS = [
-  'contact_info',
-  'socials',
-  'businessHours',
-  'company_profile',
-  'ui_header',
-] as const;
+const GENERAL_KEYS = ["contact_info", "socials", "businessHours", "company_profile", "ui_header"] as const;
 type GeneralKey = (typeof GENERAL_KEYS)[number];
-const HOME_CONTENT_KEYS = ['home.hero', 'home.metrics', 'home.value_props'] as const;
+const HOME_CONTENT_KEYS = ["home.hero", "home.metrics", "home.value_props"] as const;
 type HomeContentKey = (typeof HOME_CONTENT_KEYS)[number];
 
 function isGeneralKey(key: string): key is GeneralKey {
-  return (GENERAL_KEYS as readonly string[]).includes(String(key || '').trim() as any);
+  return (GENERAL_KEYS as readonly string[]).includes(String(key || "").trim() as any);
 }
 
 function isHomeContentKey(key: string): key is HomeContentKey {
-  return (HOME_CONTENT_KEYS as readonly string[]).includes(String(key || '').trim() as any);
+  return (HOME_CONTENT_KEYS as readonly string[]).includes(String(key || "").trim() as any);
 }
 
 function coerceSettingValue(input: any): any {
   if (input === null || input === undefined) return input;
-  if (typeof input === 'object') return input;
+  if (typeof input === "object") return input;
 
-  if (typeof input === 'string') {
+  if (typeof input === "string") {
     const s = input.trim();
     if (!s) return input;
-    const looksJson =
-      (s.startsWith('{') && s.endsWith('}')) || (s.startsWith('[') && s.endsWith(']'));
+    const looksJson = (s.startsWith("{") && s.endsWith("}")) || (s.startsWith("[") && s.endsWith("]"));
     if (!looksJson) return input;
     try {
       return JSON.parse(s);
@@ -134,14 +117,12 @@ function coerceSettingValue(input: any): any {
 }
 
 function asPlainObject(value: unknown): Record<string, unknown> {
-  return value && typeof value === 'object' && !Array.isArray(value)
-    ? (value as Record<string, unknown>)
-    : {};
+  return value && typeof value === "object" && !Array.isArray(value) ? (value as Record<string, unknown>) : {};
 }
 
 function asPlainArray(value: unknown): Record<string, unknown>[] {
   return Array.isArray(value)
-    ? value.filter((item): item is Record<string, unknown> => !!item && typeof item === 'object')
+    ? value.filter((item): item is Record<string, unknown> => !!item && typeof item === "object")
     : [];
 }
 
@@ -162,34 +143,29 @@ const JsonStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setVal
 
   // Plain string values (e.g. email, phone, URL) — render a simple text input
   // so the user doesn't need to type JSON quotes
-  if (typeof v === 'string') {
+  if (typeof v === "string") {
     return (
       <div className="space-y-3">
-        <div className="rounded-md border p-3 text-sm text-muted-foreground">
-          {t('admin.siteSettings.detail.structuredJson.noRenderer')}
+        <div className="rounded-md border p-3 text-muted-foreground text-sm">
+          {t("admin.siteSettings.detail.structuredJson.noRenderer")}
         </div>
-        <Input
-          value={v}
-          onChange={(e) => setValue(e.target.value)}
-          disabled={disabled}
-          className="font-mono"
-        />
+        <Input value={v} onChange={(e) => setValue(e.target.value)} disabled={disabled} className="font-mono" />
       </div>
     );
   }
 
   return (
     <div className="space-y-3">
-      <div className="rounded-md border p-3 text-sm text-muted-foreground">
-        {t('admin.siteSettings.detail.structuredJson.noRenderer')}
+      <div className="rounded-md border p-3 text-muted-foreground text-sm">
+        {t("admin.siteSettings.detail.structuredJson.noRenderer")}
       </div>
 
       <AdminJsonEditor
-        label={t('admin.siteSettings.detail.structuredJson.label')}
+        label={t("admin.siteSettings.detail.structuredJson.label")}
         value={v ?? {}}
         onChange={(next) => setValue(next)}
         disabled={disabled}
-        helperText={t('admin.siteSettings.detail.structuredJson.helperText')}
+        helperText={t("admin.siteSettings.detail.structuredJson.helperText")}
         height={340}
       />
     </div>
@@ -206,20 +182,13 @@ const SeoStructuredRenderer: React.FC<StructuredRenderProps> = (p) => (
   />
 );
 
-const ContactStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const ContactStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const base = React.useMemo(() => {
     const v = coerceSettingValue(value) ?? {};
-    return typeof v === 'object' && v ? v : {};
+    return typeof v === "object" && v ? v : {};
   }, [value]);
 
-  const seed = React.useMemo(
-    () => ({ phone: '', email: '', address: '', whatsapp: '' }) as any,
-    [],
-  );
+  const seed = React.useMemo(() => ({ phone: "", email: "", address: "", whatsapp: "" }) as any, []);
   const [form, setForm] = React.useState<ContactInfoFormState>(() => contactObjToForm(base, seed));
 
   React.useEffect(() => setForm(contactObjToForm(base, seed)), [base, seed]);
@@ -230,30 +199,17 @@ const ContactStructuredRenderer: React.FC<StructuredRenderProps> = ({
   };
 
   return (
-    <ContactInfoStructuredForm
-      value={form}
-      onChange={handleChange}
-      errors={{}}
-      disabled={!!disabled}
-      seed={seed}
-    />
+    <ContactInfoStructuredForm value={form} onChange={handleChange} errors={{}} disabled={!!disabled} seed={seed} />
   );
 };
 
-const SocialsStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const SocialsStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const base = React.useMemo(() => {
     const v = coerceSettingValue(value) ?? {};
-    return typeof v === 'object' && v ? v : {};
+    return typeof v === "object" && v ? v : {};
   }, [value]);
 
-  const seed = React.useMemo(
-    () => ({ instagram: '', facebook: '', linkedin: '', youtube: '', x: '' }) as any,
-    [],
-  );
+  const seed = React.useMemo(() => ({ instagram: "", facebook: "", linkedin: "", youtube: "", x: "" }) as any, []);
   const [form, setForm] = React.useState<SocialsFormState>(() => socialsObjToForm(base, seed));
 
   React.useEffect(() => setForm(socialsObjToForm(base, seed)), [base, seed]);
@@ -263,35 +219,18 @@ const SocialsStructuredRenderer: React.FC<StructuredRenderProps> = ({
     setValue(socialsFormToObj(next));
   };
 
-  return (
-    <SocialsStructuredForm
-      value={form}
-      onChange={handleChange}
-      errors={{}}
-      disabled={!!disabled}
-      seed={seed}
-    />
-  );
+  return <SocialsStructuredForm value={form} onChange={handleChange} errors={{}} disabled={!!disabled} seed={seed} />;
 };
 
-const CompanyStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const CompanyStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const base = React.useMemo(() => {
     const v = coerceSettingValue(value) ?? {};
-    return typeof v === 'object' && v ? v : {};
+    return typeof v === "object" && v ? v : {};
   }, [value]);
 
-  const seed = React.useMemo(
-    () => ({ company_name: 'guezelwebdesign', slogan: '', about: '' }) as any,
-    [],
-  );
+  const seed = React.useMemo(() => ({ company_name: "guezelwebdesign", slogan: "", about: "" }) as any, []);
 
-  const [form, setForm] = React.useState<CompanyProfileFormState>(() =>
-    companyObjToForm(base, seed),
-  );
+  const [form, setForm] = React.useState<CompanyProfileFormState>(() => companyObjToForm(base, seed));
   React.useEffect(() => setForm(companyObjToForm(base, seed)), [base, seed]);
 
   const handleChange = (next: CompanyProfileFormState) => {
@@ -300,34 +239,24 @@ const CompanyStructuredRenderer: React.FC<StructuredRenderProps> = ({
   };
 
   return (
-    <CompanyProfileStructuredForm
-      value={form}
-      onChange={handleChange}
-      errors={{}}
-      disabled={!!disabled}
-      seed={seed}
-    />
+    <CompanyProfileStructuredForm value={form} onChange={handleChange} errors={{}} disabled={!!disabled} seed={seed} />
   );
 };
 
-const UiHeaderStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const UiHeaderStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const base = React.useMemo(() => {
     const v = coerceSettingValue(value) ?? {};
-    return typeof v === 'object' && v ? v : {};
+    return typeof v === "object" && v ? v : {};
   }, [value]);
 
   const seed = React.useMemo(
     () =>
       ({
-        nav_home: 'Home',
-        nav_products: 'Products',
-        nav_services: 'Services',
-        nav_contact: 'Contact',
-        cta_label: 'Get Offer',
+        nav_home: "Home",
+        nav_products: "Products",
+        nav_services: "Services",
+        nav_contact: "Contact",
+        cta_label: "Get Offer",
       }) as any,
     [],
   );
@@ -340,22 +269,10 @@ const UiHeaderStructuredRenderer: React.FC<StructuredRenderProps> = ({
     setValue(uiHeaderFormToObj(next));
   };
 
-  return (
-    <UiHeaderStructuredForm
-      value={form}
-      onChange={handleChange}
-      errors={{}}
-      disabled={!!disabled}
-      seed={seed}
-    />
-  );
+  return <UiHeaderStructuredForm value={form} onChange={handleChange} errors={{}} disabled={!!disabled} seed={seed} />;
 };
 
-const BusinessHoursStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const BusinessHoursStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const base = React.useMemo(() => {
     const v = coerceSettingValue(value);
     return Array.isArray(v) ? v : [];
@@ -364,20 +281,18 @@ const BusinessHoursStructuredRenderer: React.FC<StructuredRenderProps> = ({
   const seed = React.useMemo(
     () =>
       [
-        { day: 'mon', open: '09:00', close: '18:00', closed: false },
-        { day: 'tue', open: '09:00', close: '18:00', closed: false },
-        { day: 'wed', open: '09:00', close: '18:00', closed: false },
-        { day: 'thu', open: '09:00', close: '18:00', closed: false },
-        { day: 'fri', open: '09:00', close: '18:00', closed: false },
-        { day: 'sat', open: '10:00', close: '14:00', closed: false },
-        { day: 'sun', open: '00:00', close: '00:00', closed: true },
+        { day: "mon", open: "09:00", close: "18:00", closed: false },
+        { day: "tue", open: "09:00", close: "18:00", closed: false },
+        { day: "wed", open: "09:00", close: "18:00", closed: false },
+        { day: "thu", open: "09:00", close: "18:00", closed: false },
+        { day: "fri", open: "09:00", close: "18:00", closed: false },
+        { day: "sat", open: "10:00", close: "14:00", closed: false },
+        { day: "sun", open: "00:00", close: "00:00", closed: true },
       ] as any,
     [],
   );
 
-  const [form, setForm] = React.useState<BusinessHoursFormState>(() =>
-    businessHoursObjToForm(base, seed),
-  );
+  const [form, setForm] = React.useState<BusinessHoursFormState>(() => businessHoursObjToForm(base, seed));
   React.useEffect(() => setForm(businessHoursObjToForm(base, seed)), [base, seed]);
 
   const handleChange = (next: BusinessHoursFormState) => {
@@ -386,45 +301,38 @@ const BusinessHoursStructuredRenderer: React.FC<StructuredRenderProps> = ({
   };
 
   return (
-    <BusinessHoursStructuredForm
-      value={form}
-      onChange={handleChange}
-      errors={{}}
-      disabled={!!disabled}
-      seed={seed}
-    />
+    <BusinessHoursStructuredForm value={form} onChange={handleChange} errors={{}} disabled={!!disabled} seed={seed} />
   );
 };
 
-const HomeHeroStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const HomeHeroStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
   const t = useAdminTranslations(adminLocale || undefined);
   const source = asPlainObject(coerceSettingValue(value));
   const normalized = {
-    badge: String(source.badge ?? ''),
-    title: String(source.title ?? ''),
-    subtitle: String(source.subtitle ?? ''),
-    primaryCtaLabel: String(source.primaryCtaLabel ?? ''),
-    primaryCtaHref: String(source.primaryCtaHref ?? '/products'),
-    secondaryCtaLabel: String(source.secondaryCtaLabel ?? ''),
-    secondaryCtaHref: String(source.secondaryCtaHref ?? '/offer'),
-    workflowLabel: String(source.workflowLabel ?? ''),
-    workflowTitle: String(source.workflowTitle ?? ''),
-    workflowBadgeTitle: String(source.workflowBadgeTitle ?? ''),
-    workflowBadgeSubtitle: String(source.workflowBadgeSubtitle ?? ''),
+    badge: String(source.badge ?? ""),
+    title: String(source.title ?? ""),
+    subtitle: String(source.subtitle ?? ""),
+    primaryCtaLabel: String(source.primaryCtaLabel ?? ""),
+    primaryCtaHref: String(source.primaryCtaHref ?? "/products"),
+    secondaryCtaLabel: String(source.secondaryCtaLabel ?? ""),
+    secondaryCtaHref: String(source.secondaryCtaHref ?? "/offer"),
+    workflowLabel: String(source.workflowLabel ?? ""),
+    workflowTitle: String(source.workflowTitle ?? ""),
+    workflowBadgeTitle: String(source.workflowBadgeTitle ?? ""),
+    workflowBadgeSubtitle: String(source.workflowBadgeSubtitle ?? ""),
   };
 
   return (
     <div className="space-y-3">
-      <div className="rounded-md border p-3 text-sm text-muted-foreground">
-        <div className="font-medium text-foreground">{normalized.title || t('admin.siteSettings.detail.structuredJson.label')}</div>
-        <div>{normalized.subtitle || 'Hero subtitle preview'}</div>
+      <div className="rounded-md border p-3 text-muted-foreground text-sm">
+        <div className="font-medium text-foreground">
+          {normalized.title || t("admin.siteSettings.detail.structuredJson.label")}
+        </div>
+        <div>{normalized.subtitle || "Hero subtitle preview"}</div>
         <div className="mt-2 text-xs">
-          CTA: {normalized.primaryCtaLabel || '...'} ({normalized.primaryCtaHref}) / {normalized.secondaryCtaLabel || '...'} ({normalized.secondaryCtaHref})
+          CTA: {normalized.primaryCtaLabel || "..."} ({normalized.primaryCtaHref}) /{" "}
+          {normalized.secondaryCtaLabel || "..."} ({normalized.secondaryCtaHref})
         </div>
       </div>
 
@@ -440,34 +348,40 @@ const HomeHeroStructuredRenderer: React.FC<StructuredRenderProps> = ({
   );
 };
 
-const HomeMetricsStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const HomeMetricsStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const source = asPlainObject(coerceSettingValue(value));
   const normalized = {
-    items: asPlainArray(source.items).slice(0, 3).map((item) => ({
-      title: String(item.title ?? ''),
-      description: String(item.description ?? ''),
-    })),
-    workflowSteps: asPlainArray(source.workflowSteps).slice(0, 3).map((item) => ({
-      step: String(item.step ?? ''),
-      title: String(item.title ?? ''),
-      description: String(item.description ?? ''),
-    })),
-    stats: asPlainArray(source.stats).slice(0, 2).map((item) => ({
-      value: String(item.value ?? ''),
-      label: String(item.label ?? ''),
-    })),
+    items: asPlainArray(source.items)
+      .slice(0, 3)
+      .map((item) => ({
+        title: String(item.title ?? ""),
+        description: String(item.description ?? ""),
+      })),
+    workflowSteps: asPlainArray(source.workflowSteps)
+      .slice(0, 3)
+      .map((item) => ({
+        step: String(item.step ?? ""),
+        title: String(item.title ?? ""),
+        description: String(item.description ?? ""),
+      })),
+    stats: asPlainArray(source.stats)
+      .slice(0, 2)
+      .map((item) => ({
+        value: String(item.value ?? ""),
+        label: String(item.label ?? ""),
+      })),
   };
 
   return (
     <div className="space-y-3">
-      <div className="rounded-md border p-3 text-sm text-muted-foreground">
-        <div>{normalized.items.length}/3 metric cards, {normalized.workflowSteps.length}/3 workflow steps, {normalized.stats.length}/2 stat badges</div>
+      <div className="rounded-md border p-3 text-muted-foreground text-sm">
+        <div>
+          {normalized.items.length}/3 metric cards, {normalized.workflowSteps.length}/3 workflow steps,{" "}
+          {normalized.stats.length}/2 stat badges
+        </div>
         <div className="mt-2 text-xs">
-          First metric: {normalized.items[0]?.title || '...'} | First step: {normalized.workflowSteps[0]?.step || '--'} {normalized.workflowSteps[0]?.title || '...'}
+          First metric: {normalized.items[0]?.title || "..."} | First step: {normalized.workflowSteps[0]?.step || "--"}{" "}
+          {normalized.workflowSteps[0]?.title || "..."}
         </div>
       </div>
 
@@ -483,30 +397,30 @@ const HomeMetricsStructuredRenderer: React.FC<StructuredRenderProps> = ({
   );
 };
 
-const HomeValuePropsStructuredRenderer: React.FC<StructuredRenderProps> = ({
-  value,
-  setValue,
-  disabled,
-}) => {
+const HomeValuePropsStructuredRenderer: React.FC<StructuredRenderProps> = ({ value, setValue, disabled }) => {
   const source = asPlainObject(coerceSettingValue(value));
   const normalized = {
-    sectionLabel: String(source.sectionLabel ?? ''),
-    title: String(source.title ?? ''),
-    subtitle: String(source.subtitle ?? ''),
+    sectionLabel: String(source.sectionLabel ?? ""),
+    title: String(source.title ?? ""),
+    subtitle: String(source.subtitle ?? ""),
     items: asPlainArray(source.items).map((item) => ({
-      key: String(item.key ?? ''),
-      title: String(item.title ?? ''),
-      description: String(item.description ?? ''),
+      key: String(item.key ?? ""),
+      title: String(item.title ?? ""),
+      description: String(item.description ?? ""),
     })),
   };
 
   return (
     <div className="space-y-3">
-      <div className="rounded-md border p-3 text-sm text-muted-foreground">
-        <div className="font-medium text-foreground">{normalized.title || 'Why us section'}</div>
-        <div>{normalized.subtitle || 'Section subtitle preview'}</div>
+      <div className="rounded-md border p-3 text-muted-foreground text-sm">
+        <div className="font-medium text-foreground">{normalized.title || "Why us section"}</div>
+        <div>{normalized.subtitle || "Section subtitle preview"}</div>
         <div className="mt-2 text-xs">
-          Item keys: {normalized.items.map((item) => item.key).filter(Boolean).join(', ') || 'quality, experience, custom, delivery'}
+          Item keys:{" "}
+          {normalized.items
+            .map((item) => item.key)
+            .filter(Boolean)
+            .join(", ") || "quality, experience, custom, delivery"}
         </div>
       </div>
 
@@ -524,8 +438,8 @@ const HomeValuePropsStructuredRenderer: React.FC<StructuredRenderProps> = ({
 
 /* ----------------------------- component ----------------------------- */
 
-const KOMPOZIT_BRAND = 'kompozit';
-const KOMPOZIT_PREFIX = 'kompozit__';
+const KOMPOZIT_BRAND = "kompozit";
+const KOMPOZIT_PREFIX = "kompozit__";
 
 export default function SiteSettingsDetailClient({ id }: { id: string }) {
   const router = useRouter();
@@ -538,12 +452,9 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
     (key: string) => (settingPrefix && key.startsWith(settingPrefix) ? key.slice(settingPrefix.length) : key),
     [settingPrefix],
   );
-  const withPrefix = React.useCallback(
-    (key: string) => `${settingPrefix}${key}`,
-    [settingPrefix],
-  );
+  const withPrefix = React.useCallback((key: string) => `${settingPrefix}${key}`, [settingPrefix]);
 
-  const rawSettingKey = React.useMemo(() => String(id || '').trim(), [id]);
+  const rawSettingKey = React.useMemo(() => String(id || "").trim(), [id]);
   const settingKey = React.useMemo(() => stripPrefix(rawSettingKey), [rawSettingKey, stripPrefix]);
 
   const {
@@ -554,28 +465,27 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
   } = useAdminLocales(settingPrefix || undefined);
 
   const localeOptions = React.useMemo(
-    () => [{ value: '*', label: t('admin.siteSettings.detail.globalOption') }, ...appLocaleOptions],
+    () => [{ value: "*", label: t("admin.siteSettings.detail.globalOption") }, ...appLocaleOptions],
     [appLocaleOptions, t],
   );
 
   const localeFromQuery = React.useMemo(() => {
-    const q = sp.get('locale');
-    return (q ?? '').trim();
+    const q = sp.get("locale");
+    return (q ?? "").trim();
   }, [sp]);
 
   const initialLocale = React.useMemo(() => {
-    const qLocale = localeFromQuery === '*' ? '*' : toShortLocale(localeFromQuery);
+    const qLocale = localeFromQuery === "*" ? "*" : toShortLocale(localeFromQuery);
 
     if (qLocale && localeOptions.some((x) => x.value === qLocale)) return qLocale;
 
-    if (defaultLocaleFromDb && localeOptions.some((x) => x.value === defaultLocaleFromDb))
-      return defaultLocaleFromDb;
+    if (defaultLocaleFromDb && localeOptions.some((x) => x.value === defaultLocaleFromDb)) return defaultLocaleFromDb;
 
-    const firstNonGlobal = localeOptions.find((x) => x.value !== '*');
-    return firstNonGlobal?.value || localeOptions?.[0]?.value || '';
+    const firstNonGlobal = localeOptions.find((x) => x.value !== "*");
+    return firstNonGlobal?.value || localeOptions?.[0]?.value || "";
   }, [localeFromQuery, localeOptions, defaultLocaleFromDb]);
 
-  const [selectedLocale, setSelectedLocale] = React.useState<string>('');
+  const [selectedLocale, setSelectedLocale] = React.useState<string>("");
 
   // init/repair selectedLocale
   React.useEffect(() => {
@@ -583,7 +493,7 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
 
     setSelectedLocale((prev) => {
       if (prev && localeOptions.some((x) => x.value === prev)) return prev;
-      return initialLocale || '';
+      return initialLocale || "";
     });
   }, [localeOptions, initialLocale]);
 
@@ -591,14 +501,14 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
   React.useEffect(() => {
     if (!settingKey || !selectedLocale) return;
 
-    const cur = localeFromQuery === '*' ? '*' : toShortLocale(localeFromQuery);
+    const cur = localeFromQuery === "*" ? "*" : toShortLocale(localeFromQuery);
     if (cur === selectedLocale) return;
 
     const qs = new URLSearchParams(Array.from(sp.entries()));
-    qs.set('locale', selectedLocale);
+    qs.set("locale", selectedLocale);
     router.replace(`/admin/site-settings/${encodeURIComponent(rawSettingKey)}?${qs.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rawSettingKey, selectedLocale]);
+  }, [rawSettingKey, selectedLocale, localeFromQuery, router.replace, settingKey, sp.entries]);
 
   // load row for key+locale (same pattern as /pages)
   const listArgs = React.useMemo(() => {
@@ -616,11 +526,11 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
   const rowFromList: SiteSetting | null = React.useMemo(() => {
     const arr = Array.isArray(rows) ? (rows as SiteSetting[]) : [];
     const exact = arr.find(
-      (r) => stripPrefix(String(r?.key || '')) === settingKey && String(r?.locale || '') === selectedLocale,
+      (r) => stripPrefix(String(r?.key || "")) === settingKey && String(r?.locale || "") === selectedLocale,
     );
     if (exact) return exact;
 
-    const byKey = arr.find((r) => stripPrefix(String(r?.key || '')) === settingKey);
+    const byKey = arr.find((r) => stripPrefix(String(r?.key || "")) === settingKey);
     return byKey || null;
   }, [rows, settingKey, selectedLocale, stripPrefix]);
 
@@ -635,7 +545,7 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
       resolvedQ.data
         ? ({
             ...(resolvedQ.data as SiteSetting),
-            key: stripPrefix(String((resolvedQ.data as SiteSetting).key || '')),
+            key: stripPrefix(String((resolvedQ.data as SiteSetting).key || "")),
           } as SiteSetting)
         : null,
     [resolvedQ.data, stripPrefix],
@@ -645,11 +555,10 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
 
   const effectiveLocale = React.useMemo(() => {
     const loc = (resolvedRow as any)?.locale;
-    return loc === null || loc === undefined ? '' : String(loc).trim();
+    return loc === null || loc === undefined ? "" : String(loc).trim();
   }, [resolvedRow]);
 
-  const isFallback =
-    !rowFromList && !!resolvedRow && effectiveLocale && effectiveLocale !== selectedLocale;
+  const isFallback = !rowFromList && !!resolvedRow && effectiveLocale && effectiveLocale !== selectedLocale;
 
   const [updateSetting, { isLoading: isSaving }] = useUpdateSiteSettingAdminMutation();
   const [deleteSetting, { isLoading: isDeleting }] = useDeleteSiteSettingAdminMutation();
@@ -666,16 +575,15 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
 
   const handleSave = async (args: { key: string; locale: string; value: SettingValue }) => {
     try {
-      if (String(args.key).toLowerCase() === 'site_meta_default' && args.locale === '*') {
-        toast.error(t('admin.siteSettings.detail.siteMetaDefaultGlobalGuard'));
+      if (String(args.key).toLowerCase() === "site_meta_default" && args.locale === "*") {
+        toast.error(t("admin.siteSettings.detail.siteMetaDefaultGlobalGuard"));
         return;
       }
       await updateSetting({ key: withPrefix(args.key), locale: args.locale, value: args.value }).unwrap();
-      toast.success(t('admin.siteSettings.detail.updated', { key: args.key, locale: args.locale }));
+      toast.success(t("admin.siteSettings.detail.updated", { key: args.key, locale: args.locale }));
       await refetch();
     } catch (err: any) {
-      const msg =
-        err?.data?.error?.message || err?.message || t('admin.siteSettings.messages.error');
+      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.messages.error");
       toast.error(msg);
     }
   };
@@ -683,13 +591,10 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
   const handleDelete = async (args: { key: string; locale?: string }) => {
     try {
       await deleteSetting({ key: withPrefix(args.key), locale: args.locale }).unwrap();
-      toast.success(
-        t('admin.siteSettings.detail.deleted', { key: args.key, locale: args.locale || '' }),
-      );
+      toast.success(t("admin.siteSettings.detail.deleted", { key: args.key, locale: args.locale || "" }));
       await refetch();
     } catch (err: any) {
-      const msg =
-        err?.data?.error?.message || err?.message || t('admin.siteSettings.messages.error');
+      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.messages.error");
       toast.error(msg);
     }
   };
@@ -698,36 +603,36 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
     if (!settingKey) return JsonStructuredRenderer;
 
     if (isSeoKey(settingKey)) {
-      if (String(settingKey).toLowerCase() === 'site_meta_default') return JsonStructuredRenderer;
+      if (String(settingKey).toLowerCase() === "site_meta_default") return JsonStructuredRenderer;
       return SeoStructuredRenderer;
     }
 
     if (isGeneralKey(settingKey)) {
-      if (settingKey === 'contact_info') return ContactStructuredRenderer;
-      if (settingKey === 'socials') return SocialsStructuredRenderer;
-      if (settingKey === 'company_profile') return CompanyStructuredRenderer;
-      if (settingKey === 'ui_header') return UiHeaderStructuredRenderer;
-      if (settingKey === 'businessHours') return BusinessHoursStructuredRenderer;
+      if (settingKey === "contact_info") return ContactStructuredRenderer;
+      if (settingKey === "socials") return SocialsStructuredRenderer;
+      if (settingKey === "company_profile") return CompanyStructuredRenderer;
+      if (settingKey === "ui_header") return UiHeaderStructuredRenderer;
+      if (settingKey === "businessHours") return BusinessHoursStructuredRenderer;
     }
 
     if (isHomeContentKey(settingKey)) {
-      if (settingKey === 'home.hero') return HomeHeroStructuredRenderer;
-      if (settingKey === 'home.metrics') return HomeMetricsStructuredRenderer;
-      if (settingKey === 'home.value_props') return HomeValuePropsStructuredRenderer;
+      if (settingKey === "home.hero") return HomeHeroStructuredRenderer;
+      if (settingKey === "home.metrics") return HomeMetricsStructuredRenderer;
+      if (settingKey === "home.value_props") return HomeValuePropsStructuredRenderer;
     }
 
     return JsonStructuredRenderer;
   }, [settingKey]);
 
-  const backHref = '/admin/site-settings';
+  const backHref = "/admin/site-settings";
 
   if (!settingKey) {
     return (
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">{t('admin.siteSettings.detail.keyMissingTitle')}</CardTitle>
-            <CardDescription>{t('admin.siteSettings.detail.keyMissingDesc')}</CardDescription>
+            <CardTitle className="text-base">{t("admin.siteSettings.detail.keyMissingTitle")}</CardTitle>
+            <CardDescription>{t("admin.siteSettings.detail.keyMissingDesc")}</CardDescription>
           </CardHeader>
         </Card>
       </div>
@@ -739,15 +644,13 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base">{t('admin.siteSettings.detail.localesMissingTitle')}</CardTitle>
-            <CardDescription>
-              {t('admin.siteSettings.detail.localesMissingDesc')}
-            </CardDescription>
+            <CardTitle className="text-base">{t("admin.siteSettings.detail.localesMissingTitle")}</CardTitle>
+            <CardDescription>{t("admin.siteSettings.detail.localesMissingDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Button asChild variant="outline" size="sm">
               <Link prefetch={false} href={backHref}>
-                {t('admin.siteSettings.detail.localesMissingAction')}
+                {t("admin.siteSettings.detail.localesMissingAction")}
               </Link>
             </Button>
           </CardContent>
@@ -760,10 +663,10 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-            <span>{t('admin.siteSettings.title')}</span>
-            <Badge variant={brand ? 'default' : 'secondary'}>
-              {brand ? `${brand.toUpperCase()} Scope` : 'Global Scope'}
+          <div className="flex flex-wrap items-center gap-2 text-muted-foreground text-sm">
+            <span>{t("admin.siteSettings.title")}</span>
+            <Badge variant={brand ? "default" : "secondary"}>
+              {brand ? `${brand.toUpperCase()} Scope` : "Global Scope"}
             </Badge>
             {settingPrefix ? (
               <Badge variant="outline">
@@ -771,32 +674,32 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
               </Badge>
             ) : null}
           </div>
-          <h1 className="text-lg font-semibold">
-            {t('admin.siteSettings.detail.editTitle')}: <code>{settingKey}</code>
+          <h1 className="font-semibold text-lg">
+            {t("admin.siteSettings.detail.editTitle")}: <code>{settingKey}</code>
           </h1>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {brand
               ? `${brand} site settings duzenleniyor. Bu ekrandaki degisiklikler yalnizca ${settingPrefix} namespace'ini etkiler.`
-              : 'Bu ekrandaki degisiklikler ortak global site settings kayitlarini etkiler.'}
+              : "Bu ekrandaki degisiklikler ortak global site settings kayitlarini etkiler."}
           </p>
         </div>
 
         <div className="flex flex-wrap items-end gap-2">
           <Button asChild variant="outline" size="sm">
             <Link prefetch={false} href={backHref}>
-              {t('admin.siteSettings.detail.backToList')}
+              {t("admin.siteSettings.detail.backToList")}
             </Link>
           </Button>
 
           <div className="space-y-2">
-            <Label>{t('admin.siteSettings.detail.localeLabel')}</Label>
+            <Label>{t("admin.siteSettings.detail.localeLabel")}</Label>
             <Select
-              value={selectedLocale || ''}
-              onValueChange={(v) => setSelectedLocale(v === '*' ? '*' : toShortLocale(v))}
+              value={selectedLocale || ""}
+              onValueChange={(v) => setSelectedLocale(v === "*" ? "*" : toShortLocale(v))}
               disabled={busy || !localeOptions.length}
             >
               <SelectTrigger className="w-60">
-                <SelectValue placeholder={t('admin.siteSettings.filters.selectLanguage')} />
+                <SelectValue placeholder={t("admin.siteSettings.filters.selectLanguage")} />
               </SelectTrigger>
               <SelectContent>
                 {localeOptions.map((o) => (
@@ -814,25 +717,25 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
             size="sm"
             onClick={() => refetch()}
             disabled={busy}
-            title={t('admin.common.refresh')}
+            title={t("admin.common.refresh")}
           >
             <RefreshCcw className="size-4" />
           </Button>
 
           {selectedLocale ? <Badge variant="secondary">{selectedLocale}</Badge> : null}
-          {busy ? <Badge variant="outline">{t('admin.siteSettings.messages.loading')}</Badge> : null}
+          {busy ? <Badge variant="outline">{t("admin.siteSettings.messages.loading")}</Badge> : null}
         </div>
       </div>
 
       {!selectedLocale ? (
-        <div className="rounded-md border p-4 text-sm text-muted-foreground">
-          {t('admin.siteSettings.detail.loadingLocale')}
+        <div className="rounded-md border p-4 text-muted-foreground text-sm">
+          {t("admin.siteSettings.detail.loadingLocale")}
         </div>
       ) : (
         <div className="space-y-3">
           {isFallback ? (
-            <div className="rounded-md border bg-muted/30 p-3 text-sm text-muted-foreground">
-              {t('admin.siteSettings.detail.fallbackNotice', {
+            <div className="rounded-md border bg-muted/30 p-3 text-muted-foreground text-sm">
+              {t("admin.siteSettings.detail.fallbackNotice", {
                 selectedLocale,
                 effectiveLocale,
               })}
@@ -840,8 +743,8 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
           ) : null}
 
           {!row && !busy ? (
-            <div className="rounded-md border p-3 text-sm text-muted-foreground">
-              {t('admin.siteSettings.detail.noRecordNotice', { key: settingKey, locale: selectedLocale })}
+            <div className="rounded-md border p-3 text-muted-foreground text-sm">
+              {t("admin.siteSettings.detail.noRecordNotice", { key: settingKey, locale: selectedLocale })}
             </div>
           ) : null}
 
@@ -873,9 +776,7 @@ export default function SiteSettingsDetailClient({ id }: { id: string }) {
         </div>
       )}
 
-      <div className="text-xs text-muted-foreground">
-        {t('admin.siteSettings.detail.note')}
-      </div>
+      <div className="text-muted-foreground text-xs">{t("admin.siteSettings.detail.note")}</div>
     </div>
   );
 }

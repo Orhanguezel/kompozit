@@ -40,8 +40,9 @@ export default async function ReferencesPage({
   const visibleReferences = references.length > 0 ? references : getFallbackReferences(locale);
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-muted)] relative overflow-hidden">
-      <div className="surface-dark-shell carbon-mesh absolute inset-0 opacity-[0.03] pointer-events-none" />
+    <div className="min-h-screen bg-[var(--color-carbon)] relative overflow-hidden text-[var(--color-cream)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-carbon)_80%)] opacity-80" aria-hidden />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">

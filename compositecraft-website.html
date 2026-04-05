@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CompositeCraft — Premium Carbon Fiber & Fiberglass Composite Manufacturing</title>
+<meta name="description" content="CompositeCraft is a leading manufacturer of custom carbon fiber and fiberglass composite products. From architectural planters to bespoke caskets, we engineer lightweight, durable composite solutions for every industry.">
+<meta name="keywords" content="carbon fiber manufacturing, fiberglass composite, composite planters, composite coffins, custom composite products, carbon fiber reinforced polymer, CFRP, GRP manufacturing, lightweight composite solutions">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="CompositeCraft — Premium Carbon Fiber & Fiberglass Composite Manufacturing">
+<meta property="og:description" content="Custom carbon fiber and fiberglass composite products engineered for strength, beauty, and durability. Industry-leading composite manufacturing.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.compositecraft.com/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --carbon: #0a0a0a;
+  --graphite: #1a1a1a;
+  --steel: #2a2a2a;
+  --fiber: #3a3a3a;
+  --silver: #8a8a8a;
+  --light: #c0c0c0;
+  --cream: #e8e4df;
+  --gold: #c9a96e;
+  --gold-bright: #dbb978;
+  --white: #f5f2ed;
+  --accent: #d4a853;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--carbon);
+  color: var(--cream);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* --- CARBON FIBER TEXTURE --- */
+.carbon-texture {
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.02) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.02) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.02) 75%);
+  background-size: 4px 4px;
+  background-position: 0 0, 0 2px, 2px -2px, -2px 0px;
+}
+
+/* --- NAVIGATION --- */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 1.2rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.4s ease;
+  background: transparent;
+}
+
+nav.scrolled {
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(201,169,110,0.15);
+  padding: 0.8rem 3rem;
+}
+
+.logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 6px;
+  color: var(--white);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--gold);
+  transform: rotate(45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logo-icon::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: var(--gold);
+  transform: rotate(0deg);
+}
+
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--light);
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-weight: 500;
+  position: relative;
+  transition: color 0.3s;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.3s;
+}
+
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+
+.nav-cta {
+  padding: 10px 28px;
+  border: 1px solid var(--gold);
+  color: var(--gold) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 3px !important;
+  transition: all 0.3s !important;
+}
+
+.nav-cta:hover {
+  background: var(--gold) !important;
+  color: var(--carbon) !important;
+}
+
+.nav-cta::after { display: none !important; }
+
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.mobile-toggle span {
+  width: 28px;
+  height: 1.5px;
+  background: var(--cream);
+  transition: 0.3s;
+}
+
+/* --- HERO --- */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(201,169,110,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(201,169,110,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, var(--carbon) 0%, var(--graphite) 50%, var(--carbon) 100%);
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,169,110,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,169,110,0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+}
+
+.hero-content {
+  position: relative;
+  text-align: center;
+  max-width: 900px;
+  padding: 0 2rem;
+}
+
+.hero-label {
+  font-size: 0.75rem;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.3s forwards;
+}
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: 4px;
+  color: var(--white);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp 1s 0.5s forwards;
+}
+
+.hero h1 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.hero-desc {
+  font-size: 1.1rem;
+  color: var(--silver);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  font-weight: 300;
+  line-height: 1.8;
+  opacity: 0;
+  animation: fadeUp 1s 0.7s forwards;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeUp 1s 0.9s forwards;
+}
+
+.btn-primary {
+  padding: 16px 48px;
+  background: var(--gold);
+  color: var(--carbon);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before { left: 100%; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(201,169,110,0.3); }
+
+.btn-outline {
+  padding: 16px 48px;
+  border: 1px solid var(--silver);
+  color: var(--cream);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--silver);
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 1s 1.2s forwards;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+/* --- STATS BAR --- */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(201,169,110,0.15);
+  border-bottom: 1px solid rgba(201,169,110,0.15);
+}
+
+.stat-item {
+  padding: 3rem 2rem;
+  text-align: center;
+  border-right: 1px solid rgba(201,169,110,0.1);
+  transition: background 0.3s;
+}
+
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(201,169,110,0.03); }
+
+.stat-number {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin-top: 0.5rem;
+}
+
+/* --- SECTION STYLES --- */
+section {
+  padding: 8rem 3rem;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.section-title em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.section-desc {
+  font-size: 1.05rem;
+  color: var(--silver);
+  max-width: 650px;
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+/* --- ABOUT --- */
+.about {
+  background: var(--graphite);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+  height: 500px;
+}
+
+.about-img-main {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(135deg, var(--steel) 0%, var(--fiber) 50%, var(--steel) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.about-img-main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(201,169,110,0.03) 2px, rgba(201,169,110,0.03) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(201,169,110,0.03) 2px, rgba(201,169,110,0.03) 4px);
+}
+
+.about-img-main::after {
+  content: 'COMPOSITE\ASTRUCTURE';
+  white-space: pre;
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  color: rgba(201,169,110,0.08);
+  line-height: 1;
+}
+
+.about-accent {
+  position: absolute;
+  bottom: -2rem;
+  right: -2rem;
+  width: 200px;
+  height: 200px;
+  border: 1px solid var(--gold);
+  opacity: 0.3;
+}
+
+.about-text-content h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  color: var(--cream);
+  font-weight: 400;
+  margin: 2rem 0 1rem;
+  font-style: italic;
+}
+
+.about-text-content p {
+  color: var(--silver);
+  line-height: 1.9;
+  margin-bottom: 1rem;
+  font-weight: 300;
+}
+
+/* --- MATERIALS --- */
+.materials {
+  background: var(--carbon);
+  position: relative;
+}
+
+.materials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  max-width: 1300px;
+  margin: 3rem auto 0;
+}
+
+.material-card {
+  padding: 4rem 3rem;
+  background: var(--graphite);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s;
+}
+
+.material-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s;
+}
+
+.material-card:hover::before { transform: scaleX(1); }
+.material-card:hover { background: var(--steel); }
+
+.material-icon {
+  width: 60px;
+  height: 60px;
+  border: 1px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  color: var(--gold);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.material-card h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+.material-card p {
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.material-specs {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.spec {
+  padding: 1rem;
+  background: rgba(0,0,0,0.3);
+}
+
+.spec-value {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+}
+
+.spec-label {
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--silver);
+  margin-top: 0.25rem;
+}
+
+/* --- PRODUCTS --- */
+.products {
+  background: var(--graphite);
+}
+
+.products-showcase {
+  max-width: 1300px;
+  margin: 4rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+
+.product-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--carbon);
+  cursor: pointer;
+  group: true;
+}
+
+.product-visual {
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s;
+}
+
+.product-card:nth-child(1) .product-visual {
+  background:
+    radial-gradient(circle at 30% 40%, rgba(201,169,110,0.12) 0%, transparent 60%),
+    linear-gradient(135deg, #1a1815 0%, #2a2520 50%, #1a1815 100%);
+}
+
+.product-card:nth-child(2) .product-visual {
+  background:
+    radial-gradient(circle at 70% 60%, rgba(201,169,110,0.1) 0%, transparent 60%),
+    linear-gradient(135deg, #151a18 0%, #202a25 50%, #151a18 100%);
+}
+
+.product-card:nth-child(3) .product-visual {
+  background:
+    radial-gradient(circle at 50% 30%, rgba(201,169,110,0.1) 0%, transparent 60%),
+    linear-gradient(135deg, #18151a 0%, #25202a 50%, #18151a 100%);
+}
+
+.product-card:hover .product-visual {
+  transform: scale(1.03);
+}
+
+.product-icon-lg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  opacity: 0.15;
+  color: var(--gold);
+  transition: opacity 0.3s;
+}
+
+.product-card:hover .product-icon-lg { opacity: 0.25; }
+
+.product-number {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  color: var(--gold);
+  opacity: 0.6;
+}
+
+.product-info {
+  padding: 2.5rem;
+}
+
+.product-info h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+
+.product-info p {
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.product-features {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.product-tag {
+  padding: 6px 14px;
+  border: 1px solid rgba(201,169,110,0.2);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* --- PROCESS --- */
+.process {
+  background: var(--carbon);
+  position: relative;
+}
+
+.process-timeline {
+  max-width: 1100px;
+  margin: 4rem auto 0;
+  position: relative;
+}
+
+.process-timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--gold), rgba(201,169,110,0.1));
+}
+
+.process-step {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.process-step::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 1.5rem;
+  width: 12px;
+  height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 20px rgba(201,169,110,0.3);
+}
+
+.process-step:nth-child(even) .step-content {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: left;
+  padding-left: 3rem;
+}
+
+.process-step:nth-child(even) .step-number-side {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: right;
+  padding-right: 3rem;
+}
+
+.process-step:nth-child(odd) .step-content {
+  text-align: right;
+  padding-right: 3rem;
+}
+
+.process-step:nth-child(odd) .step-number-side {
+  text-align: left;
+  padding-left: 3rem;
+}
+
+.step-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 5rem;
+  color: rgba(201,169,110,0.1);
+  line-height: 1;
+}
+
+.step-content h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+
+.step-content p {
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+/* --- ADVANTAGES --- */
+.advantages {
+  background: var(--graphite);
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  max-width: 1300px;
+  margin: 4rem auto 0;
+}
+
+.advantage-item {
+  padding: 3rem 2.5rem;
+  background: var(--carbon);
+  transition: all 0.4s;
+  position: relative;
+}
+
+.advantage-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transition: transform 0.4s;
+}
+
+.advantage-item:hover { background: var(--steel); }
+.advantage-item:hover::after { transform: scaleX(1); }
+
+.advantage-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  color: rgba(201,169,110,0.15);
+  margin-bottom: 1rem;
+}
+
+.advantage-item h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+
+.advantage-item p {
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+
+/* --- GALLERY --- */
+.gallery {
+  background: var(--carbon);
+  padding: 8rem 0;
+}
+
+.gallery-header {
+  padding: 0 3rem;
+  max-width: 1300px;
+  margin: 0 auto 4rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+}
+
+.gallery-item {
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.gallery-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(10,10,10,0.8) 0%, transparent 50%);
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.gallery-item:hover::before { opacity: 1; }
+
+.gallery-item:nth-child(1) {
+  background: linear-gradient(135deg, #1c1812, #2e2518);
+  grid-row: span 2;
+  height: auto;
+}
+
+.gallery-item:nth-child(2) {
+  background: linear-gradient(135deg, #121c18, #182e25);
+}
+
+.gallery-item:nth-child(3) {
+  background: linear-gradient(135deg, #18121c, #25182e);
+}
+
+.gallery-item:nth-child(4) {
+  background: linear-gradient(135deg, #1c1818, #2e2525);
+  grid-row: span 2;
+  height: auto;
+}
+
+.gallery-item:nth-child(5) {
+  background: linear-gradient(135deg, #12181c, #18252e);
+}
+
+.gallery-item:nth-child(6) {
+  background: linear-gradient(135deg, #1c1c12, #2e2e18);
+}
+
+.gallery-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.4s;
+}
+
+.gallery-item:hover .gallery-caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.gallery-caption span {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.gallery-caption h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 2px;
+  color: var(--white);
+}
+
+.gallery-weave {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(201,169,110,0.03) 10px, rgba(201,169,110,0.03) 12px),
+    repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(201,169,110,0.03) 10px, rgba(201,169,110,0.03) 12px);
+  transition: opacity 0.4s;
+}
+
+.gallery-item:hover .gallery-weave { opacity: 0.5; }
+
+/* --- APPLICATIONS / INDUSTRIES --- */
+.industries {
+  background: var(--graphite);
+}
+
+.industries-flex {
+  display: flex;
+  gap: 2px;
+  max-width: 1300px;
+  margin: 4rem auto 0;
+}
+
+.industry-item {
+  flex: 1;
+  padding: 3rem 2rem;
+  background: var(--carbon);
+  text-align: center;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.industry-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center bottom, rgba(201,169,110,0.06) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.industry-item:hover::before { opacity: 1; }
+.industry-item:hover { transform: translateY(-4px); }
+
+.industry-icon {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  display: block;
+  filter: grayscale(0.5);
+}
+
+.industry-item h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+
+.industry-item p {
+  color: var(--silver);
+  font-size: 0.85rem;
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* --- TESTIMONIAL --- */
+.testimonial {
+  background: var(--carbon);
+  text-align: center;
+  padding: 10rem 3rem;
+  position: relative;
+}
+
+.testimonial::before {
+  content: '"';
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15rem;
+  color: rgba(201,169,110,0.06);
+  position: absolute;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  line-height: 1;
+}
+
+.testimonial blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-style: italic;
+  color: var(--cream);
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.testimonial-author {
+  font-size: 0.75rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* --- CTA --- */
+.cta-section {
+  background: linear-gradient(135deg, var(--graphite) 0%, var(--carbon) 100%);
+  padding: 10rem 3rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(circle at 30% 50%, rgba(201,169,110,0.04) 0%, transparent 40%),
+    radial-gradient(circle at 70% 50%, rgba(201,169,110,0.03) 0%, transparent 40%);
+  animation: ctaGlow 8s ease-in-out infinite alternate;
+}
+
+.cta-content {
+  position: relative;
+}
+
+.cta-content .section-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.cta-content .section-desc {
+  max-width: 600px;
+  margin: 0 auto 3rem;
+}
+
+/* --- CONTACT --- */
+.contact {
+  background: var(--graphite);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 4rem;
+  max-width: 1300px;
+  margin: 3rem auto 0;
+}
+
+.contact-info-block {
+  margin-bottom: 2.5rem;
+}
+
+.contact-info-block h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+.contact-info-block p,
+.contact-info-block a {
+  color: var(--silver);
+  font-weight: 300;
+  text-decoration: none;
+  line-height: 1.8;
+  transition: color 0.3s;
+}
+
+.contact-info-block a:hover { color: var(--gold); }
+
+.contact-form {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: var(--carbon);
+  border: 1px solid var(--fiber);
+  padding: 14px 18px;
+  color: var(--cream);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  transition: border-color 0.3s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--gold);
+}
+
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.form-group select option {
+  background: var(--carbon);
+  color: var(--cream);
+}
+
+.form-submit {
+  justify-self: start;
+}
+
+/* --- FOOTER --- */
+footer {
+  background: var(--carbon);
+  border-top: 1px solid rgba(201,169,110,0.1);
+  padding: 5rem 3rem 2rem;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 4rem;
+  max-width: 1300px;
+  margin: 0 auto 4rem;
+}
+
+.footer-brand .logo {
+  margin-bottom: 1.5rem;
+}
+
+.footer-brand p {
+  color: var(--silver);
+  font-weight: 300;
+  line-height: 1.8;
+  font-size: 0.9rem;
+}
+
+.footer-col h4 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.footer-col a {
+  color: var(--silver);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 300;
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--gold); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(201,169,110,0.08);
+  padding-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.footer-bottom p {
+  color: var(--silver);
+  font-size: 0.8rem;
+  font-weight: 300;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-social a {
+  color: var(--silver);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.footer-social a:hover { color: var(--gold); }
+
+/* --- ANIMATIONS --- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+
+@keyframes ctaGlow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(10deg); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .products-showcase { grid-template-columns: 1fr 1fr; }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .gallery-item:nth-child(1),
+  .gallery-item:nth-child(4) { grid-row: span 1; height: 350px; }
+  .footer-top { grid-template-columns: 1fr 1fr; }
+  .process-timeline::before { left: 2rem; }
+  .process-step { grid-template-columns: 1fr; padding-left: 4rem; }
+  .process-step::before { left: 2rem; }
+  .process-step:nth-child(even) .step-content,
+  .process-step:nth-child(odd) .step-content {
+    text-align: left;
+    padding: 0;
+    grid-column: 1;
+  }
+  .step-number-side,
+  .process-step:nth-child(even) .step-number-side,
+  .process-step:nth-child(odd) .step-number-side {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  section { padding: 5rem 1.5rem; }
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .mobile-toggle { display: flex; }
+
+  .nav-links.active {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(10,10,10,0.98);
+    padding: 2rem 1.5rem;
+    gap: 1.5rem;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .materials-grid { grid-template-columns: 1fr; }
+  .products-showcase { grid-template-columns: 1fr; }
+  .advantages-grid { grid-template-columns: 1fr; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .industries-flex { flex-direction: column; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+  .hero-buttons { flex-direction: column; align-items: center; }
+  .about-visual { height: 350px; }
+  .about-accent { display: none; }
+}
+
+/* --- STRUCTURED DATA (hidden) --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+</style>
+</head>
+<body>
+
+<!-- STRUCTURED DATA FOR SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "CompositeCraft",
+  "description": "Premium manufacturer of custom carbon fiber and fiberglass composite products including architectural planters, bespoke caskets, and industrial composite components.",
+  "url": "https://www.compositecraft.com",
+  "foundingDate": "2010",
+  "areaServed": "Worldwide",
+  "knowsAbout": ["Carbon Fiber Manufacturing", "Fiberglass Composites", "CFRP", "GRP", "Composite Planters", "Composite Caskets"],
+  "makesOffer": [
+    {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Composite Planters"}},
+    {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Composite Caskets"}},
+    {"@type": "Offer", "itemOffered": {"@type": "Product", "name": "Custom Composite Products"}}
+  ]
+}
+</script>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a href="#" class="logo">
+    <div class="logo-icon"></div>
+    COMPOSITECRAFT
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#materials">Materials</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<header class="hero carbon-texture" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <p class="hero-label">Carbon Fiber & Fiberglass Composite Manufacturing</p>
+    <h1>ENGINEERED<br>FOR <em>Eternity</em></h1>
+    <p class="hero-desc">We craft precision composite products from carbon fiber and fiberglass — where advanced material science meets artisan craftsmanship. Lighter, stronger, built to endure.</p>
+    <div class="hero-buttons">
+      <a href="#products" class="btn-primary">Explore Products</a>
+      <a href="#contact" class="btn-outline">Request a Quote</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    SCROLL
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats-bar carbon-texture" aria-label="Company statistics">
+  <div class="stat-item reveal">
+    <div class="stat-number">15+</div>
+    <div class="stat-label">Years of Experience</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">2,500+</div>
+    <div class="stat-label">Products Delivered</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">40+</div>
+    <div class="stat-label">Countries Served</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">99.7%</div>
+    <div class="stat-label">Quality Rate</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-visual reveal">
+      <div class="about-img-main carbon-texture"></div>
+      <div class="about-accent"></div>
+    </div>
+    <div class="about-text-content reveal">
+      <p class="section-label">Who We Are</p>
+      <h2 class="section-title">MASTERY IN<br><em>Composite</em> ENGINEERING</h2>
+      <p class="section-desc">At CompositeCraft, we are dedicated to the design and manufacturing of high-performance composite products using both carbon fiber reinforced polymer (CFRP) and glass fiber reinforced polymer (GRP / fiberglass) technologies.</p>
+      <h3>"Where science meets craftsmanship"</h3>
+      <p>Our state-of-the-art facility combines advanced material engineering with meticulous handwork. Every product begins with a thorough understanding of its intended environment — from UV exposure and moisture resistance to load-bearing requirements and aesthetic vision.</p>
+      <p>Whether it's an architectural planter destined for a five-star hotel lobby or a bespoke composite casket crafted with dignity and precision, we approach every project with the same commitment to structural integrity and visual excellence.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section class="materials" id="materials">
+  <div style="max-width: 1300px; margin: 0 auto;">
+    <p class="section-label reveal">Our Materials</p>
+    <h2 class="section-title reveal">ADVANCED <em>Materials</em><br>INFINITE POTENTIAL</h2>
+    <p class="section-desc reveal">We work with two primary composite material families, each offering distinct advantages depending on the application, environment, and performance requirements of your project.</p>
+  </div>
+  <div class="materials-grid">
+    <article class="material-card reveal">
+      <div class="material-icon">CF</div>
+      <h3>CARBON FIBER COMPOSITES</h3>
+      <p>Carbon fiber reinforced polymer (CFRP) is composed of carbon filaments embedded within a resin matrix, typically epoxy. The result is a material that delivers exceptional stiffness, tensile strength, and fatigue resistance at a fraction of the weight of steel or aluminium.</p>
+      <p>Ideal for products demanding the ultimate strength-to-weight ratio, carbon fiber composites exhibit minimal thermal expansion, superior vibration damping, and an unmistakable woven aesthetic that communicates precision engineering.</p>
+      <div class="material-specs">
+        <div class="spec">
+          <div class="spec-value">5X</div>
+          <div class="spec-label">Stronger Than Steel</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">1/3</div>
+          <div class="spec-label">Weight of Aluminum</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">High</div>
+          <div class="spec-label">Corrosion Resistance</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">Low</div>
+          <div class="spec-label">Thermal Expansion</div>
+        </div>
+      </div>
+    </article>
+    <article class="material-card reveal">
+      <div class="material-icon">GF</div>
+      <h3>FIBERGLASS COMPOSITES</h3>
+      <p>Glass fiber reinforced polymer (GRP), commonly known as fiberglass, is created by combining fine glass fibers with polyester or vinylester resin. This versatile composite offers excellent impact resistance, electrical insulation, and weatherproof durability at a significantly lower cost than carbon fiber.</p>
+      <p>Fiberglass composites excel in applications requiring complex shapes, UV stability, and long-term exposure to harsh outdoor conditions. The material can be finished in virtually any color or texture — from smooth gloss to natural stone effects.</p>
+      <div class="material-specs">
+        <div class="spec">
+          <div class="spec-value">UV</div>
+          <div class="spec-label">Resistant Finish</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">50+</div>
+          <div class="spec-label">Year Lifespan</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">Any</div>
+          <div class="spec-label">Shape Possible</div>
+        </div>
+        <div class="spec">
+          <div class="spec-value">Cost</div>
+          <div class="spec-label">Effective Solution</div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div style="max-width: 1300px; margin: 0 auto;">
+    <p class="section-label reveal">Our Products</p>
+    <h2 class="section-title reveal">CRAFTED <em>Products</em><br>FOR EVERY NEED</h2>
+    <p class="section-desc reveal">From architectural elements to deeply personal items, our composite manufacturing capabilities span a diverse product range — each one engineered with the same precision and care.</p>
+  </div>
+  <div class="products-showcase">
+    <!-- PLANTERS -->
+    <article class="product-card reveal">
+      <div class="product-visual">
+        <div class="product-number">01 / PRODUCT</div>
+        <div class="product-icon-lg">&#9632;</div>
+      </div>
+      <div class="product-info">
+        <h3>COMPOSITE PLANTERS & POTS</h3>
+        <p>Our fiberglass and carbon fiber planters are engineered for commercial and residential spaces. Marine-grade composite construction ensures weatherproof durability while remaining lightweight enough for rooftop installations and interior displays. Available in custom shapes, sizes, and finishes including faux stone, metallic, matte, and natural wood textures.</p>
+        <div class="product-features">
+          <span class="product-tag">Frost Resistant</span>
+          <span class="product-tag">UV Stable</span>
+          <span class="product-tag">Lightweight</span>
+          <span class="product-tag">Custom Colors</span>
+        </div>
+      </div>
+    </article>
+    <!-- CASKETS -->
+    <article class="product-card reveal">
+      <div class="product-visual">
+        <div class="product-number">02 / PRODUCT</div>
+        <div class="product-icon-lg">&#9670;</div>
+      </div>
+      <div class="product-info">
+        <h3>COMPOSITE CASKETS & COFFINS</h3>
+        <p>Our composite caskets represent a modern alternative to traditional wood and metal options. Crafted from fiberglass or carbon fiber with premium interior linings, these caskets offer exceptional structural integrity, corrosion resistance, and dignified aesthetics. Suitable for both burial and cremation, with options for personalized finishes and custom hardware.</p>
+        <div class="product-features">
+          <span class="product-tag">Corrosion Proof</span>
+          <span class="product-tag">Lightweight</span>
+          <span class="product-tag">Elegant Finish</span>
+          <span class="product-tag">Eco Options</span>
+        </div>
+      </div>
+    </article>
+    <!-- CUSTOM -->
+    <article class="product-card reveal">
+      <div class="product-visual">
+        <div class="product-number">03 / PRODUCT</div>
+        <div class="product-icon-lg">&#9674;</div>
+      </div>
+      <div class="product-info">
+        <h3>CUSTOM COMPOSITE SOLUTIONS</h3>
+        <p>Beyond our standard product lines, we offer full custom composite engineering services. From automotive body panels and marine components to architectural cladding, furniture, and industrial enclosures — our engineering team will work with you from concept through prototyping to production, delivering precision parts optimized for your specific application.</p>
+        <div class="product-features">
+          <span class="product-tag">Prototyping</span>
+          <span class="product-tag">Small Batch</span>
+          <span class="product-tag">Mass Production</span>
+          <span class="product-tag">Full CAD</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div style="max-width: 1100px; margin: 0 auto;">
+    <p class="section-label reveal">Manufacturing Process</p>
+    <h2 class="section-title reveal">FROM <em>Concept</em><br>TO COMPLETION</h2>
+    <p class="section-desc reveal">Our vertically integrated manufacturing process ensures quality control at every stage — from raw material selection through final finishing and delivery.</p>
+  </div>
+  <div class="process-timeline">
+    <div class="process-step reveal">
+      <div class="step-content">
+        <h3>DESIGN & ENGINEERING</h3>
+        <p>Every project begins with detailed consultation and CAD modeling. Our engineers analyze structural loads, environmental exposure, and aesthetic requirements to specify the optimal fiber layup schedule, resin system, and manufacturing approach for your product.</p>
+      </div>
+      <div class="step-number-side"><div class="step-num">01</div></div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number-side"><div class="step-num">02</div></div>
+      <div class="step-content">
+        <h3>MOLD FABRICATION</h3>
+        <p>Precision molds are CNC-machined or hand-crafted from master plugs. Our mold-making capabilities support complex geometries, undercuts, and multi-part assemblies — ensuring dimensional accuracy and repeatable production quality.</p>
+      </div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-content">
+        <h3>LAMINATION & LAYUP</h3>
+        <p>Carbon fiber or fiberglass fabrics are carefully laid into the mold according to the engineered ply schedule. Resin is applied through hand layup, vacuum infusion, or resin transfer molding (RTM) depending on the product specifications and volume requirements.</p>
+      </div>
+      <div class="step-number-side"><div class="step-num">03</div></div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-number-side"><div class="step-num">04</div></div>
+      <div class="step-content">
+        <h3>CURING & DEMOLDING</h3>
+        <p>Parts are cured under controlled temperature and pressure conditions. Post-cure heat treatments optimize cross-linking within the resin matrix, maximizing mechanical properties. Parts are then carefully demolded and inspected for dimensional accuracy.</p>
+      </div>
+    </div>
+    <div class="process-step reveal">
+      <div class="step-content">
+        <h3>FINISHING & QUALITY CONTROL</h3>
+        <p>Each product undergoes precision trimming, surface preparation, primer application, and final finishing. Our quality assurance process includes visual inspection, dimensional verification, and structural testing to ensure every piece meets our exacting standards before packaging and delivery.</p>
+      </div>
+      <div class="step-number-side"><div class="step-num">05</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ADVANTAGES -->
+<section class="advantages" id="advantages">
+  <div style="max-width: 1300px; margin: 0 auto;">
+    <p class="section-label reveal">Why Composites</p>
+    <h2 class="section-title reveal">THE COMPOSITE <em>Advantage</em></h2>
+    <p class="section-desc reveal">Composite materials offer a unique combination of properties that traditional materials simply cannot match. Here's why industries worldwide are choosing composite solutions.</p>
+  </div>
+  <div class="advantages-grid">
+    <article class="advantage-item reveal">
+      <div class="advantage-num">01</div>
+      <h3>SUPERIOR STRENGTH-TO-WEIGHT</h3>
+      <p>Carbon fiber composites deliver five times the strength of steel at roughly one-third the weight. This makes composites ideal for applications where reducing mass improves performance, handling, or installation logistics.</p>
+    </article>
+    <article class="advantage-item reveal">
+      <div class="advantage-num">02</div>
+      <h3>CORROSION & WEATHER RESISTANCE</h3>
+      <p>Unlike metal or wood, composite materials do not rust, rot, or degrade when exposed to moisture, salt air, UV radiation, or chemical environments. Products maintain their structural integrity and appearance for decades.</p>
+    </article>
+    <article class="advantage-item reveal">
+      <div class="advantage-num">03</div>
+      <h3>DESIGN FREEDOM</h3>
+      <p>The molding process allows us to create virtually any shape — from smooth geometric forms to complex organic curves. Composites can replicate the appearance of stone, metal, wood, or concrete while being a fraction of the weight.</p>
+    </article>
+    <article class="advantage-item reveal">
+      <div class="advantage-num">04</div>
+      <h3>THERMAL STABILITY</h3>
+      <p>Carbon fiber composites exhibit very low thermal expansion coefficients, meaning products maintain dimensional stability across extreme temperature fluctuations — critical for outdoor architectural installations and precision components.</p>
+    </article>
+    <article class="advantage-item reveal">
+      <div class="advantage-num">05</div>
+      <h3>LONGEVITY & LOW MAINTENANCE</h3>
+      <p>With no susceptibility to biological decay, galvanic corrosion, or fatigue under cyclic loading, composite products typically outlast their metal, wood, and concrete counterparts by a significant margin — with minimal maintenance required.</p>
+    </article>
+    <article class="advantage-item reveal">
+      <div class="advantage-num">06</div>
+      <h3>SUSTAINABLE MANUFACTURING</h3>
+      <p>Our production processes are engineered to minimize waste and energy consumption. The extended lifespan of composite products reduces replacement frequency, and many of our fiberglass formulations incorporate recycled content.</p>
+    </article>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="gallery-header">
+    <p class="section-label reveal">Portfolio</p>
+    <h2 class="section-title reveal">SELECTED <em>Works</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item reveal">
+      <div class="gallery-weave"></div>
+      <div class="gallery-caption">
+        <span>Architectural</span>
+        <h4>Grand Lobby Planter Series</h4>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-weave"></div>
+      <div class="gallery-caption">
+        <span>Bespoke</span>
+        <h4>Carbon Fiber Casket</h4>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-weave"></div>
+      <div class="gallery-caption">
+        <span>Custom</span>
+        <h4>Marine Components</h4>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-weave"></div>
+      <div class="gallery-caption">
+        <span>Commercial</span>
+        <h4>Outdoor Planter Collection</h4>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-weave"></div>
+      <div class="gallery-caption">
+        <span>Industrial</span>
+        <h4>Carbon Fiber Panels</h4>
+      </div>
+    </div>
+    <div class="gallery-item reveal">
+      <div class="gallery-weave"></div>
+      <div class="gallery-caption">
+        <span>Interior</span>
+        <h4>Designer Pot Series</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="industries" id="industries">
+  <div style="max-width: 1300px; margin: 0 auto;">
+    <p class="section-label reveal">Industries We Serve</p>
+    <h2 class="section-title reveal">APPLICATIONS <em>Across</em> INDUSTRIES</h2>
+  </div>
+  <div class="industries-flex">
+    <article class="industry-item reveal">
+      <span class="industry-icon" aria-hidden="true">&#9998;</span>
+      <h4>ARCHITECTURE & DESIGN</h4>
+      <p>Planters, cladding panels, decorative elements, and custom furnishings for commercial and residential projects.</p>
+    </article>
+    <article class="industry-item reveal">
+      <span class="industry-icon" aria-hidden="true">&#9878;</span>
+      <h4>FUNERAL INDUSTRY</h4>
+      <p>Lightweight, dignified composite caskets and cremation containers with premium finish options and custom hardware.</p>
+    </article>
+    <article class="industry-item reveal">
+      <span class="industry-icon" aria-hidden="true">&#9875;</span>
+      <h4>MARINE & AUTOMOTIVE</h4>
+      <p>Body panels, hull components, structural parts, and aerodynamic elements engineered for performance and durability.</p>
+    </article>
+    <article class="industry-item reveal">
+      <span class="industry-icon" aria-hidden="true">&#9881;</span>
+      <h4>INDUSTRIAL</h4>
+      <p>Enclosures, housings, tooling, and structural components for manufacturing, energy, and infrastructure applications.</p>
+    </article>
+    <article class="industry-item reveal">
+      <span class="industry-icon" aria-hidden="true">&#10047;</span>
+      <h4>LANDSCAPE & GARDEN</h4>
+      <p>Residential and commercial planters, garden features, and outdoor furniture built to withstand all weather conditions.</p>
+    </article>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial reveal">
+  <blockquote>The quality and precision of CompositeCraft's work exceeded our expectations. Their composite planters transformed our hotel lobby — lightweight enough for our rooftop installation yet indistinguishable from natural stone.</blockquote>
+  <p class="testimonial-author">— Sarah M., Interior Design Director</p>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-content">
+    <p class="section-label reveal">Start Your Project</p>
+    <h2 class="section-title reveal">READY TO BUILD<br><em>Something</em> EXTRAORDINARY?</h2>
+    <p class="section-desc reveal">Whether you need a single prototype or a full production run, our team is ready to bring your composite vision to life. Contact us today for a consultation and free quote.</p>
+    <div class="hero-buttons reveal">
+      <a href="#contact" class="btn-primary">Get a Free Quote</a>
+      <a href="#products" class="btn-outline">View Products</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div style="max-width: 1300px; margin: 0 auto;">
+    <p class="section-label reveal">Contact Us</p>
+    <h2 class="section-title reveal">LET'S <em>Talk</em></h2>
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="contact-info-block">
+          <h4>HEADQUARTERS</h4>
+          <p>CompositeCraft Manufacturing<br>Industrial District, Building 7<br>Your City, Country 00000</p>
+        </div>
+        <div class="contact-info-block">
+          <h4>EMAIL</h4>
+          <a href="mailto:info@compositecraft.com">info@compositecraft.com</a><br>
+          <a href="mailto:sales@compositecraft.com">sales@compositecraft.com</a>
+        </div>
+        <div class="contact-info-block">
+          <h4>PHONE</h4>
+          <a href="tel:+1234567890">+1 (234) 567-890</a>
+        </div>
+        <div class="contact-info-block">
+          <h4>WORKING HOURS</h4>
+          <p>Monday — Friday: 08:00 — 18:00<br>Saturday: 09:00 — 14:00</p>
+        </div>
+      </div>
+      <form class="contact-form reveal" onsubmit="event.preventDefault(); alert('Thank you! We will contact you shortly.');">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="john@company.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="+1 (234) 567-890">
+          </div>
+          <div class="form-group">
+            <label for="product">Product Interest</label>
+            <select id="product" name="product">
+              <option value="">Select a product</option>
+              <option value="planters">Composite Planters & Pots</option>
+              <option value="caskets">Composite Caskets & Coffins</option>
+              <option value="custom">Custom Composite Products</option>
+              <option value="industrial">Industrial Components</option>
+              <option value="other">Other / Not Sure</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Project Details</label>
+          <textarea id="message" name="message" placeholder="Tell us about your project requirements, dimensions, quantities, and any specific finish or material preferences..."></textarea>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn-primary">Send Inquiry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+        <div class="logo-icon"></div>
+        COMPOSITECRAFT
+      </a>
+      <p>Premium carbon fiber and fiberglass composite manufacturing. Engineering excellence from concept to completion.</p>
+    </div>
+    <div class="footer-col">
+      <h4>PRODUCTS</h4>
+      <ul>
+        <li><a href="#products">Composite Planters</a></li>
+        <li><a href="#products">Composite Caskets</a></li>
+        <li><a href="#products">Custom Solutions</a></li>
+        <li><a href="#products">Industrial Parts</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>COMPANY</h4>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#process">Manufacturing</a></li>
+        <li><a href="#gallery">Portfolio</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>RESOURCES</h4>
+      <ul>
+        <li><a href="#materials">Materials Guide</a></li>
+        <li><a href="#advantages">Why Composites</a></li>
+        <li><a href="#industries">Industries</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 CompositeCraft. All Rights Reserved.</p>
+    <div class="footer-social">
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+      <a href="#">YouTube</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Mobile menu toggle
+const mobileToggle = document.getElementById('mobileToggle');
+const navLinks = document.getElementById('navLinks');
+mobileToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+
+// Close mobile menu on link click
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => navLinks.classList.remove('active'));
+});
+
+// Reveal on scroll
+const revealElements = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+revealElements.forEach(el => revealObserver.observe(el));
+
+// Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

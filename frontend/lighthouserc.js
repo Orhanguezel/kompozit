@@ -11,7 +11,8 @@ module.exports = {
         'http://127.0.0.1:3122/tr/gallery',
         'http://127.0.0.1:3122/tr/contact',
       ],
-      startServerCommand: 'node scripts/prepare-standalone.mjs && PORT=3122 HOSTNAME=127.0.0.1 node .next/standalone/karbonkompozit/server.js',
+      startServerCommand:
+        'node scripts/prepare-standalone.mjs && NODE_ENV=production PORT=3122 HOSTNAME=127.0.0.1 node .next/standalone/server.js',
       startServerReadyPattern: 'Ready in',
       numberOfRuns: 2,
       settings: {

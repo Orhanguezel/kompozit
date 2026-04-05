@@ -51,7 +51,7 @@ export async function fetchSliders(locale?: string): Promise<Record<string, unkn
 export async function fetchMenuItems(locale: string): Promise<Record<string, unknown>[]> {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/menu-items?locale=${encodeURIComponent(locale)}&is_active=1&site_id=kompozit`,
+      `${API_BASE_URL}/menu_items?locale=${encodeURIComponent(locale)}&is_active=1&site_id=kompozit&nested=1`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];
@@ -65,7 +65,7 @@ export async function fetchMenuItems(locale: string): Promise<Record<string, unk
 export async function fetchFooterSections(locale: string): Promise<Record<string, unknown>[]> {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/footer-sections?locale=${encodeURIComponent(locale)}&is_active=1&site_id=kompozit`,
+      `${API_BASE_URL}/footer_sections?locale=${encodeURIComponent(locale)}&is_active=1&site_id=kompozit`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];

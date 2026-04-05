@@ -33,8 +33,13 @@ export function localizedPath(
   locale: string,
   pathname: string,
 ): string {
-  const p = pathname.startsWith('/') ? pathname : `/${pathname}`;
   const shortLocale = normLocaleShort(locale);
+  const p = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  
+  // Prevent double localization if the path already starts with a valid locale
+  const isAlreadyLocalized = AVAILABLE_LOCALES.some(l => p.startsWith(`/${l}/`) || p === `/${l}`);
+  if (isAlreadyLocalized) return p;
+
   const isDefaultLocale = !shortLocale || shortLocale === FALLBACK_LOCALE;
 
   if (p === '/') return isDefaultLocale ? '/' : `/${shortLocale}`;

@@ -4,7 +4,7 @@
 // Route: /admin/custompage/:id  (id: "new" | UUID)
 // =============================================================
 
-import AdminCustomPageDetailClient from '../admin-custom-pages-detail-client';
+import AdminCustomPageDetailClient from "../admin-custom-pages-detail-client";
 
 type Params = { id: string };
 type SearchParams = Promise<{ module?: string | string[] }> | { module?: string | string[] };
@@ -21,9 +21,6 @@ export default async function Page({
   const s = (await searchParams) ?? {};
   const rawModule = Array.isArray(s.module) ? s.module[0] : s.module;
   return (
-    <AdminCustomPageDetailClient
-      id={p.id}
-      initialModuleKey={typeof rawModule === 'string' ? rawModule.trim() : ''}
-    />
+    <AdminCustomPageDetailClient id={p.id} initialModuleKey={typeof rawModule === "string" ? rawModule.trim() : ""} />
   );
 }

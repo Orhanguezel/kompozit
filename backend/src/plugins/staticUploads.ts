@@ -11,4 +11,11 @@ export default fp(async (app: FastifyInstance) => {
     root: uploadsDir,
     prefix: '/uploads/', // https://www.ensotek.de/uploads/...
   });
+
+  // Seed 316 / bazı kayıtlar: public URL `/media/kompozit/...` → disk `uploads/media/kompozit/...`
+  app.register(fastifyStatic, {
+    root: path.join(uploadsDir, 'media'),
+    prefix: '/media/',
+    decorateReply: false,
+  });
 });

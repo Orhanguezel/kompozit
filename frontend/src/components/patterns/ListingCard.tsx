@@ -17,6 +17,10 @@ type ListingCardProps = {
   badge?: string;
   /** Micro-label above title (e.g. localized “Engineering-grade”). Omit to hide the row. */
   lineLabel?: string;
+  /** 1-based index for decorative numbering (01, 02, …) in showcase layouts. */
+  listIndex?: number;
+  /** Rotates placeholder gradient when `imageSrc` is missing (0–5). */
+  visualVariant?: number;
 };
 
 export function ListingCard({
@@ -26,89 +30,68 @@ export function ListingCard({
   imageSrc,
   imageAlt = '',
   imageSizes = '(max-width: 768px) 100vw, 33vw',
-  imageAspectClassName = 'aspect-[4/3]',
-  footer,
+  listIndex,
   specs,
-  category,
-  badge,
-  lineLabel,
 }: ListingCardProps) {
+  const paddedIndex = listIndex != null ? String(listIndex).padStart(2, '0') : null;
+  const geometricIcon = listIndex === 1 ? '■' : listIndex === 2 ? '◆' : '◇';
+
   return (
-    <Link
-      href={href}
-      className="glass-premium glow-hover group block overflow-hidden rounded-[2.5rem] border-white/5 bg-white/[0.02] transition-all duration-500 hover:-translate-y-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
-    >
-      {imageSrc ? (
-        <div className={`relative overflow-hidden bg-[var(--color-border)] ${imageAspectClassName}`}>
-          {/* Overlay on Hover */}
-          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity z-10 backdrop-blur-[2px]" />
-          
+    <Link href={href} className="product-card-cc group">
+      {/* Visual Area */}
+      <div className="product-visual-cc">
+        {imageSrc ? (
           <OptimizedImage
             src={imageSrc}
             alt={imageAlt}
             fill
-            className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
             sizes={imageSizes}
           />
-          
-          {/* Category/Badge Top Right */}
-          {(category || badge) && (
-             <div className="absolute top-4 right-4 z-20">
-                <span className="glass-premium rounded-full px-4 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-brand border-brand/30 bg-brand/10 backdrop-blur-md shadow-xl">
-                   {badge || category}
-                </span>
-             </div>
-          )}
-
-          {/* Specs overlay: hover on md+; touch devices get strip below image */}
-          {specs && specs.length > 0 ? (
-            <div className="absolute inset-0 z-20 hidden flex-col justify-end p-6 opacity-0 translate-y-4 transition-all duration-500 md:flex md:group-hover:translate-y-0 md:group-hover:opacity-100">
-              <div className="mb-8 flex flex-wrap gap-2">
-                {specs.slice(0, 3).map((spec, i) => (
-                  <span
-                    key={i}
-                    className="glass-premium rounded-lg border border-white/10 bg-white/10 px-3 py-1 text-[10px] font-bold text-white backdrop-blur-md"
-                  >
-                    {spec}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          <div className="absolute bottom-4 right-4 z-30 hidden translate-y-4 opacity-0 transition-all delay-100 duration-500 md:block md:group-hover:translate-y-0 md:group-hover:opacity-100">
-            <div className="flex size-12 items-center justify-center rounded-2xl border border-white/20 bg-brand text-white shadow-2xl">
-              <ArrowRight className="size-6" />
-            </div>
-          </div>
-        </div>
-      ) : null}
-      {imageSrc && specs && specs.length > 0 ? (
-        <div className="flex flex-wrap gap-2 border-t border-white/10 bg-black/25 px-6 py-3 md:hidden">
-          {specs.slice(0, 3).map((spec, i) => (
-            <span
-              key={i}
-              className="rounded-lg border border-white/15 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-[var(--color-text-primary)]"
-            >
-              {spec}
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--graphite)] to-[var(--steel)]" />
+        )}
+        
+        {/* Absolute Overlays */}
+        <div className="absolute inset-x-0 top-0 z-10 p-6">
+          <div className="flex items-center justify-between">
+            <span className="font-display text-[0.7rem] uppercase tracking-[3px] text-[var(--gold)] opacity-70">
+              {paddedIndex ? `${paddedIndex} / PRODUCT` : 'PRODUCT'}
             </span>
-          ))}
-        </div>
-      ) : null}
-      <div className="p-8">
-        {lineLabel ? (
-          <div className="mb-3 flex items-center gap-2">
-            <Cpu className="size-3 text-brand opacity-60" aria-hidden />
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] opacity-40">{lineLabel}</span>
           </div>
-        ) : null}
-        <h3 className="text-xl font-bold tracking-tight line-clamp-2 group-hover:text-brand transition-colors duration-300">{title}</h3>
-        {description ? (
-          <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)] line-clamp-3 opacity-70 group-hover:opacity-100 transition-opacity">
+        </div>
+
+        <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+          <span className="font-display text-[4rem] text-[var(--gold)] opacity-10 transition-opacity duration-500 group-hover:opacity-20">
+            {geometricIcon}
+          </span>
+        </div>
+      </div>
+
+      {/* Info Area */}
+      <div className="p-8 lg:p-10">
+        <h3 className="line-clamp-1 font-display text-[1.4rem] font-normal uppercase tracking-[3px] text-[var(--white)] transition-colors duration-300 group-hover:text-[var(--gold)]">
+          {title}
+        </h3>
+        
+        {description && (
+          <p className="mt-4 line-clamp-3 text-sm font-light leading-relaxed text-[var(--silver)] opacity-80">
             {description}
           </p>
-        ) : null}
-        {footer ? <div className="mt-6">{footer}</div> : null}
+        )}
+
+        {specs && specs.length > 0 && (
+          <div className="mt-8 flex flex-wrap gap-2">
+            {specs.slice(0, 4).map((spec, i) => (
+              <span
+                key={i}
+                className="border border-[var(--gold)]/20 bg-[var(--gold)]/5 px-3 py-1 text-[9px] font-bold uppercase tracking-widest text-[var(--gold)]"
+              >
+                {spec}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </Link>
   );

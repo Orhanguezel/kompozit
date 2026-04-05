@@ -1,29 +1,40 @@
 import 'server-only';
 
-import { getTranslations } from 'next-intl/server';
+import dynamic from 'next/dynamic';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ArrowRight, Shield, Zap, Settings, Truck } from 'lucide-react';
+import Image from 'next/image';
+import { ArrowRight, Shield, Zap, Settings, Truck, Cpu, Award, MoveRight } from 'lucide-react';
 
-import { absoluteAssetUrl, API_BASE_URL } from '@/lib/utils';
+import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildPageMetadata, localizedPath, siteUrlBase } from '@/seo';
 import { buildHomePageSchemaGraph } from '@/seo/home-jsonld';
-import { NewsletterForm } from '@/components/sections/NewsletterForm';
 import { ReferencesTrustStrip } from '@/components/sections/ReferencesTrustStrip';
+import { StatsBar } from '@/components/sections/StatsBar';
+import { MaterialCards } from '@/components/sections/MaterialCards';
+import { ProcessTimeline } from '@/components/sections/ProcessTimeline';
+import { IndustryStrip } from '@/components/sections/IndustryStrip';
+import { HomeTestimonial } from '@/components/sections/HomeTestimonial';
+import { HomeContact } from '@/components/sections/HomeContact';
+import { AdvantagesGrid } from '@/components/sections/AdvantagesGrid';
+import { GalleryShowcase } from '@/components/sections/GalleryShowcase';
 import { DarkCtaPanel } from '@/components/patterns/DarkCtaPanel';
-import { FeatureCard } from '@/components/patterns/FeatureCard';
 import { ListingCard } from '@/components/patterns/ListingCard';
-import { MediaOverlayCard } from '@/components/patterns/MediaOverlayCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { Reveal } from '@/components/motion/Reveal';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
-import { getFallbackBlogPosts, getFallbackGalleries, getFallbackProducts } from '@/lib/content-fallbacks';
+import { getFallbackGalleries, getFallbackProducts } from '@/lib/content-fallbacks';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { fetchHomePageContent } from '@/features/site-settings/home';
 import { buildMediaAlt } from '@/lib/media-seo';
 
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
-const BLOG_PLACEHOLDER_SRC = '/media/blog-placeholder.svg';
+const PRODUCT_PLACEHOLDER_SRC = '/media/product-placeholder.svg';
+
+const NewsletterFormLazy = dynamic(() =>
+  import('@/components/sections/NewsletterForm').then((m) => m.NewsletterForm),
+);
 
 function homeHref(locale: string, path: string): string {
   const p = (path || '').trim();
@@ -34,7 +45,7 @@ function homeHref(locale: string, path: string): string {
 async function fetchFeaturedProducts(locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/products?item_type=kompozit&is_active=1&is_featured=1&locale=${locale}&limit=8`,
+      `${API_BASE_URL}/products?item_type=kompozit&is_active=1&locale=${locale}&limit=6`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];
@@ -48,21 +59,7 @@ async function fetchFeaturedProducts(locale: string) {
 async function fetchFeaturedGalleries(locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/galleries?module_key=kompozit&is_active=1&is_featured=1&locale=${locale}&limit=6`,
-      { next: { revalidate: 300 } },
-    );
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data : (data as any)?.items ?? [];
-  } catch {
-    return [];
-  }
-}
-
-async function fetchFeaturedBlogPosts(locale: string) {
-  try {
-    const res = await fetch(
-      `${API_BASE_URL}/custom_pages?module_key=kompozit_blog&is_active=1&locale=${locale}&limit=3`,
+      `${API_BASE_URL}/galleries?module_key=kompozit&is_active=1&locale=${locale}&limit=6`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];
@@ -97,88 +94,42 @@ export default async function HomePage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale });
 
-  const [products, galleries, blogPosts, homeContent, contactForLd] = await Promise.all([
+  const [products, galleries, homeContent, contactForLd] = await Promise.all([
     fetchFeaturedProducts(locale),
     fetchFeaturedGalleries(locale),
-    fetchFeaturedBlogPosts(locale),
     fetchHomePageContent(locale),
     fetchParsedContactInfo(locale),
   ]);
 
   const siteUrl = siteUrlBase();
-  const { hero: heroApi, metrics: metricsApi, valueProps: valuePropsApi } = homeContent;
+  const { hero: heroApi, valueProps: valuePropsApi, statsBar: statsBarApi, testimonial: testimonialApi, about: aboutApi } =
+    homeContent;
 
-  const baseMetrics = t.raw('home.hero.metrics') as Record<string, string>;
-  const heroMetrics = metricsApi
-    ? {
-        prototypeTitle: metricsApi.items[0]?.title ?? baseMetrics.prototypeTitle,
-        prototypeDesc: metricsApi.items[0]?.description ?? baseMetrics.prototypeDesc,
-        productionTitle: metricsApi.items[1]?.title ?? baseMetrics.productionTitle,
-        productionDesc: metricsApi.items[1]?.description ?? baseMetrics.productionDesc,
-        engineeringTitle: metricsApi.items[2]?.title ?? baseMetrics.engineeringTitle,
-        engineeringDesc: metricsApi.items[2]?.description ?? baseMetrics.engineeringDesc,
-      }
-    : {
-        prototypeTitle: baseMetrics.prototypeTitle,
-        prototypeDesc: baseMetrics.prototypeDesc,
-        productionTitle: baseMetrics.productionTitle,
-        productionDesc: baseMetrics.productionDesc,
-        engineeringTitle: baseMetrics.engineeringTitle,
-        engineeringDesc: baseMetrics.engineeringDesc,
-      };
-
-  const baseSteps = t.raw('home.hero.steps') as Record<string, string>;
-  const heroSteps = metricsApi
-    ? {
-        oneTitle: metricsApi.workflowSteps[0]?.title ?? baseSteps.oneTitle,
-        oneDesc: metricsApi.workflowSteps[0]?.description ?? baseSteps.oneDesc,
-        twoTitle: metricsApi.workflowSteps[1]?.title ?? baseSteps.twoTitle,
-        twoDesc: metricsApi.workflowSteps[1]?.description ?? baseSteps.twoDesc,
-        threeTitle: metricsApi.workflowSteps[2]?.title ?? baseSteps.threeTitle,
-        threeDesc: metricsApi.workflowSteps[2]?.description ?? baseSteps.threeDesc,
-      }
-    : {
-        oneTitle: baseSteps.oneTitle,
-        oneDesc: baseSteps.oneDesc,
-        twoTitle: baseSteps.twoTitle,
-        twoDesc: baseSteps.twoDesc,
-        threeTitle: baseSteps.threeTitle,
-        threeDesc: baseSteps.threeDesc,
-      };
-
-  const baseStats = t.raw('home.hero.stats') as Record<string, string>;
-  const heroStats = metricsApi
-    ? {
-        stepsValue: metricsApi.stats[0]?.value ?? baseStats.stepsValue,
-        stepsLabel: metricsApi.stats[0]?.label ?? baseStats.stepsLabel,
-        b2bValue: metricsApi.stats[1]?.value ?? baseStats.b2bValue,
-        b2bLabel: metricsApi.stats[1]?.label ?? baseStats.b2bLabel,
-      }
-    : {
-        stepsValue: baseStats.stepsValue,
-        stepsLabel: baseStats.stepsLabel,
-        b2bValue: baseStats.b2bValue,
-        b2bLabel: baseStats.b2bLabel,
-      };
-  const visibleProducts = products.length > 0 ? products.slice(0, 8) : getFallbackProducts(locale);
-  const visibleBlogPosts = blogPosts.length > 0 ? blogPosts.slice(0, 3) : getFallbackBlogPosts(locale);
+  const visibleProducts = products.length > 0 ? products.slice(0, 6) : getFallbackProducts(locale).slice(0, 6);
   const visibleGalleries = galleries.length > 0 ? galleries.slice(0, 6) : getFallbackGalleries(locale);
-  const [featuredBlogPost, ...secondaryBlogPosts] = visibleBlogPosts;
-  const featuredBlogImageSrc =
-    absoluteAssetUrl(featuredBlogPost?.image_url || featuredBlogPost?.featured_image) ||
-    BLOG_PLACEHOLDER_SRC;
+  const aboutVisualRaw =
+    (visibleGalleries[0] as { cover_image?: string | null; imageSrc?: string; image_url?: string })
+      ?.cover_image ||
+    (visibleGalleries[0] as { imageSrc?: string })?.imageSrc ||
+    (visibleGalleries[0] as { image_url?: string })?.image_url ||
+    (visibleProducts[0] as { image_url?: string | null })?.image_url;
+  const aboutVisualSrc =
+    resolvePublicAssetUrl(aboutVisualRaw) ?? aboutVisualRaw ?? GALLERY_PLACEHOLDER_SRC;
 
   const whyUsItems = [
     { icon: Shield, key: 'quality' },
     { icon: Zap, key: 'experience' },
     { icon: Settings, key: 'custom' },
     { icon: Truck, key: 'delivery' },
+    { icon: Cpu, key: 'innovation' },
+    { icon: Award, key: 'certification' },
   ] as const;
 
   return (
-    <>
+    <main className="relative bg-[var(--carbon)]">
       <JsonLd
         data={buildHomePageSchemaGraph(locale, {
           siteUrl,
@@ -187,405 +138,263 @@ export default async function HomePage({
         })}
       />
 
-      {/* Hero */}
-      <section className="surface-dark-shell carbon-mesh backdrop-blur-[2px]">
-        <div className="surface-hero-glow-brand motion-float-soft absolute left-[-8rem] top-16 h-72 w-72 rounded-full blur-3xl opacity-40" />
-        <div className="surface-hero-glow-muted motion-float-soft absolute right-[-6rem] top-24 h-80 w-80 rounded-full blur-3xl opacity-20" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-20 lg:grid-cols-[minmax(0,1.2fr)_minmax(24rem,0.8fr)] lg:px-8 lg:py-32">
-          <div className="motion-fade-up max-w-3xl">
-            <span className="surface-glass-dark shimmer-btn inline-flex rounded-full px-5 py-1.5 text-[10px] font-bold uppercase tracking-[0.3em] text-[var(--color-brand-light)] border-brand/20">
-              {heroApi?.badge ?? t('home.hero.badge')}
+      {/* --- HERO SECTION --- */}
+      <section className="hero">
+        <div className="hero-bg" />
+        <div className="gold-grid-bg absolute inset-0 z-[1]" />
+        
+        <div className="container relative z-10 mx-auto px-8 text-center">
+          <Reveal>
+            <span className="hero-label">
+              {heroApi?.badge ?? 'Foundational Engineering'}
             </span>
-            <h1 className="surface-dark-heading motion-fade-up motion-delay-1 mt-6 max-w-4xl text-balance text-4xl font-bold lg:text-6xl">
-              {heroApi?.title ?? t('home.hero.title')}
-            </h1>
-            <p className="surface-dark-text motion-fade-up motion-delay-2 mt-6 max-w-2xl text-lg leading-8">
+          </Reveal>
+          
+          <Reveal delay={200}>
+            <h1 
+              dangerouslySetInnerHTML={{ 
+                __html: heroApi?.title ?? (t.raw('home.hero.title') as string)
+              }}
+            />
+          </Reveal>
+          
+          <Reveal delay={400}>
+            <p className="hero-subtitle">
               {heroApi?.subtitle ?? t('home.hero.subtitle')}
             </p>
-            <div className="motion-fade-up motion-delay-3 mt-10 flex flex-wrap gap-5">
-              <Link
+          </Reveal>
+          
+          <Reveal delay={600}>
+            <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8">
+              <Link 
                 href={heroApi?.primaryCtaHref ? homeHref(locale, heroApi.primaryCtaHref) : localizedPath(locale, '/products')}
-                className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)]"
+                className="hero-btn-primary shimmer-btn"
               >
                 {heroApi?.primaryCtaLabel ?? t('home.hero.cta')}
-                <ArrowRight className="size-5" />
+                <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              <Link
+              
+              <Link 
                 href={heroApi?.secondaryCtaHref ? homeHref(locale, heroApi.secondaryCtaHref) : localizedPath(locale, '/offer')}
-                className="glass-premium surface-glass-hover surface-dark-heading inline-flex items-center gap-3 rounded-xl px-8 py-4 font-semibold transition-all hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)]"
+                className="hero-btn-outline"
               >
                 {heroApi?.secondaryCtaLabel ?? t('home.hero.ctaSecondary')}
               </Link>
             </div>
-            <div className="mt-12 grid gap-4 sm:grid-cols-3">
-              <div className="glass-premium motion-fade-up motion-delay-2 rounded-2xl p-5 border-white/5">
-                <p className="surface-dark-heading text-2xl font-bold tracking-tight">{heroMetrics.prototypeTitle}</p>
-                <p className="surface-dark-text mt-1 text-xs font-medium uppercase tracking-wider opacity-80">{heroMetrics.prototypeDesc}</p>
-              </div>
-              <div className="glass-premium motion-fade-up motion-delay-3 rounded-2xl p-5 border-white/5">
-                <p className="surface-dark-heading text-2xl font-bold tracking-tight">{heroMetrics.productionTitle}</p>
-                <p className="surface-dark-text mt-1 text-xs font-medium uppercase tracking-wider opacity-80">{heroMetrics.productionDesc}</p>
-              </div>
-              <div className="glass-premium motion-fade-up motion-delay-4 rounded-2xl p-5 border-white/5">
-                <p className="surface-dark-heading text-2xl font-bold tracking-tight">{heroMetrics.engineeringTitle}</p>
-                <p className="surface-dark-text mt-1 text-xs font-medium uppercase tracking-wider opacity-80">{heroMetrics.engineeringDesc}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="motion-slide-right motion-delay-2 flex items-stretch justify-center lg:justify-end">
-            <div className="glass-premium shadow-hero-panel w-full max-w-xl rounded-[2.5rem] p-4 border-white/10">
-              <div className="glass-premium rounded-[2rem] p-8 border-white/5 bg-white/[0.02]">
-                <div className="flex items-start justify-between gap-6">
-                  <div>
-                    <p className="surface-dark-text text-[10px] font-bold uppercase tracking-[0.25em] opacity-70">
-                      {heroApi?.workflowLabel ?? t('home.hero.workflowLabel')}
-                    </p>
-                    <h2 className="surface-dark-heading mt-3 text-3xl font-bold tracking-tight">
-                      {heroApi?.workflowTitle ?? t('home.hero.workflowTitle')}
-                    </h2>
-                  </div>
-                  <div className="glass-premium rounded-2xl px-5 py-4 text-right border-brand/30 bg-brand/10">
-                    <p className="surface-dark-heading text-3xl font-bold text-gradient-brand">
-                      {heroApi?.workflowBadgeTitle ?? t('home.hero.workflowBadgeTitle')}
-                    </p>
-                    <p className="surface-dark-text text-[10px] font-bold uppercase tracking-wider">
-                      {heroApi?.workflowBadgeSubtitle ?? t('home.hero.workflowBadgeSubtitle')}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 space-y-4">
-                  <div className="glass-premium rounded-2xl px-5 py-5 border-white/5 hover:bg-white/[0.04] transition-colors group">
-                    <p className="surface-dark-heading text-sm font-bold flex items-center gap-3">
-                      <span className="size-6 rounded-full bg-brand/20 text-brand text-[10px] flex items-center justify-center border border-brand/30">
-                        {metricsApi?.workflowSteps[0]?.step ?? '01'}
-                      </span>
-                      {heroSteps.oneTitle}
-                    </p>
-                    <p className="surface-dark-text mt-2 text-sm leading-relaxed opacity-80 pl-9">
-                      {heroSteps.oneDesc}
-                    </p>
-                  </div>
-                  <div className="glass-premium rounded-2xl px-5 py-5 border-white/5 hover:bg-white/[0.04] transition-colors group">
-                    <p className="surface-dark-heading text-sm font-bold flex items-center gap-3">
-                      <span className="size-6 rounded-full bg-brand/20 text-brand text-[10px] flex items-center justify-center border border-brand/30">
-                        {metricsApi?.workflowSteps[1]?.step ?? '02'}
-                      </span>
-                      {heroSteps.twoTitle}
-                    </p>
-                    <p className="surface-dark-text mt-2 text-sm leading-relaxed opacity-80 pl-9">
-                      {heroSteps.twoDesc}
-                    </p>
-                  </div>
-                  <div className="glass-premium rounded-2xl px-5 py-5 border-white/5 hover:bg-white/[0.04] transition-colors group">
-                    <p className="surface-dark-heading text-sm font-bold flex items-center gap-3">
-                      <span className="size-6 rounded-full bg-brand/20 text-brand text-[10px] flex items-center justify-center border border-brand/30">
-                        {metricsApi?.workflowSteps[2]?.step ?? '03'}
-                      </span>
-                      {heroSteps.threeTitle}
-                    </p>
-                    <p className="surface-dark-text mt-2 text-sm leading-relaxed opacity-80 pl-9">
-                      {heroSteps.threeDesc}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 grid grid-cols-2 gap-4">
-                  <div className="glass-premium rounded-2xl px-6 py-6 border-white/5">
-                    <p className="surface-dark-heading text-4xl font-bold tracking-tighter text-gradient-brand">{heroStats.stepsValue}</p>
-                    <p className="surface-dark-text mt-1 text-xs font-bold uppercase tracking-widest opacity-60">{heroStats.stepsLabel}</p>
-                  </div>
-                  <div className="glass-premium rounded-2xl px-6 py-6 border-white/5">
-                    <p className="surface-dark-heading text-4xl font-bold tracking-tighter text-gradient-brand">{heroStats.b2bValue}</p>
-                    <p className="surface-dark-text mt-1 text-xs font-bold uppercase tracking-widest opacity-60">{heroStats.b2bLabel}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Us */}
-      <section className="section-py">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="motion-fade-up">
-            <SectionHeader
-            title={valuePropsApi?.title ?? t('home.whyUs.title')}
-            description={valuePropsApi?.subtitle ?? t('home.whyUs.subtitle')}
-            label={valuePropsApi?.sectionLabel ?? (t('home.whyUs.sectionLabel') || 'Reliability')}
-            align="center"
-            />
-          </div>
-          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {whyUsItems.map(({ icon: Icon, key }, index) => {
-              const fromDb = valuePropsApi?.items?.find((i) => i.key === key);
-              return (
-                <div key={key} className={`motion-fade-up motion-delay-${Math.min(index + 1, 4)}`}>
-                  <FeatureCard
-                    icon={<Icon className="size-7 text-[var(--color-brand)] group-hover:text-white transition-colors" />}
-                    title={fromDb?.title ?? t(`home.whyUs.${key}`)}
-                    description={fromDb?.description ?? t(`home.whyUs.${key}Desc`)}
-                    index={index}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Products */}
-      <section className="section-py bg-[var(--color-bg-muted)]">
-          <div className="mx-auto max-w-7xl px-4 lg:px-8">
-            <div className="motion-fade-up">
-              <SectionHeader
-              title={t('home.products.title')}
-              description={t('home.products.subtitle')}
-              label={t('home.products.sectionLabel') || 'Solutions'}
-              action={(
-                <Link
-                  href={localizedPath(locale, '/products')}
-                  className="hidden items-center gap-2 rounded-md text-sm font-bold text-[var(--color-brand)] transition-all hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)] sm:flex"
-                >
-                  {t('common.viewAll')} <ArrowRight className="size-4" />
-                </Link>
-              )}
-              />
-            </div>
-            <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-              {visibleProducts.map((p: any, index: number) => (
-                <div key={p.id ?? p.title} className={`motion-fade-up motion-delay-${(index % 4) + 1}`}>
-                  <ListingCard
-                    href={p.slug ? localizedPath(locale, `/products/${p.slug}`) : `${localizedPath(locale, '/offer')}?product=${encodeURIComponent(p.title)}`}
-                    title={p.title}
-                    description={p.description}
-                    lineLabel={t('common.listingEngineeringLine')}
-                    imageSrc={p.image_url}
-                    imageAlt={buildMediaAlt({
-                      locale,
-                      kind: 'product',
-                      title: p.title,
-                      alt: p.alt,
-                      caption: p.caption,
-                      description: p.description,
-                    })}
-                    imageSizes="(max-width: 768px) 50vw, 25vw"
-                    imageAspectClassName="aspect-[4/3]"
-                    specs={p.specs}
-                    category={p.category}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-      <ReferencesTrustStrip locale={locale} />
-
-      {/* Gallery preview */}
-      <section className="section-py">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="motion-fade-up">
-            <SectionHeader
-            title={t('home.gallery.title')}
-            description={t('home.gallery.subtitle')}
-            label={t('home.gallery.sectionLabel') || 'Visuals'}
-            action={(
-              <Link
-                href={localizedPath(locale, '/gallery')}
-                className="hidden items-center gap-2 rounded-md text-sm font-bold text-[var(--color-brand)] transition-all hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] sm:flex"
-              >
-                {t('common.viewAll')} <ArrowRight className="size-4" />
-              </Link>
-            )}
-            />
-          </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:auto-rows-[22rem] lg:grid-cols-3">
-            {visibleGalleries.map((g: any, index: number) => {
-              const bentoClasses = [
-                'lg:col-span-2 lg:row-span-1', // Item 1: Wide
-                'lg:col-span-1 lg:row-span-2', // Item 2: Tall
-                'lg:col-span-1 lg:row-span-1', // Item 3: Square
-                'lg:col-span-1 lg:row-span-1', // Item 4: Square
-                'lg:col-span-2 lg:row-span-1', // Item 5: Wide
-              ];
-              const gridClass = bentoClasses[index % bentoClasses.length] || '';
-              
-              return (
-                <Reveal key={g.id ?? g.title} delay={120 * (index + 1)} className={gridClass}>
-                  <MediaOverlayCard
-                    href={g.slug ? localizedPath(locale, `/gallery/${g.slug}`) : localizedPath(locale, '/gallery')}
-                    src={absoluteAssetUrl(g.cover_image_url_resolved || g.cover_image || g.imageSrc) || GALLERY_PLACEHOLDER_SRC}
-                    alt={buildMediaAlt({
-                      locale,
-                      kind: 'gallery-cover',
-                      title: g.title,
-                      alt: g.cover_image_alt,
-                      description: g.description,
-                    })}
-                    title={g.title}
-                    meta={g.image_count != null ? `${g.image_count} ${t('gallery.viewAll').toLowerCase()}` : undefined}
-                    description={g.description}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    aspectClassName="h-full w-full"
-                  />
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Blog Section */}
-      <section className="section-py bg-[var(--color-bg-muted)] overflow-hidden relative">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8 relative z-10">
-          <Reveal>
-            <SectionHeader
-            title={t('home.blog.title')}
-            description={t('home.blog.subtitle')}
-            label={t('home.blog.sectionLabel') || 'Expertise'}
-            />
           </Reveal>
-          <Reveal className="mt-12" delay={120}>
-            {featuredBlogPost ? (
-              <article className="glass-premium overflow-hidden rounded-[2.5rem] bg-white/[0.03] border-brand/5 shadow-2xl transition-all hover:shadow-brand/5">
-                <div className="grid gap-0 lg:grid-cols-2">
-                  <div className="relative aspect-[16/10] lg:aspect-auto overflow-hidden bg-[var(--color-border)]">
-                    <OptimizedImage
-                      src={featuredBlogImageSrc}
-                      alt={buildMediaAlt({
-                        locale,
-                        kind: 'blog',
-                        title: featuredBlogPost.title,
-                        alt: featuredBlogPost.alt,
-                        caption: featuredBlogPost.description,
-                        description: featuredBlogPost.description,
-                      })}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-1000 hover:scale-105"
-                    />
-                    <div className="absolute left-6 top-6">
-                      <span className="glass-premium rounded-full border border-brand/20 px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-brand">
-                        {t('home.blog.spotlightBadge')}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-8 lg:p-12 flex flex-col justify-center">
-                    <h3 className="text-balance text-3xl font-bold tracking-tight text-[var(--color-text-primary)] lg:text-4xl">
-                      {featuredBlogPost.title || t('home.blog.spotlightTitle')}
-                    </h3>
-                    <p className="mt-6 text-lg leading-relaxed text-[var(--color-text-secondary)] opacity-80">
-                      {featuredBlogPost.description || t('home.blog.spotlightBodyPrimary')}
-                    </p>
-                    
-                    <div className="glass-premium mt-8 rounded-[1.5rem] p-6 border-white/5 bg-white/[0.02]">
-                      <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-brand">
-                        {t('home.blog.insightLabel')}
-                      </p>
-                      <p className="mt-3 text-sm leading-relaxed text-[var(--color-text-secondary)] opacity-90 italic">
-                        "{t('home.blog.insightText')}"
-                      </p>
-                    </div>
+        </div>
 
-                    <Link
-                      href={featuredBlogPost?.slug ? localizedPath(locale, `/blog/${featuredBlogPost.slug}`) : localizedPath(locale, '/blog')}
-                      className="btn-primary shimmer-btn glow-hover mt-10 inline-flex w-fit items-center gap-3 rounded-xl px-8 py-4 font-bold transition-all hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
-                    >
-                      {t('blog.readMore')}
-                      <ArrowRight className="size-5" />
-                    </Link>
+        {/* Scroll Hint */}
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
+          <div className="flex h-12 w-6 justify-center rounded-full border border-[var(--gold)]/30 backdrop-blur-sm">
+            <div className="mt-2 h-2 w-1 animate-bounce bg-[var(--gold)]" />
+          </div>
+        </div>
+      </section>
+
+      <StatsBar locale={locale} fromApi={statsBarApi} />
+
+      {/* --- ABOUT SECTION --- */}
+      <section id="about" className="section-py relative overflow-hidden bg-[var(--carbon)]">
+        <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
+          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
+            {/* Left: Content */}
+            <div className="order-2 lg:order-1">
+              <Reveal>
+                <span className="section-label-cc">{aboutApi?.label || t('home.whyUs.sectionLabel')}</span>
+                <h2 className="section-title-cc" dangerouslySetInnerHTML={{ __html: aboutApi?.title || t('home.whyUs.title') }} />
+                
+                <h3 className="font-serif text-[1.4rem] font-normal italic leading-snug text-[var(--gold)] lg:text-[1.8rem] opacity-90">
+                   {aboutApi?.tagline || t('home.testimonial.quote')}
+                </h3>
+                
+                <p className="mt-8 text-base font-light leading-[1.8] text-[var(--silver)] lg:text-lg">
+                  {aboutApi?.intro || t('home.whyUs.subtitle')}
+                </p>
+                
+                <div className="mt-12 grid gap-8 sm:grid-cols-2">
+                  <div className="group space-y-4">
+                    <div className="flex size-14 items-center justify-center border border-[var(--gold)]/20 bg-[var(--gold)]/5 transition-all group-hover:bg-[var(--gold)]/10">
+                      <Cpu className="size-6 text-[var(--gold)]" />
+                    </div>
+                    <h4 className="font-display text-base uppercase tracking-[2px] text-[var(--white)]">
+                      {t('home.hero.metrics.engineeringTitle')}
+                    </h4>
+                    <p className="text-sm font-light leading-relaxed text-[var(--silver)]">
+                      {t('home.hero.metrics.engineeringDesc')}
+                    </p>
+                  </div>
+                  
+                  <div className="group space-y-4">
+                    <div className="flex size-14 items-center justify-center border border-[var(--gold)]/20 bg-[var(--gold)]/5 transition-all group-hover:bg-[var(--gold)]/10">
+                      <Zap className="size-6 text-[var(--gold)]" />
+                    </div>
+                    <h4 className="font-display text-base uppercase tracking-[2px] text-[var(--white)]">
+                      {t('home.hero.metrics.prototypeTitle')}
+                    </h4>
+                    <p className="text-sm font-light leading-relaxed text-[var(--silver)]">
+                      {t('home.hero.metrics.prototypeDesc')}
+                    </p>
                   </div>
                 </div>
-              </article>
-            ) : null}
-          </Reveal>
 
-          <Reveal className="mt-16">
-            <div className="flex items-center gap-6 mb-8">
-               <h3 className="text-xl font-bold tracking-tight">{t('home.blog.archiveLabel')}</h3>
-               <div className="h-px flex-1 bg-border/40" />
-               <Link
-                href={localizedPath(locale, '/blog')}
-                className="flex items-center gap-2 rounded-md text-sm font-bold text-brand hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
-              >
-                {t('common.viewAll')} <ArrowRight className="size-4" />
-              </Link>
-            </div>
-            <div className="grid gap-6 lg:grid-cols-3">
-              {secondaryBlogPosts.map((post: any, index: number) => (
-                <Reveal key={post.id ?? post.title} delay={120 * (index + 1)}>
-                  <article
-                    className="glass-premium glow-hover group flex h-full flex-col rounded-[2rem] bg-white/[0.02] p-8 transition-all hover:-translate-y-1 focus-within:ring-2 focus-within:ring-brand focus-within:ring-offset-2 focus-within:ring-offset-[var(--color-bg-muted)]"
+                <div className="mt-12 pt-8">
+                  <Link
+                    href={localizedPath(locale, '/about')}
+                    className="group relative inline-flex items-center gap-4 border border-[var(--gold)] px-10 py-5 text-[0.85rem] font-bold uppercase tracking-[3px] text-[var(--gold)] transition-all duration-300 hover:bg-[var(--gold)] hover:text-[var(--carbon)]"
                   >
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold tracking-tight group-hover:text-brand transition-colors">
-                        {post.title}
-                      </h3>
-                      <p className="mt-4 text-sm leading-relaxed text-[var(--color-text-secondary)] opacity-80 line-clamp-3">
-                        {post.description}
+                    {t('common.readMore')}
+                    <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Right: Visual */}
+            <div className="order-1 lg:order-2">
+              <Reveal delay={200}>
+                <div className="relative mx-auto max-w-[500px]">
+                  <div className="about-img-main">
+                    <div className="absolute inset-0 z-10 bg-gradient-to-br from-black/40 via-transparent to-black/20" />
+                    <div className="gold-grid-bg pointer-events-none absolute inset-0 z-10 opacity-[0.05]" />
+                    <div className="animate-scan absolute left-0 top-0 z-20 h-px w-full bg-gradient-to-r from-transparent via-[var(--gold)]/50 to-transparent" />
+                    <Image
+                      src={aboutVisualSrc}
+                      alt="Kompozit üretim görseli"
+                      fill
+                      unoptimized
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="about-accent-square hidden lg:block" />
+                  
+                  {/* Floating Metric */}
+                  <div className="absolute -left-8 -top-8 z-30 hidden lg:block">
+                    <div className="border border-[var(--gold)]/30 bg-[var(--carbon)] p-8 shadow-2xl backdrop-blur-3xl">
+                      <p className="font-display text-[2.5rem] leading-none text-[var(--gold)]">
+                        {t('home.stats.yoeNumber').split('+')[0]}+
+                      </p>
+                      <p className="mt-2 text-[0.65rem] font-bold uppercase tracking-[3px] text-[var(--silver)]">
+                         {t('home.stats.yoeLabel')}
                       </p>
                     </div>
-                    <Link
-                      href={post.slug ? localizedPath(locale, `/blog/${post.slug}`) : localizedPath(locale, '/blog')}
-                      className="mt-8 inline-flex items-center gap-2 rounded-md text-[10px] font-bold uppercase tracking-widest text-brand transition-all hover:gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
-                    >
-                      {t('blog.readMore')}
-                      <ArrowRight className="size-4" />
-                    </Link>
-                  </article>
-                </Reveal>
-              ))}
+                  </div>
+                </div>
+              </Reveal>
             </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="surface-dark-shell carbon-mesh py-24 relative overflow-hidden">
-        <div className="surface-hero-glow-brand motion-float-soft absolute right-0 top-0 h-96 w-96 rounded-full blur-3xl opacity-30" />
-        <div className="surface-hero-glow-muted motion-float-soft absolute left-0 bottom-0 h-64 w-64 rounded-full blur-3xl opacity-10" />
-        <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+      <MaterialCards locale={locale} />
+
+      {/* --- INDUSTRIES (Full Bleed Grid) --- */}
+      <IndustryStrip locale={locale} />
+
+      {/* --- PRODUCTS (Showcase Grid) --- */}
+      <section className="section-py bg-[var(--carbon)]">
+        <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <Reveal>
-            <DarkCtaPanel
-            title={t('common.offerCtaTitle')}
-            description={t('common.offerCtaDescription')}
-            action={(
-              <Link
-                href={localizedPath(locale, '/offer')}
-                className="btn-primary shimmer-btn glow-hover mt-10 inline-flex items-center gap-3 rounded-xl px-10 py-5 text-lg font-bold transition-all hover:scale-[1.05] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)]"
+            <div className="mb-16 flex items-end justify-between border-b border-[var(--gold)]/10 pb-8">
+              <div className="max-w-2xl">
+                <span className="section-label-cc">{t('home.products.sectionLabel') || 'Solutions'}</span>
+                <h2 className="section-title-cc mb-0">{t('home.products.title')}</h2>
+              </div>
+              <Link 
+                href={localizedPath(locale, '/products')}
+                className="hidden items-center gap-3 text-[0.75rem] font-bold uppercase tracking-[3px] text-[var(--gold)] transition-all hover:gap-4 lg:flex"
               >
-                {t('common.requestOffer')}
-                <ArrowRight className="size-6" />
+                {t('common.viewAll')} <ArrowRight className="size-5" />
               </Link>
-            )}
-            />
+            </div>
+          </Reveal>
+
+          <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3">
+            {visibleProducts.map((p: any, index: number) => (
+              <Reveal key={p.id ?? p.title} delay={(index % 3) * 100} className="grid-item-cc">
+                <ListingCard
+                  listIndex={index + 1}
+                  visualVariant={index}
+                  href={p.slug ? localizedPath(locale, `/products/${p.slug}`) : localizedPath(locale, '/products')}
+                  title={p.title}
+                  description={p.description}
+                  lineLabel={t('common.listingEngineeringLine')}
+                  imageSrc={
+                    resolvePublicAssetUrl(p.image_url) ?? p.image_url ?? PRODUCT_PLACEHOLDER_SRC
+                  }
+                  imageAlt={p.title}
+                  imageSizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  imageAspectClassName="h-[450px]"
+                  specs={p.specs}
+                  category={p.category}
+                />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- PROCESS (Timeline) --- */}
+      <ProcessTimeline locale={locale} />
+
+      {/* --- ADVANTAGES (Why us) --- */}
+      <AdvantagesGrid locale={locale} />
+
+      {/* --- PORTFOLIO (Gallery) --- */}
+      <GalleryShowcase locale={locale} items={visibleGalleries} />
+
+      {/* --- CTA / TRUST --- */}
+      <section className="section-py relative overflow-hidden bg-(--graphite)">
+        <div className="carbon-texture absolute inset-0 opacity-[0.05]" />
+        <div className="mx-auto max-w-[1300px] px-6 text-center lg:px-12">
+          <Reveal>
+            <div className="mx-auto max-w-3xl">
+              <span className="section-label-cc">{t('common.contactUs')}</span>
+              <h2 className="section-title-cc">{t('common.offerCtaTitle')}</h2>
+              <p className="mb-14 text-lg font-light leading-relaxed text-[var(--silver)]">
+                {t('common.offerCtaDescription')}
+              </p>
+              
+              <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+                <Link
+                  href={localizedPath(locale, '/contact')}
+                  className="hero-btn-primary shimmer-btn"
+                >
+                  {t('common.requestOffer')}
+                  <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Link>
+                <div className="flex items-center gap-3 px-6 py-4">
+                  <Shield className="size-5 text-[var(--gold)]/60" />
+                  <span className="text-sm font-medium tracking-wide text-[var(--silver)]/80">
+                    {t('common.freeOfObligation')}
+                  </span>
+                </div>
+              </div>
+            </div>
           </Reveal>
         </div>
       </section>
 
-      {/* Newsletter */}
-      <section className="section-py surface-dark-shell carbon-mesh overflow-hidden py-24">
-        <div className="surface-hero-glow-brand absolute right-[-5rem] top-[-5rem] h-64 w-64 rounded-full blur-3xl opacity-20" />
-        <div className="mx-auto max-w-2xl px-4 text-center relative z-10">
-          <Reveal>
-            <h2 className="text-3xl font-bold tracking-tight surface-dark-heading lg:text-4xl">{t('home.newsletter.title')}</h2>
-            <p className="mt-4 text-lg surface-dark-text opacity-70">
-              {t('home.newsletter.subtitle')}
-            </p>
-          </Reveal>
-          <Reveal className="mt-10" delay={200}>
-            <div className="glass-premium p-2 pr-2 rounded-[1.5rem] bg-white/[0.05] border-white/10 max-w-lg mx-auto">
-               <NewsletterForm locale={locale} />
-            </div>
-            <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.25em] surface-dark-text opacity-40">
-              {t('home.newsletter.privacyNote')}
-            </p>
-          </Reveal>
-        </div>
-      </section>
-    </>
+      {/* --- CONTACT FORM --- */}
+      <HomeContact 
+        contactInfo={contactForLd}
+        labels={{
+          label: t('contact.label'),
+          title: t('contact.form.title'),
+          description: t('contact.form.subtitle'),
+          namePlaceholder: t('common.name'),
+          emailPlaceholder: t('common.email'),
+          messagePlaceholder: t('common.message'),
+          submit: t('common.send'),
+          response: t('contact.features.one') || 'Response within 24 hours',
+          infoLabels: {
+            email: t('contact.info.email'),
+            phone: t('contact.info.phone'),
+            address: t('contact.info.address'),
+            hours: t('contact.info.hours'),
+          }
+        }}
+      />
+    </main>
   );
 }

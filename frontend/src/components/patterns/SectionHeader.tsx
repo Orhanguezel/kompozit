@@ -18,23 +18,25 @@ export function SectionHeader({
   const isCentered = align === 'center';
 
   return (
-    <div className={`flex gap-8 ${isCentered ? 'flex-col items-center text-center' : 'flex-row items-end justify-between'}`}>
-      <div className={isCentered ? 'max-w-3xl' : ''}>
+    <div className={`flex gap-10 ${isCentered ? 'flex-col items-center text-center' : 'flex-col lg:flex-row lg:items-end lg:justify-between'}`}>
+      <div className={isCentered ? 'max-w-3xl' : 'max-w-4xl'}>
         {label ? (
-          <div className={`flex items-center gap-3 mb-3 ${isCentered ? 'justify-center' : ''}`}>
-            <div className="h-[2px] w-8 bg-brand rounded-full" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-brand/80">{label}</span>
+          <div className={`flex items-center gap-4 mb-6 ${isCentered ? 'justify-center' : ''}`}>
+             <div className="h-px w-10 bg-[var(--color-gold)] opacity-60" />
+             <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--color-gold-bright)]">{label}</span>
           </div>
         ) : null}
-        <h2 className="text-3xl font-bold tracking-tight lg:text-4xl text-balance">{title}</h2>
+        <h2 className="text-4xl font-normal tracking-tight lg:text-5xl font-[var(--font-display)] leading-[1.1] text-balance text-[var(--color-text-primary)]">
+          {title}
+        </h2>
         {description ? (
-          <p className={`mt-4 text-base leading-relaxed text-[var(--color-text-secondary)] opacity-80 ${isCentered ? 'mx-auto' : ''}`}>
+          <p className={`mt-6 text-lg leading-relaxed text-[var(--color-text-secondary)] opacity-80 ${isCentered ? 'mx-auto' : ''}`}>
             {description}
           </p>
         ) : null}
       </div>
       {action ? (
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 lg:pb-2">
           {action}
         </div>
       ) : null}

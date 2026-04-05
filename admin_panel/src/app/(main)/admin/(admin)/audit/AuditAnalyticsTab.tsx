@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // =============================================================
 // FILE: src/app/(main)/admin/(admin)/audit/AuditAnalyticsTab.tsx
@@ -6,109 +6,92 @@
 // - Summary cards, pie charts, tables, response time stats, monthly trend
 // =============================================================
 
-import * as React from 'react';
-import { useMemo } from 'react';
-import {
-  Activity,
-  AlertTriangle,
-  Clock,
-  Users,
-  Loader2,
-  TrendingUp,
-  Zap,
-  BarChart3,
-} from 'lucide-react';
+import { useMemo } from "react";
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+import { Activity, AlertTriangle, BarChart3, Clock, Loader2, TrendingUp, Users, Zap } from "lucide-react";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-
-import {
-  PieChart,
-  Pie,
+  Bar,
   Cell,
+  ComposedChart,
+  Legend,
+  Line,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  Bar,
-  Line,
-  ComposedChart,
-} from 'recharts';
+} from "recharts";
 
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import {
   useGetAuditSummaryAdminQuery,
-  useGetTopEndpointsAdminQuery,
-  useGetSlowestEndpointsAdminQuery,
-  useGetTopUsersAdminQuery,
-  useGetTopIpsAdminQuery,
-  useGetStatusDistributionAdminQuery,
   useGetMethodDistributionAdminQuery,
-  useGetResponseTimeStatsAdminQuery,
   useGetMonthlyAggregationAdminQuery,
-} from '@/integrations/hooks';
-
+  useGetResponseTimeStatsAdminQuery,
+  useGetSlowestEndpointsAdminQuery,
+  useGetStatusDistributionAdminQuery,
+  useGetTopEndpointsAdminQuery,
+  useGetTopIpsAdminQuery,
+  useGetTopUsersAdminQuery,
+} from "@/integrations/hooks";
 import type {
+  AnalyticsDateRangeParams,
+  AnalyticsMonthlyParams,
   AuditSummaryDto,
-  TopEndpointDto,
-  SlowestEndpointDto,
-  TopUserDto,
-  TopIpDto,
-  StatusDistributionDto,
   MethodDistributionDto,
-  ResponseTimeStatsDto,
   MonthlyAggregationDto,
-} from '@/integrations/shared';
+  ResponseTimeStatsDto,
+  SlowestEndpointDto,
+  StatusDistributionDto,
+  TopEndpointDto,
+  TopIpDto,
+  TopUserDto,
+} from "@/integrations/shared";
 
 /* ----------------------------- constants ----------------------------- */
 
 const STATUS_COLORS: Record<string, string> = {
-  '2xx': '#22c55e',
-  '3xx': '#3b82f6',
-  '4xx': '#eab308',
-  '5xx': '#ef4444',
-  other: '#6b7280',
+  "2xx": "#22c55e",
+  "3xx": "#3b82f6",
+  "4xx": "#eab308",
+  "5xx": "#ef4444",
+  other: "#6b7280",
 };
 
 const METHOD_COLORS: Record<string, string> = {
-  GET: '#3b82f6',
-  POST: '#22c55e',
-  PUT: '#eab308',
-  PATCH: '#f97316',
-  DELETE: '#ef4444',
-  OPTIONS: '#8b5cf6',
-  HEAD: '#6b7280',
+  GET: "#3b82f6",
+  POST: "#22c55e",
+  PUT: "#eab308",
+  PATCH: "#f97316",
+  DELETE: "#ef4444",
+  OPTIONS: "#8b5cf6",
+  HEAD: "#6b7280",
 };
 
 /* ----------------------------- helpers ----------------------------- */
 
 function fmtMs(value: number | null | undefined): string {
-  if (value == null || !Number.isFinite(value)) return '\u2014';
+  if (value == null || !Number.isFinite(value)) return "\u2014";
   return `${value.toFixed(1)} ms`;
 }
 
 function fmtPct(value: number | null | undefined): string {
-  if (value == null || !Number.isFinite(value)) return '\u2014';
+  if (value == null || !Number.isFinite(value)) return "\u2014";
   return `${value.toFixed(2)}%`;
 }
 
 function fmtNum(value: number | null | undefined): string {
-  if (value == null || !Number.isFinite(value)) return '\u2014';
+  if (value == null || !Number.isFinite(value)) return "\u2014";
   return value.toLocaleString();
 }
 
 function fmtWhen(iso?: string | null): string {
-  if (!iso) return '\u2014';
+  if (!iso) return "\u2014";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return String(iso);
   return d.toLocaleString();
@@ -116,11 +99,11 @@ function fmtWhen(iso?: string | null): string {
 
 function fmtMonth(monthStr: string): string {
   // "2025-12" -> "Dec 2025"
-  const parts = monthStr.split('-');
+  const parts = monthStr.split("-");
   if (parts.length < 2) return monthStr;
   const d = new Date(Number(parts[0]), Number(parts[1]) - 1, 1);
   if (Number.isNaN(d.getTime())) return monthStr;
-  return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short' });
+  return d.toLocaleDateString(undefined, { year: "numeric", month: "short" });
 }
 
 /* ----------------------------- types ----------------------------- */
@@ -133,12 +116,12 @@ type Props = {
 /* ----------------------------- component ----------------------------- */
 
 export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props) {
-  const t = useAdminT('admin.audit');
+  const t = useAdminT("admin.audit");
 
   /* ---- build params ---- */
 
-  const analyticsParams = useMemo(() => {
-    const p: Record<string, string | number> = {};
+  const analyticsParams = useMemo<AnalyticsDateRangeParams>(() => {
+    const p: AnalyticsDateRangeParams = {};
     if (dateRange.from) p.created_from = dateRange.from;
     if (dateRange.to) p.created_to = dateRange.to;
     if (excludeLocalhost) p.exclude_localhost = 1;
@@ -150,7 +133,7 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
     [excludeLocalhost],
   );
 
-  const monthlyParams = useMemo(
+  const monthlyParams = useMemo<AnalyticsMonthlyParams>(
     () => ({
       months: 12,
       ...(excludeLocalhost ? { exclude_localhost: 1 as const } : {}),
@@ -161,13 +144,13 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
   /* ---- queries ---- */
 
   const summaryQ = useGetAuditSummaryAdminQuery(summaryParams, { skip: false });
-  const topEndpointsQ = useGetTopEndpointsAdminQuery(analyticsParams as any, { skip: false });
-  const slowestEndpointsQ = useGetSlowestEndpointsAdminQuery(analyticsParams as any, { skip: false });
-  const topUsersQ = useGetTopUsersAdminQuery(analyticsParams as any, { skip: false });
-  const topIpsQ = useGetTopIpsAdminQuery(analyticsParams as any, { skip: false });
-  const statusDistQ = useGetStatusDistributionAdminQuery(analyticsParams as any, { skip: false });
-  const methodDistQ = useGetMethodDistributionAdminQuery(analyticsParams as any, { skip: false });
-  const responseTimeQ = useGetResponseTimeStatsAdminQuery(analyticsParams as any, { skip: false });
+  const topEndpointsQ = useGetTopEndpointsAdminQuery(analyticsParams, { skip: false });
+  const slowestEndpointsQ = useGetSlowestEndpointsAdminQuery(analyticsParams, { skip: false });
+  const topUsersQ = useGetTopUsersAdminQuery(analyticsParams, { skip: false });
+  const topIpsQ = useGetTopIpsAdminQuery(analyticsParams, { skip: false });
+  const statusDistQ = useGetStatusDistributionAdminQuery(analyticsParams, { skip: false });
+  const methodDistQ = useGetMethodDistributionAdminQuery(analyticsParams, { skip: false });
+  const responseTimeQ = useGetResponseTimeStatsAdminQuery(analyticsParams, { skip: false });
   const monthlyQ = useGetMonthlyAggregationAdminQuery(monthlyParams, { skip: false });
 
   /* ---- data ---- */
@@ -186,7 +169,7 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
 
   const LoadingBadge = () => (
     <Badge variant="outline" className="flex items-center gap-1.5">
-      <Loader2 className="h-3 w-3 animate-spin" /> {t('common.loading')}
+      <Loader2 className="h-3 w-3 animate-spin" /> {t("common.loading")}
     </Badge>
   );
 
@@ -207,7 +190,7 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
       methodDist.map((m) => ({
         name: m.method,
         value: m.count,
-        color: METHOD_COLORS[m.method] ?? '#6b7280',
+        color: METHOD_COLORS[m.method] ?? "#6b7280",
       })),
     [methodDist],
   );
@@ -232,18 +215,18 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
   return (
     <div className="space-y-6">
       {/* ==================== 1. SUMMARY CARDS ==================== */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {/* Today's Total Requests */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('analytics.todayRequests')}</CardTitle>
+            <CardTitle className="font-medium text-sm">{t("analytics.todayRequests")}</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             {summaryQ.isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <div className="text-2xl font-bold">{fmtNum(summary?.today_requests)}</div>
+              <div className="font-bold text-2xl">{fmtNum(summary?.today_requests)}</div>
             )}
           </CardContent>
         </Card>
@@ -251,7 +234,7 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
         {/* Today's Errors + Error Rate */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('analytics.todayErrors')}</CardTitle>
+            <CardTitle className="font-medium text-sm">{t("analytics.todayErrors")}</CardTitle>
             <AlertTriangle className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -259,9 +242,9 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
-                <div className="text-2xl font-bold">{fmtNum(summary?.today_errors)}</div>
-                <p className="text-xs text-muted-foreground">
-                  {t('analytics.errorRate')}: {fmtPct(summary?.today_error_rate)}
+                <div className="font-bold text-2xl">{fmtNum(summary?.today_errors)}</div>
+                <p className="text-muted-foreground text-xs">
+                  {t("analytics.errorRate")}: {fmtPct(summary?.today_error_rate)}
                 </p>
               </>
             )}
@@ -271,14 +254,14 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
         {/* Avg Response Time */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('analytics.avgResponseTime')}</CardTitle>
+            <CardTitle className="font-medium text-sm">{t("analytics.avgResponseTime")}</CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             {summaryQ.isLoading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
-              <div className="text-2xl font-bold">{fmtMs(summary?.today_avg_response_time)}</div>
+              <div className="font-bold text-2xl">{fmtMs(summary?.today_avg_response_time)}</div>
             )}
           </CardContent>
         </Card>
@@ -286,7 +269,7 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
         {/* Unique IPs / Unique Users */}
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">{t('analytics.uniqueVisitors')}</CardTitle>
+            <CardTitle className="font-medium text-sm">{t("analytics.uniqueVisitors")}</CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -294,9 +277,9 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <>
-                <div className="text-2xl font-bold">{fmtNum(summary?.today_unique_ips)}</div>
-                <p className="text-xs text-muted-foreground">
-                  {t('analytics.uniqueUsers')}: {fmtNum(summary?.today_unique_users)}
+                <div className="font-bold text-2xl">{fmtNum(summary?.today_unique_ips)}</div>
+                <p className="text-muted-foreground text-xs">
+                  {t("analytics.uniqueUsers")}: {fmtNum(summary?.today_unique_users)}
                 </p>
               </>
             )}
@@ -305,23 +288,21 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
       </div>
 
       {/* ==================== 2. PIE CHARTS ==================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Status Distribution */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-base">{t('analytics.statusDistribution')}</CardTitle>
-                <CardDescription>{t('analytics.statusDistributionDesc')}</CardDescription>
+                <CardTitle className="text-base">{t("analytics.statusDistribution")}</CardTitle>
+                <CardDescription>{t("analytics.statusDistributionDesc")}</CardDescription>
               </div>
               {statusDistQ.isLoading && <LoadingBadge />}
             </div>
           </CardHeader>
           <CardContent>
             {statusPieData.length === 0 && !statusDistQ.isLoading ? (
-              <div className="text-center text-sm text-muted-foreground py-8">
-                {t('common.noRecords')}
-              </div>
+              <div className="py-8 text-center text-muted-foreground text-sm">{t("common.noRecords")}</div>
             ) : (
               <ResponsiveContainer width="100%" height={280}>
                 <PieChart>
@@ -334,17 +315,13 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
                     dataKey="value"
                     nameKey="name"
                     paddingAngle={2}
-                    label={({ name, percent }) =>
-                      `${name} (${(percent * 100).toFixed(0)}%)`
-                    }
+                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
                   >
-                    {statusPieData.map((entry, idx) => (
-                      <Cell key={`status-${idx}`} fill={entry.color} />
+                    {statusPieData.map((entry) => (
+                      <Cell key={entry.name} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip
-                    formatter={(value: number) => [fmtNum(value), t('analytics.requests')]}
-                  />
+                  <Tooltip formatter={(value: number) => [fmtNum(value), t("analytics.requests")]} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
@@ -357,17 +334,15 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-base">{t('analytics.methodDistribution')}</CardTitle>
-                <CardDescription>{t('analytics.methodDistributionDesc')}</CardDescription>
+                <CardTitle className="text-base">{t("analytics.methodDistribution")}</CardTitle>
+                <CardDescription>{t("analytics.methodDistributionDesc")}</CardDescription>
               </div>
               {methodDistQ.isLoading && <LoadingBadge />}
             </div>
           </CardHeader>
           <CardContent>
             {methodPieData.length === 0 && !methodDistQ.isLoading ? (
-              <div className="text-center text-sm text-muted-foreground py-8">
-                {t('common.noRecords')}
-              </div>
+              <div className="py-8 text-center text-muted-foreground text-sm">{t("common.noRecords")}</div>
             ) : (
               <ResponsiveContainer width="100%" height={280}>
                 <PieChart>
@@ -380,17 +355,13 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
                     dataKey="value"
                     nameKey="name"
                     paddingAngle={2}
-                    label={({ name, percent }) =>
-                      `${name} (${(percent * 100).toFixed(0)}%)`
-                    }
+                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
                   >
-                    {methodPieData.map((entry, idx) => (
-                      <Cell key={`method-${idx}`} fill={entry.color} />
+                    {methodPieData.map((entry) => (
+                      <Cell key={entry.name} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip
-                    formatter={(value: number) => [fmtNum(value), t('analytics.requests')]}
-                  />
+                  <Tooltip formatter={(value: number) => [fmtNum(value), t("analytics.requests")]} />
                   <Legend />
                 </PieChart>
               </ResponsiveContainer>
@@ -400,16 +371,16 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
       </div>
 
       {/* ==================== 3. TOP & SLOWEST ENDPOINTS ==================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Top Endpoints */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <TrendingUp className="h-4 w-4" /> {t('analytics.topEndpoints')}
+                  <TrendingUp className="h-4 w-4" /> {t("analytics.topEndpoints")}
                 </CardTitle>
-                <CardDescription>{t('analytics.topEndpointsDesc')}</CardDescription>
+                <CardDescription>{t("analytics.topEndpointsDesc")}</CardDescription>
               </div>
               {topEndpointsQ.isLoading && <LoadingBadge />}
             </div>
@@ -419,34 +390,30 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('analytics.path')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.requestCount')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.avgTime')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.errorRate')}</TableHead>
+                    <TableHead>{t("analytics.path")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.requestCount")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.avgTime")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.errorRate")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {topEndpoints.length === 0 && !topEndpointsQ.isLoading ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center text-sm text-muted-foreground">
-                        {t('common.noRecords')}
+                      <TableCell colSpan={4} className="text-center text-muted-foreground text-sm">
+                        {t("common.noRecords")}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    topEndpoints.map((ep, idx) => (
-                      <TableRow key={`top-ep-${idx}`}>
+                    topEndpoints.map((ep) => (
+                      <TableRow key={`${ep.path}-${ep.request_count}`}>
                         <TableCell className="max-w-[200px] truncate font-mono text-xs" title={ep.path}>
                           {ep.path}
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtNum(ep.request_count)}
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtMs(ep.avg_response_time)}
-                        </TableCell>
+                        <TableCell className="text-right tabular-nums">{fmtNum(ep.request_count)}</TableCell>
+                        <TableCell className="text-right tabular-nums">{fmtMs(ep.avg_response_time)}</TableCell>
                         <TableCell className="text-right tabular-nums">
                           <Badge
-                            variant={ep.error_rate > 10 ? 'destructive' : ep.error_rate > 5 ? 'secondary' : 'outline'}
+                            variant={ep.error_rate > 10 ? "destructive" : ep.error_rate > 5 ? "secondary" : "outline"}
                           >
                             {fmtPct(ep.error_rate)}
                           </Badge>
@@ -466,9 +433,9 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Zap className="h-4 w-4" /> {t('analytics.slowestEndpoints')}
+                  <Zap className="h-4 w-4" /> {t("analytics.slowestEndpoints")}
                 </CardTitle>
-                <CardDescription>{t('analytics.slowestEndpointsDesc')}</CardDescription>
+                <CardDescription>{t("analytics.slowestEndpointsDesc")}</CardDescription>
               </div>
               {slowestEndpointsQ.isLoading && <LoadingBadge />}
             </div>
@@ -478,34 +445,28 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('analytics.path')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.avgTime')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.maxTime')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.requestCount')}</TableHead>
+                    <TableHead>{t("analytics.path")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.avgTime")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.maxTime")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.requestCount")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {slowestEndpoints.length === 0 && !slowestEndpointsQ.isLoading ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center text-sm text-muted-foreground">
-                        {t('common.noRecords')}
+                      <TableCell colSpan={4} className="text-center text-muted-foreground text-sm">
+                        {t("common.noRecords")}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    slowestEndpoints.map((ep, idx) => (
-                      <TableRow key={`slow-ep-${idx}`}>
+                    slowestEndpoints.map((ep) => (
+                      <TableRow key={`${ep.path}-${ep.max_response_time}`}>
                         <TableCell className="max-w-[200px] truncate font-mono text-xs" title={ep.path}>
                           {ep.path}
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtMs(ep.avg_response_time)}
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtMs(ep.max_response_time)}
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtNum(ep.request_count)}
-                        </TableCell>
+                        <TableCell className="text-right tabular-nums">{fmtMs(ep.avg_response_time)}</TableCell>
+                        <TableCell className="text-right tabular-nums">{fmtMs(ep.max_response_time)}</TableCell>
+                        <TableCell className="text-right tabular-nums">{fmtNum(ep.request_count)}</TableCell>
                       </TableRow>
                     ))
                   )}
@@ -517,16 +478,16 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
       </div>
 
       {/* ==================== 4. TOP USERS & TOP IPS ==================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         {/* Top Users */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Users className="h-4 w-4" /> {t('analytics.topUsers')}
+                  <Users className="h-4 w-4" /> {t("analytics.topUsers")}
                 </CardTitle>
-                <CardDescription>{t('analytics.topUsersDesc')}</CardDescription>
+                <CardDescription>{t("analytics.topUsersDesc")}</CardDescription>
               </div>
               {topUsersQ.isLoading && <LoadingBadge />}
             </div>
@@ -536,36 +497,30 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('analytics.user')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.requestCount')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.lastSeen')}</TableHead>
+                    <TableHead>{t("analytics.user")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.requestCount")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.lastSeen")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {topUsers.length === 0 && !topUsersQ.isLoading ? (
                     <TableRow>
-                      <TableCell colSpan={3} className="text-center text-sm text-muted-foreground">
-                        {t('common.noRecords')}
+                      <TableCell colSpan={3} className="text-center text-muted-foreground text-sm">
+                        {t("common.noRecords")}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    topUsers.map((u, idx) => (
-                      <TableRow key={`user-${idx}`}>
+                    topUsers.map((u) => (
+                      <TableRow key={u.user_id ? `user-${u.user_id}` : (u.email ?? u.full_name ?? "user-unknown")}>
                         <TableCell className="text-sm">
-                          <div className="font-medium">
-                            {u.full_name || u.email || `uid:${u.user_id}`}
-                          </div>
-                          {u.email && u.full_name && (
-                            <div className="text-xs text-muted-foreground">{u.email}</div>
-                          )}
+                          <div className="font-medium">{u.full_name || u.email || `uid:${u.user_id}`}</div>
+                          {u.email && u.full_name && <div className="text-muted-foreground text-xs">{u.email}</div>}
                           {!u.full_name && !u.email && (
-                            <div className="text-xs text-muted-foreground">ID: {u.user_id}</div>
+                            <div className="text-muted-foreground text-xs">ID: {u.user_id}</div>
                           )}
                         </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtNum(u.request_count)}
-                        </TableCell>
-                        <TableCell className="text-right text-xs text-muted-foreground whitespace-nowrap">
+                        <TableCell className="text-right tabular-nums">{fmtNum(u.request_count)}</TableCell>
+                        <TableCell className="whitespace-nowrap text-right text-muted-foreground text-xs">
                           {fmtWhen(u.last_seen)}
                         </TableCell>
                       </TableRow>
@@ -583,9 +538,9 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
             <div className="flex items-center justify-between">
               <div>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Activity className="h-4 w-4" /> {t('analytics.topIps')}
+                  <Activity className="h-4 w-4" /> {t("analytics.topIps")}
                 </CardTitle>
-                <CardDescription>{t('analytics.topIpsDesc')}</CardDescription>
+                <CardDescription>{t("analytics.topIpsDesc")}</CardDescription>
               </div>
               {topIpsQ.isLoading && <LoadingBadge />}
             </div>
@@ -595,30 +550,26 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('analytics.ip')}</TableHead>
-                    <TableHead>{t('analytics.country')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.requestCount')}</TableHead>
-                    <TableHead className="text-right">{t('analytics.lastSeen')}</TableHead>
+                    <TableHead>{t("analytics.ip")}</TableHead>
+                    <TableHead>{t("analytics.country")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.requestCount")}</TableHead>
+                    <TableHead className="text-right">{t("analytics.lastSeen")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {topIps.length === 0 && !topIpsQ.isLoading ? (
                     <TableRow>
-                      <TableCell colSpan={4} className="text-center text-sm text-muted-foreground">
-                        {t('common.noRecords')}
+                      <TableCell colSpan={4} className="text-center text-muted-foreground text-sm">
+                        {t("common.noRecords")}
                       </TableCell>
                     </TableRow>
                   ) : (
-                    topIps.map((ipRow, idx) => (
-                      <TableRow key={`ip-${idx}`}>
+                    topIps.map((ipRow) => (
+                      <TableRow key={ipRow.ip}>
                         <TableCell className="font-mono text-xs">{ipRow.ip}</TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {ipRow.country || '\u2014'}
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {fmtNum(ipRow.request_count)}
-                        </TableCell>
-                        <TableCell className="text-right text-xs text-muted-foreground whitespace-nowrap">
+                        <TableCell className="text-muted-foreground text-sm">{ipRow.country || "\u2014"}</TableCell>
+                        <TableCell className="text-right tabular-nums">{fmtNum(ipRow.request_count)}</TableCell>
+                        <TableCell className="whitespace-nowrap text-right text-muted-foreground text-xs">
                           {fmtWhen(ipRow.last_seen)}
                         </TableCell>
                       </TableRow>
@@ -637,18 +588,16 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Clock className="h-4 w-4" /> {t('analytics.responseTimeStats')}
+                <Clock className="h-4 w-4" /> {t("analytics.responseTimeStats")}
               </CardTitle>
-              <CardDescription>{t('analytics.responseTimeStatsDesc')}</CardDescription>
+              <CardDescription>{t("analytics.responseTimeStatsDesc")}</CardDescription>
             </div>
             {responseTimeQ.isLoading && <LoadingBadge />}
           </div>
         </CardHeader>
         <CardContent>
           {!responseTimeStats && !responseTimeQ.isLoading ? (
-            <div className="text-center text-sm text-muted-foreground py-4">
-              {t('common.noRecords')}
-            </div>
+            <div className="py-4 text-center text-muted-foreground text-sm">{t("common.noRecords")}</div>
           ) : responseTimeStats ? (
             <div className="space-y-4">
               <div className="flex flex-wrap gap-3">
@@ -656,14 +605,11 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
                 <StatPill label="P95" value={fmtMs(responseTimeStats.p95)} />
                 <StatPill label="P99" value={fmtMs(responseTimeStats.p99)} />
                 <Separator orientation="vertical" className="h-8" />
-                <StatPill label={t('analytics.avg')} value={fmtMs(responseTimeStats.avg)} />
-                <StatPill label={t('analytics.min')} value={fmtMs(responseTimeStats.min)} />
-                <StatPill label={t('analytics.max')} value={fmtMs(responseTimeStats.max)} />
+                <StatPill label={t("analytics.avg")} value={fmtMs(responseTimeStats.avg)} />
+                <StatPill label={t("analytics.min")} value={fmtMs(responseTimeStats.min)} />
+                <StatPill label={t("analytics.max")} value={fmtMs(responseTimeStats.max)} />
                 <Separator orientation="vertical" className="h-8" />
-                <StatPill
-                  label={t('analytics.totalRequests')}
-                  value={fmtNum(responseTimeStats.total_requests)}
-                />
+                <StatPill label={t("analytics.totalRequests")} value={fmtNum(responseTimeStats.total_requests)} />
               </div>
             </div>
           ) : null}
@@ -676,34 +622,21 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2 text-base">
-                <BarChart3 className="h-4 w-4" /> {t('analytics.monthlyTrend')}
+                <BarChart3 className="h-4 w-4" /> {t("analytics.monthlyTrend")}
               </CardTitle>
-              <CardDescription>{t('analytics.monthlyTrendDesc')}</CardDescription>
+              <CardDescription>{t("analytics.monthlyTrendDesc")}</CardDescription>
             </div>
             {monthlyQ.isLoading && <LoadingBadge />}
           </div>
         </CardHeader>
         <CardContent>
           {monthlyChartData.length === 0 && !monthlyQ.isLoading ? (
-            <div className="text-center text-sm text-muted-foreground py-8">
-              {t('common.noRecords')}
-            </div>
+            <div className="py-8 text-center text-muted-foreground text-sm">{t("common.noRecords")}</div>
           ) : (
             <ResponsiveContainer width="100%" height={360}>
               <ComposedChart data={monthlyChartData}>
-                <XAxis
-                  dataKey="month"
-                  tick={{ fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  yAxisId="left"
-                  tick={{ fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                  width={60}
-                />
+                <XAxis dataKey="month" tick={{ fontSize: 12 }} tickLine={false} axisLine={false} />
+                <YAxis yAxisId="left" tick={{ fontSize: 12 }} tickLine={false} axisLine={false} width={60} />
                 <YAxis
                   yAxisId="right"
                   orientation="right"
@@ -712,40 +645,28 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
                   axisLine={false}
                   width={60}
                   label={{
-                    value: 'ms',
-                    position: 'insideTopRight',
+                    value: "ms",
+                    position: "insideTopRight",
                     offset: -5,
-                    style: { fontSize: 11, fill: '#6b7280' },
+                    style: { fontSize: 11, fill: "#6b7280" },
                   }}
                 />
                 <Tooltip
                   formatter={(value: number, name: string) => {
-                    if (name === 'avg_response_time') return [`${value.toFixed(1)} ms`, t('analytics.avgTime')];
-                    return [fmtNum(value), name === 'requests' ? t('analytics.requests') : t('analytics.errors')];
+                    if (name === "avg_response_time") return [`${value.toFixed(1)} ms`, t("analytics.avgTime")];
+                    return [fmtNum(value), name === "requests" ? t("analytics.requests") : t("analytics.errors")];
                   }}
                 />
                 <Legend
                   formatter={(value: string) => {
-                    if (value === 'requests') return t('analytics.requests');
-                    if (value === 'errors') return t('analytics.errors');
-                    if (value === 'avg_response_time') return t('analytics.avgTime');
+                    if (value === "requests") return t("analytics.requests");
+                    if (value === "errors") return t("analytics.errors");
+                    if (value === "avg_response_time") return t("analytics.avgTime");
                     return value;
                   }}
                 />
-                <Bar
-                  yAxisId="left"
-                  dataKey="requests"
-                  fill="#3b82f6"
-                  radius={[4, 4, 0, 0]}
-                  name="requests"
-                />
-                <Bar
-                  yAxisId="left"
-                  dataKey="errors"
-                  fill="#ef4444"
-                  radius={[4, 4, 0, 0]}
-                  name="errors"
-                />
+                <Bar yAxisId="left" dataKey="requests" fill="#3b82f6" radius={[4, 4, 0, 0]} name="requests" />
+                <Bar yAxisId="left" dataKey="errors" fill="#ef4444" radius={[4, 4, 0, 0]} name="errors" />
                 <Line
                   yAxisId="right"
                   type="monotone"
@@ -769,8 +690,8 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
 function StatPill({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center gap-2 rounded-md border bg-muted/50 px-3 py-2">
-      <span className="text-xs font-medium text-muted-foreground uppercase">{label}</span>
-      <span className="text-sm font-semibold tabular-nums">{value}</span>
+      <span className="font-medium text-muted-foreground text-xs uppercase">{label}</span>
+      <span className="font-semibold text-sm tabular-nums">{value}</span>
     </div>
   );
 }

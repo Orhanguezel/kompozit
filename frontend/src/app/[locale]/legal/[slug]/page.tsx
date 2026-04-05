@@ -89,8 +89,11 @@ export default async function LegalPage({
   const content = 'content' in resolved ? normalizeRichContent(resolved.content) : '';
 
   return (
-    <div className="section-py">
-      <div className="mx-auto max-w-3xl px-4 lg:px-8">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.1]" aria-hidden />
+
+      <div className="section-py relative z-10">
+        <div className="mx-auto max-w-4xl px-4 lg:px-8">
         <ContentPageHeader
           title={resolved.title}
           description={resolved.description}
@@ -101,6 +104,7 @@ export default async function LegalPage({
             dangerouslySetInnerHTML={{ __html: content }}
           />
         )}
+        </div>
       </div>
     </div>
   );

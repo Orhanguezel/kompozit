@@ -5,11 +5,12 @@
 //  - tolerate alternate keys: day, dt, ts, created_at
 // =============================================================
 
-'use client';
+"use client";
 
-import React, { useMemo, useState } from 'react';
+import type React from "react";
+import { useMemo, useState } from "react";
 
-import type { AuditMetricsDailyRowDto } from '@/integrations/shared';
+import type { AuditMetricsDailyRowDto } from "@/integrations/shared";
 
 type Props = {
   rows: AuditMetricsDailyRowDto[];
@@ -18,13 +19,13 @@ type Props = {
 };
 
 function n(v: unknown, fallback = 0) {
-  const x = typeof v === 'number' ? v : Number(v);
+  const x = typeof v === "number" ? v : Number(v);
   return Number.isFinite(x) ? x : fallback;
 }
 
 function toYmd(input: unknown): string {
-  const s = String(input ?? '').trim();
-  if (!s) return '';
+  const s = String(input ?? "").trim();
+  if (!s) return "";
   // already YYYY-MM-DD
   if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
   // ISO datetime -> take first 10 chars
@@ -38,15 +39,41 @@ function toYmd(input: unknown): string {
 function fmtDayLabel(isoOrDate: string) {
   const ymd = toYmd(isoOrDate);
   const m = String(ymd).match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!m) return String(isoOrDate || '');
+  if (!m) return String(isoOrDate || "");
   return `${m[3]}.${m[2]}`;
 }
 
 function fmtIsoNice(isoOrDate: string) {
   const ymd = toYmd(isoOrDate);
   const m = String(ymd).match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  if (!m) return String(isoOrDate || '');
+  if (!m) return String(isoOrDate || "");
   return `${m[3]}.${m[2]}.${m[1]}`;
+}
+
+type AuditDailyChartLooseRow = Partial<AuditMetricsDailyRowDto> & {
+  day?: unknown;
+  dt?: unknown;
+  ts?: unknown;
+  created_at?: unknown;
+  count?: unknown;
+  total_requests?: unknown;
+  unique?: unknown;
+  uniq_ips?: unknown;
+  error_count?: unknown;
+  fails?: unknown;
+};
+
+function normalizeAuditRow(row: AuditDailyChartLooseRow) {
+  const rawDate = row.date ?? row.day ?? row.dt ?? row.ts ?? row.created_at ?? "";
+  const date = toYmd(rawDate);
+
+  return {
+    date,
+    label: fmtDayLabel(date),
+    requests: n(row.requests ?? row.count ?? row.total_requests),
+    unique_ips: n(row.unique_ips ?? row.unique ?? row.uniq_ips),
+    errors: n(row.errors ?? row.error_count ?? row.fails),
+  };
 }
 
 export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }) => {
@@ -56,24 +83,7 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
   const data = useMemo(() => {
     const a = Array.isArray(rows) ? rows : [];
     return [...a]
-      .map((r) => {
-        const rawDate =
-          (r as any).date ??
-          (r as any).day ??
-          (r as any).dt ??
-          (r as any).ts ??
-          (r as any).created_at ??
-          '';
-        const date = toYmd(rawDate);
-
-        return {
-          date,
-          label: fmtDayLabel(date),
-          requests: n((r as any).requests ?? (r as any).count ?? (r as any).total_requests),
-          unique_ips: n((r as any).unique_ips ?? (r as any).unique ?? (r as any).uniq_ips),
-          errors: n((r as any).errors ?? (r as any).error_count ?? (r as any).fails),
-        };
-      })
+      .map((r) => normalizeAuditRow(r as AuditDailyChartLooseRow))
       .filter((x) => !!x.date && /^\d{4}-\d{2}-\d{2}/.test(x.date))
       .sort((x, y) => String(x.date).localeCompare(String(y.date)));
   }, [rows]);
@@ -97,44 +107,32 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
   }, [data]);
 
   const yTicks = 4;
-  const tickVals = Array.from({ length: yTicks + 1 }).map((_, i) =>
-    Math.round((maxRequests * (yTicks - i)) / yTicks),
-  );
+  const tickVals = Array.from({ length: yTicks + 1 }).map((_, i) => Math.round((maxRequests * (yTicks - i)) / yTicks));
 
   const barGap = 6;
   const barCount = Math.max(1, data.length);
   const barW = Math.max(8, Math.floor((chartW - barGap * (barCount - 1)) / barCount));
 
-  const [hoverIdx, setHoverIdx] = useState<number | null>(null);
-
   return (
     <div>
       <div className="mb-2 flex flex-wrap items-center gap-3">
-        <div className="text-sm text-muted-foreground">
+        <div className="text-muted-foreground text-sm">
           Son {data.length || 0} gün: <strong>requests</strong> bar
-          {showUnique ? ', unique' : ''} {showErrors ? ', errors' : ''}
+          {showUnique ? ", unique" : ""} {showErrors ? ", errors" : ""}
         </div>
 
         <div className="ml-auto flex items-center gap-3">
           <label className="mb-0 flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={showUnique}
-              onChange={(e) => setShowUnique(e.target.checked)}
-            />
+            <input type="checkbox" checked={showUnique} onChange={(e) => setShowUnique(e.target.checked)} />
             Unique IP
           </label>
 
           <label className="mb-0 flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              checked={showErrors}
-              onChange={(e) => setShowErrors(e.target.checked)}
-            />
+            <input type="checkbox" checked={showErrors} onChange={(e) => setShowErrors(e.target.checked)} />
             Errors
           </label>
 
-          {loading && <span className="text-sm text-muted-foreground">Yükleniyor...</span>}
+          {loading && <span className="text-muted-foreground text-sm">Yükleniyor...</span>}
         </div>
       </div>
 
@@ -145,19 +143,13 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
       )}
 
       <div className="overflow-hidden rounded border bg-card">
-        <svg
-          viewBox={`0 0 ${W} ${H}`}
-          width="100%"
-          height={H}
-          role="img"
-          aria-label="Audit günlük metrik grafiği"
-        >
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} role="img" aria-label="Audit günlük metrik grafiği">
           <rect x="0" y="0" width={W} height={H} fill="white" />
 
           {tickVals.map((tv, i) => {
             const y = padT + (chartH * i) / yTicks;
             return (
-              <g key={`t-${i}`}>
+              <g key={`t-${tv}`}>
                 <line x1={padL} y1={y} x2={W - padR} y2={y} stroke="#e9ecef" strokeWidth="1" />
                 <text x={padL - 8} y={y + 4} textAnchor="end" fontSize="11" fill="#6c757d">
                   {tv}
@@ -170,31 +162,20 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
             const x = padL + idx * (barW + barGap);
             const h = Math.round((r.requests / maxRequests) * chartH);
             const y = padT + (chartH - h);
-            const isHover = hoverIdx === idx;
 
             return (
-              <g
-                key={`${r.date}-${idx}`}
-                onMouseEnter={() => setHoverIdx(idx)}
-                onMouseLeave={() => setHoverIdx(null)}
-              >
+              <g key={`${r.date}-${idx}`}>
                 <rect
                   x={x}
                   y={y}
                   width={barW}
                   height={h}
                   rx="3"
-                  fill={isHover ? '#0b5ed7' : '#0d6efd'}
+                  fill="#0d6efd"
                   opacity={r.requests === 0 ? 0.25 : 0.9}
                 />
                 {(data.length <= 14 || idx % 2 === 0) && (
-                  <text
-                    x={x + barW / 2}
-                    y={H - 10}
-                    textAnchor="middle"
-                    fontSize="11"
-                    fill="#6c757d"
-                  >
+                  <text x={x + barW / 2} y={H - 10} textAnchor="middle" fontSize="11" fill="#6c757d">
                     {r.label}
                   </text>
                 )}
@@ -202,83 +183,24 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
             );
           })}
 
-          {hoverIdx !== null &&
-            data[hoverIdx] &&
-            (() => {
-              const r = data[hoverIdx];
-              const xBar = padL + hoverIdx * (barW + barGap);
-              const boxW = 220;
-              const boxH = showUnique || showErrors ? 76 : 56;
-
-              const px = xBar + barW + 10 + boxW <= W - padR ? xBar + barW + 10 : xBar - boxW - 10;
-              const py = padT + 10;
-
-              return (
-                <g>
-                  <rect
-                    x={px}
-                    y={py}
-                    width={boxW}
-                    height={boxH}
-                    rx="8"
-                    fill="white"
-                    stroke="#dee2e6"
-                  />
-                  <text x={px + 12} y={py + 20} fontSize="12" fill="#212529">
-                    <tspan fontWeight="600">{fmtIsoNice(r.date)}</tspan>
-                  </text>
-                  <text x={px + 12} y={py + 40} fontSize="12" fill="#212529">
-                    requests: <tspan fontWeight="600">{r.requests}</tspan>
-                  </text>
-                  {(showUnique || showErrors) && (
-                    <text x={px + 12} y={py + 58} fontSize="12" fill="#212529">
-                      {showUnique ? (
-                        <>
-                          unique: <tspan fontWeight="600">{r.unique_ips}</tspan>
-                        </>
-                      ) : null}
-                      {showUnique && showErrors ? <tspan> · </tspan> : null}
-                      {showErrors ? (
-                        <>
-                          errors: <tspan fontWeight="600">{r.errors}</tspan>
-                        </>
-                      ) : null}
-                    </text>
-                  )}
-                </g>
-              );
-            })()}
-
-          <line
-            x1={padL}
-            y1={padT + chartH}
-            x2={W - padR}
-            y2={padT + chartH}
-            stroke="#dee2e6"
-            strokeWidth="1"
-          />
+          <line x1={padL} y1={padT + chartH} x2={W - padR} y2={padT + chartH} stroke="#dee2e6" strokeWidth="1" />
         </svg>
 
         {hasAny && (
-          <div className="flex items-center justify-between border-t px-3 py-2 text-sm text-muted-foreground">
-            <div>{data[data.length - 1]?.date ? fmtIsoNice(data[data.length - 1].date) : '-'}</div>
+          <div className="flex items-center justify-between border-t px-3 py-2 text-muted-foreground text-sm">
+            <div>{data[data.length - 1]?.date ? fmtIsoNice(data[data.length - 1].date) : "-"}</div>
             <div className="flex gap-3">
               <span>
-                requests:{' '}
-                <strong className="text-foreground">{data[data.length - 1]?.requests ?? 0}</strong>
+                requests: <strong className="text-foreground">{data[data.length - 1]?.requests ?? 0}</strong>
               </span>
               {showUnique && (
                 <span>
-                  unique:{' '}
-                  <strong className="text-foreground">
-                    {data[data.length - 1]?.unique_ips ?? 0}
-                  </strong>
+                  unique: <strong className="text-foreground">{data[data.length - 1]?.unique_ips ?? 0}</strong>
                 </span>
               )}
               {showErrors && (
                 <span>
-                  errors:{' '}
-                  <strong className="text-foreground">{data[data.length - 1]?.errors ?? 0}</strong>
+                  errors: <strong className="text-foreground">{data[data.length - 1]?.errors ?? 0}</strong>
                 </span>
               )}
             </div>

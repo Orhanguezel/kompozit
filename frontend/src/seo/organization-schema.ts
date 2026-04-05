@@ -43,6 +43,10 @@ export function buildOrganizationSchemaItems(
       ...orgPayload,
       image: logo,
       knowsAbout: knowsAboutForLocale(locale),
+      speakableSpecification: {
+        '@type': 'SpeakableSpecification',
+        cssSelector: ['h1', '.hero-desc', '.section-desc'],
+      },
       areaServed: [
         { '@type': 'Country', name: 'Turkey' },
         { '@type': 'AdministrativeArea', name: 'International' },

@@ -5,13 +5,14 @@
 // - ✅ No category/subcategory
 // =============================================================
 
-'use client';
+"use client";
 
-import React from 'react';
+import type React from "react";
 
-import { AdminImageUploadField } from '@/app/(main)/admin/_components/common/AdminImageUploadField';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
-import type { ContentImageSize, CustomPageFormValues } from './custom-page-form';
+import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+
+import type { ContentImageSize, CustomPageFormValues } from "./custom-page-form";
 
 type Props = {
   values: CustomPageFormValues;
@@ -49,11 +50,20 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
   setValues,
 }) => {
   const t = useAdminT();
+  const tagsInputId = "custom-page-tags";
+  const imageSizeInputId = "custom-page-image-size";
+  const manualUrlInputId = "custom-page-manual-url";
+  const metaTitleInputId = "custom-page-meta-title";
+  const metaDescriptionInputId = "custom-page-meta-description";
+
   return (
-    <div className="rounded-lg border bg-card p-3 space-y-4">
+    <div className="space-y-4 rounded-lg border bg-card p-3">
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">{t('admin.customPage.form.tags')}</label>
+        <label htmlFor={tagsInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.tags")}
+        </label>
         <input
+          id={tagsInputId}
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           placeholder="ör: guezelwebdesign, kampanya, blog"
@@ -64,26 +74,29 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">{t('admin.customPage.form.imageSize')}</label>
+        <label htmlFor={imageSizeInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.imageSize")}
+        </label>
         <select
+          id={imageSizeInputId}
           className="w-full rounded-md border bg-background px-2 py-2 text-sm"
           value={contentImageSize}
           onChange={(e) => setContentImageSize(e.target.value as ContentImageSize)}
           disabled={disabled}
         >
-          <option value="sm">{t('admin.customPage.form.imageSizeSm')}</option>
-          <option value="md">{t('admin.customPage.form.imageSizeMd')}</option>
-          <option value="lg">{t('admin.customPage.form.imageSizeLg')}</option>
-          <option value="full">{t('admin.customPage.form.imageSizeFull')}</option>
+          <option value="sm">{t("admin.customPage.form.imageSizeSm")}</option>
+          <option value="md">{t("admin.customPage.form.imageSizeMd")}</option>
+          <option value="lg">{t("admin.customPage.form.imageSizeLg")}</option>
+          <option value="full">{t("admin.customPage.form.imageSizeFull")}</option>
         </select>
       </div>
 
       <AdminImageUploadField
-        label={t('admin.customPage.form.content') + ' ' + t('admin.common.upload')}
-        helperText={<>{t('admin.customPage.form.uploadHelperText')}</>}
+        label={`${t("admin.customPage.form.content")} ${t("admin.common.upload")}`}
+        helperText={t("admin.customPage.form.uploadHelperText")}
         bucket="public"
         folder="custom_pages/content"
-        metadata={{ ...(imageMetadata || {}), section: 'content' }}
+        metadata={{ ...(imageMetadata || {}), section: "content" }}
         multiple
         value={contentImagePreview}
         onChange={(url) => handleAddContentImage(url)}
@@ -92,10 +105,11 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
       />
 
       <div className="space-y-2">
-        <label className="block text-xs text-muted-foreground">
-          {t('admin.customPage.form.manualUrl')}
+        <label htmlFor={manualUrlInputId} className="block text-muted-foreground text-xs">
+          {t("admin.customPage.form.manualUrl")}
         </label>
         <input
+          id={manualUrlInputId}
           type="url"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           placeholder="https://..."
@@ -106,7 +120,7 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
         <input
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-          placeholder={t('admin.customPage.form.altTextPlaceholder')}
+          placeholder={t("admin.customPage.form.altTextPlaceholder")}
           value={manualImageAlt}
           onChange={(e) => setManualImageAlt(e.target.value)}
           disabled={disabled}
@@ -117,13 +131,16 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
           onClick={handleAddManualImage}
           disabled={disabled}
         >
-          {t('admin.customPage.form.addManualUrl')}
+          {t("admin.customPage.form.addManualUrl")}
         </button>
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">{t('admin.customPage.form.metaTitle')}</label>
+        <label htmlFor={metaTitleInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.metaTitle")}
+        </label>
         <input
+          id={metaTitleInputId}
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           value={values.meta_title}
@@ -133,8 +150,11 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
       </div>
 
       <div>
-        <label className="mb-1 block text-xs text-muted-foreground">{t('admin.customPage.form.metaDescription')}</label>
+        <label htmlFor={metaDescriptionInputId} className="mb-1 block text-muted-foreground text-xs">
+          {t("admin.customPage.form.metaDescription")}
+        </label>
         <textarea
+          id={metaDescriptionInputId}
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           rows={3}
           value={values.meta_description}

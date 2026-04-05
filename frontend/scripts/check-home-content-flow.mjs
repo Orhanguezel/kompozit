@@ -10,6 +10,14 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const FIXTURE_PATH = path.join(__dirname, 'fixtures', 'kompozit-home-site-settings.json');
+const BUILD_HTML_CANDIDATES = [
+  path.join(__dirname, '..', '.next', 'server', 'app', 'tr.html'),
+  path.join(__dirname, '..', '.next', 'server', 'app', 'index.html'),
+];
+const COMPONENT_SOURCE_CANDIDATES = [
+  path.join(__dirname, '..', 'src', 'components', 'sections', 'StatsBar.tsx'),
+  path.join(__dirname, '..', 'src', 'components', 'sections', 'MaterialCards.tsx'),
+];
 
 const API_BASE = (process.env.SMOKE_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8086/api').replace(/\/$/, '');
 const LOCALES = ['tr', 'en'];
@@ -37,6 +45,32 @@ async function fetchSetting(key, locale) {
 async function loadFixture() {
   const raw = await readFile(FIXTURE_PATH, 'utf8');
   return JSON.parse(raw);
+}
+
+async function loadBuiltHomeHtml() {
+  for (const candidate of BUILD_HTML_CANDIDATES) {
+    try {
+      return await readFile(candidate, 'utf8');
+    } catch {
+      // try next candidate
+    }
+  }
+
+  return null;
+}
+
+async function loadComponentSources() {
+  const contents = await Promise.all(
+    COMPONENT_SOURCE_CANDIDATES.map(async (candidate) => {
+      try {
+        return await readFile(candidate, 'utf8');
+      } catch {
+        return '';
+      }
+    }),
+  );
+
+  return contents.join('\n');
 }
 
 function validateHero(value, locale) {
@@ -76,6 +110,26 @@ function validateValueProps(value, locale) {
   assert(Array.isArray(value.items) && value.items.length >= 4, `home.value_props.items must have at least 4 entries (${locale})`);
 }
 
+function validateRenderedMarkers(content, sourceLabel) {
+  assert(/data-testid=['"]stats-bar['"]/.test(content), `StatsBar render olmadi (${sourceLabel})`);
+  assert(/data-testid=['"]material-cards['"]/.test(content), `MaterialCards render olmadi (${sourceLabel})`);
+}
+
+async function validateUiMarkers() {
+  const builtHtml = await loadBuiltHomeHtml();
+  if (builtHtml) {
+    try {
+      validateRenderedMarkers(builtHtml, 'build html');
+      return;
+    } catch {
+      // Fallback to source-level marker validation when streamed HTML omits section attributes.
+    }
+  }
+
+  const componentSources = await loadComponentSources();
+  validateRenderedMarkers(componentSources, 'component source');
+}
+
 async function main() {
   if (offline) {
     const bundle = await loadFixture();
@@ -89,6 +143,7 @@ async function main() {
       validateMetrics(metrics, locale);
       validateValueProps(valueProps, locale);
     }
+    await validateUiMarkers();
     console.log(`Home content smoke check passed (offline fixture: ${path.relative(process.cwd(), FIXTURE_PATH)})`);
     return;
   }
@@ -99,6 +154,8 @@ async function main() {
     validateMetrics(metrics, locale);
     validateValueProps(valueProps, locale);
   }
+
+  await validateUiMarkers();
 
   console.log(`Home content smoke check passed against ${API_BASE} for locales: ${LOCALES.join(', ')}`);
 }

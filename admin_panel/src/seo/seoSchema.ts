@@ -4,13 +4,13 @@
 // SINGLE SOURCE OF TRUTH: open_graph.images[]
 // =============================================================
 
-import { z } from 'zod';
+import { z } from "zod";
 
 const nonEmpty = z.string().trim().min(1);
 
 export const seoOpenGraphSchema = z
   .object({
-    type: z.enum(['website', 'article', 'product']).default('website'),
+    type: z.enum(["website", "article", "product"]).default("website"),
     /** ✅ SINGLE SOURCE: images[] only */
     images: z.array(z.string().trim().min(1)).default([]),
   })
@@ -18,9 +18,7 @@ export const seoOpenGraphSchema = z
 
 export const seoTwitterSchema = z
   .object({
-    card: z
-      .enum(['summary', 'summary_large_image', 'app', 'player'])
-      .default('summary_large_image'),
+    card: z.enum(["summary", "summary_large_image", "app", "player"]).default("summary_large_image"),
     site: z.string().trim().optional(),
     creator: z.string().trim().optional(),
   })
@@ -42,14 +40,14 @@ export const seoSchema = z
     description: z.string().trim().optional(),
 
     open_graph: seoOpenGraphSchema.default({
-      type: 'website',
-      images: ['/img/og-default.jpg'],
+      type: "website",
+      images: ["/img/og-default.jpg"],
     }),
 
     twitter: seoTwitterSchema.default({
-      card: 'summary_large_image',
-      site: '',
-      creator: '',
+      card: "summary_large_image",
+      site: "",
+      creator: "",
     }),
 
     robots: seoRobotsSchema.default({
@@ -72,26 +70,26 @@ export const siteMetaDefaultSchema = z
 
 export type SiteMetaDefaultObject = z.infer<typeof siteMetaDefaultSchema>;
 
-export const DEFAULT_OG_IMAGE = '/img/og-default.jpg';
+export const DEFAULT_OG_IMAGE = "/img/og-default.jpg";
 
 /**
  * ✅ Global fallback – DB boş/kırık olduğunda kullanılır.
  * Asıl değerler site_settings.seo içinden gelir.
  */
 export const DEFAULT_SEO_GLOBAL: SeoObject = {
-  site_name: 'guezelwebdesign Industrial Cooling Towers',
-  title_default: 'guezelwebdesign Industrial Cooling Towers and Engineering',
-  title_template: '%s – guezelwebdesign',
+  site_name: "guezelwebdesign Industrial Cooling Towers",
+  title_default: "guezelwebdesign Industrial Cooling Towers and Engineering",
+  title_template: "%s – guezelwebdesign",
   description:
-    'Industrial cooling towers, engineering, installation and service solutions for efficient process cooling.',
+    "Industrial cooling towers, engineering, installation and service solutions for efficient process cooling.",
   open_graph: {
-    type: 'website',
+    type: "website",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
-    card: 'summary_large_image',
-    site: '',
-    creator: '',
+    card: "summary_large_image",
+    site: "",
+    creator: "",
   },
   robots: {
     noindex: false,
@@ -106,22 +104,22 @@ export const DEFAULT_SEO_GLOBAL: SeoObject = {
  */
 export const DEFAULT_SITE_META_DEFAULT_BY_LOCALE: Record<string, SiteMetaDefaultObject> = {
   tr: {
-    title: 'guezelwebdesign – Endüstriyel Su Soğutma Kuleleri ve Mühendislik',
+    title: "guezelwebdesign – Endüstriyel Su Soğutma Kuleleri ve Mühendislik",
     description:
-      'Endüstriyel soğutma kuleleri, modernizasyon ve enerji verimliliği çözümleri. Keşif, üretim, montaj, bakım ve yedek parça.',
-    keywords: 'guezelwebdesign, endüstriyel, soğutma kulesi, enerji verimliliği, b2b',
+      "Endüstriyel soğutma kuleleri, modernizasyon ve enerji verimliliği çözümleri. Keşif, üretim, montaj, bakım ve yedek parça.",
+    keywords: "guezelwebdesign, endüstriyel, soğutma kulesi, enerji verimliliği, b2b",
   },
   en: {
-    title: 'guezelwebdesign – Industrial Cooling Towers and Engineering',
+    title: "guezelwebdesign – Industrial Cooling Towers and Engineering",
     description:
-      'Industrial cooling towers and energy efficiency solutions. Engineering, manufacturing, installation, modernization, testing and spare parts.',
-    keywords: 'guezelwebdesign, industrial, cooling towers, energy efficiency, b2b',
+      "Industrial cooling towers and energy efficiency solutions. Engineering, manufacturing, installation, modernization, testing and spare parts.",
+    keywords: "guezelwebdesign, industrial, cooling towers, energy efficiency, b2b",
   },
   de: {
-    title: 'guezelwebdesign – Industrielle Kuehltuerme und Engineering',
+    title: "guezelwebdesign – Industrielle Kuehltuerme und Engineering",
     description:
-      'Industrielle Kuehlturmtechnik und Energieeffizienzloesungen. Planung, Fertigung, Montage, Modernisierung, Leistungstests und Ersatzteile.',
-    keywords: 'guezelwebdesign, industriell, kuehlturm, energieeffizienz, b2b',
+      "Industrielle Kuehlturmtechnik und Energieeffizienzloesungen. Planung, Fertigung, Montage, Modernisierung, Leistungstests und Ersatzteile.",
+    keywords: "guezelwebdesign, industriell, kuehlturm, energieeffizienz, b2b",
   },
 };
 
@@ -130,10 +128,10 @@ export const DEFAULT_SITE_META_DEFAULT_BY_LOCALE: Record<string, SiteMetaDefault
  * ------------------------------------------------------------------ */
 
 function tryParseJson(input: unknown): unknown {
-  if (typeof input !== 'string') return input;
+  if (typeof input !== "string") return input;
   const s = input.trim();
   if (!s) return {};
-  if (!((s.startsWith('{') && s.endsWith('}')) || (s.startsWith('[') && s.endsWith(']')))) {
+  if (!((s.startsWith("{") && s.endsWith("}")) || (s.startsWith("[") && s.endsWith("]")))) {
     return input;
   }
   try {
@@ -200,9 +198,7 @@ export function parseSeoFromSettings(input: unknown): SeoObject {
  *  - Her locale için siteMetaDefaultSchema ile validate edilir.
  *  - Hatalı/bilinmeyen localeler için DEFAULT_SITE_META_DEFAULT_BY_LOCALE kullanılır.
  */
-export function parseSiteMetaDefaultByLocale(
-  input: unknown,
-): Record<string, SiteMetaDefaultObject> {
+export function parseSiteMetaDefaultByLocale(input: unknown): Record<string, SiteMetaDefaultObject> {
   const base = DEFAULT_SITE_META_DEFAULT_BY_LOCALE;
 
   if (input === null || input === undefined) {
@@ -211,7 +207,7 @@ export function parseSiteMetaDefaultByLocale(
 
   const raw = tryParseJson(input);
 
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
     return base;
   }
 

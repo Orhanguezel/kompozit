@@ -22,12 +22,23 @@
     "rights": "All rights reserved",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
+    "social": {
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "youtube": "YouTube"
+    },
     "sections": {
       "explore": "Explore",
       "company": "Company",
       "legal": "Legal",
       "quickLinks": "Quick Links"
-    }
+    },
+    "contact": "Contact",
+    "address_label": "Address",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "hours_label": "Working Hours",
+    "designed_by": "Design"
   },
   "common": {
     "loading": "Loading...",
@@ -59,8 +70,8 @@
   },
   "home": {
     "hero": {
-      "title": "Carbon Fiber and FRP Composite Solutions",
-      "subtitle": "We align engineering, sample validation and production planning for carbon fiber, FRP and fiberglass composite parts within a single B2B project workflow.",
+      "title": "Engineering <em>Craft</em> for the Industrial World",
+      "subtitle": "Merging creative design with industrial discipline. We manage your composite projects from rapid prototyping to serial production.",
       "cta": "Explore Products",
       "ctaSecondary": "Get Quote",
       "badge": "B2B Composite Manufacturing",
@@ -89,7 +100,8 @@
         "stepsLabel": "Core process stages",
         "b2bValue": "B2B",
         "b2bLabel": "Project-based collaboration"
-      }
+      },
+      "scrollHint": "Scroll down"
     },
     "products": {
       "title": "Our Products",
@@ -107,7 +119,11 @@
       "custom": "Custom Manufacturing",
       "customDesc": "Project-specific solutions for parts, panels, housings and structural components",
       "delivery": "Fast Delivery",
-      "deliveryDesc": "Workflow that clarifies sample, revision and delivery planning from the start"
+      "deliveryDesc": "Workflow that clarifies sample, revision and delivery planning from the start",
+      "innovation": "Technology",
+      "innovationDesc": "Engineering-led approach to process selection including vacuum infusion, RTM and hand lay-up",
+      "certification": "Quality Assurance",
+      "certificationDesc": "Process tracking, deviation management and pre-production sample validation workflow"
     },
     "gallery": {
       "title": "Gallery",
@@ -142,6 +158,155 @@
       "success": "Successfully subscribed!",
       "error": "An error occurred, please try again.",
       "privacyNote": "Zero spam. Industrial-grade confidentiality."
+    },
+    "stats": {
+      "ariaLabel": "Statistics",
+      "yoeNumber": "15+",
+      "yoeLabel": "Years in composites",
+      "projectsNumber": "500+",
+      "projectsLabel": "Project parts delivered",
+      "standardNumber": "AS9100",
+      "standardLabel": "Precision manufacturing mindset",
+      "certNumber": "ISO 9001",
+      "certLabel": "Process and quality discipline"
+    },
+    "materials": {
+      "sectionLabel": "Material Architecture",
+      "title": "Choose the right laminate for your application",
+      "subtitle": "We position carbon fiber and GRP composites by weight, stiffness, chemical resistance and production scalability.",
+      "carbon": {
+        "name": "Carbon Fiber",
+        "description": "The performance-oriented structure preferred for enclosures, panels and OEM parts requiring high stiffness, low weight and premium surface finish.",
+        "specs": {
+          "tensile": {
+            "label": "Tensile Strength",
+            "value": "600–1500 MPa"
+          },
+          "density": {
+            "label": "Density",
+            "value": "1.5–1.6 g/cm³"
+          },
+          "modulus": {
+            "label": "Elastic Modulus",
+            "value": "70–120 GPa"
+          },
+          "thermal": {
+            "label": "Thermal Stability",
+            "value": "High"
+          }
+        }
+      },
+      "frp": {
+        "name": "Fiberglass / GRP",
+        "description": "Versatile composite platform for tanks, panels, housings and outdoor applications balancing chemical resistance, service life and cost.",
+        "specs": {
+          "tensile": {
+            "label": "Tensile Strength",
+            "value": "200–900 MPa"
+          },
+          "density": {
+            "label": "Density",
+            "value": "1.8–2.0 g/cm³"
+          },
+          "modulus": {
+            "label": "Elastic Modulus",
+            "value": "20–45 GPa"
+          },
+          "thermal": {
+            "label": "Thermal Stability",
+            "value": "Medium-High"
+          }
+        }
+      }
+    },
+    "process": {
+      "sectionLabel": "Workflow",
+      "title": "From Prototype to Serial",
+      "subtitle": "We manage sample validation, revision and serial production ramp within a single coordinated workflow.",
+      "steps": {
+        "design": {
+          "title": "Technical Analysis",
+          "body": "Application requirements, operating conditions and material selection are defined."
+        },
+        "mold": {
+          "title": "Tooling & Prototype",
+          "body": "Project-specific mold design and initial sample production."
+        },
+        "production": {
+          "title": "Production",
+          "body": "Repeatable serial production via vacuum infusion or hand lay-up."
+        },
+        "quality": {
+          "title": "Quality Control",
+          "body": "Dimensional inspection, surface quality review and process deviation analysis."
+        },
+        "delivery": {
+          "title": "Delivery",
+          "body": "Packaging, documentation and on-time delivery planning."
+        }
+      }
+    },
+    "industries": {
+      "sectionLabel": "Sectors",
+      "title": "Sectors We Serve",
+      "subtitle": "Composite solutions across a wide range of sectors from defense to energy, landscaping to storage.",
+      "items": {
+        "defense": {
+          "title": "Defense",
+          "description": "Structural and protective composite parts"
+        },
+        "energy": {
+          "title": "Energy",
+          "description": "Chemical-resistant tanks and panel systems"
+        },
+        "landscaping": {
+          "title": "Landscaping",
+          "description": "Lightweight and durable outdoor solutions"
+        },
+        "storage": {
+          "title": "Storage",
+          "description": "Industrial enclosures and housing components"
+        },
+        "custom": {
+          "title": "Custom Projects",
+          "description": "Need-specific engineering design"
+        }
+      }
+    },
+    "testimonial": {
+      "quote": "Having the same team own specification, sampling and production ramp is the decisive advantage in B2B composite programs.",
+      "attribution": "Engineering partner — defense industry"
+    },
+    "advantages": {
+      "sectionLabel": "Advantages",
+      "title": "Why Composite?",
+      "subtitle": "High-performance solutions that push beyond the limits of traditional materials.",
+      "items": {
+        "performance": {
+          "title": "High Performance",
+          "description": "Composites combine the strength of steel with the lightness of aluminium, delivering superior performance across industrial applications."
+        },
+        "durability": {
+          "title": "Long Lifespan",
+          "description": "Exceptional corrosion and fatigue resistance ensures reliable service life under demanding conditions for years."
+        },
+        "design": {
+          "title": "Design Freedom",
+          "description": "Complex geometries and custom tooling enable forms that conventional manufacturing simply cannot achieve."
+        },
+        "thermal": {
+          "title": "Thermal Resistance",
+          "description": "Maintains structural integrity at elevated temperatures — the ideal choice for harsh industrial environments."
+        },
+        "longevity": {
+          "title": "Low Maintenance",
+          "description": "Minimal upkeep requirements compared to metal alternatives significantly reduce total cost of ownership."
+        },
+        "sustainability": {
+          "title": "Sustainability",
+          "description": "Lightweight construction reduces energy consumption; long product lifespan cuts waste, supporting greener manufacturing."
+        }
+      }
     }
   },
   "products": {
@@ -153,6 +318,8 @@
     "noProducts": "No products found in this category.",
     "specs": "Technical Specifications",
     "requestOffer": "Get Quote for This Product",
+    "detailEyebrow": "Product detail",
+    "technicalScope": "Technical scope",
     "solutionCategories": {
       "planters": "Landscaping & Urban Equipment",
       "tanks": "Storage & Tank Solutions",
@@ -209,7 +376,8 @@
     "empty": "No published solution pages yet. Add them via Admin custom pages.",
     "ctaOffer": "Request a quote for your project",
     "detailCtaTitle": "Does this solution line fit your project?",
-    "detailCtaDescription": "Share dimensions, volumes, timing and technical specifications—we will guide engineering review and quotation."
+    "detailCtaDescription": "Share dimensions, volumes, timing and technical specifications—we will guide engineering review and quotation.",
+    "detailHeroEyebrow": "Engineering solution"
   },
   "blog": {
     "title": "Blog",
@@ -255,6 +423,7 @@
     },
     "form": {
       "title": "Send a Message",
+      "subtitle": "Share your project details — we take it from there",
       "namePlaceholder": "Your Full Name",
       "emailPlaceholder": "example@company.com",
       "phonePlaceholder": "+90 5XX XXX XX XX",
@@ -281,6 +450,11 @@
         "three": "We then share the right product, sample or quotation path together with a clear lead-time expectation."
       }
     },
+    "homeTeaser": {
+      "title": "Full project form",
+      "body": "Attach drawings, specifications and quantity expectations on the contact page. Our team routes technical review and quotation from there.",
+      "cta": "Open contact form"
+    },
     "faq": {
       "title": "Frequently asked questions",
       "intro": "Short answers about our B2B composite manufacturing and quotation workflow.",
@@ -306,6 +480,32 @@
         "two": "Manufacturing route: molded part, panel, profile, tube or custom component process",
         "three": "Quantity, lead time, finish expectations, quality and logistics planning"
       }
+    },
+    "summary": {
+      "title": "Why Us?",
+      "items": {
+        "one": {
+          "title": "Engineering Support",
+          "body": "We clarify your technical requirements together — from material selection and production route to tolerances and surface quality."
+        },
+        "two": {
+          "title": "Rapid Prototyping",
+          "body": "We complete the sample and prototype phase quickly, providing an iterative process open to revisions."
+        },
+        "three": {
+          "title": "Series Production",
+          "body": "From an approved prototype to consistent series production, we establish a scalable process structure."
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "q1": "How long does the quote process take?",
+      "a1": "Depending on the project details, we typically complete our technical review and deliver a preliminary quote within 1–3 business days.",
+      "q2": "Can I order in small quantities?",
+      "a2": "Yes. We accommodate samples, prototypes and small-batch orders; minimum quantities are evaluated on a per-project basis.",
+      "q3": "Can I get a quote without technical drawings?",
+      "a3": "Yes. We can start with dimensions, operating conditions and quantity information. We can also support you during the technical drawing process if needed."
     },
     "form": {
       "productInterest": "Product/Service of Interest",
@@ -371,7 +571,8 @@
       "partnershipLead": "Ready to initiate a composite project?",
       "partnershipCta": "Request a technical quote",
       "sectorsHeading": "Expert sectors"
-    }
+    },
+    "tagline": "Where science meets craftsmanship"
   },
   "legal": {
     "title": "Legal",

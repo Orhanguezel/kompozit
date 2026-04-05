@@ -1,9 +1,9 @@
 import 'server-only';
 
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { API_BASE_URL } from '@/lib/utils';
+import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
@@ -12,6 +12,7 @@ import { buildMediaAlt } from '@/lib/media-seo';
 import { SeoIssueBeacon } from '@/components/monitoring/SeoIssueBeacon';
 import { ProductB2bBanner } from '@/components/sections/ProductB2bBanner';
 import { fetchProductsB2bContent } from '@/features/site-settings/products-b2b';
+import { Reveal } from '@/components/motion/Reveal';
 
 async function fetchProducts(locale: string, filters?: { category?: string; tag?: string }) {
   const params = new URLSearchParams({
@@ -78,6 +79,7 @@ export default async function ProductsPage({
 }) {
   const { locale } = await params;
   const { category, tag } = await searchParams;
+  setRequestLocale(locale);
   const t = await getTranslations({ locale });
 
   const [products, categories, b2bContent] = await Promise.all([
@@ -89,11 +91,9 @@ export default async function ProductsPage({
   const visibleProducts = products.length > 0 ? products : fallbackProducts;
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-muted)] relative overflow-hidden">
-      <div className="surface-dark-shell carbon-mesh absolute inset-0 opacity-[0.03] pointer-events-none" />
-      
+    <main className="relative bg-[var(--carbon)]">
       <div className="section-py relative z-10">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
             data={jsonld.graph([
               jsonld.collectionPage({
@@ -109,23 +109,26 @@ export default async function ProductsPage({
               }),
             ])}
           />
-          <SectionHeader
-            title={t('products.title')}
-            description={t('products.description')}
-            label="Catalogue"
-          />
+          
+          <Reveal>
+            <div className="mb-16">
+              <span className="section-label-cc">Catalogue</span>
+              <h1 className="section-title-cc">{t('products.title')}</h1>
+              <p className="section-subtitle-cc">{t('products.description')}</p>
+            </div>
+          </Reveal>
 
           <ProductB2bBanner locale={locale} content={b2bContent} />
 
           {/* Category filter */}
           {categories.length > 0 && (
-            <div className="mt-10 flex flex-wrap gap-3">
+            <div className="mt-12 mb-16 flex flex-wrap gap-4">
               <Link
                 href={localizedPath(locale, '/products')}
-                className={`rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                className={`px-6 py-3 text-[10px] font-bold uppercase tracking-[3px] transition-all duration-300 border ${
                   !category
-                    ? 'bg-brand text-white shadow-lg shadow-brand/20'
-                    : 'glass-premium border-white/5 bg-white/5 text-[var(--color-text-secondary)] hover:bg-white/10 hover:text-[var(--color-text-primary)]'
+                    ? 'border-[var(--gold)] bg-[var(--gold)] text-[var(--carbon)]'
+                    : 'border-[var(--gold)]/15 bg-transparent text-[var(--silver)] hover:border-[var(--gold)]/40 hover:text-[var(--gold)]'
                 }`}
               >
                 {t('products.allCategories')}
@@ -134,10 +137,10 @@ export default async function ProductsPage({
                 <Link
                   key={c.id}
                   href={`${localizedPath(locale, '/products')}?category=${encodeURIComponent(c.slug)}`}
-                  className={`rounded-full px-6 py-2.5 text-xs font-bold uppercase tracking-wider transition-all duration-300 ${
+                  className={`px-6 py-3 text-[10px] font-bold uppercase tracking-[3px] transition-all duration-300 border ${
                     category === c.slug
-                      ? 'bg-brand text-white shadow-lg shadow-brand/20'
-                      : 'glass-premium border-white/5 bg-white/5 text-[var(--color-text-secondary)] hover:bg-white/10 hover:text-[var(--color-text-primary)]'
+                      ? 'border-[var(--gold)] bg-[var(--gold)] text-[var(--carbon)]'
+                      : 'border-[var(--gold)]/15 bg-transparent text-[var(--silver)] hover:border-[var(--gold)]/40 hover:text-[var(--gold)]'
                   }`}
                 >
                   {c.name}
@@ -147,18 +150,18 @@ export default async function ProductsPage({
           )}
 
           {/* Product grid */}
-          <div className="mt-12">
-            {products.length === 0 && (
-              <div className="glass-premium rounded-[2rem] p-12 text-center border-white/5 bg-white/[0.02] mb-12">
+          <div className="relative">
+            {products.length === 0 && !visibleProducts.length && (
+              <div className="border border-[var(--gold)]/10 p-16 text-center bg-[var(--graphite)] mb-12">
                 <SeoIssueBeacon
                   type="soft-404"
                   pathname={localizedPath(locale, '/products')}
                   reason={category || tag ? 'catalog-filter-empty' : 'products-list-empty'}
                 />
-                <p className="text-xl font-bold tracking-tight">
+                <p className="font-display text-[1.8rem] uppercase tracking-[4px] text-[var(--white)]">
                   {t('products.noProducts')}
                 </p>
-                <p className="mt-4 text-sm text-[var(--color-text-muted)] opacity-70">
+                <p className="mt-6 text-sm font-light text-[var(--silver)] max-w-md mx-auto">
                   {locale === 'en'
                     ? 'Sample product lines are being synchronized. Contact our team for immediate technical specs.'
                     : 'Urun hatlari senkronize ediliyor. Teknik detaylar ve teklif icin dogrudan iletisime gecebilirsiniz.'}
@@ -166,15 +169,21 @@ export default async function ProductsPage({
               </div>
             )}
             
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {visibleProducts.map((p: any, index: number) => (
-                <div key={p.id ?? p.title} className="motion-fade-up" style={{ animationDelay: `${index * 50}ms` }}>
+                <Reveal key={p.id ?? p.title} delay={index * 40} className="grid-item-cc">
                   <ListingCard
+                    listIndex={index + 1}
+                    visualVariant={index}
                     href={p.slug ? localizedPath(locale, `/products/${p.slug}`) : `${localizedPath(locale, '/offer')}?product=${encodeURIComponent(p.title)}`}
                     title={p.title}
                     description={p.description}
                     lineLabel={t('common.listingEngineeringLine')}
-                    imageSrc={p.image_url}
+                    imageSrc={
+                      p.image_url
+                        ? (resolvePublicAssetUrl(p.image_url) ?? p.image_url)
+                        : undefined
+                    }
                     specs={p.specs}
                     category={p.category_name || p.category}
                     badge={p.is_featured ? (locale === 'en' ? 'Featured' : 'Öne Çıkan') : undefined}
@@ -187,14 +196,14 @@ export default async function ProductsPage({
                       description: p.description,
                     })}
                     imageSizes="(max-width: 768px) 50vw, 25vw"
-                    imageAspectClassName="aspect-[3/4]"
+                    imageAspectClassName="h-[450px]"
                   />
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }

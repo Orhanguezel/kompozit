@@ -204,8 +204,8 @@ export default function MyModule() {
 Büyük JSON dosyalarına ekleme yapmak için:
 
 ```js
-// merge-i18n.js
-const fs = require('fs');
+// merge-i18n.mjs
+import fs from "node:fs";
 
 function mergeDeep(target, source) {
   const result = { ...target };

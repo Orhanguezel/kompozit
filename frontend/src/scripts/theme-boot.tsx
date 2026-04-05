@@ -47,12 +47,12 @@ export function ThemeBootScript() {
           preset: preset
         };
       } catch (e) {
-        document.documentElement.setAttribute('data-theme-mode', 'light');
+        document.documentElement.setAttribute('data-theme-mode', 'dark');
         document.documentElement.setAttribute('data-theme-preset', 'default');
-        document.documentElement.style.colorScheme = 'light';
+        document.documentElement.style.colorScheme = 'dark';
         if (document.body) {
-          document.body.setAttribute('data-theme-mode', 'light');
-          document.body.style.colorScheme = 'light';
+          document.body.setAttribute('data-theme-mode', 'dark');
+          document.body.style.colorScheme = 'dark';
         }
       }
     })();

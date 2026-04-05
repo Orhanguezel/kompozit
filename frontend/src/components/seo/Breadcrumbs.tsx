@@ -1,14 +1,29 @@
 import Link from 'next/link';
 
+import { cn } from '@/lib/utils';
+
 type BreadcrumbItem = {
   label: string;
   href?: string;
 };
 
-export function Breadcrumbs({ items }: { items: BreadcrumbItem[] }) {
+export function Breadcrumbs({
+  items,
+  className,
+  olClassName,
+}: {
+  items: BreadcrumbItem[];
+  className?: string;
+  olClassName?: string;
+}) {
   return (
-    <nav aria-label="Breadcrumb" className="mb-6">
-      <ol className="flex flex-wrap items-center gap-2 text-sm text-[var(--color-text-secondary)]">
+    <nav aria-label="Breadcrumb" className={cn('mb-6', className)}>
+      <ol
+        className={cn(
+          'flex flex-wrap items-center gap-2 text-sm text-[var(--color-text-secondary)]',
+          olClassName,
+        )}
+      >
         {items.map((item, index) => {
           const isLast = index === items.length - 1;
           return (

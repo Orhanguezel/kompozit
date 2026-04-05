@@ -7,7 +7,7 @@ import { THEME_STORAGE_KEYS, type ThemeMode } from '@/lib/preferences/theme';
 
 export function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
-  const [mode, setMode] = useState<ThemeMode>('light');
+  const [mode, setMode] = useState<ThemeMode>('dark');
 
   useEffect(() => {
     setMounted(true);

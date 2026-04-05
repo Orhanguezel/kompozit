@@ -5,7 +5,8 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const NEXT_DIR = path.join(ROOT, '.next');
-const STANDALONE_APP_DIR = path.join(NEXT_DIR, 'standalone', 'karbonkompozit');
+/** Next.js 16+: `output: 'standalone'` emits `.next/standalone/server.js` (no nested package folder). */
+const STANDALONE_APP_DIR = path.join(NEXT_DIR, 'standalone');
 const STATIC_SOURCE = path.join(NEXT_DIR, 'static');
 const STATIC_TARGET = path.join(STANDALONE_APP_DIR, '.next', 'static');
 const PUBLIC_SOURCE = path.join(ROOT, 'public');

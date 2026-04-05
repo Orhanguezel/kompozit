@@ -1,31 +1,31 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 const ALLOWED_PREFIXES = [
-  '/admin',
-  '/admin/dashboard',
-  '/admin/products',
-  '/admin/categories',
-  '/admin/subcategories',
-  '/admin/gallery',
-  '/admin/offer',
-  '/admin/custompage',
-  '/admin/reviews',
-  '/admin/site-settings',
-  '/admin/contacts',
-  '/admin/menuitem',
-  '/admin/library',
-  '/admin/references',
-  '/admin/users',
-  '/admin/notifications',
-  '/admin/storage',
-  '/admin/audit',
-  '/admin/profile',
+  "/admin",
+  "/admin/dashboard",
+  "/admin/products",
+  "/admin/categories",
+  "/admin/subcategories",
+  "/admin/gallery",
+  "/admin/offer",
+  "/admin/custompage",
+  "/admin/reviews",
+  "/admin/site-settings",
+  "/admin/contacts",
+  "/admin/menuitem",
+  "/admin/library",
+  "/admin/references",
+  "/admin/users",
+  "/admin/notifications",
+  "/admin/storage",
+  "/admin/audit",
+  "/admin/profile",
 ] as const;
 
 function isAllowed(pathname: string | null): boolean {
@@ -46,7 +46,8 @@ export function KompozitAdminRouteGate({ children }: { children: React.ReactNode
         <CardHeader>
           <CardTitle>Bu ekran MOE Kompozit panelinde aktif değil</CardTitle>
           <CardDescription>
-            Bu admin panel kompozit operasyonlari icin sadeleştirildi. Su anki route shared Ensotek panelinden kalan bir ekrana ait.
+            Bu admin panel kompozit operasyonlari icin sadeleştirildi. Su anki route shared Ensotek panelinden kalan bir
+            ekrana ait.
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-3">

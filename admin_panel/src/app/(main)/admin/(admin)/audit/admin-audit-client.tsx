@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // =============================================================
 // FILE: src/app/(main)/admin/(admin)/audit/admin-audit-client.tsx
@@ -8,87 +8,94 @@
 // - URL state: filters + pagination + localhost toggle
 // =============================================================
 
-import * as React from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { toast } from 'sonner';
+import * as React from "react";
+
+import { useRouter, useSearchParams } from "next/navigation";
+
 import {
   Activity,
-  ShieldCheck,
-  UserCheck,
+  Ban,
+  BarChart3,
+  Calendar,
+  Download,
+  Filter,
+  Globe,
+  Loader2,
+  Plus,
   RefreshCcw,
   Search,
-  Calendar,
-  Filter,
-  Loader2,
-  Globe,
+  ShieldCheck,
   Trash2,
-  BarChart3,
-  Download,
-  Ban,
-  Plus,
-} from 'lucide-react';
+  UserCheck,
+} from "lucide-react";
+import { toast } from "sonner";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Switch } from '@/components/ui/switch';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Separator } from '@/components/ui/separator';
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { AuditDailyChart } from "@/components/admin/audit/AuditDailyChart";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-
-import { AuditDailyChart } from '@/components/admin/audit/AuditDailyChart';
-import { AuditGeoMap } from './AuditGeoMap';
-import AuditAnalyticsTab from './AuditAnalyticsTab';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
-
+  useAddBlockedIpAdminMutation,
+  useClearAuditLogsAdminMutation,
+  useDeleteBlockedIpAdminMutation,
+  useGetAuditGeoStatsAdminQuery,
+  useGetAuditMetricsDailyAdminQuery,
+  useListAuditAuthEventsAdminQuery,
+  useListAuditRequestLogsAdminQuery,
+  useListBlockedIpsAdminQuery,
+} from "@/integrations/hooks";
 import type {
   AuditAuthEvent,
   AuditAuthEventDto,
-  AuditRequestLogDto,
-  AuditListResponse,
-  AuditMetricsDailyResponseDto,
+  AuditAuthEventsListQueryParams,
+  AuditGeoStatsQueryParams,
   AuditGeoStatsResponseDto,
-} from '@/integrations/shared';
-import { AUDIT_AUTH_EVENTS } from '@/integrations/shared';
-import {
-  useListAuditRequestLogsAdminQuery,
-  useListAuditAuthEventsAdminQuery,
-  useGetAuditMetricsDailyAdminQuery,
-  useGetAuditGeoStatsAdminQuery,
-  useClearAuditLogsAdminMutation,
-  useListBlockedIpsAdminQuery,
-  useAddBlockedIpAdminMutation,
-  useDeleteBlockedIpAdminMutation,
-} from '@/integrations/hooks';
-import type { IpBlocklistEntry } from '@/integrations/shared/ip-blocklist.types';
+  AuditListResponse,
+  AuditMetricsDailyQueryParams,
+  AuditMetricsDailyResponseDto,
+  AuditRequestLogDto,
+  AuditRequestLogsListQueryParams,
+} from "@/integrations/shared";
+import { AUDIT_AUTH_EVENTS } from "@/integrations/shared";
+import type { IpBlocklistEntry } from "@/integrations/shared/ip-blocklist.types";
+
+import AuditAnalyticsTab from "./AuditAnalyticsTab";
+import { AuditGeoMap } from "./AuditGeoMap";
 
 /* ----------------------------- helpers ----------------------------- */
 
-type TabKey = 'analytics' | 'requests' | 'auth' | 'metrics' | 'map' | 'blocklist';
+type TabKey = "analytics" | "requests" | "auth" | "metrics" | "map" | "blocklist";
+type AuditQueryValue = string | number | boolean | null | undefined;
+type AuditUrlState = Record<string, AuditQueryValue>;
+type MutationError = {
+  data?: {
+    error?: {
+      message?: string;
+    };
+    message?: string;
+  };
+  error?: string;
+  message?: string;
+};
+type BlocklistResponse = {
+  items?: IpBlocklistEntry[];
+};
 
-function safeText(v: unknown, fb = ''): string {
-  const s = String(v ?? '').trim();
+function safeText(v: unknown, fb = ""): string {
+  const s = String(v ?? "").trim();
   return s ? s : fb;
 }
 
 function safeInt(v: string | null, fb: number): number {
-  const n = Number(v ?? '');
+  const n = Number(v ?? "");
   return Number.isFinite(n) && n >= 0 ? n : fb;
 }
 
@@ -100,111 +107,113 @@ function parseStatusCode(v: string): number | undefined {
 }
 
 function normalizeTab(v: string | null): TabKey {
-  const s = String(v ?? '').toLowerCase();
-  if (s === 'analytics') return 'analytics';
-  if (s === 'auth') return 'auth';
-  if (s === 'metrics') return 'metrics';
-  if (s === 'map') return 'map';
-  if (s === 'requests') return 'requests';
-  if (s === 'blocklist') return 'blocklist';
-  return 'analytics';
+  const s = String(v ?? "").toLowerCase();
+  if (s === "analytics") return "analytics";
+  if (s === "auth") return "auth";
+  if (s === "metrics") return "metrics";
+  if (s === "map") return "map";
+  if (s === "requests") return "requests";
+  if (s === "blocklist") return "blocklist";
+  return "analytics";
 }
 
-const EXPORT_BASE = '/api/admin/audit/export';
+const EXPORT_BASE = "/api/admin/audit/export";
 
 function normalizeBoolLike(v: string | null): boolean {
-  return v === '1' || v === 'true';
+  return v === "1" || v === "true";
 }
 
-function toQS(next: Record<string, any>) {
+function toQS(next: AuditUrlState) {
   const sp = new URLSearchParams();
   Object.entries(next).forEach(([k, v]) => {
-    if (v === undefined || v === null || v === '') return;
+    if (v === undefined || v === null || v === "") return;
     sp.set(k, String(v));
   });
   const qs = sp.toString();
-  return qs ? `?${qs}` : '';
+  return qs ? `?${qs}` : "";
 }
 
 function getErrMessage(err: unknown, fallback: string): string {
-  const anyErr = err as any;
-  const m1 = anyErr?.data?.error?.message;
-  if (typeof m1 === 'string' && m1.trim()) return m1;
-  const m2 = anyErr?.data?.message;
-  if (typeof m2 === 'string' && m2.trim()) return m2;
-  const m3 = anyErr?.error;
-  if (typeof m3 === 'string' && m3.trim()) return m3;
+  const error = err as MutationError;
+  const m1 = error.data?.error?.message;
+  if (typeof m1 === "string" && m1.trim()) return m1;
+  const m2 = error.data?.message;
+  if (typeof m2 === "string" && m2.trim()) return m2;
+  const m3 = error.error;
+  if (typeof m3 === "string" && m3.trim()) return m3;
+  const m4 = error.message;
+  if (typeof m4 === "string" && m4.trim()) return m4;
   return fallback;
 }
 
 function fmtWhen(iso?: string | null): string {
-  if (!iso) return '—';
+  if (!iso) return "—";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return String(iso);
   return d.toLocaleString();
 }
 
-function statusVariant(code: number): 'default' | 'secondary' | 'destructive' | 'outline' {
-  if (code >= 500) return 'destructive';
-  if (code >= 400) return 'secondary';
-  if (code >= 300) return 'outline';
-  return 'default';
+function statusVariant(code: number): "default" | "secondary" | "destructive" | "outline" {
+  if (code >= 500) return "destructive";
+  if (code >= 400) return "secondary";
+  if (code >= 300) return "outline";
+  return "default";
 }
 
-function authEventVariant(ev: string): 'default' | 'secondary' | 'destructive' | 'outline' {
-  if (ev === 'login_success') return 'default';
-  if (ev === 'login_failed') return 'destructive';
-  if (ev === 'logout') return 'secondary';
-  return 'outline';
+function authEventVariant(ev: string): "default" | "secondary" | "destructive" | "outline" {
+  if (ev === "login_success") return "default";
+  if (ev === "login_failed") return "destructive";
+  if (ev === "logout") return "secondary";
+  return "outline";
 }
 
 function truncate(s: string | null | undefined, max = 60): string {
-  if (!s) return '';
-  return s.length > max ? s.slice(0, max) + '…' : s;
+  if (!s) return "";
+  return s.length > max ? `${s.slice(0, max)}…` : s;
 }
 
 function geoLabel(country: string | null | undefined, city: string | null | undefined): string {
-  if (country === 'LOCAL') return 'Localhost';
+  if (country === "LOCAL") return "Localhost";
   const parts: string[] = [];
   if (city) parts.push(city);
   if (country) parts.push(country);
-  return parts.join(', ') || '';
+  return parts.join(", ") || "";
 }
 
-type SortKey = 'created_at' | 'response_time_ms' | 'status_code';
+type SortKey = "created_at" | "response_time_ms" | "status_code";
 
 /* ----------------------------- component ----------------------------- */
 
 export default function AdminAuditClient() {
   const router = useRouter();
   const sp = useSearchParams();
-  const t = useAdminT('admin.audit');
+  const t = useAdminT("admin.audit");
 
-  const tab = normalizeTab(sp.get('tab'));
+  const tab = normalizeTab(sp.get("tab"));
 
-  const q = sp.get('q') ?? '';
-  const method = sp.get('method') ?? '';
-  const status = sp.get('status') ?? '';
-  const from = sp.get('from') ?? '';
-  const to = sp.get('to') ?? '';
-  const onlyAdmin = normalizeBoolLike(sp.get('only_admin'));
-  const excludeLocalhost = normalizeBoolLike(sp.get('exclude_localhost'));
+  const q = sp.get("q") ?? "";
+  const method = sp.get("method") ?? "";
+  const status = sp.get("status") ?? "";
+  const from = sp.get("from") ?? "";
+  const to = sp.get("to") ?? "";
+  const onlyAdmin = normalizeBoolLike(sp.get("only_admin"));
+  const excludeLocalhost = normalizeBoolLike(sp.get("exclude_localhost"));
 
-  const reqUserId = sp.get('req_user_id') ?? '';
-  const reqIp = sp.get('req_ip') ?? '';
-  const sort = (sp.get('sort') ?? 'created_at') as SortKey;
-  const orderDir = (sp.get('orderDir') ?? 'desc') as 'asc' | 'desc';
+  const reqUserId = sp.get("req_user_id") ?? "";
+  const reqIp = sp.get("req_ip") ?? "";
+  const sort = (sp.get("sort") ?? "created_at") as SortKey;
+  const orderDir = (sp.get("orderDir") ?? "desc") as "asc" | "desc";
 
-  const event = sp.get('event') ?? '';
-  const email = sp.get('email') ?? '';
-  const user_id = sp.get('user_id') ?? '';
-  const ip = sp.get('ip') ?? '';
+  const event = sp.get("event") ?? "";
+  const email = sp.get("email") ?? "";
+  const user_id = sp.get("user_id") ?? "";
+  const ip = sp.get("ip") ?? "";
 
-  const days = String(safeInt(sp.get('days'), 14) || 14);
-  const path_prefix = sp.get('path_prefix') ?? '';
+  const days = String(safeInt(sp.get("days"), 14) || 14);
+  const path_prefix = sp.get("path_prefix") ?? "";
 
-  const limit = safeInt(sp.get('limit'), 50) || 50;
-  const offset = safeInt(sp.get('offset'), 0);
+  const limit = safeInt(sp.get("limit"), 50) || 50;
+  const offset = safeInt(sp.get("offset"), 0);
 
   // local state for request filters
   const [qText, setQText] = React.useState(q);
@@ -217,7 +226,7 @@ export default function AdminAuditClient() {
   const [reqUserIdText, setReqUserIdText] = React.useState(reqUserId);
   const [reqIpText, setReqIpText] = React.useState(reqIp);
   const [sortText, setSortText] = React.useState<SortKey>(sort);
-  const [orderDirText, setOrderDirText] = React.useState<'asc' | 'desc'>(orderDir);
+  const [orderDirText, setOrderDirText] = React.useState<"asc" | "desc">(orderDir);
 
   // local state for auth filters
   const [eventText, setEventText] = React.useState(event);
@@ -249,7 +258,7 @@ export default function AdminAuditClient() {
   React.useEffect(() => setDaysText(days), [days]);
   React.useEffect(() => setPathPrefixText(path_prefix), [path_prefix]);
 
-  function apply(next: Partial<Record<string, any>>) {
+  function apply(next: Partial<AuditUrlState>) {
     const merged = {
       tab,
       q,
@@ -257,8 +266,8 @@ export default function AdminAuditClient() {
       status,
       from,
       to,
-      only_admin: onlyAdmin ? '1' : '',
-      exclude_localhost: excludeLocalhost ? '1' : '',
+      only_admin: onlyAdmin ? "1" : "",
+      exclude_localhost: excludeLocalhost ? "1" : "",
       req_user_id: reqUserId,
       req_ip: reqIp,
       sort,
@@ -287,8 +296,8 @@ export default function AdminAuditClient() {
       exclude_localhost: merged.exclude_localhost || undefined,
       req_user_id: merged.req_user_id || undefined,
       req_ip: merged.req_ip || undefined,
-      sort: merged.sort !== 'created_at' ? merged.sort : undefined,
-      orderDir: merged.orderDir !== 'desc' ? merged.orderDir : undefined,
+      sort: merged.sort !== "created_at" ? merged.sort : undefined,
+      orderDir: merged.orderDir !== "desc" ? merged.orderDir : undefined,
       event: merged.event && merged.event !== ALL ? merged.event : undefined,
       email: merged.email || undefined,
       user_id: merged.user_id || undefined,
@@ -309,13 +318,13 @@ export default function AdminAuditClient() {
   function onSubmitRequests(e: React.FormEvent) {
     e.preventDefault();
     apply({
-      tab: 'requests',
+      tab: "requests",
       q: qText.trim(),
       method: methodText.trim().toUpperCase(),
       status: statusText.trim(),
       from: fromText.trim(),
       to: toText.trim(),
-      only_admin: onlyAdminFlag ? '1' : '',
+      only_admin: onlyAdminFlag ? "1" : "",
       req_user_id: reqUserIdText.trim(),
       req_ip: reqIpText.trim(),
       sort: sortText,
@@ -325,28 +334,28 @@ export default function AdminAuditClient() {
   }
 
   function onResetRequests() {
-    setQText('');
-    setMethodText('');
-    setStatusText('');
-    setFromText('');
-    setToText('');
+    setQText("");
+    setMethodText("");
+    setStatusText("");
+    setFromText("");
+    setToText("");
     setOnlyAdminFlag(false);
-    setReqUserIdText('');
-    setReqIpText('');
-    setSortText('created_at');
-    setOrderDirText('desc');
+    setReqUserIdText("");
+    setReqIpText("");
+    setSortText("created_at");
+    setOrderDirText("desc");
     apply({
-      tab: 'requests',
-      q: '',
-      method: '',
-      status: '',
-      from: '',
-      to: '',
-      only_admin: '',
-      req_user_id: '',
-      req_ip: '',
-      sort: 'created_at',
-      orderDir: 'desc',
+      tab: "requests",
+      q: "",
+      method: "",
+      status: "",
+      from: "",
+      to: "",
+      only_admin: "",
+      req_user_id: "",
+      req_ip: "",
+      sort: "created_at",
+      orderDir: "desc",
       offset: 0,
     });
   }
@@ -354,7 +363,7 @@ export default function AdminAuditClient() {
   function onSubmitAuth(e: React.FormEvent) {
     e.preventDefault();
     apply({
-      tab: 'auth',
+      tab: "auth",
       event: eventText,
       email: emailText.trim(),
       user_id: userIdText.trim(),
@@ -366,20 +375,20 @@ export default function AdminAuditClient() {
   }
 
   function onResetAuth() {
-    setEventText('');
-    setEmailText('');
-    setUserIdText('');
-    setIpText('');
-    setFromText('');
-    setToText('');
+    setEventText("");
+    setEmailText("");
+    setUserIdText("");
+    setIpText("");
+    setFromText("");
+    setToText("");
     apply({
-      tab: 'auth',
-      event: '',
-      email: '',
-      user_id: '',
-      ip: '',
-      from: '',
-      to: '',
+      tab: "auth",
+      event: "",
+      email: "",
+      user_id: "",
+      ip: "",
+      from: "",
+      to: "",
       offset: 0,
     });
   }
@@ -389,28 +398,30 @@ export default function AdminAuditClient() {
     const d = String(safeInt(daysText, 14) || 14);
     setDaysText(d);
     apply({
-      tab: 'metrics',
+      tab: "metrics",
       days: d,
       path_prefix: pathPrefixText.trim(),
-      only_admin: onlyAdminFlag ? '1' : '',
+      only_admin: onlyAdminFlag ? "1" : "",
     });
   }
 
   function onResetMetrics() {
-    setDaysText('14');
-    setPathPrefixText('');
+    setDaysText("14");
+    setPathPrefixText("");
     setOnlyAdminFlag(false);
     apply({
-      tab: 'metrics',
-      days: '14',
-      path_prefix: '',
-      only_admin: '',
+      tab: "metrics",
+      days: "14",
+      path_prefix: "",
+      only_admin: "",
     });
   }
 
   /* ----------------------------- queries ----------------------------- */
 
-  const reqParams = React.useMemo(() => {
+  const ALL = "__all__" as const;
+
+  const reqParams = React.useMemo<AuditRequestLogsListQueryParams>(() => {
     const code = parseStatusCode(status);
     return {
       q: q || undefined,
@@ -422,14 +433,14 @@ export default function AdminAuditClient() {
       exclude_localhost: excludeLocalhost ? 1 : undefined,
       created_from: from || undefined,
       created_to: to || undefined,
-      sort: sort as 'created_at' | 'response_time_ms' | 'status_code',
-      orderDir: orderDir as 'asc' | 'desc',
+      sort,
+      orderDir,
       limit,
       offset,
     };
   }, [q, method, status, reqUserId, reqIp, onlyAdmin, excludeLocalhost, from, to, sort, orderDir, limit, offset]);
 
-  const authParams = React.useMemo(() => {
+  const authParams = React.useMemo<AuditAuthEventsListQueryParams>(() => {
     const ev = event && event !== ALL ? event : undefined;
     return {
       event: ev as AuditAuthEvent | undefined,
@@ -439,14 +450,14 @@ export default function AdminAuditClient() {
       exclude_localhost: excludeLocalhost ? 1 : undefined,
       created_from: from || undefined,
       created_to: to || undefined,
-      sort: 'created_at' as const,
-      orderDir: 'desc' as const,
+      sort: "created_at" as const,
+      orderDir: "desc" as const,
       limit,
       offset,
     };
-  }, [event, email, user_id, ip, excludeLocalhost, from, to, limit, offset]);
+  }, [event, email, user_id, ip, excludeLocalhost, from, to, limit, offset, ALL]);
 
-  const metricsParams = React.useMemo(() => {
+  const metricsParams = React.useMemo<AuditMetricsDailyQueryParams>(() => {
     const d = safeInt(days, 14) || 14;
     return {
       days: d,
@@ -456,35 +467,35 @@ export default function AdminAuditClient() {
     };
   }, [days, onlyAdmin, excludeLocalhost, path_prefix]);
 
-  const reqQ = useListAuditRequestLogsAdminQuery(
-    tab === 'requests' ? (reqParams as any) : (undefined as any),
-    { skip: tab !== 'requests', refetchOnFocus: true } as any,
-  ) as any;
-
-  const authQ = useListAuditAuthEventsAdminQuery(
-    tab === 'auth' ? (authParams as any) : (undefined as any),
-    { skip: tab !== 'auth', refetchOnFocus: true } as any,
-  ) as any;
-
-  const metricsQ = useGetAuditMetricsDailyAdminQuery(
-    tab === 'metrics' ? (metricsParams as any) : (undefined as any),
-    { skip: tab !== 'metrics', refetchOnFocus: true } as any,
-  ) as any;
-
-  const geoParams = React.useMemo(() => {
+  const geoParams = React.useMemo<AuditGeoStatsQueryParams>(() => {
     const d = safeInt(days, 30) || 30;
     return {
       days: d,
       only_admin: onlyAdmin ? 1 : undefined,
       exclude_localhost: excludeLocalhost ? 1 : undefined,
-      source: 'requests' as const,
+      source: "requests",
     };
   }, [days, onlyAdmin, excludeLocalhost]);
 
-  const geoQ = useGetAuditGeoStatsAdminQuery(
-    tab === 'map' ? (geoParams as any) : (undefined as any),
-    { skip: tab !== 'map', refetchOnFocus: true } as any,
-  ) as any;
+  const reqQ = useListAuditRequestLogsAdminQuery(tab === "requests" ? reqParams : undefined, {
+    skip: tab !== "requests",
+    refetchOnFocus: true,
+  });
+
+  const authQ = useListAuditAuthEventsAdminQuery(tab === "auth" ? authParams : undefined, {
+    skip: tab !== "auth",
+    refetchOnFocus: true,
+  });
+
+  const metricsQ = useGetAuditMetricsDailyAdminQuery(tab === "metrics" ? metricsParams : undefined, {
+    skip: tab !== "metrics",
+    refetchOnFocus: true,
+  });
+
+  const geoQ = useGetAuditGeoStatsAdminQuery(tab === "map" ? geoParams : undefined, {
+    skip: tab !== "map",
+    refetchOnFocus: true,
+  });
 
   const reqData = (reqQ.data as AuditListResponse<AuditRequestLogDto> | undefined) ?? {
     items: [],
@@ -509,22 +520,20 @@ export default function AdminAuditClient() {
   const canNextReq = offset + limit < reqTotal;
   const canNextAuth = offset + limit < authTotal;
 
-  const ALL = '__all__' as const;
-
   const [clearAuditLogs, { isLoading: isClearing }] = useClearAuditLogsAdminMutation();
 
   /* ---- Blocklist ---- */
   const blocklistQ = useListBlockedIpsAdminQuery(undefined, {
-    skip: tab !== 'blocklist',
+    skip: tab !== "blocklist",
     refetchOnFocus: true,
-  } as any) as any;
+  });
   const [addBlockedIp, { isLoading: isAddingIp }] = useAddBlockedIpAdminMutation();
   const [deleteBlockedIp] = useDeleteBlockedIpAdminMutation();
-  const blocklistItems: IpBlocklistEntry[] = (blocklistQ.data as any)?.items ?? [];
+  const blocklistItems: IpBlocklistEntry[] = (blocklistQ.data as BlocklistResponse | undefined)?.items ?? [];
   const blocklistLoading = blocklistQ.isLoading || blocklistQ.isFetching;
 
-  const [newIpText, setNewIpText] = React.useState('');
-  const [newNoteText, setNewNoteText] = React.useState('');
+  const [newIpText, setNewIpText] = React.useState("");
+  const [newNoteText, setNewNoteText] = React.useState("");
   const [deleteConfirmId, setDeleteConfirmId] = React.useState<number | null>(null);
 
   async function onAddIp() {
@@ -532,15 +541,15 @@ export default function AdminAuditClient() {
     if (!ip) return;
     try {
       await addBlockedIp({ ip, note: newNoteText.trim() || null }).unwrap();
-      setNewIpText('');
-      setNewNoteText('');
-      toast.success(t('blocklist.messages.added'));
-    } catch (err: any) {
-      const code = err?.data?.error?.message;
-      if (code === 'cannot_block_own_ip') {
-        toast.error(t('blocklist.errors.ownIp'));
+      setNewIpText("");
+      setNewNoteText("");
+      toast.success(t("blocklist.messages.added"));
+    } catch (err: unknown) {
+      const code = (err as MutationError).data?.error?.message;
+      if (code === "cannot_block_own_ip") {
+        toast.error(t("blocklist.errors.ownIp"));
       } else {
-        toast.error(getErrMessage(err, t('blocklist.messages.addError')));
+        toast.error(getErrMessage(err, t("blocklist.messages.addError")));
       }
     }
   }
@@ -549,33 +558,33 @@ export default function AdminAuditClient() {
     try {
       await deleteBlockedIp(id).unwrap();
       setDeleteConfirmId(null);
-      toast.success(t('blocklist.messages.deleted'));
+      toast.success(t("blocklist.messages.deleted"));
     } catch (err) {
-      toast.error(getErrMessage(err, t('blocklist.messages.deleteError')));
+      toast.error(getErrMessage(err, t("blocklist.messages.deleteError")));
     }
   }
 
   async function onRefresh() {
     try {
-      if (tab === 'requests') await reqQ.refetch();
-      if (tab === 'auth') await authQ.refetch();
-      if (tab === 'metrics') await metricsQ.refetch();
-      if (tab === 'map') await geoQ.refetch();
-      toast.success(t('refreshed'));
+      if (tab === "requests") await reqQ.refetch();
+      if (tab === "auth") await authQ.refetch();
+      if (tab === "metrics") await metricsQ.refetch();
+      if (tab === "map") await geoQ.refetch();
+      toast.success(t("refreshed"));
     } catch (err) {
-      toast.error(getErrMessage(err, t('error')));
+      toast.error(getErrMessage(err, t("error")));
     }
   }
 
   async function onClearLogs() {
-    if (!window.confirm(t('clear.dialogDescription'))) return;
-    const target = tab === 'requests' ? 'requests' : tab === 'auth' ? 'auth' : 'all';
+    if (!window.confirm(t("clear.dialogDescription"))) return;
+    const target = tab === "requests" ? "requests" : tab === "auth" ? "auth" : "all";
     try {
       const data = await clearAuditLogs({ target }).unwrap();
       const total = (data.deletedRequests ?? 0) + (data.deletedAuth ?? 0);
-      toast.success(t('clear.success', { count: String(total) }));
-    } catch (err: any) {
-      toast.error(err?.data?.error?.message || err?.message || t('error'));
+      toast.success(t("clear.success", { count: String(total) }));
+    } catch (err: unknown) {
+      toast.error(getErrMessage(err, t("error")));
     }
   }
 
@@ -586,8 +595,8 @@ export default function AdminAuditClient() {
       {/* ---- HEADER ---- */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div className="space-y-1">
-          <h1 className="text-lg font-semibold">{t('header.title')}</h1>
-          <p className="text-sm text-muted-foreground">{t('header.description')}</p>
+          <h1 className="font-semibold text-lg">{t("header.title")}</h1>
+          <p className="text-muted-foreground text-sm">{t("header.description")}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           {/* Localhost toggle */}
@@ -596,44 +605,46 @@ export default function AdminAuditClient() {
               checked={excludeLocalhostFlag}
               onCheckedChange={(v) => {
                 setExcludeLocalhostFlag(v);
-                apply({ exclude_localhost: v ? '1' : '' });
+                apply({ exclude_localhost: v ? "1" : "" });
               }}
               id="exclude-localhost"
             />
-            <Label htmlFor="exclude-localhost" className="text-xs whitespace-nowrap cursor-pointer">
-              {t('common.excludeLocalhost')}
+            <Label htmlFor="exclude-localhost" className="cursor-pointer whitespace-nowrap text-xs">
+              {t("common.excludeLocalhost")}
             </Label>
           </div>
 
           {/* Export dropdown */}
-          <Select onValueChange={(v) => {
-            const base = `${EXPORT_BASE}/${v.startsWith('auth') ? 'auth-events' : 'request-logs'}`;
-            const format = v.endsWith('-json') ? 'json' : 'csv';
-            const params = new URLSearchParams({ format });
-            if (excludeLocalhost) params.set('exclude_localhost', '1');
-            if (from) params.set('created_from', from);
-            if (to) params.set('created_to', to);
-            window.open(`${base}?${params}`, '_blank');
-          }}>
+          <Select
+            onValueChange={(v) => {
+              const base = `${EXPORT_BASE}/${v.startsWith("auth") ? "auth-events" : "request-logs"}`;
+              const format = v.endsWith("-json") ? "json" : "csv";
+              const params = new URLSearchParams({ format });
+              if (excludeLocalhost) params.set("exclude_localhost", "1");
+              if (from) params.set("created_from", from);
+              if (to) params.set("created_to", to);
+              window.open(`${base}?${params}`, "_blank");
+            }}
+          >
             <SelectTrigger className="w-auto gap-1">
               <Download className="h-4 w-4" />
-              <SelectValue placeholder={t('common.export')} />
+              <SelectValue placeholder={t("common.export")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="requests-csv">{t('common.exportCsv')} (Requests)</SelectItem>
-              <SelectItem value="requests-json">{t('common.exportJson')} (Requests)</SelectItem>
-              <SelectItem value="auth-csv">{t('common.exportCsv')} (Auth)</SelectItem>
-              <SelectItem value="auth-json">{t('common.exportJson')} (Auth)</SelectItem>
+              <SelectItem value="requests-csv">{t("common.exportCsv")} (Requests)</SelectItem>
+              <SelectItem value="requests-json">{t("common.exportJson")} (Requests)</SelectItem>
+              <SelectItem value="auth-csv">{t("common.exportCsv")} (Auth)</SelectItem>
+              <SelectItem value="auth-json">{t("common.exportJson")} (Auth)</SelectItem>
             </SelectContent>
           </Select>
 
           <Button variant="outline" onClick={onRefresh} disabled={anyLoading}>
             <RefreshCcw className="mr-2 h-4 w-4" />
-            {t('refresh')}
+            {t("refresh")}
           </Button>
           <Button variant="destructive" onClick={onClearLogs} disabled={isClearing}>
             <Trash2 className="mr-2 h-4 w-4" />
-            {t('clear.button')}
+            {t("clear.button")}
           </Button>
         </div>
       </div>
@@ -641,31 +652,28 @@ export default function AdminAuditClient() {
       <Tabs value={tab} onValueChange={onTabChange}>
         <TabsList className="flex-wrap">
           <TabsTrigger value="analytics">
-            <BarChart3 className="mr-2 h-4 w-4" /> {t('tabs.analytics')}
+            <BarChart3 className="mr-2 h-4 w-4" /> {t("tabs.analytics")}
           </TabsTrigger>
           <TabsTrigger value="requests">
-            <Activity className="mr-2 h-4 w-4" /> {t('tabs.requests')}
+            <Activity className="mr-2 h-4 w-4" /> {t("tabs.requests")}
           </TabsTrigger>
           <TabsTrigger value="auth">
-            <UserCheck className="mr-2 h-4 w-4" /> {t('tabs.auth')}
+            <UserCheck className="mr-2 h-4 w-4" /> {t("tabs.auth")}
           </TabsTrigger>
           <TabsTrigger value="metrics">
-            <ShieldCheck className="mr-2 h-4 w-4" /> {t('tabs.metrics')}
+            <ShieldCheck className="mr-2 h-4 w-4" /> {t("tabs.metrics")}
           </TabsTrigger>
           <TabsTrigger value="map">
-            <Globe className="mr-2 h-4 w-4" /> {t('tabs.map')}
+            <Globe className="mr-2 h-4 w-4" /> {t("tabs.map")}
           </TabsTrigger>
           <TabsTrigger value="blocklist">
-            <Ban className="mr-2 h-4 w-4" /> {t('tabs.blocklist')}
+            <Ban className="mr-2 h-4 w-4" /> {t("tabs.blocklist")}
           </TabsTrigger>
         </TabsList>
 
         {/* ==================== ANALYTICS TAB ==================== */}
         <TabsContent value="analytics" className="space-y-4">
-          <AuditAnalyticsTab
-            excludeLocalhost={excludeLocalhost}
-            dateRange={{ from: from, to: to }}
-          />
+          <AuditAnalyticsTab excludeLocalhost={excludeLocalhost} dateRange={{ from: from, to: to }} />
         </TabsContent>
 
         {/* ==================== REQUESTS TAB ==================== */}
@@ -673,80 +681,84 @@ export default function AdminAuditClient() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Filter className="h-4 w-4" /> {t('requests.filtersTitle')}
+                <Filter className="h-4 w-4" /> {t("requests.filtersTitle")}
               </CardTitle>
-              <CardDescription>{t('requests.filtersDescription')}</CardDescription>
+              <CardDescription>{t("requests.filtersDescription")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmitRequests} className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <Label>{t('requests.search')}</Label>
+                  <Label>{t("requests.search")}</Label>
                   <Input value={qText} onChange={(e) => setQText(e.target.value)} placeholder="/api/orders" />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('requests.method')}</Label>
+                  <Label>{t("requests.method")}</Label>
                   <Input value={methodText} onChange={(e) => setMethodText(e.target.value)} placeholder="GET" />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('requests.status')}</Label>
+                  <Label>{t("requests.status")}</Label>
                   <Input value={statusText} onChange={(e) => setStatusText(e.target.value)} placeholder="200" />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.from')}</Label>
+                  <Label>{t("common.from")}</Label>
                   <Input type="datetime-local" value={fromText} onChange={(e) => setFromText(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.to')}</Label>
+                  <Label>{t("common.to")}</Label>
                   <Input type="datetime-local" value={toText} onChange={(e) => setToText(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.userId')}</Label>
-                  <Input value={reqUserIdText} onChange={(e) => setReqUserIdText(e.target.value)} placeholder={t('common.userId')} />
+                  <Label>{t("common.userId")}</Label>
+                  <Input
+                    value={reqUserIdText}
+                    onChange={(e) => setReqUserIdText(e.target.value)}
+                    placeholder={t("common.userId")}
+                  />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.ip')}</Label>
+                  <Label>{t("common.ip")}</Label>
                   <Input value={reqIpText} onChange={(e) => setReqIpText(e.target.value)} placeholder="192.168.1.1" />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('requests.sort')}</Label>
+                  <Label>{t("requests.sort")}</Label>
                   <div className="flex gap-2">
                     <Select value={sortText} onValueChange={(v) => setSortText(v as SortKey)}>
                       <SelectTrigger className="flex-1">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="created_at">{t('requests.sortDate')}</SelectItem>
-                        <SelectItem value="response_time_ms">{t('requests.sortResponseTime')}</SelectItem>
-                        <SelectItem value="status_code">{t('requests.sortStatusCode')}</SelectItem>
+                        <SelectItem value="created_at">{t("requests.sortDate")}</SelectItem>
+                        <SelectItem value="response_time_ms">{t("requests.sortResponseTime")}</SelectItem>
+                        <SelectItem value="status_code">{t("requests.sortStatusCode")}</SelectItem>
                       </SelectContent>
                     </Select>
-                    <Select value={orderDirText} onValueChange={(v) => setOrderDirText(v as 'asc' | 'desc')}>
+                    <Select value={orderDirText} onValueChange={(v) => setOrderDirText(v as "asc" | "desc")}>
                       <SelectTrigger className="w-24">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="desc">{t('common.desc')}</SelectItem>
-                        <SelectItem value="asc">{t('common.asc')}</SelectItem>
+                        <SelectItem value="desc">{t("common.desc")}</SelectItem>
+                        <SelectItem value="asc">{t("common.asc")}</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <Label className="flex items-center gap-2">
-                    <span>{t('common.onlyAdmin')}</span>
+                    <span>{t("common.onlyAdmin")}</span>
                   </Label>
                   <div className="flex items-center gap-2">
                     <Switch checked={onlyAdminFlag} onCheckedChange={setOnlyAdminFlag} />
-                    <span className="text-sm text-muted-foreground">{t('common.adminRequests')}</span>
+                    <span className="text-muted-foreground text-sm">{t("common.adminRequests")}</span>
                   </div>
                 </div>
 
-                <div className="md:col-span-3 flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 md:col-span-3">
                   <Button type="submit">
-                    <Search className="mr-2 h-4 w-4" /> {t('common.apply')}
+                    <Search className="mr-2 h-4 w-4" /> {t("common.apply")}
                   </Button>
                   <Button type="button" variant="secondary" onClick={onResetRequests}>
-                    {t('common.reset')}
+                    {t("common.reset")}
                   </Button>
                 </div>
               </form>
@@ -757,20 +769,18 @@ export default function AdminAuditClient() {
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <CardTitle className="text-base">{t('requests.logsTitle')}</CardTitle>
-                  <CardDescription>
-                    {t('common.totalRecords', { count: String(reqTotal) })}
-                  </CardDescription>
+                  <CardTitle className="text-base">{t("requests.logsTitle")}</CardTitle>
+                  <CardDescription>{t("common.totalRecords", { count: String(reqTotal) })}</CardDescription>
                 </div>
                 <Badge variant="outline">
-                  {reqLoading ? t('common.loading') : t('common.recordCount', { count: String(reqData.items.length) })}
+                  {reqLoading ? t("common.loading") : t("common.recordCount", { count: String(reqData.items.length) })}
                 </Badge>
               </div>
             </CardHeader>
             <CardContent>
               {reqQ.error && (
                 <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm">
-                  {getErrMessage(reqQ.error, t('error'))}
+                  {getErrMessage(reqQ.error, t("error"))}
                 </div>
               )}
 
@@ -778,19 +788,19 @@ export default function AdminAuditClient() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>{t('columns.date')}</TableHead>
-                      <TableHead>{t('columns.request')}</TableHead>
-                      <TableHead>{t('columns.status')}</TableHead>
-                      <TableHead>{t('columns.ipUser')}</TableHead>
-                      <TableHead>{t('columns.location')}</TableHead>
-                      <TableHead className="hidden lg:table-cell">{t('columns.userAgent')}</TableHead>
+                      <TableHead>{t("columns.date")}</TableHead>
+                      <TableHead>{t("columns.request")}</TableHead>
+                      <TableHead>{t("columns.status")}</TableHead>
+                      <TableHead>{t("columns.ipUser")}</TableHead>
+                      <TableHead>{t("columns.location")}</TableHead>
+                      <TableHead className="hidden lg:table-cell">{t("columns.userAgent")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {reqData.items.length === 0 && !reqLoading && (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center text-sm text-muted-foreground">
-                          {t('common.noRecords')}
+                        <TableCell colSpan={6} className="text-center text-muted-foreground text-sm">
+                          {t("common.noRecords")}
                         </TableCell>
                       </TableRow>
                     )}
@@ -800,9 +810,7 @@ export default function AdminAuditClient() {
                       const geo = geoLabel(r.country, r.city);
                       return (
                         <TableRow key={String(r.id)}>
-                          <TableCell className="whitespace-nowrap text-sm">
-                            {fmtWhen(r.created_at)}
-                          </TableCell>
+                          <TableCell className="whitespace-nowrap text-sm">{fmtWhen(r.created_at)}</TableCell>
                           <TableCell className="text-sm">
                             <div className="font-medium">{safeText(r.method)}</div>
                             <div className="text-muted-foreground">{safeText(r.path)}</div>
@@ -811,23 +819,24 @@ export default function AdminAuditClient() {
                             )}
                           </TableCell>
                           <TableCell>
-                            <Badge variant={statusVariant(code)}>{code || '—'}</Badge>
-                            <div className="text-xs text-muted-foreground mt-1">
+                            <Badge variant={statusVariant(code)}>{code || "—"}</Badge>
+                            <div className="mt-1 text-muted-foreground text-xs">
                               {Number(r.response_time_ms ?? 0)}ms
                             </div>
                           </TableCell>
                           <TableCell className="text-sm">
                             <div className="font-medium">{safeText(r.ip)}</div>
                             <div className="text-muted-foreground">
-                              {r.user_id ? `uid:${r.user_id}` : t('common.anon')}
-                              {r.is_admin ? ' · admin' : ''}
+                              {r.user_id ? `uid:${r.user_id}` : t("common.anon")}
+                              {r.is_admin ? " · admin" : ""}
                             </div>
                           </TableCell>
-                          <TableCell className="text-sm text-muted-foreground">
-                            {geo || '—'}
-                          </TableCell>
-                          <TableCell className="hidden lg:table-cell text-xs text-muted-foreground max-w-[200px] truncate" title={r.user_agent ?? ''}>
-                            {truncate(r.user_agent, 50) || '—'}
+                          <TableCell className="text-muted-foreground text-sm">{geo || "—"}</TableCell>
+                          <TableCell
+                            className="hidden max-w-[200px] truncate text-muted-foreground text-xs lg:table-cell"
+                            title={r.user_agent ?? ""}
+                          >
+                            {truncate(r.user_agent, 50) || "—"}
                           </TableCell>
                         </TableRow>
                       );
@@ -838,9 +847,9 @@ export default function AdminAuditClient() {
 
               <Separator className="my-4" />
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">
-                  {reqTotal === 0 ? '0' : `${offset + 1}-${Math.min(offset + limit, reqTotal)}`}
-                  {' / '} {reqTotal}
+                <div className="text-muted-foreground text-sm">
+                  {reqTotal === 0 ? "0" : `${offset + 1}-${Math.min(offset + limit, reqTotal)}`}
+                  {" / "} {reqTotal}
                 </div>
                 <div className="flex gap-2">
                   <Button
@@ -849,7 +858,7 @@ export default function AdminAuditClient() {
                     disabled={!canPrev}
                     onClick={() => apply({ offset: Math.max(0, offset - limit) })}
                   >
-                    {t('common.prev')}
+                    {t("common.prev")}
                   </Button>
                   <Button
                     variant="outline"
@@ -857,7 +866,7 @@ export default function AdminAuditClient() {
                     disabled={!canNextReq}
                     onClick={() => apply({ offset: offset + limit })}
                   >
-                    {t('common.next')}
+                    {t("common.next")}
                   </Button>
                 </div>
               </div>
@@ -870,20 +879,20 @@ export default function AdminAuditClient() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Filter className="h-4 w-4" /> {t('auth.filtersTitle')}
+                <Filter className="h-4 w-4" /> {t("auth.filtersTitle")}
               </CardTitle>
-              <CardDescription>{t('auth.filtersDescription')}</CardDescription>
+              <CardDescription>{t("auth.filtersDescription")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmitAuth} className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <Label>{t('auth.event')}</Label>
-                  <Select value={eventText || ''} onValueChange={setEventText}>
+                  <Label>{t("auth.event")}</Label>
+                  <Select value={eventText || ""} onValueChange={setEventText}>
                     <SelectTrigger>
-                      <SelectValue placeholder={t('common.all')} />
+                      <SelectValue placeholder={t("common.all")} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value={ALL}>{t('common.all')}</SelectItem>
+                      <SelectItem value={ALL}>{t("common.all")}</SelectItem>
                       {AUDIT_AUTH_EVENTS.map((ev) => (
                         <SelectItem key={ev} value={ev}>
                           {ev}
@@ -893,32 +902,32 @@ export default function AdminAuditClient() {
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('auth.email')}</Label>
+                  <Label>{t("auth.email")}</Label>
                   <Input value={emailText} onChange={(e) => setEmailText(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.userId')}</Label>
+                  <Label>{t("common.userId")}</Label>
                   <Input value={userIdText} onChange={(e) => setUserIdText(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.ip')}</Label>
+                  <Label>{t("common.ip")}</Label>
                   <Input value={ipText} onChange={(e) => setIpText(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.from')}</Label>
+                  <Label>{t("common.from")}</Label>
                   <Input type="datetime-local" value={fromText} onChange={(e) => setFromText(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.to')}</Label>
+                  <Label>{t("common.to")}</Label>
                   <Input type="datetime-local" value={toText} onChange={(e) => setToText(e.target.value)} />
                 </div>
 
-                <div className="md:col-span-3 flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 md:col-span-3">
                   <Button type="submit">
-                    <Search className="mr-2 h-4 w-4" /> {t('common.apply')}
+                    <Search className="mr-2 h-4 w-4" /> {t("common.apply")}
                   </Button>
                   <Button type="button" variant="secondary" onClick={onResetAuth}>
-                    {t('common.reset')}
+                    {t("common.reset")}
                   </Button>
                 </div>
               </form>
@@ -929,20 +938,20 @@ export default function AdminAuditClient() {
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <CardTitle className="text-base">{t('auth.eventsTitle')}</CardTitle>
-                  <CardDescription>
-                    {t('common.totalRecords', { count: String(authTotal) })}
-                  </CardDescription>
+                  <CardTitle className="text-base">{t("auth.eventsTitle")}</CardTitle>
+                  <CardDescription>{t("common.totalRecords", { count: String(authTotal) })}</CardDescription>
                 </div>
                 <Badge variant="outline">
-                  {authLoading ? t('common.loading') : t('common.recordCount', { count: String(authData.items.length) })}
+                  {authLoading
+                    ? t("common.loading")
+                    : t("common.recordCount", { count: String(authData.items.length) })}
                 </Badge>
               </div>
             </CardHeader>
             <CardContent>
               {authQ.error && (
                 <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm">
-                  {getErrMessage(authQ.error, t('error'))}
+                  {getErrMessage(authQ.error, t("error"))}
                 </div>
               )}
 
@@ -950,19 +959,19 @@ export default function AdminAuditClient() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>{t('columns.date')}</TableHead>
-                      <TableHead>{t('auth.event')}</TableHead>
-                      <TableHead>{t('columns.user')}</TableHead>
-                      <TableHead>{t('common.ip')}</TableHead>
-                      <TableHead>{t('columns.location')}</TableHead>
-                      <TableHead className="hidden lg:table-cell">{t('columns.userAgent')}</TableHead>
+                      <TableHead>{t("columns.date")}</TableHead>
+                      <TableHead>{t("auth.event")}</TableHead>
+                      <TableHead>{t("columns.user")}</TableHead>
+                      <TableHead>{t("common.ip")}</TableHead>
+                      <TableHead>{t("columns.location")}</TableHead>
+                      <TableHead className="hidden lg:table-cell">{t("columns.userAgent")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {authData.items.length === 0 && !authLoading && (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center text-sm text-muted-foreground">
-                          {t('common.noRecords')}
+                        <TableCell colSpan={6} className="text-center text-muted-foreground text-sm">
+                          {t("common.noRecords")}
                         </TableCell>
                       </TableRow>
                     )}
@@ -976,15 +985,16 @@ export default function AdminAuditClient() {
                             <Badge variant={authEventVariant(r.event)}>{safeText(r.event)}</Badge>
                           </TableCell>
                           <TableCell className="text-sm">
-                            <div className="font-medium">{safeText(r.email || r.user_id || '—')}</div>
-                            <div className="text-muted-foreground">{r.user_id ? `uid:${r.user_id}` : ''}</div>
+                            <div className="font-medium">{safeText(r.email || r.user_id || "—")}</div>
+                            <div className="text-muted-foreground">{r.user_id ? `uid:${r.user_id}` : ""}</div>
                           </TableCell>
                           <TableCell className="text-sm">{safeText(r.ip)}</TableCell>
-                          <TableCell className="text-sm text-muted-foreground">
-                            {geo || '—'}
-                          </TableCell>
-                          <TableCell className="hidden lg:table-cell text-xs text-muted-foreground max-w-[200px] truncate" title={r.user_agent ?? ''}>
-                            {truncate(r.user_agent, 50) || '—'}
+                          <TableCell className="text-muted-foreground text-sm">{geo || "—"}</TableCell>
+                          <TableCell
+                            className="hidden max-w-[200px] truncate text-muted-foreground text-xs lg:table-cell"
+                            title={r.user_agent ?? ""}
+                          >
+                            {truncate(r.user_agent, 50) || "—"}
                           </TableCell>
                         </TableRow>
                       );
@@ -995,9 +1005,9 @@ export default function AdminAuditClient() {
 
               <Separator className="my-4" />
               <div className="flex items-center justify-between">
-                <div className="text-sm text-muted-foreground">
-                  {authTotal === 0 ? '0' : `${offset + 1}-${Math.min(offset + limit, authTotal)}`}
-                  {' / '} {authTotal}
+                <div className="text-muted-foreground text-sm">
+                  {authTotal === 0 ? "0" : `${offset + 1}-${Math.min(offset + limit, authTotal)}`}
+                  {" / "} {authTotal}
                 </div>
                 <div className="flex gap-2">
                   <Button
@@ -1006,7 +1016,7 @@ export default function AdminAuditClient() {
                     disabled={!canPrev}
                     onClick={() => apply({ offset: Math.max(0, offset - limit) })}
                   >
-                    {t('common.prev')}
+                    {t("common.prev")}
                   </Button>
                   <Button
                     variant="outline"
@@ -1014,7 +1024,7 @@ export default function AdminAuditClient() {
                     disabled={!canNextAuth}
                     onClick={() => apply({ offset: offset + limit })}
                   >
-                    {t('common.next')}
+                    {t("common.next")}
                   </Button>
                 </div>
               </div>
@@ -1027,45 +1037,49 @@ export default function AdminAuditClient() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Calendar className="h-4 w-4" /> {t('metrics.title')}
+                <Calendar className="h-4 w-4" /> {t("metrics.title")}
               </CardTitle>
-              <CardDescription>{t('metrics.description')}</CardDescription>
+              <CardDescription>{t("metrics.description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmitMetrics} className="grid gap-4 md:grid-cols-3">
                 <div className="space-y-2">
-                  <Label>{t('metrics.days')}</Label>
+                  <Label>{t("metrics.days")}</Label>
                   <Select value={daysText} onValueChange={setDaysText}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="7">{t('metrics.nDays', { n: '7' })}</SelectItem>
-                      <SelectItem value="14">{t('metrics.nDays', { n: '14' })}</SelectItem>
-                      <SelectItem value="30">{t('metrics.nDays', { n: '30' })}</SelectItem>
-                      <SelectItem value="60">{t('metrics.nDays', { n: '60' })}</SelectItem>
-                      <SelectItem value="90">{t('metrics.nDays', { n: '90' })}</SelectItem>
+                      <SelectItem value="7">{t("metrics.nDays", { n: "7" })}</SelectItem>
+                      <SelectItem value="14">{t("metrics.nDays", { n: "14" })}</SelectItem>
+                      <SelectItem value="30">{t("metrics.nDays", { n: "30" })}</SelectItem>
+                      <SelectItem value="60">{t("metrics.nDays", { n: "60" })}</SelectItem>
+                      <SelectItem value="90">{t("metrics.nDays", { n: "90" })}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('metrics.pathPrefix')}</Label>
-                  <Input value={pathPrefixText} onChange={(e) => setPathPrefixText(e.target.value)} placeholder="/api" />
+                  <Label>{t("metrics.pathPrefix")}</Label>
+                  <Input
+                    value={pathPrefixText}
+                    onChange={(e) => setPathPrefixText(e.target.value)}
+                    placeholder="/api"
+                  />
                 </div>
                 <div className="space-y-2">
-                  <Label>{t('common.onlyAdmin')}</Label>
+                  <Label>{t("common.onlyAdmin")}</Label>
                   <div className="flex items-center gap-2">
                     <Switch checked={onlyAdminFlag} onCheckedChange={setOnlyAdminFlag} />
-                    <span className="text-sm text-muted-foreground">{t('common.adminRequests')}</span>
+                    <span className="text-muted-foreground text-sm">{t("common.adminRequests")}</span>
                   </div>
                 </div>
 
-                <div className="md:col-span-3 flex flex-wrap items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2 md:col-span-3">
                   <Button type="submit">
-                    <Filter className="mr-2 h-4 w-4" /> {t('common.apply')}
+                    <Filter className="mr-2 h-4 w-4" /> {t("common.apply")}
                   </Button>
                   <Button type="button" variant="secondary" onClick={onResetMetrics}>
-                    {t('common.reset')}
+                    {t("common.reset")}
                   </Button>
                 </div>
               </form>
@@ -1076,12 +1090,14 @@ export default function AdminAuditClient() {
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <CardTitle className="text-base">{t('metrics.chartTitle')}</CardTitle>
-                  <CardDescription>{t('metrics.lastNDays', { n: String(metricsData.days?.length ?? 0) })}</CardDescription>
+                  <CardTitle className="text-base">{t("metrics.chartTitle")}</CardTitle>
+                  <CardDescription>
+                    {t("metrics.lastNDays", { n: String(metricsData.days?.length ?? 0) })}
+                  </CardDescription>
                 </div>
                 {metricsLoading && (
                   <Badge variant="outline" className="flex items-center gap-2">
-                    <Loader2 className="h-3 w-3 animate-spin" /> {t('common.loading')}
+                    <Loader2 className="h-3 w-3 animate-spin" /> {t("common.loading")}
                   </Badge>
                 )}
               </div>
@@ -1089,7 +1105,7 @@ export default function AdminAuditClient() {
             <CardContent>
               {metricsQ.error && (
                 <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm">
-                  {getErrMessage(metricsQ.error, t('error'))}
+                  {getErrMessage(metricsQ.error, t("error"))}
                 </div>
               )}
               <AuditDailyChart rows={metricsData.days ?? []} loading={metricsLoading} />
@@ -1104,15 +1120,13 @@ export default function AdminAuditClient() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
                   <CardTitle className="flex items-center gap-2 text-base">
-                    <Globe className="h-4 w-4" /> {t('map.title')}
+                    <Globe className="h-4 w-4" /> {t("map.title")}
                   </CardTitle>
-                  <CardDescription>
-                    {t('map.description', { days: String(geoParams.days) })}
-                  </CardDescription>
+                  <CardDescription>{t("map.description", { days: String(geoParams.days) })}</CardDescription>
                 </div>
                 {geoLoading && (
                   <Badge variant="outline" className="flex items-center gap-2">
-                    <Loader2 className="h-3 w-3 animate-spin" /> {t('common.loading')}
+                    <Loader2 className="h-3 w-3 animate-spin" /> {t("common.loading")}
                   </Badge>
                 )}
               </div>
@@ -1120,7 +1134,7 @@ export default function AdminAuditClient() {
             <CardContent>
               {geoQ.error && (
                 <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm">
-                  {getErrMessage(geoQ.error, t('error'))}
+                  {getErrMessage(geoQ.error, t("error"))}
                 </div>
               )}
               <AuditGeoMap items={geoData.items ?? []} loading={geoLoading} />
@@ -1134,34 +1148,44 @@ export default function AdminAuditClient() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-base">
-                <Ban className="h-4 w-4" /> {t('blocklist.title')}
+                <Ban className="h-4 w-4" /> {t("blocklist.title")}
               </CardTitle>
-              <CardDescription>{t('blocklist.description')}</CardDescription>
+              <CardDescription>{t("blocklist.description")}</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-wrap items-end gap-3">
-                <div className="flex-1 min-w-[180px] space-y-2">
-                  <Label htmlFor="new-ip">{t('blocklist.ipLabel')}</Label>
+                <div className="min-w-[180px] flex-1 space-y-2">
+                  <Label htmlFor="new-ip">{t("blocklist.ipLabel")}</Label>
                   <Input
                     id="new-ip"
-                    placeholder={t('blocklist.ipPlaceholder')}
+                    placeholder={t("blocklist.ipPlaceholder")}
                     value={newIpText}
                     onChange={(e) => setNewIpText(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); onAddIp(); } }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        onAddIp();
+                      }
+                    }}
                   />
                 </div>
-                <div className="flex-1 min-w-[180px] space-y-2">
-                  <Label htmlFor="new-note">{t('blocklist.noteLabel')}</Label>
+                <div className="min-w-[180px] flex-1 space-y-2">
+                  <Label htmlFor="new-note">{t("blocklist.noteLabel")}</Label>
                   <Input
                     id="new-note"
-                    placeholder={t('blocklist.notePlaceholder')}
+                    placeholder={t("blocklist.notePlaceholder")}
                     value={newNoteText}
                     onChange={(e) => setNewNoteText(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); onAddIp(); } }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        onAddIp();
+                      }
+                    }}
                   />
                 </div>
                 <Button onClick={onAddIp} disabled={!newIpText.trim() || isAddingIp}>
-                  <Plus className="mr-2 h-4 w-4" /> {t('blocklist.addIp')}
+                  <Plus className="mr-2 h-4 w-4" /> {t("blocklist.addIp")}
                 </Button>
               </div>
             </CardContent>
@@ -1172,12 +1196,12 @@ export default function AdminAuditClient() {
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <CardTitle className="text-base">{t('blocklist.listTitle')}</CardTitle>
-                  <CardDescription>{t('blocklist.listDescription')}</CardDescription>
+                  <CardTitle className="text-base">{t("blocklist.listTitle")}</CardTitle>
+                  <CardDescription>{t("blocklist.listDescription")}</CardDescription>
                 </div>
                 {blocklistLoading && (
                   <Badge variant="outline" className="flex items-center gap-2">
-                    <Loader2 className="h-3 w-3 animate-spin" /> {t('common.loading')}
+                    <Loader2 className="h-3 w-3 animate-spin" /> {t("common.loading")}
                   </Badge>
                 )}
               </div>
@@ -1185,40 +1209,38 @@ export default function AdminAuditClient() {
             <CardContent>
               {blocklistQ.error && (
                 <div className="rounded-md border border-destructive/30 bg-destructive/5 p-3 text-sm">
-                  {getErrMessage(blocklistQ.error, t('error'))}
+                  {getErrMessage(blocklistQ.error, t("error"))}
                 </div>
               )}
               {!blocklistLoading && blocklistItems.length === 0 ? (
-                <p className="text-sm text-muted-foreground">{t('blocklist.empty')}</p>
+                <p className="text-muted-foreground text-sm">{t("blocklist.empty")}</p>
               ) : (
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead>{t('blocklist.columns.ip')}</TableHead>
-                      <TableHead>{t('blocklist.columns.note')}</TableHead>
-                      <TableHead>{t('blocklist.columns.addedAt')}</TableHead>
-                      <TableHead className="text-right">{t('blocklist.columns.actions')}</TableHead>
+                      <TableHead>{t("blocklist.columns.ip")}</TableHead>
+                      <TableHead>{t("blocklist.columns.note")}</TableHead>
+                      <TableHead>{t("blocklist.columns.addedAt")}</TableHead>
+                      <TableHead className="text-right">{t("blocklist.columns.actions")}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {blocklistItems.map((entry) => (
                       <TableRow key={entry.id}>
                         <TableCell className="font-mono text-sm">{entry.ip}</TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {entry.note || '—'}
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
+                        <TableCell className="text-muted-foreground text-sm">{entry.note || "—"}</TableCell>
+                        <TableCell className="whitespace-nowrap text-muted-foreground text-sm">
                           {fmtWhen(entry.created_at)}
                         </TableCell>
                         <TableCell className="text-right">
                           {deleteConfirmId === entry.id ? (
                             <div className="flex items-center justify-end gap-2">
-                              <span className="text-xs text-muted-foreground">{t('blocklist.confirmDelete')}</span>
+                              <span className="text-muted-foreground text-xs">{t("blocklist.confirmDelete")}</span>
                               <Button size="sm" variant="destructive" onClick={() => onDeleteIp(entry.id)}>
-                                {t('blocklist.columns.confirmYes')}
+                                {t("blocklist.columns.confirmYes")}
                               </Button>
                               <Button size="sm" variant="outline" onClick={() => setDeleteConfirmId(null)}>
-                                {t('blocklist.columns.confirmNo')}
+                                {t("blocklist.columns.confirmNo")}
                               </Button>
                             </div>
                           ) : (
@@ -1226,7 +1248,7 @@ export default function AdminAuditClient() {
                               size="icon"
                               variant="ghost"
                               onClick={() => setDeleteConfirmId(entry.id)}
-                              title={t('blocklist.deleteEntry')}
+                              title={t("blocklist.deleteEntry")}
                             >
                               <Trash2 className="h-4 w-4" />
                             </Button>

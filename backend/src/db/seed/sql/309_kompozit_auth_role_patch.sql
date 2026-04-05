@@ -1,7 +1,8 @@
-ALTER TABLE users
-  ADD COLUMN IF NOT EXISTS role ENUM('admin','moderator','user') NOT NULL DEFAULT 'user' AFTER phone;
+-- 309_kompozit_auth_role_patch.sql
+-- users.role kolonu artık 298_kompozit_base_schema.sql içinde CREATE TABLE sırasında
+-- tanımlanır. Bu dosya geriye dönük uyumluluk için kullanıcıları user_roles'dan senkronize eder.
 
-UPDATE users u
+UPDATE `users` u
 LEFT JOIN (
   SELECT
     ur.user_id,

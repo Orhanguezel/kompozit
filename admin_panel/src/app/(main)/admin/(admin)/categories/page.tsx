@@ -3,7 +3,7 @@
 // Ensotek — Admin Categories Page
 // =============================================================
 
-import CategoriesPage from './categories';
+import CategoriesPage from "./categories";
 
 interface Props {
   searchParams: Promise<{ module?: string }>;

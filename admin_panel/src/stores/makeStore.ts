@@ -1,17 +1,19 @@
 // src/store/makeStore.ts
-import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
+import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
+import type { Middleware, Reducer } from "redux";
 
-import { baseApi } from '@/integrations/baseApi';
-import preferencesReducer from './preferencesSlice';
+import { baseApi } from "@/integrations/baseApi";
 
-type AnyApi = {
+import preferencesReducer from "./preferencesSlice";
+
+type StoreApi = {
   reducerPath: string;
-  reducer: any;
-  middleware: any;
+  reducer: Reducer;
+  middleware: Middleware;
 };
 
-const apis: AnyApi[] = [baseApi];
+const apis: StoreApi[] = [baseApi];
 
 export function makeStore() {
   const reducer = {
@@ -29,7 +31,7 @@ export function makeStore() {
         serializableCheck: false,
         immutableCheck: false,
       }).concat(apis.map((api) => api.middleware)),
-    devTools: process.env.NODE_ENV !== 'production',
+    devTools: process.env.NODE_ENV !== "production",
   });
 
   setupListeners(store.dispatch);
@@ -37,5 +39,5 @@ export function makeStore() {
 }
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type RootState = ReturnType<AppStore['getState']>;
-export type AppDispatch = AppStore['dispatch'];
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];

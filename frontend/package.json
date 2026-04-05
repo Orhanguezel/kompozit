@@ -15,6 +15,8 @@
     "test:smoke:admin-content": "node scripts/check-admin-content-flow.mjs",
     "test:smoke:home-content": "node scripts/check-home-content-flow.mjs",
     "test:smoke:home-content:offline": "node scripts/check-home-content-flow.mjs --offline",
+    "test:smoke:home-api": "node scripts/check-home-api-routes.mjs",
+    "test:smoke:home-api:offline": "node scripts/check-home-api-routes.mjs --offline",
     "test:media": "node scripts/check-media-seo.mjs",
     "audit:media": "node scripts/audit-media-seo.mjs",
     "audit:crawl": "node scripts/crawl-seo-report.mjs",

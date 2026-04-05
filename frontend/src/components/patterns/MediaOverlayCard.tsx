@@ -36,20 +36,25 @@ export function MediaOverlayCard({
         className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
         sizes={sizes}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-60 transition-opacity group-hover:opacity-80" />
+      
+      {/* Texture and Overlay */}
+      <div className="absolute inset-0 carbon-texture opacity-10 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 transition-all duration-700 group-hover:opacity-90 group-hover:via-black/70" />
       
       <div className="absolute inset-0 flex flex-col justify-end p-8">
-        <div className="translate-y-4 transition-transform duration-500 group-hover:translate-y-0">
+        <div className="translate-y-6 transition-all duration-500 ease-out group-hover:translate-y-0">
           {meta ? (
-            <div className="mb-3 inline-flex items-center rounded-full bg-brand/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-brand backdrop-blur-md border border-brand/20">
+            <div className="mb-4 inline-flex items-center rounded-full border border-[var(--color-gold)]/30 bg-[var(--color-gold)]/10 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-gold)] backdrop-blur-md">
               {meta}
             </div>
           ) : null}
-          <h3 className="text-2xl font-bold text-white tracking-tight">{title}</h3>
-          <div className="grid grid-rows-[0fr] transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:mt-3">
+          <h3 className="font-[var(--font-display)] text-[2rem] font-normal uppercase leading-none tracking-[0.08em] text-white">
+            {title}
+          </h3>
+          <div className="mt-4 grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-80">
              <div className="overflow-hidden">
                 {description ? (
-                  <p className="text-sm leading-relaxed text-white/70 line-clamp-2">
+                  <p className="pb-2 text-sm italic leading-relaxed text-white/70 line-clamp-2">
                     {description}
                   </p>
                 ) : null}
@@ -58,7 +63,7 @@ export function MediaOverlayCard({
         </div>
       </div>
 
-      <div className="absolute right-6 top-6 size-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white scale-0 transition-transform duration-500 group-hover:scale-100">
+      <div className="absolute right-6 top-6 size-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white scale-0 transition-all duration-500 group-hover:scale-100 group-hover:rotate-90">
         <Plus className="size-6" />
       </div>
     </Link>

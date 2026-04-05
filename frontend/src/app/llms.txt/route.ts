@@ -42,6 +42,7 @@ export async function GET() {
   lines.push('- Default public locale is Turkish (tr); English (en) uses /en/ prefix for paths other than home.');
   lines.push('- Product catalogue, solutions (application lines), gallery and blog are API-driven; slugs are shared across locales where applicable.');
   lines.push('- For quotations and engineering questions, use the contact and offer forms linked from /contact and /offer.');
+  lines.push('- The contact page includes a short B2B FAQ (also exposed as FAQPage structured data for search).');
 
   const body = `${lines.join('\n')}\n`;
 

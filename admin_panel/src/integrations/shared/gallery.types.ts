@@ -4,7 +4,7 @@
 // Backend: src/modules/gallery/*
 // =============================================================
 
-import type { BoolLike } from '@/integrations/shared';
+import type { BoolLike } from "@/integrations/shared";
 
 /* -------------------------------------------------------------
  * LIST QUERY (public + admin ortak)
@@ -12,8 +12,8 @@ import type { BoolLike } from '@/integrations/shared';
 
 export type GalleryListQueryParams = {
   order?: string;
-  sort?: 'created_at' | 'updated_at' | 'display_order';
-  orderDir?: 'asc' | 'desc';
+  sort?: "created_at" | "updated_at" | "display_order";
+  orderDir?: "asc" | "desc";
   limit?: number;
   offset?: number;
 
@@ -170,11 +170,11 @@ export const serializeGalleryListQuery = (q?: GalleryListQueryParams): Record<st
   if (q.order) params.order = q.order;
   if (q.sort) params.sort = q.sort;
   if (q.orderDir) params.orderDir = q.orderDir;
-  if (typeof q.limit === 'number') params.limit = q.limit;
-  if (typeof q.offset === 'number') params.offset = q.offset;
+  if (typeof q.limit === "number") params.limit = q.limit;
+  if (typeof q.offset === "number") params.offset = q.offset;
 
-  if (typeof q.is_active !== 'undefined') params.is_active = q.is_active;
-  if (typeof q.is_featured !== 'undefined') params.is_featured = q.is_featured;
+  if (typeof q.is_active !== "undefined") params.is_active = q.is_active;
+  if (typeof q.is_featured !== "undefined") params.is_featured = q.is_featured;
 
   if (q.q) params.q = q.q;
   if (q.slug) params.slug = q.slug;

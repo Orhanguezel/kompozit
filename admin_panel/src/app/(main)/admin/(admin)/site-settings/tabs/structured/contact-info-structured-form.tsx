@@ -1,19 +1,19 @@
-
 // =============================================================
 // FILE: src/components/admin/site-settings/structured/ContactInfoStructuredForm.tsx
 // =============================================================
 
 "use client";
 
-import React from "react";
+import type React from "react";
+
 import { z } from "zod";
+
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { useAdminTranslations } from "@/i18n";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
-
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 
 export const contactInfoSchema = z
   .object({
@@ -74,7 +74,9 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-2">
-          <Label htmlFor="contact-phone" className="text-sm">{t("admin.siteSettings.structured.contact.labels.phone")}</Label>
+          <Label htmlFor="contact-phone" className="text-sm">
+            {t("admin.siteSettings.structured.contact.labels.phone")}
+          </Label>
           <Input
             id="contact-phone"
             className="h-8"
@@ -82,11 +84,13 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
             onChange={(e) => onChange({ ...form, phone: e.target.value })}
             disabled={disabled}
           />
-          {errors?.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
+          {errors?.phone && <p className="text-destructive text-xs">{errors.phone}</p>}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contact-email" className="text-sm">{t("admin.siteSettings.structured.contact.labels.email")}</Label>
+          <Label htmlFor="contact-email" className="text-sm">
+            {t("admin.siteSettings.structured.contact.labels.email")}
+          </Label>
           <Input
             id="contact-email"
             className="h-8"
@@ -94,11 +98,13 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
             onChange={(e) => onChange({ ...form, email: e.target.value })}
             disabled={disabled}
           />
-          {errors?.email && <p className="text-xs text-destructive">{errors.email}</p>}
+          {errors?.email && <p className="text-destructive text-xs">{errors.email}</p>}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="contact-whatsapp" className="text-sm">{t("admin.siteSettings.structured.contact.labels.whatsapp")}</Label>
+          <Label htmlFor="contact-whatsapp" className="text-sm">
+            {t("admin.siteSettings.structured.contact.labels.whatsapp")}
+          </Label>
           <Input
             id="contact-whatsapp"
             className="h-8"
@@ -106,11 +112,13 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
             onChange={(e) => onChange({ ...form, whatsapp: e.target.value })}
             disabled={disabled}
           />
-          {errors?.whatsapp && <p className="text-xs text-destructive">{errors.whatsapp}</p>}
+          {errors?.whatsapp && <p className="text-destructive text-xs">{errors.whatsapp}</p>}
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label htmlFor="contact-address" className="text-sm">{t("admin.siteSettings.structured.contact.labels.address")}</Label>
+          <Label htmlFor="contact-address" className="text-sm">
+            {t("admin.siteSettings.structured.contact.labels.address")}
+          </Label>
           <Textarea
             id="contact-address"
             rows={3}
@@ -119,7 +127,7 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
             disabled={disabled}
             className="text-sm"
           />
-          {errors?.address && <p className="text-xs text-destructive">{errors.address}</p>}
+          {errors?.address && <p className="text-destructive text-xs">{errors.address}</p>}
         </div>
       </div>
     </div>

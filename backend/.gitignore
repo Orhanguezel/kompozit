@@ -1,6 +1,12 @@
 node_modules/
 dist/
-uploads/
+# Yerel yüklemeler (PDF vb.); repo ile gelen marka dosyaları hariç
+uploads/*
+!uploads/kompozit/
+!uploads/kompozit/brand/
+!uploads/kompozit/brand/**
+!uploads/kompozit/samples/
+!uploads/kompozit/samples/**
 .env.local
 .env.*.local
 *.log

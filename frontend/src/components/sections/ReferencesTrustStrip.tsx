@@ -70,7 +70,7 @@ export async function ReferencesTrustStrip({ locale }: { locale: string }) {
   if (items.length === 0) return null;
 
   return (
-    <section className="section-py border-y border-white/5 bg-[var(--color-bg-muted)]/80">
+    <section className="section-py border-y border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)]">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <SectionHeader
           title={t('home.references.title')}
@@ -98,7 +98,7 @@ export async function ReferencesTrustStrip({ locale }: { locale: string }) {
                       src={item.imageSrc}
                       alt={item.imageAlt}
                       fill
-                      className="object-contain object-center grayscale filter"
+                      className="object-contain object-center transition-all duration-500 grayscale group-hover:grayscale-0 group-hover:scale-105"
                       sizes="144px"
                     />
                   </div>
@@ -111,7 +111,7 @@ export async function ReferencesTrustStrip({ locale }: { locale: string }) {
             );
 
             const className =
-              'group flex min-h-[3.5rem] min-w-[6rem] items-center justify-center rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3 transition-all hover:border-brand/20 hover:bg-white/[0.04]';
+              'group flex min-h-[3.5rem] min-w-[6rem] items-center justify-center rounded-2xl border border-white/5 bg-white/[0.02] px-4 py-3 transition-all hover:border-brand/20 hover:bg-white/[0.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]';
 
             if (item.external) {
               return (
@@ -138,7 +138,7 @@ export async function ReferencesTrustStrip({ locale }: { locale: string }) {
         <div className="mt-8 flex justify-center sm:hidden">
           <Link
             href={localizedPath(locale, '/references')}
-            className="inline-flex items-center gap-2 text-sm font-bold text-[var(--color-brand)]"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[var(--color-brand)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-muted)]"
           >
             {t('home.references.cta')}
             <ArrowRight className="size-4" />

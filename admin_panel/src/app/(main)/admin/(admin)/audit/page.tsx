@@ -3,7 +3,7 @@
 // FINAL — Admin Audit Page
 // =============================================================
 
-import AdminAuditClient from './admin-audit-client';
+import AdminAuditClient from "./admin-audit-client";
 
 export default function Page() {
   return <AdminAuditClient />;

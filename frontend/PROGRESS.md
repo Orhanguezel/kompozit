@@ -381,3 +381,18 @@
 - [x] Referrer-Policy: strict-origin-when-cross-origin
 - [x] Static assets: Cache-Control immutable (31536000s)
 - [x] compress: true, poweredByHeader: false
+
+---
+
+## Release Note
+
+MOE Kompozit yayina hazir mimari turunda frontend, admin panel ve backend tek marka etrafinda hizalandi: ana sayfa vitrin bloklari ve urun B2B metinleri `site_settings` uzerinden locale-aware yonetilecek sekilde baglandi, references ve solutions akislari public frontend'e tasindi, urun listeleme servisi kategori slug ve tag filtreleriyle genisletildi, canonical/hreflang ve default-locale URL stratejisi temizlenip sitemap/metadata katmani guclendirildi, Organization + LocalBusiness JSON-LD ortak helper'a alinip kritik detay sayfalarina yayildi, smoke/build/type-check hatlari calisir duruma getirildi ve son durumda `frontend` type-check + build, `admin_panel` build ve `backend` build dogrulandi; kalan aciklar esas olarak icerik izinleri, kategori agaci temizligi, Antigravity UI polish ve admin paneldeki mevcut Biome lint borcudur.
+
+2026-04-04 premium release turunda frontend deploy zinciri standalone Next.js cikisina tasindi: `frontend` icin PM2 runtime `node .next/standalone/server.js` ile hizalandi, Dockerfile cok-asamali standalone kopya modeline gecti ve GitHub Actions workflow'u yeni `frontend`/`backend`/`admin_panel` dizin yapisina gore type-check + build adimlariyla guncellendi. Ana sayfaya premium vitrin bloklari olarak `StatsBar`, `MaterialCards`, `ProcessTimeline` ve `IndustryStrip` yerlestirildi; ilgili TR/EN i18n namespace'leri dolduruldu ve home smoke testi yeni section isaretleriyle genislendirildi. SEO tarafinda `HowTo`, solution/product bazli `FAQPage` ve Organization `speakableSpecification` katmani eklendi; son durumda `frontend` icin `npm run type-check`, `npm run build` ve `npm run test:smoke:home-content:offline` tekrar yesile cekildi. `admin_panel` tarafinda `npm run check:fix` 304 dosyada otomatik temizlik yapti, ancak ozellikle `custompage` alaninda 89 Biome error halen manuel debt olarak duruyor.
+
+
+---
+
+## Release Note — Premium Tasarım Dönüşümü (2026-04-04)
+
+Bu turda CompositeCraft referans tasarımı MOE Kompozit'e adapte edildi. Renk sistemi altın (#c9a96e) temelli olarak doğrulandı ve zaten uygulanmıştı; font sistemi Bebas Neue (display) + Cormorant Garamond (serif) + DM Sans (body) üçlüsüne geçildi. Ana sayfaya altı yeni premium bölüm eklendi: `StatsBar` (4 metrik, 2×2 mobil grid), hakkımızda bölümü (carbon texture + gold accent), `MaterialCards` (CF + CTP specs, border-top gold slide hover), `ProcessTimeline` (5 adım, merkez gold çizgi, sol/sağ alternatif layout), `IndustryStrip` (5 sektör, translateY hover + radial gold glow), `HomeTestimonial` (Cormorant Garamond italic, dekoratif büyük tırnak); `FeatureCard` border-bottom gold slide hover ile tamamlandı. GEO katmanında HowTo JSON-LD (solution slug bazında 4 senaryo, TR+EN), FAQPage JSON-LD (solution + product detayları, TR+EN) ve Organization speakableSpecification eklendi. `global-error.tsx` root layout hataları için güvenlik ağı olarak oluşturuldu. Tüm yeni bileşenler `data-testid` ile işaretlendi; smoke testi, type-check ve build yeşile çekildi; standalone output + PM2 + Dockerfile zinciri doğrulandı. Kalan açıklar: Antigravity A0–A17 görsel onayı ve admin panel Biome lint borcu.

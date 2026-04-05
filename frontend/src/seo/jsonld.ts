@@ -17,6 +17,7 @@ export function org(input: {
   sameAs?: string[];
   knowsAbout?: string[];
   areaServed?: Array<string | Thing>;
+  speakableSpecification?: Thing;
 }): Thing {
   return {
     '@type': 'Organization',
@@ -32,6 +33,7 @@ export function org(input: {
     ...(input.sameAs?.length ? { sameAs: input.sameAs } : {}),
     ...(input.knowsAbout?.length ? { knowsAbout: input.knowsAbout } : {}),
     ...(input.areaServed?.length ? { areaServed: input.areaServed } : {}),
+    ...(input.speakableSpecification ? { speakableSpecification: input.speakableSpecification } : {}),
   };
 }
 
@@ -232,5 +234,41 @@ export function contactPage(input: {
     name: input.name,
     url: input.url,
     ...(input.description ? { description: input.description } : {}),
+  };
+}
+
+export function faqPage(input: {
+  url?: string;
+  mainEntity: Array<{ question: string; answer: string }>;
+}): Thing {
+  return {
+    '@type': 'FAQPage',
+    ...(input.url ? { url: input.url } : {}),
+    mainEntity: input.mainEntity.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+}
+
+export function howTo(input: {
+  name: string;
+  description?: string;
+  step: Array<{ name: string; text: string }>;
+}): Thing {
+  return {
+    '@type': 'HowTo',
+    name: input.name,
+    ...(input.description ? { description: input.description } : {}),
+    step: input.step.map((item, index) => ({
+      '@type': 'HowToStep',
+      position: index + 1,
+      name: item.name,
+      text: item.text,
+    })),
   };
 }

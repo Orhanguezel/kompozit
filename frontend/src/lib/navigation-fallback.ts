@@ -18,7 +18,6 @@ export function buildDefaultMenu(locale: string, t: TranslateFn): MenuItemLike[]
     { title: t('home'), url: localizedPath(locale, '/') },
     { title: t('products'), url: localizedPath(locale, '/products') },
     { title: t('solutions'), url: localizedPath(locale, '/solutions') },
-    { title: t('references'), url: localizedPath(locale, '/references') },
     { title: t('gallery'), url: localizedPath(locale, '/gallery') },
     { title: t('blog'), url: localizedPath(locale, '/blog') },
     { title: t('about'), url: localizedPath(locale, '/about') },
@@ -31,22 +30,10 @@ export function ensureMenuItems(
   locale: string,
   t: TranslateFn,
 ): Record<string, unknown>[] {
-  const fallback = buildDefaultMenu(locale, t);
-  const byUrl = new Map<string, Record<string, unknown>>();
-
-  for (const raw of input) {
-    const url = String(raw.url ?? raw.href ?? '').trim();
-    if (!url) continue;
-    byUrl.set(url, raw);
+  if (input && input.length > 0) {
+    return input;
   }
-
-  for (const item of fallback) {
-    if (!byUrl.has(item.url)) {
-      byUrl.set(item.url, item as unknown as Record<string, unknown>);
-    }
-  }
-
-  return Array.from(byUrl.values());
+  return buildDefaultMenu(locale, t) as unknown as Record<string, unknown>[];
 }
 
 export function buildDefaultFooterSections(
@@ -91,7 +78,8 @@ export function ensureFooterSections(
 ): Record<string, unknown>[] {
   const fallbackSections = buildDefaultFooterSections(locale, navT, footerT);
 
-  if (input.length === 0) {
+  const totalItems = input.reduce((sum, s) => sum + (Array.isArray(s.items) ? s.items.length : 0), 0);
+  if (input.length === 0 || totalItems === 0) {
     return fallbackSections as unknown as Record<string, unknown>[];
   }
 
@@ -108,10 +96,33 @@ export function ensureFooterSections(
     .flatMap((section) => section.items)
     .filter((item) => !existingUrls.has(item.url));
 
-  if (quickLinks.length === 0) return input;
+  // Localization override for section titles
+  // Mapping of common API titles to translation keys
+  const sectionTitleMap: Record<string, string> = {
+    'Explore': 'sections.explore',
+    'Kesfet': 'sections.explore',
+    'Kategoriler': 'sections.explore',
+    'Company': 'sections.company',
+    'Kurumsal': 'sections.company',
+    'Legal': 'sections.legal',
+    'Yasal': 'sections.legal',
+    'Hizli Baglantilar': 'sections.quickLinks',
+    'Baglantilar': 'sections.quickLinks',
+  };
+
+  const processedInput = input.map(section => {
+    const title = String(section.title || '');
+    const tKey = sectionTitleMap[title];
+    return {
+      ...section,
+      title: tKey ? footerT(tKey) : title
+    };
+  });
+
+  if (quickLinks.length === 0) return processedInput;
 
   return [
-    ...input,
+    ...processedInput,
     {
       title: footerT('sections.quickLinks'),
       items: quickLinks,

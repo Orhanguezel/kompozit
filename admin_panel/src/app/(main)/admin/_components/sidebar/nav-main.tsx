@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { ChevronRight, MailIcon, PlusCircleIcon } from 'lucide-react';
+import { ChevronRight, MailIcon, PlusCircleIcon } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -24,9 +25,8 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   useSidebar,
-} from '@/components/ui/sidebar';
-import type { NavGroup, NavMainItem } from '@/navigation/sidebar/sidebar-items';
-import { useAdminT } from '@/app/(main)/admin/_components/common/useAdminT';
+} from "@/components/ui/sidebar";
+import type { NavGroup, NavMainItem } from "@/navigation/sidebar/sidebar-items";
 
 interface NavMainProps {
   readonly items: readonly NavGroup[];
@@ -39,12 +39,12 @@ const IsComingSoon = ({ text }: { text: string }) => (
 );
 
 function isPathActive(currentPath: string, targetUrl: string) {
-  const p = String(currentPath || '/');
-  const u = String(targetUrl || '/');
+  const p = String(currentPath || "/");
+  const u = String(targetUrl || "/");
 
   // exact match OR sub-route match
   // /admin/site-settings -> active on /admin/site-settings and /admin/site-settings/xxx
-  return p === u || p.startsWith(u + '/');
+  return p === u || p.startsWith(`${u}/`);
 }
 
 const NavItemExpanded = ({
@@ -54,17 +54,12 @@ const NavItemExpanded = ({
   comingSoonText,
 }: {
   item: NavMainItem;
-  isActive: (url: string, subItems?: NavMainItem['subItems']) => boolean;
-  isSubmenuOpen: (subItems?: NavMainItem['subItems']) => boolean;
+  isActive: (url: string, subItems?: NavMainItem["subItems"]) => boolean;
+  isSubmenuOpen: (subItems?: NavMainItem["subItems"]) => boolean;
   comingSoonText: string;
 }) => {
   return (
-    <Collapsible
-      key={item.title}
-      asChild
-      defaultOpen={isSubmenuOpen(item.subItems)}
-      className="group/collapsible"
-    >
+    <Collapsible key={item.title} asChild defaultOpen={isSubmenuOpen(item.subItems)} className="group/collapsible">
       <SidebarMenuItem>
         <CollapsibleTrigger asChild>
           {item.subItems ? (
@@ -85,7 +80,7 @@ const NavItemExpanded = ({
               isActive={isActive(item.url)}
               tooltip={item.title}
             >
-              <Link prefetch={false} href={item.url} target={item.newTab ? '_blank' : undefined}>
+              <Link prefetch={false} href={item.url} target={item.newTab ? "_blank" : undefined}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
                 {item.comingSoon && <IsComingSoon text={comingSoonText} />}
@@ -99,16 +94,8 @@ const NavItemExpanded = ({
             <SidebarMenuSub>
               {item.subItems.map((subItem) => (
                 <SidebarMenuSubItem key={subItem.title}>
-                  <SidebarMenuSubButton
-                    aria-disabled={subItem.comingSoon}
-                    isActive={isActive(subItem.url)}
-                    asChild
-                  >
-                    <Link
-                      prefetch={false}
-                      href={subItem.url}
-                      target={subItem.newTab ? '_blank' : undefined}
-                    >
+                  <SidebarMenuSubButton aria-disabled={subItem.comingSoon} isActive={isActive(subItem.url)} asChild>
+                    <Link prefetch={false} href={subItem.url} target={subItem.newTab ? "_blank" : undefined}>
                       {subItem.icon && <subItem.icon />}
                       <span>{subItem.title}</span>
                       {subItem.comingSoon && <IsComingSoon text={comingSoonText} />}
@@ -130,7 +117,7 @@ const NavItemCollapsed = ({
   comingSoonText,
 }: {
   item: NavMainItem;
-  isActive: (url: string, subItems?: NavMainItem['subItems']) => boolean;
+  isActive: (url: string, subItems?: NavMainItem["subItems"]) => boolean;
   comingSoonText: string;
 }) => {
   return (
@@ -157,11 +144,7 @@ const NavItemCollapsed = ({
                 aria-disabled={subItem.comingSoon}
                 isActive={isActive(subItem.url)}
               >
-                <Link
-                  prefetch={false}
-                  href={subItem.url}
-                  target={subItem.newTab ? '_blank' : undefined}
-                >
+                <Link prefetch={false} href={subItem.url} target={subItem.newTab ? "_blank" : undefined}>
                   {subItem.icon && <subItem.icon className="[&>svg]:text-sidebar-foreground" />}
                   <span>{subItem.title}</span>
                   {subItem.comingSoon && <IsComingSoon text={comingSoonText} />}
@@ -180,14 +163,14 @@ export function NavMain({ items, showQuickCreate = false }: NavMainProps) {
   const { state, isMobile } = useSidebar();
   const t = useAdminT();
 
-  const isItemActive = (url: string, subItems?: NavMainItem['subItems']) => {
+  const isItemActive = (url: string, subItems?: NavMainItem["subItems"]) => {
     if (subItems?.length) {
       return subItems.some((sub) => isPathActive(path, sub.url));
     }
     return isPathActive(path, url);
   };
 
-  const isSubmenuOpen = (subItems?: NavMainItem['subItems']) => {
+  const isSubmenuOpen = (subItems?: NavMainItem["subItems"]) => {
     return subItems?.some((sub) => isPathActive(path, sub.url)) ?? false;
   };
 
@@ -199,11 +182,11 @@ export function NavMain({ items, showQuickCreate = false }: NavMainProps) {
             <SidebarMenu>
               <SidebarMenuItem className="flex items-center gap-2">
                 <SidebarMenuButton
-                  tooltip={t('admin.sidebar.quickCreate')}
+                  tooltip={t("admin.sidebar.quickCreate")}
                   className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
                 >
                   <PlusCircleIcon />
-                  <span>{t('admin.sidebar.quickCreate')}</span>
+                  <span>{t("admin.sidebar.quickCreate")}</span>
                 </SidebarMenuButton>
                 <Button
                   size="icon"
@@ -211,7 +194,7 @@ export function NavMain({ items, showQuickCreate = false }: NavMainProps) {
                   variant="outline"
                 >
                   <MailIcon />
-                  <span className="sr-only">{t('admin.sidebar.inbox')}</span>
+                  <span className="sr-only">{t("admin.sidebar.inbox")}</span>
                 </Button>
               </SidebarMenuItem>
             </SidebarMenu>
@@ -226,7 +209,7 @@ export function NavMain({ items, showQuickCreate = false }: NavMainProps) {
           <SidebarGroupContent className="flex flex-col gap-2">
             <SidebarMenu>
               {group.items.map((item) => {
-                if (state === 'collapsed' && !isMobile) {
+                if (state === "collapsed" && !isMobile) {
                   if (!item.subItems) {
                     return (
                       <SidebarMenuItem key={item.title}>
@@ -236,21 +219,24 @@ export function NavMain({ items, showQuickCreate = false }: NavMainProps) {
                           tooltip={item.title}
                           isActive={isItemActive(item.url)}
                         >
-                          <Link
-                            prefetch={false}
-                            href={item.url}
-                            target={item.newTab ? '_blank' : undefined}
-                          >
+                          <Link prefetch={false} href={item.url} target={item.newTab ? "_blank" : undefined}>
                             {item.icon && <item.icon />}
                             <span>{item.title}</span>
-                            {item.comingSoon && <IsComingSoon text={t('admin.sidebar.comingSoon')} />}
+                            {item.comingSoon && <IsComingSoon text={t("admin.sidebar.comingSoon")} />}
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     );
                   }
 
-                  return <NavItemCollapsed key={item.title} item={item} isActive={isItemActive} comingSoonText={t('admin.sidebar.comingSoon')} />;
+                  return (
+                    <NavItemCollapsed
+                      key={item.title}
+                      item={item}
+                      isActive={isItemActive}
+                      comingSoonText={t("admin.sidebar.comingSoon")}
+                    />
+                  );
                 }
 
                 return (
@@ -259,7 +245,7 @@ export function NavMain({ items, showQuickCreate = false }: NavMainProps) {
                     item={item}
                     isActive={isItemActive}
                     isSubmenuOpen={isSubmenuOpen}
-                    comingSoonText={t('admin.sidebar.comingSoon')}
+                    comingSoonText={t("admin.sidebar.comingSoon")}
                   />
                 );
               })}

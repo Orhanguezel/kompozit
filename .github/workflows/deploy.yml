@@ -1,6 +1,6 @@
 # GitHub Actions — Kompozit CI/CD
 # Triggers on push to main branch
-# Builds karbonkompozit + kompozit_admin_panel + kompozit_backend
+# Builds frontend + admin_panel + backend
 # Deploys via SSH to same VPS as Ensotek
 #
 # Required GitHub Secrets:
@@ -24,9 +24,6 @@ env:
   NEXT_TELEMETRY_DISABLED: "1"
 
 jobs:
-  # ──────────────────────────────────────────────
-  # 1) Build
-  # ──────────────────────────────────────────────
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
@@ -40,36 +37,45 @@ jobs:
         with:
           bun-version: latest
 
-      # ── Backend ──
       - name: Install & build kompozit_backend
-        working-directory: kompozit_backend
+        working-directory: backend
         run: |
           bun install --frozen-lockfile || bun install
           bun run build
 
-      # ── Frontend (karbonkompozit) ──
-      - name: Install & build karbonkompozit
-        working-directory: karbonkompozit
+      - name: Install frontend dependencies
+        working-directory: frontend
         run: |
           bun install --frozen-lockfile || bun install
-          bun run build
 
-      # ── Admin Panel ──
+      - name: Type Check
+        working-directory: frontend
+        run: bun run type-check
+
+      - name: Build
+        working-directory: frontend
+        run: bun run build
+
+      - name: Smoke tests (home, offline — no API)
+        working-directory: frontend
+        run: |
+          bun run test:smoke:home-content:offline
+          bun run test:smoke:home-api:offline
+
       - name: Install & build kompozit_admin_panel
-        working-directory: kompozit_admin_panel
+        working-directory: admin_panel
         run: |
           bun install --frozen-lockfile || bun install
           bun run build
 
-      # ── Upload artifacts ──
       - name: Upload backend artifact
         uses: actions/upload-artifact@v4
         with:
           name: kompozit-backend-dist
           path: |
-            kompozit_backend/dist/
-            kompozit_backend/package.json
-            kompozit_backend/ecosystem.config.cjs
+            backend/dist/
+            backend/package.json
+            backend/ecosystem.config.cjs
           retention-days: 1
 
       - name: Upload karbonkompozit artifact
@@ -77,11 +83,12 @@ jobs:
         with:
           name: kompozit-frontend-dist
           path: |
-            karbonkompozit/.next/standalone/
-            karbonkompozit/.next/static/
-            karbonkompozit/public/
-            karbonkompozit/package.json
-            karbonkompozit/ecosystem.config.cjs
+            frontend/.next/standalone/
+            frontend/.next/static/
+            frontend/public/
+            frontend/package.json
+            frontend/ecosystem.config.cjs
+            frontend/Dockerfile
           retention-days: 1
 
       - name: Upload admin panel artifact
@@ -89,16 +96,13 @@ jobs:
         with:
           name: kompozit-admin-dist
           path: |
-            kompozit_admin_panel/.next/standalone/
-            kompozit_admin_panel/.next/static/
-            kompozit_admin_panel/public/
-            kompozit_admin_panel/package.json
-            kompozit_admin_panel/ecosystem.config.cjs
+            admin_panel/.next/standalone/
+            admin_panel/.next/static/
+            admin_panel/public/
+            admin_panel/package.json
+            admin_panel/ecosystem.config.cjs
           retention-days: 1
 
-  # ──────────────────────────────────────────────
-  # 2) Deploy
-  # ──────────────────────────────────────────────
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -151,7 +155,6 @@ jobs:
             -e "$RSYNC_SSH" \
             kompozit-admin-dist/ ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/Ensotek/kompozit_admin_panel/
 
-      # ── PM2 restart ──
       - name: Restart services
         uses: appleboy/ssh-action@v1.0.0
         with:

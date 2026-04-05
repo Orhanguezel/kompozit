@@ -1,6 +1,6 @@
 import 'server-only';
 
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
@@ -10,6 +10,7 @@ import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { Reveal } from '@/components/motion/Reveal';
 import { fetchSolutions } from '@/features/solutions';
+import { resolvePublicAssetUrl } from '@/lib/utils';
 import { getFallbackSolutions } from '@/lib/content-fallbacks';
 
 export async function generateMetadata({
@@ -33,6 +34,7 @@ export default async function SolutionsPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const [tSol, tCommon] = await Promise.all([
     getTranslations({ locale, namespace: 'solutions' }),
     getTranslations({ locale, namespace: 'common' }),
@@ -41,64 +43,78 @@ export default async function SolutionsPage({
   const items = data && data.length > 0 ? data : getFallbackSolutions(locale);
 
   return (
-    <div className="section-py bg-[var(--color-bg-muted)] relative overflow-hidden">
-      <div className="surface-dark-shell carbon-mesh absolute inset-0 opacity-[0.03] pointer-events-none" />
-      <div className="relative z-10 mx-auto max-w-7xl px-4 lg:px-8">
-        <JsonLd
-          data={jsonld.graph([
-            jsonld.collectionPage({
-              name: tSol('listTitle'),
-              description: tSol('listDescription'),
-              url: localizedUrl(locale, '/solutions'),
-              mainEntity: jsonld.itemList(
-                items.slice(0, 24).map((item: { title?: string; slug?: string }) => ({
-                  name: String(item.title ?? ''),
-                  url: item.slug ? localizedUrl(locale, `/solutions/${item.slug}`) : localizedUrl(locale, '/offer'),
-                })),
-              ),
-            }),
-          ])}
-        />
-        <SectionHeader
-          title={tSol('listTitle')}
-          description={tSol('listDescription')}
-          label={tSol('sectionLabel')}
-          align="left"
-        />
+    <main className="relative bg-[var(--carbon)]">
+      <JsonLd
+        data={jsonld.graph([
+          jsonld.collectionPage({
+            name: tSol('listTitle'),
+            description: tSol('listDescription'),
+            url: localizedUrl(locale, '/solutions'),
+            mainEntity: jsonld.itemList(
+              items.slice(0, 24).map((item: { title?: string; slug?: string }) => ({
+                name: String(item.title ?? ''),
+                url: item.slug ? localizedUrl(locale, `/solutions/${item.slug}`) : localizedUrl(locale, '/offer'),
+              })),
+            ),
+          }),
+        ])}
+      />
 
-        {items.length === 0 ? (
-          <p className="mt-10 text-[var(--color-text-secondary)]">{tSol('empty')}</p>
-        ) : (
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item: any, index: number) => (
-              <Reveal key={item.id ?? item.slug} delay={80 * (index + 1)}>
-                <ListingCard
-                  href={item.slug ? localizedPath(locale, `/solutions/${item.slug}`) : localizedPath(locale, '/offer')}
-                  title={item.title}
-                  lineLabel={tCommon('listingEngineeringLine')}
-                  description={item.description ?? item.summary}
-                  imageSrc={item.image_url ?? item.featured_image}
-                  specs={item.specs}
-                  category={item.category}
-                  imageAlt={item.title}
-                  imageSizes="(max-width: 768px) 100vw, 33vw"
-                  imageAspectClassName="aspect-[16/10]"
-                />
-              </Reveal>
-            ))}
-          </div>
-        )}
+      <section className="section-py">
+        <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
+          <Reveal>
+            <div className="mb-16">
+              <span className="section-label-cc">{tSol('sectionLabel') || 'Engineering Solutions'}</span>
+              <h1 className="section-title-cc">{tSol('listTitle')}</h1>
+              <p className="section-subtitle-cc">{tSol('listDescription')}</p>
+            </div>
+          </Reveal>
 
-        <div className="mt-14 text-center">
-          <Link
-            href={localizedPath(locale, '/offer')}
-            className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-2 rounded-xl px-8 py-4 font-semibold"
-          >
-            {tSol('ctaOffer')}
-            <ArrowRight className="size-5" />
-          </Link>
+          {items.length === 0 ? (
+            <p className="text-[var(--silver)] opacity-60">{tSol('empty')}</p>
+          ) : (
+            <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3">
+              {items.map((item: any, index: number) => (
+                <Reveal key={item.id ?? item.slug} delay={index * 50} className="grid-item-cc">
+                  <ListingCard
+                    listIndex={index + 1}
+                    visualVariant={index}
+                    href={item.slug ? localizedPath(locale, `/solutions/${item.slug}`) : localizedPath(locale, '/offer')}
+                    title={item.title}
+                    lineLabel={tCommon('listingEngineeringLine')}
+                    description={item.description ?? item.summary}
+                    imageSrc={
+                      resolvePublicAssetUrl(item.image_url ?? item.featured_image) ??
+                      item.image_url ??
+                      item.featured_image
+                    }
+                    specs={item.specs}
+                    category={item.category}
+                    imageAlt={item.title}
+                    imageSizes="(max-width: 768px) 100vw, 33vw"
+                    imageAspectClassName="h-[450px]"
+                  />
+                </Reveal>
+              ))}
+            </div>
+          )}
+
+          <Reveal delay={400}>
+            <div className="mt-24 border-t border-[var(--gold)]/10 pt-16 text-center">
+              <h2 className="font-display text-[1.8rem] uppercase tracking-[4px] text-[var(--white)] mb-8">
+                 {tSol('ctaOffer')}
+              </h2>
+              <Link
+                href={localizedPath(locale, '/offer')}
+                className="hero-btn-primary shimmer-btn"
+              >
+                {tCommon('requestOffer')}
+                <ArrowRight className="size-5" />
+              </Link>
+            </div>
+          </Reveal>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
