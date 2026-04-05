@@ -8,10 +8,11 @@ const nextConfig: NextConfig = {
   output: 'standalone',
 
   async rewrites() {
+    // Always use local backend for server-side rewrites to avoid external loop
     const backendBase = (
+      process.env.BACKEND_INTERNAL_URL ||
       process.env.BACKEND_URL ||
-      process.env.NEXT_PUBLIC_API_URL ||
-      'http://127.0.0.1:8186/api'
+      'http://127.0.0.1:8186'
     ).replace(/\/api\/?$/, '');
 
     return [
