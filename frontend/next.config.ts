@@ -7,6 +7,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: 'standalone',
 
+  async redirects() {
+    return [
+      { source: '/', destination: '/tr', permanent: false },
+    ];
+  },
+
   async rewrites() {
     // Always use local backend for server-side rewrites to avoid external loop
     const backendBase = (
