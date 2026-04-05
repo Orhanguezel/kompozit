@@ -6,8 +6,6 @@ import { registerProjectPublic, registerProjectAdmin } from './routes/project';
 
 export async function registerAllRoutes(app: FastifyInstance) {
   await app.register(async (api) => {
-    api.get('/health', async () => ({ ok: true }));
-
     await api.register(async (adminApi) => {
       adminApi.addHook('onRequest', requireAuth);
       adminApi.addHook('onRequest', requireAdmin);
