@@ -51,7 +51,7 @@ export async function generateMetadata({
       (locale.startsWith('en')
         ? `${gallery.title}. Review visuals from composite production steps, project details and completed applications.`
         : `${gallery.title}. Kompozit uretim adimlari, proje detaylari ve tamamlanan uygulamalardan gorselleri inceleyin.`),
-    ogImage: gallery.cover_image_url_resolved || gallery.cover_image,
+    ogImage: gallery.cover_image_url || gallery.cover_image_url_resolved || gallery.cover_image,
     includeLocaleAlternates: false,
   });
 }
@@ -110,8 +110,8 @@ export default async function GalleryDetailPage({
                 description: gallery.description,
                 url: galleryUrl,
                 images: (images.length > 0 ? images : [{
-                  image_url_resolved: gallery.cover_image_url_resolved,
-                  image_url: gallery.cover_image,
+                  image_url_resolved: gallery.cover_image_url || gallery.cover_image_url_resolved,
+                  image_url: gallery.cover_image_url || gallery.cover_image,
                   alt: gallery.cover_image_alt,
                   caption: gallery.description,
                   width: 1200,
@@ -134,7 +134,7 @@ export default async function GalleryDetailPage({
                   });
 
                   return jsonld.imageObject({
-                    contentUrl: img.image_url_resolved || img.image_url || gallery.cover_image_url_resolved || gallery.cover_image || GALLERY_PLACEHOLDER_SRC,
+                    contentUrl: img.image_url_resolved || img.image_url || gallery.cover_image_url || gallery.cover_image_url_resolved || gallery.cover_image || GALLERY_PLACEHOLDER_SRC,
                     name: media.alt,
                     caption: media.caption || media.alt,
                     width: dimensions.width,
@@ -225,8 +225,9 @@ export default async function GalleryDetailPage({
             <OptimizedImage
               src={
                 resolvePublicAssetUrl(
-                  gallery.cover_image_url_resolved || gallery.cover_image,
+                  gallery.cover_image_url || gallery.cover_image_url_resolved || gallery.cover_image,
                 ) ??
+                gallery.cover_image_url ??
                 gallery.cover_image_url_resolved ??
                 gallery.cover_image ??
                 GALLERY_PLACEHOLDER_SRC

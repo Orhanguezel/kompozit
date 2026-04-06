@@ -127,8 +127,9 @@ export default async function GalleryPage({
                       href={g.slug ? localizedPath(locale, `/gallery/${g.slug}`) : localizedPath(locale, '/gallery')}
                       src={
                         resolvePublicAssetUrl(
-                          g.cover_image_url_resolved || g.cover_image || g.imageSrc,
+                          g.cover_image_url || g.cover_image_url_resolved || g.cover_image || g.imageSrc,
                         ) ??
+                        g.cover_image_url ??
                         g.cover_image_url_resolved ??
                         g.cover_image ??
                         g.imageSrc ??
