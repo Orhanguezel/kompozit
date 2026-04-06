@@ -6,6 +6,7 @@ import { resolvePublicAssetUrl } from '@/lib/utils';
 
 function galleryItemImageSrc(item: Record<string, unknown>): string {
   const raw =
+    (typeof item.cover_image_url === 'string' && item.cover_image_url) ||
     (typeof item.cover_image_url_resolved === 'string' && item.cover_image_url_resolved) ||
     (typeof item.cover_image === 'string' && item.cover_image) ||
     (typeof item.image_url === 'string' && item.image_url) ||
