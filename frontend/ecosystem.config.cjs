@@ -9,7 +9,7 @@ module.exports = {
       name: 'kompozit-frontend',
       cwd: '/var/www/Ensotek/kompozit/frontend',
       script: 'node',
-      args: '.next/standalone/server.js',
+      args: '.next/standalone/kompozit/frontend/server.js',
       exec_mode: 'fork',
       instances: 1,
       watch: false,
