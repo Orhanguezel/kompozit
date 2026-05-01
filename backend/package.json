@@ -17,7 +17,7 @@
     "test:smoke:kompozit-admin": "node scripts/smoke-kompozit-admin.mjs"
   },
   "dependencies": {
-    "@agro/shared-backend": "workspace:*",
+    "@ensotek/shared-backend": "workspace:*",
     "@fastify/cookie": "^11",
     "@fastify/cors": "^11",
     "@fastify/jwt": "^10",

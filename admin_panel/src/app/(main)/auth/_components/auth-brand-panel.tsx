@@ -12,14 +12,14 @@ type Props = {
 };
 
 export function AuthBrandPanel({ heading, subtext }: Props) {
-  const { data: logoSetting } = useGetSiteSettingByKeyQuery("site_logo");
-  const { data: configSetting } = useGetSiteSettingByKeyQuery("ui_admin_config");
+  const { data: logoSetting } = useGetSiteSettingByKeyQuery("kompozit__site_logo");
+  const { data: configSetting } = useGetSiteSettingByKeyQuery("kompozit__ui_admin_config");
 
   const logoVal = logoSetting?.value as any;
   const configVal = configSetting?.value as any;
 
-  const logoUrl: string = logoVal?.url || LOGO_FALLBACK;
-  const logoAlt: string = logoVal?.alt || "Logo";
+  const logoUrl: string = logoVal?.url || logoVal?.logo_url || logoVal?.logo_light_url || LOGO_FALLBACK;
+  const logoAlt: string = logoVal?.alt || logoVal?.logo_alt || "Logo";
   const appName: string = configVal?.branding?.app_name || "MOE Kompozit";
 
   return (

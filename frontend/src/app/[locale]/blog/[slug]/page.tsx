@@ -117,8 +117,8 @@ export default async function BlogPostPage({
               ),
             ])}
           />
-          <Breadcrumbs 
-            items={breadcrumbs} 
+          <Breadcrumbs
+            items={breadcrumbs}
             className="mb-10"
             olClassName="text-[var(--color-light)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-off-white)]"
           />

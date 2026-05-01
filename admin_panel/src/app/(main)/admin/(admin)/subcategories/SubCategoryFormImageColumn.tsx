@@ -10,6 +10,7 @@ import type React from "react";
 import { useEffect, useMemo, useState } from "react";
 
 import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 
 export type SubCategoryImageMetadata = {
   category_id?: string;
@@ -32,6 +33,7 @@ export const SubCategoryFormImageColumn: React.FC<SubCategoryFormImageColumnProp
   disabled,
   onIconChange,
 }) => {
+  const t = useAdminT("admin.subcategories");
   // ✅ Controlled local state (AdminImageUploadField internal-state sync problemi için)
   const [localValue, setLocalValue] = useState<string>(safeStr(iconValue));
 
@@ -51,11 +53,11 @@ export const SubCategoryFormImageColumn: React.FC<SubCategoryFormImageColumnProp
   return (
     <AdminImageUploadField
       key={remountKey}
-      label="Alt Kategori Görseli"
+      label={t("legacyForm.imageLabel")}
       helperText={
         <>
-          Storage modülü üzerinden alt kategori için bir görsel yükleyebilirsin. Yüklenen görselin URL&apos;i anında
-          burada önizleme olarak görünür ve formdaki <strong>Icon / Görsel URL</strong> alanına da yansır.
+          {t("legacyForm.imageHelperBefore")} <strong>{t("legacyForm.imageHelperStrong")}</strong>{" "}
+          {t("legacyForm.imageHelperAfter")}
         </>
       }
       bucket="public"

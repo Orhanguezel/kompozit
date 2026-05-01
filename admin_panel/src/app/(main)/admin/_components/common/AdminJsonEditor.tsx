@@ -13,9 +13,9 @@ import { useEffect, useState } from "react";
 
 import { Braces } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import { cn } from "@/lib/utils";
 
 type AdminJsonEditorProps = {

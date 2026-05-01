@@ -42,7 +42,7 @@ const normalizeList = (raw: unknown): ApiCustomPage[] => {
   return [];
 };
 
-const BASE = "/admin/custom_pages";
+const BASE = "/admin/custom-pages";
 
 export const customPagesAdminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({

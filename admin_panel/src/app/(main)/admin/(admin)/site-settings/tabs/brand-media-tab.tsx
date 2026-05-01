@@ -14,9 +14,9 @@ import { toast } from "sonner";
 
 import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
 import {
   useDeleteSiteSettingAdminMutation,
   useListSiteSettingsAdminQuery,
@@ -130,7 +130,7 @@ function normalizeImageUrl(rawUrl: string): string {
     return url;
   }
 
-  /* 
+  /*
   if (typeof window !== 'undefined') {
     console.warn(
       `[BrandMediaTab] Relative URL detected: "${url}". ` +

@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@ensotek/shared-ui/admin/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupLabel,

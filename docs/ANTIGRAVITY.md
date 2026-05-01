@@ -1,8 +1,8 @@
 # Antigravity — V2 Görsel Doğrulama Checklist
 
-> **Hedef:** Her section için `compositecraft-website.html` ile yan yana karşılaştırma.  
-> **Referans:** `http://127.0.0.1:5500/compositecraft-website.html`  
-> **Site:** `http://localhost:3020` (veya `/en` locale için)  
+> **Hedef:** Her section için `compositecraft-website.html` ile yan yana karşılaştırma.
+> **Referans:** `http://127.0.0.1:5500/compositecraft-website.html`
+> **Site:** `http://localhost:3020` (veya `/en` locale için)
 > **Kural:** Her bölümü ayrı screenshot ile doğrula. Sorun varsa CURSOR.md ilgili bölümüne yaz.
 
 ---

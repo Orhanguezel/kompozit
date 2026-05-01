@@ -1,0 +1,35 @@
+# MOE Kompozit - Endustriyel Kompozit Cozumleri
+> Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan Ensotek alt markasi.
+
+## Ensotek Bagi
+MOE Kompozit, Ensotek Turkiye'nin kompozit uretim alt markasidir. Ensotek'in sogutma kulesi sektorundeki 39+ yillik muhendislik ve kalite deneyimi, MOE Kompozit'in karbon fiber, CTP tank, FRP boru, pultruzyon profil ve ozel kompozit parca uretimine aktarilir.
+
+## Uretim Yetkinlikleri
+- Karbon fiber bilesenleri: savunma, havacilik, enerji ve ulasim icin hafif parcalar.
+- CTP / FRP tank ve borular: kimya, gida, su aritma ve endustriyel depolama.
+- Pultruzyon profilleri: yapi, raf sistemleri ve ozel kesit profiller.
+- RTM ve el yatirmasi: kompleks form, otomotiv, beyaz esya ve ozel seri uretim.
+- Sehir mobilyasi ve endustriyel kompozit uygulamalari.
+
+## Hedef Sektorler
+Savunma, enerji, endustriyel depolama, kimya, altyapi, ulasim, sehir mobilyasi, denizcilik ve ozel proje uretimi.
+
+## Standartlar
+ISO 9001 odakli kalite sistemi, AS9100 baseline hedefi, teknik sartnameye gore malzeme sertifikasyonu ve proses kontrolu.
+
+## Iletisim
+- Website: https://karbonkompozit.com.tr
+- Teklif ve teknik talepler: offers@moekompozit.com
+- Ana grup: https://www.ensotek.com.tr
+
+## Web Hiyerarsisi
+- /tr/urunler: 7 ana urun kategorisi.
+- /tr/sektorler: sektor bazli uygulama rehberleri.
+- /tr/hakkimizda: uretim altyapisi, kalite ve kurumsal bilgi.
+- /tr/galeri: urun ve uretim gorselleri.
+- /tr/blog: karbon fiber, CTP ve kompozit teknolojileri.
+- /tr/iletisim: iletisim formu.
+- /tr/teklif: online teklif portali.
+
+## Anahtar Konular
+Karbon fiber uretim, CTP tank, FRP boru, pultruzyon profil, RTM, resin transfer molding, el yatirmasi, kompozit malzeme, savunma kompozit, ruzgar turbini bileseni, kimyasal depolama tanki, kompozit izolator.

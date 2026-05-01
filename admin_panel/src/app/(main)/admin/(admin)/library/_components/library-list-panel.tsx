@@ -16,14 +16,14 @@ import { toast } from "sonner";
 import { type AdminLocaleOption, AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
 import {
   useListLibraryAdminQuery,
   useRemoveLibraryAdminMutation,
@@ -31,13 +31,7 @@ import {
 } from "@/integrations/endpoints/admin/library_admin.endpoints";
 import type { LibraryDto } from "@/integrations/shared";
 
-const LIBRARY_TYPES = [
-  { value: "brochure", label: "Broşür" },
-  { value: "catalog", label: "Katalog" },
-  { value: "manual", label: "Kılavuz" },
-  { value: "technical", label: "Teknik Döküman" },
-  { value: "other", label: "Diğer" },
-];
+const LIBRARY_TYPE_VALUES = ["brochure", "catalog", "manual", "technical", "other"] as const;
 
 const isTruthy = (v: unknown) => v === 1 || v === true || v === "1" || v === "true";
 
@@ -93,11 +87,20 @@ export default function LibraryListPanel() {
     }));
   }, [localeOptions]);
 
+  const libraryTypes = React.useMemo(
+    () =>
+      LIBRARY_TYPE_VALUES.map((value) => ({
+        value,
+        label: t(`detail.types.${value}`),
+      })),
+    [t],
+  );
+
   const handleToggleActive = async (item: LibraryDto, value: boolean) => {
     try {
       await updateLibrary({ id: item.id, patch: { is_active: value } }).unwrap();
     } catch {
-      toast.error("Aktiflik değiştirilemedi");
+      toast.error(t("messages.toggleActiveError"));
     }
   };
 
@@ -105,7 +108,7 @@ export default function LibraryListPanel() {
     try {
       await updateLibrary({ id: item.id, patch: { is_published: value } }).unwrap();
     } catch {
-      toast.error("Yayın durumu değiştirilemedi");
+      toast.error(t("messages.togglePublishedError"));
     }
   };
 
@@ -113,18 +116,18 @@ export default function LibraryListPanel() {
     try {
       await updateLibrary({ id: item.id, patch: { featured: value } }).unwrap();
     } catch {
-      toast.error("Öne çıkarma değiştirilemedi");
+      toast.error(t("messages.toggleFeaturedError"));
     }
   };
 
   const handleDelete = async (item: LibraryDto) => {
-    if (!confirm(`"${item.name || item.slug}" silinsin mi?`)) return;
+    if (!confirm(t("messages.confirmDelete", { title: item.name || item.slug || "" }))) return;
     try {
       await removeLibrary(item.id).unwrap();
-      toast.success("Silindi");
+      toast.success(t("messages.deleted"));
       refetch();
     } catch {
-      toast.error("Silinemedi");
+      toast.error(t("messages.deleteError"));
     }
   };
 
@@ -180,13 +183,13 @@ export default function LibraryListPanel() {
                 disabled={isLoading}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Tüm Tipler" />
+                  <SelectValue placeholder={t("filters.allTypes")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tüm Tipler</SelectItem>
-                  {LIBRARY_TYPES.map((t) => (
-                    <SelectItem key={t.value} value={t.value}>
-                      {t.label}
+                  <SelectItem value="all">{t("filters.allTypes")}</SelectItem>
+                  {libraryTypes.map((libraryType) => (
+                    <SelectItem key={libraryType.value} value={libraryType.value}>
+                      {libraryType.label}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -203,7 +206,7 @@ export default function LibraryListPanel() {
                   disabled={isLoading}
                 />
                 <Label htmlFor="active-filter" className="cursor-pointer text-sm">
-                  Aktif
+                  {t("table.active")}
                 </Label>
               </div>
               <div className="flex items-center gap-2">
@@ -214,7 +217,7 @@ export default function LibraryListPanel() {
                   disabled={isLoading}
                 />
                 <Label htmlFor="published-filter" className="cursor-pointer text-sm">
-                  Yayın
+                  {t("table.published")}
                 </Label>
               </div>
               <div className="flex items-center gap-2">
@@ -225,7 +228,7 @@ export default function LibraryListPanel() {
                   disabled={isLoading}
                 />
                 <Label htmlFor="featured-filter" className="cursor-pointer text-sm">
-                  Öne Çıkan
+                  {t("table.featured")}
                 </Label>
               </div>
             </div>
@@ -240,28 +243,28 @@ export default function LibraryListPanel() {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[48px]">#</TableHead>
-                <TableHead>Ad / Slug</TableHead>
-                <TableHead className="w-[110px]">Tip</TableHead>
-                <TableHead className="w-[80px] text-center">Aktif</TableHead>
-                <TableHead className="w-[80px] text-center">Yayın</TableHead>
-                <TableHead className="w-[90px] text-center">Öne Çıkan</TableHead>
-                <TableHead className="w-[70px] text-center">Görünt.</TableHead>
-                <TableHead className="w-[70px] text-center">İndirme</TableHead>
-                <TableHead className="w-[60px] text-center">Sıra</TableHead>
-                <TableHead className="w-[110px] text-right">İşlemler</TableHead>
+                <TableHead>{t("table.name")}</TableHead>
+                <TableHead className="w-[110px]">{t("table.type")}</TableHead>
+                <TableHead className="w-[80px] text-center">{t("table.active")}</TableHead>
+                <TableHead className="w-[80px] text-center">{t("table.published")}</TableHead>
+                <TableHead className="w-[90px] text-center">{t("table.featured")}</TableHead>
+                <TableHead className="w-[70px] text-center">{t("table.views")}</TableHead>
+                <TableHead className="w-[70px] text-center">{t("table.downloads")}</TableHead>
+                <TableHead className="w-[60px] text-center">{t("table.order")}</TableHead>
+                <TableHead className="w-[110px] text-right">{t("table.actions")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {isFetching && items.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={10} className="py-8 text-center text-muted-foreground text-sm">
-                    Yükleniyor...
+                    {t("list.loading")}
                   </TableCell>
                 </TableRow>
               ) : items.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={10} className="py-8 text-center text-muted-foreground text-sm">
-                    Kayıt bulunamadı.
+                    {t("list.empty")}
                   </TableCell>
                 </TableRow>
               ) : (
@@ -269,7 +272,7 @@ export default function LibraryListPanel() {
                   const isActive = isTruthy(item.is_active);
                   const isPublished = isTruthy(item.is_published);
                   const isFeatured = isTruthy(item.featured);
-                  const typeMeta = LIBRARY_TYPES.find((t) => t.value === item.type);
+                  const typeMeta = libraryTypes.find((libraryType) => libraryType.value === item.type);
 
                   return (
                     <TableRow key={item.id} className={!isActive ? "opacity-50" : ""}>
@@ -277,7 +280,7 @@ export default function LibraryListPanel() {
 
                       <TableCell>
                         <div className="max-w-[280px] truncate font-medium text-sm" title={item.name || ""}>
-                          {item.name || <span className="text-muted-foreground italic">(adsız)</span>}
+                          {item.name || <span className="text-muted-foreground italic">{t("list.unnamed")}</span>}
                         </div>
                         <div className="max-w-[280px] truncate text-muted-foreground text-xs">
                           <code>{item.slug || "—"}</code>

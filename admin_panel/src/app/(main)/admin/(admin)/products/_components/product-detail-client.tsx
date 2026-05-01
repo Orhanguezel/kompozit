@@ -24,14 +24,14 @@ import { type AdminLocaleOption, AdminLocaleSelect } from "@/app/(main)/admin/_c
 import RichContentEditor from "@/app/(main)/admin/_components/common/RichContentEditor";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import {
   useCreateProductAdminMutation,
   useGetProductAdminQuery,
@@ -70,12 +70,12 @@ function getObj(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
 }
 
-function getErrMessage(error: unknown): string {
+function getErrMessage(error: unknown, fallback: string): string {
   const errObj = getObj(error);
   const data = getObj(errObj?.data);
   const nestedError = getObj(data?.error);
   const message = nestedError?.message ?? data?.message ?? errObj?.message;
-  return typeof message === "string" && message.trim() ? message : "Hata oluştu";
+  return typeof message === "string" && message.trim() ? message : fallback;
 }
 
 interface Props {
@@ -186,7 +186,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     e?.preventDefault();
 
     if (!formData.title.trim()) {
-      toast.error("Başlık (title) zorunludur");
+      toast.error(t("detail.titleRequired"));
       return;
     }
 
@@ -222,17 +222,17 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     try {
       if (isNew) {
         const result = await createProduct(payload).unwrap();
-        toast.success("Ürün oluşturuldu");
+        toast.success(t("detail.createSuccess"));
         if (result?.id) {
           const typeParam = itemType === "sparepart" ? "?type=sparepart" : "";
           router.push(`/admin/products/${result.id}${typeParam}`);
         }
       } else {
         await updateProduct({ id, patch: payload }).unwrap();
-        toast.success("Ürün güncellendi");
+        toast.success(t("detail.updateSuccess"));
       }
     } catch (error: unknown) {
-      toast.error(`Hata: ${getErrMessage(error)}`);
+      toast.error(t("detail.errorPrefix", { message: getErrMessage(error, t("detail.defaultError")) }));
     }
   };
 
@@ -262,7 +262,9 @@ export default function ProductDetailClient({ id, itemType }: Props) {
               </Button>
               <div>
                 <CardTitle className="text-base">{isNew ? t("actions.create") : t("actions.edit")}</CardTitle>
-                <CardDescription>{isNew ? "Yeni ürün oluştur" : `${item?.title || ""} düzenle`}</CardDescription>
+                <CardDescription>
+                  {isNew ? t("detail.createDescription") : t("detail.editDescription", { title: item?.title || "" })}
+                </CardDescription>
               </div>
             </div>
             <AdminLocaleSelect
@@ -278,22 +280,22 @@ export default function ProductDetailClient({ id, itemType }: Props) {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
         <TabsList>
-          <TabsTrigger value="form">Form</TabsTrigger>
+          <TabsTrigger value="form">{t("detail.tabs.form")}</TabsTrigger>
           <TabsTrigger value="specs" disabled={isNew}>
             <ListChecks className="mr-2 h-4 w-4" />
-            Özellikler
+            {t("detail.tabs.specs")}
           </TabsTrigger>
           <TabsTrigger value="faqs" disabled={isNew}>
             <HelpCircle className="mr-2 h-4 w-4" />
-            SSS
+            {t("detail.tabs.faqs")}
           </TabsTrigger>
           <TabsTrigger value="reviews" disabled={isNew}>
             <Star className="mr-2 h-4 w-4" />
-            Değerlendirmeler
+            {t("detail.tabs.reviews")}
           </TabsTrigger>
           <TabsTrigger value="json">
             <FileJson className="mr-2 h-4 w-4" />
-            JSON
+            {t("detail.tabs.json")}
           </TabsTrigger>
         </TabsList>
 
@@ -307,32 +309,32 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                   <div className="space-y-6 lg:col-span-2">
                     {/* Başlık */}
                     <div className="space-y-2">
-                      <Label htmlFor="title">Başlık *</Label>
+                      <Label htmlFor="title">{t("detail.fields.title")}</Label>
                       <Input
                         id="title"
                         value={formData.title}
                         onChange={(e) => handleChange("title", e.target.value)}
                         disabled={isLoading}
-                        placeholder="Ürün başlığı"
+                        placeholder={t("detail.placeholders.title")}
                       />
                     </div>
 
                     {/* Slug */}
                     <div className="space-y-2">
-                      <Label htmlFor="slug">Slug</Label>
+                      <Label htmlFor="slug">{t("detail.fields.slug")}</Label>
                       <Input
                         id="slug"
                         value={formData.slug}
                         onChange={(e) => handleChange("slug", e.target.value)}
                         disabled={isLoading}
-                        placeholder="urun-slug"
+                        placeholder={t("detail.placeholders.slug")}
                       />
                     </div>
 
                     {/* Fiyat + Stok + Kod */}
                     <div className="grid grid-cols-3 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="price">Fiyat</Label>
+                        <Label htmlFor="price">{t("detail.fields.price")}</Label>
                         <Input
                           id="price"
                           type="number"
@@ -344,7 +346,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="stock_quantity">Stok</Label>
+                        <Label htmlFor="stock_quantity">{t("detail.fields.stock")}</Label>
                         <Input
                           id="stock_quantity"
                           type="number"
@@ -355,7 +357,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="product_code">Ürün Kodu</Label>
+                        <Label htmlFor="product_code">{t("detail.fields.productCode")}</Label>
                         <Input
                           id="product_code"
                           value={formData.product_code}
@@ -368,7 +370,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
 
                     {/* Açıklama */}
                     <div className="space-y-2">
-                      <Label>Açıklama</Label>
+                      <Label>{t("detail.fields.description")}</Label>
                       <RichContentEditor
                         value={formData.description}
                         onChange={(v) => handleChange("description", v)}
@@ -379,7 +381,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                     {/* Alt + Etiketler */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="image_alt">Görsel Alt Text</Label>
+                        <Label htmlFor="image_alt">{t("detail.fields.imageAlt")}</Label>
                         <Input
                           id="image_alt"
                           value={formData.image_alt}
@@ -388,22 +390,22 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="tags">Etiketler</Label>
+                        <Label htmlFor="tags">{t("detail.fields.tags")}</Label>
                         <Input
                           id="tags"
                           value={formData.tags}
                           onChange={(e) => handleChange("tags", e.target.value)}
                           disabled={isLoading}
-                          placeholder="virgülle ayır"
+                          placeholder={t("detail.placeholders.tags")}
                         />
                       </div>
                     </div>
 
                     {/* SEO */}
                     <div className="space-y-4 rounded-md border p-4">
-                      <p className="font-medium text-muted-foreground text-sm">SEO</p>
+                      <p className="font-medium text-muted-foreground text-sm">{t("detail.fields.seo")}</p>
                       <div className="space-y-2">
-                        <Label htmlFor="meta_title">Meta Başlık</Label>
+                        <Label htmlFor="meta_title">{t("detail.fields.metaTitle")}</Label>
                         <Input
                           id="meta_title"
                           value={formData.meta_title}
@@ -412,7 +414,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="meta_description">Meta Açıklama</Label>
+                        <Label htmlFor="meta_description">{t("detail.fields.metaDescription")}</Label>
                         <Textarea
                           id="meta_description"
                           value={formData.meta_description}
@@ -433,7 +435,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                           disabled={isLoading}
                         />
                         <Label htmlFor="is_active" className="cursor-pointer">
-                          Aktif
+                          {t("detail.fields.active")}
                         </Label>
                       </div>
                       <div className="flex items-center gap-2">
@@ -444,7 +446,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                           disabled={isLoading}
                         />
                         <Label htmlFor="is_featured" className="cursor-pointer">
-                          Öne Çıkan
+                          {t("detail.fields.featured")}
                         </Label>
                       </div>
                     </div>
@@ -454,7 +456,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                   <div className="space-y-6">
                     {/* Kategori */}
                     <div className="space-y-2">
-                      <Label>Kategori</Label>
+                      <Label>{t("detail.fields.category")}</Label>
                       <Select
                         value={formData.category_id || "none"}
                         onValueChange={(v) => {
@@ -464,10 +466,10 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         disabled={isLoading}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Kategori seç" />
+                          <SelectValue placeholder={t("detail.placeholders.category")} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="none">— Kategori seç —</SelectItem>
+                          <SelectItem value="none">{t("detail.placeholders.category")}</SelectItem>
                           {categories.map((cat) => (
                             <SelectItem key={cat.id} value={String(cat.id)}>
                               {cat.name || cat.slug}
@@ -480,17 +482,17 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                     {/* Alt Kategori */}
                     {formData.category_id && (
                       <div className="space-y-2">
-                        <Label>Alt Kategori</Label>
+                        <Label>{t("detail.fields.subcategory")}</Label>
                         <Select
                           value={formData.sub_category_id || "none"}
                           onValueChange={(v) => handleChange("sub_category_id", v === "none" ? "" : v)}
                           disabled={isLoading || subcategories.length === 0}
                         >
                           <SelectTrigger>
-                            <SelectValue placeholder="Alt kategori seç" />
+                            <SelectValue placeholder={t("detail.placeholders.subcategory")} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="none">— Alt kategori seç —</SelectItem>
+                            <SelectItem value="none">{t("detail.placeholders.subcategory")}</SelectItem>
                             {subcategories.map((sub) => (
                               <SelectItem key={sub.id} value={String(sub.id)}>
                                 {sub.name || sub.slug}
@@ -503,7 +505,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
 
                     {/* Görsel */}
                     <AdminImageUploadField
-                      label="Kapak Görseli"
+                      label={t("detail.fields.coverImage")}
                       value={formData.image_url}
                       onChange={handleImageChange}
                       disabled={isLoading}
@@ -533,7 +535,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
           ) : (
             <Card>
               <CardContent className="py-8 text-center text-muted-foreground text-sm">
-                Teknik özellikler eklemek için önce ürünü kaydedin.
+                {t("detail.emptyStates.specs")}
               </CardContent>
             </Card>
           )}
@@ -546,7 +548,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
           ) : (
             <Card>
               <CardContent className="py-8 text-center text-muted-foreground text-sm">
-                SSS eklemek için önce ürünü kaydedin.
+                {t("detail.emptyStates.faqs")}
               </CardContent>
             </Card>
           )}
@@ -559,7 +561,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
           ) : (
             <Card>
               <CardContent className="py-8 text-center text-muted-foreground text-sm">
-                Değerlendirmeler eklemek için önce ürünü kaydedin.
+                {t("detail.emptyStates.reviews")}
               </CardContent>
             </Card>
           )}
@@ -569,8 +571,8 @@ export default function ProductDetailClient({ id, itemType }: Props) {
         <TabsContent value="json">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Ürün Verisi (JSON)</CardTitle>
-              <CardDescription>Tüm alanları JSON olarak düzenleyebilirsiniz.</CardDescription>
+              <CardTitle className="text-base">{t("detail.json.title")}</CardTitle>
+              <CardDescription>{t("detail.json.description")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -582,7 +584,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                 {/* Sağ: görsel önizleme/yükleme */}
                 <div className="space-y-4">
                   <AdminImageUploadField
-                    label="Kapak Görseli"
+                    label={t("detail.fields.coverImage")}
                     value={formData.image_url}
                     onChange={handleImageChange}
                     disabled={isLoading}

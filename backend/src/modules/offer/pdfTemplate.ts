@@ -8,9 +8,9 @@
 // =============================================================
 
 import type { OfferRow } from './schema';
-import { getAppLocales, getDefaultLocale } from '@agro/shared-backend/modules/siteSettings/service';
+import { getAppLocales, getDefaultLocale } from '@ensotek/shared-backend/modules/siteSettings/service';
 import { db } from '@/db/client';
-import { siteSettings } from '@agro/shared-backend/modules/siteSettings/schema';
+import { siteSettings } from '@ensotek/shared-backend/modules/siteSettings/schema';
 import { and, inArray, eq } from 'drizzle-orm';
 
 type PdfTemplateContext = OfferRow & {

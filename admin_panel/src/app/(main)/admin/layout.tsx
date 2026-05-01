@@ -6,7 +6,7 @@
 import type { ReactNode } from "react";
 
 import { AppSidebar } from "@/app/(main)/admin/_components/sidebar/app-sidebar";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@ensotek/shared-ui/admin/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 

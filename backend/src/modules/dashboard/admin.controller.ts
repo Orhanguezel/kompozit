@@ -19,13 +19,13 @@ import { reviews } from "@/modules/review/schema";
 import { offersTable } from '@/modules/offer/schema';
 
 // Shared-backend şemaları
-import { categories } from "@agro/shared-backend/modules/categories/schema";
-import { subCategories } from "@agro/shared-backend/modules/subcategories/schema";
-import { contact_messages } from "@agro/shared-backend/modules/contact/schema";
-import { siteSettings } from "@agro/shared-backend/modules/siteSettings/schema";
-import { customPages } from "@agro/shared-backend/modules/customPages/schema";
-import { library } from "@agro/shared-backend/modules/library/schema";
-import { users } from "@agro/shared-backend/modules/auth/schema";
+import { categories } from "@ensotek/shared-backend/modules/categories/schema";
+import { subCategories } from "@ensotek/shared-backend/modules/subcategories/schema";
+import { contact_messages } from "@ensotek/shared-backend/modules/contact/schema";
+import { siteSettings } from "@ensotek/shared-backend/modules/siteSettings/schema";
+import { customPages } from "@ensotek/shared-backend/modules/customPages/schema";
+import { library } from "@ensotek/shared-backend/modules/library/schema";
+import { users } from "@ensotek/shared-backend/modules/auth/schema";
 
 type DashboardCountItem = {
   key: string;

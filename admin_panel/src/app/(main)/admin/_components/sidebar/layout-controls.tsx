@@ -4,10 +4,10 @@
 
 import { Settings } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { ADMIN_LOCALE_OPTIONS, useAdminTranslations } from "@/i18n";
 import { type FontKey, fontOptions } from "@/lib/fonts/registry";

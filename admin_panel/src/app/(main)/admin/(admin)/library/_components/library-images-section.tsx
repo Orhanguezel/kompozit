@@ -9,10 +9,11 @@ import { CheckCircle2, Copy, Image as ImageIcon, Loader2, Star, Trash2 } from "l
 import { toast } from "sonner";
 
 import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import {
   useCreateLibraryImageAdminMutation,
   useListLibraryImagesAdminQuery,
@@ -76,7 +77,13 @@ function imageIdOf(r: LibraryImageDto): string {
   return r.id ? String(r.id) : "";
 }
 
-const UrlInline: React.FC<{ url: string; disabled?: boolean }> = ({ url, disabled }) => {
+const UrlInline: React.FC<{ url: string; disabled?: boolean; copyTitle: string; copySuccess: string; copyError: string }> = ({
+  url,
+  disabled,
+  copyTitle,
+  copySuccess,
+  copyError,
+}) => {
   const safe = (url || "").trim();
 
   const handleCopy = async (e: React.MouseEvent) => {
@@ -86,9 +93,9 @@ const UrlInline: React.FC<{ url: string; disabled?: boolean }> = ({ url, disable
 
     try {
       await navigator.clipboard.writeText(safe);
-      toast.success("URL kopyalandı.");
+      toast.success(copySuccess);
     } catch {
-      toast.error("URL kopyalanamadı.");
+      toast.error(copyError);
     }
   };
 
@@ -103,7 +110,7 @@ const UrlInline: React.FC<{ url: string; disabled?: boolean }> = ({ url, disable
         className="h-5 w-5 shrink-0"
         onClick={handleCopy}
         disabled={disabled || !safe}
-        title="URL'i kopyala"
+        title={copyTitle}
       >
         <Copy className="h-3 w-3" />
       </Button>
@@ -119,6 +126,7 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
   coverUrl,
   metadata,
 }) => {
+  const t = useAdminT("admin.library");
   const { data, isLoading, isFetching, refetch } = useListLibraryImagesAdminQuery(
     { id: libraryId, locale },
     {
@@ -167,10 +175,10 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
       };
 
       await createImg({ id: libraryId, payload }).unwrap();
-      toast.success("Galeri görseli eklendi.");
+      toast.success(t("imagesSection.createSuccess"));
       await refetch();
     } catch (err: unknown) {
-      toast.error(getErrorMessage(err, "Resim kaydı oluşturulamadı."));
+      toast.error(getErrorMessage(err, t("imagesSection.createError")));
     } finally {
       inflightUrlsRef.current.delete(safeUrl);
     }
@@ -189,30 +197,30 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
       try {
         const patch: LibraryImageUpdatePayload = { display_order, locale };
         await updateImg({ id: libraryId, imageId, patch }).unwrap();
-        toast.success("Sıralama güncellendi.");
+        toast.success(t("imagesSection.orderSuccess"));
         await refetch();
       } catch (err: unknown) {
-        toast.error(getErrorMessage(err, "Sıralama güncellenemedi."));
+        toast.error(getErrorMessage(err, t("imagesSection.orderError")));
       }
     },
-    [libraryId, locale, updateImg, refetch],
+    [libraryId, locale, updateImg, refetch, t],
   );
 
   const handleDelete = useCallback(
     async (r: LibraryImageDto) => {
       const imageId = imageIdOf(r);
       if (!imageId) return;
-      if (!confirm("Bu görseli silmek istiyor musun?")) return;
+      if (!confirm(t("imagesSection.confirmDelete"))) return;
 
       try {
         await removeImg({ id: libraryId, imageId }).unwrap();
-        toast.success("Görsel silindi.");
+        toast.success(t("imagesSection.deleteSuccess"));
         await refetch();
       } catch (err: unknown) {
-        toast.error(getErrorMessage(err, "Silme hatası."));
+        toast.error(getErrorMessage(err, t("imagesSection.deleteError")));
       }
     },
-    [libraryId, removeImg, refetch],
+    [libraryId, removeImg, refetch, t],
   );
 
   return (
@@ -221,7 +229,7 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 font-semibold text-sm">
             <ImageIcon className="h-4 w-4 text-primary" />
-            Galeri Görselleri
+            {t("imagesSection.title")}
           </CardTitle>
           {(isLoading || isFetching) && <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />}
         </div>
@@ -230,7 +238,7 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
       <CardContent className="space-y-4 pt-4">
         <div className="rounded-lg border bg-muted/20 p-4">
           <AdminImageUploadField
-            label="Yeni görsel yükle"
+            label={t("imagesSection.uploadLabel")}
             bucket="public"
             folder="library/gallery"
             metadata={metadata}
@@ -295,11 +303,17 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
                             </span>
                             {isCover && (
                               <span className="font-bold text-[10px] text-primary uppercase tracking-wider">
-                                Kapak Görseli
+                                {t("imagesSection.coverImage")}
                               </span>
                             )}
                           </div>
-                          <UrlInline url={url} disabled={busy} />
+                          <UrlInline
+                            url={url}
+                            disabled={busy}
+                            copyTitle={t("imagesSection.copyUrlTitle")}
+                            copySuccess={t("imagesSection.copyUrlSuccess")}
+                            copyError={t("imagesSection.copyUrlError")}
+                          />
                         </div>
 
                         <div className="flex shrink-0 gap-1">
@@ -311,7 +325,7 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
                               disabled={busy}
                               onClick={() => onSelectAsCover(url)}
                             >
-                              <Star className="mr-1 h-3 w-3" /> Kapak Yap
+                              <Star className="mr-1 h-3 w-3" /> {t("imagesSection.makeCover")}
                             </Button>
                           )}
                           <Button
@@ -328,7 +342,7 @@ export const LibraryImagesSection: React.FC<LibraryImagesSectionProps> = ({
 
                       <div className="mt-2 flex items-center gap-3 border-t border-dashed pt-2">
                         <Label className="font-medium text-[10px] text-muted-foreground uppercase tracking-tight">
-                          Görüntüleme Sırası:
+                          {t("imagesSection.displayOrder")}
                         </Label>
                         <div className="flex items-center gap-1">
                           <Input

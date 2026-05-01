@@ -32,14 +32,17 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'blog' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'blog' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   return buildPageMetadata({
     locale,
     pathname: '/blog',
     title: locale.startsWith('en')
       ? `${t('title')} - Composite Engineering and Production Insights`
       : `${t('title')} - Kompozit Muhendislik ve Uretim Notlari`,
-    description: t('description'),
+    description: seoT('blogDescription'),
   });
 }
 
@@ -58,7 +61,7 @@ export default async function BlogPage({
     <div className="min-h-screen bg-[var(--color-carbon)] relative overflow-hidden text-[var(--color-cream)]">
       <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-carbon)_85%)] opacity-90" aria-hidden />
-      
+
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <JsonLd
@@ -101,7 +104,7 @@ export default async function BlogPage({
                 </p>
               </div>
             )}
-            
+
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
               {visiblePosts.map((post: any, index: number) => (
                 <Reveal key={post.id ?? post.title} delay={100 * (index % 6)}>

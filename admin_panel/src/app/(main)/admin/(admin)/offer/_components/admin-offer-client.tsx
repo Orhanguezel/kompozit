@@ -9,17 +9,17 @@ import * as React from "react";
 
 import Link from "next/link";
 
-import { Pencil, Plus, RefreshCcw, Search, Trash2 } from "lucide-react";
+import { Download, Pencil, Plus, RefreshCcw, Search, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
 import { useDeleteOfferAdminMutation, useListOffersAdminQuery } from "@/integrations/hooks";
 import type { OfferStatus, OfferView } from "@/integrations/shared";
 
@@ -27,8 +27,12 @@ import type { OfferStatus, OfferView } from "@/integrations/shared";
 
 type Filters = {
   q: string;
+  source: string;
+  sector: string;
   status: "all" | OfferStatus;
   orderDir: "asc" | "desc";
+  createdFrom: string;
+  createdTo: string;
 };
 
 function getObj(value: unknown): Record<string, unknown> | null {
@@ -41,6 +45,11 @@ function getErrMsg(err: unknown, fallback: string): string {
   const nestedError = getObj(data?.error);
   const message = nestedError?.message ?? data?.message ?? errObj?.message;
   return typeof message === "string" && message.trim() ? message : fallback;
+}
+
+function label(t: (key: string) => string, key: string, fallback: string): string {
+  const translated = t(key);
+  return translated && translated !== key ? translated : fallback;
 }
 
 function statusLabel(t: (key: string) => string, status: OfferStatus): string {
@@ -74,6 +83,68 @@ function fmtMoney(amount: unknown, currency: unknown): string {
   }
 }
 
+function formValue(item: OfferView, keys: string[]): string {
+  const data = item.form_data ?? {};
+  for (const key of keys) {
+    const value = data[key];
+    if (value !== null && value !== undefined && String(value).trim()) return String(value).trim();
+  }
+  return "";
+}
+
+function sectorOf(item: OfferView): string {
+  return formValue(item, ["sector", "industry", "sektor", "sektör", "product_category", "category"]);
+}
+
+function csvCell(value: unknown): string {
+  const raw = value === null || value === undefined ? "" : String(value);
+  return `"${raw.replace(/"/g, '""')}"`;
+}
+
+function downloadCsv(rows: OfferView[]) {
+  const header = [
+    "offer_no",
+    "status",
+    "source",
+    "sector",
+    "customer_name",
+    "company_name",
+    "email",
+    "phone",
+    "subject",
+    "country_code",
+    "gross_total",
+    "currency",
+    "created_at",
+  ];
+  const lines = rows.map((item) =>
+    [
+      item.offer_no,
+      item.status,
+      item.source,
+      sectorOf(item),
+      item.customer_name,
+      item.company_name,
+      item.email,
+      item.phone,
+      item.subject,
+      item.country_code,
+      item.gross_total,
+      item.currency,
+      item.created_at,
+    ]
+      .map(csvCell)
+      .join(","),
+  );
+  const blob = new Blob([[header.join(","), ...lines].join("\n")], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `offers-${new Date().toISOString().slice(0, 10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 /* ------------------------------------------------------------------ */
 
 export default function AdminOfferClient({ initialSource }: { initialSource?: string }) {
@@ -81,27 +152,38 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
 
   const [filters, setFilters] = React.useState<Filters>({
     q: "",
+    source: initialSource ?? "",
+    sector: "",
     status: "all",
     orderDir: "desc",
+    createdFrom: "",
+    createdTo: "",
   });
 
   const params = React.useMemo(
     () => ({
       q: filters.q.trim() || undefined,
+      source: filters.source.trim() || undefined,
       status: filters.status === "all" ? undefined : (filters.status as OfferStatus),
       orderDir: filters.orderDir,
       sort: "created_at" as const,
       limit: 200,
       offset: 0,
-      source: initialSource || undefined,
+      created_from: filters.createdFrom || undefined,
+      created_to: filters.createdTo || undefined,
     }),
-    [filters, initialSource],
+    [filters],
   );
 
   const listQ = useListOffersAdminQuery(params, { refetchOnMountOrArgChange: true });
   const [deleteOffer, deleteState] = useDeleteOfferAdminMutation();
 
-  const rows = (listQ.data ?? []) as OfferView[];
+  const allRows = (listQ.data ?? []) as OfferView[];
+  const rows = React.useMemo(() => {
+    const sector = filters.sector.trim().toLowerCase();
+    if (!sector) return allRows;
+    return allRows.filter((item) => sectorOf(item).toLowerCase().includes(sector));
+  }, [allRows, filters.sector]);
   const listBusy = listQ.isLoading || listQ.isFetching;
   const busy = listBusy || deleteState.isLoading;
 
@@ -117,7 +199,7 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
       await deleteOffer({ id: item.id }).unwrap();
       toast.success(t("messages.deleted"));
       listQ.refetch();
-    } catch (err: unknown) {
+    } catch (err: any) {
       toast.error(getErrMsg(err, t("messages.deleteError")));
     }
   }
@@ -135,6 +217,10 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
           <Button variant="outline" size="sm" onClick={() => listQ.refetch()} disabled={busy}>
             <RefreshCcw className="mr-2 size-4" />
             <span className="hidden sm:inline">{t("actions.refresh")}</span>
+          </Button>
+          <Button variant="outline" size="sm" onClick={() => downloadCsv(rows)} disabled={busy || rows.length === 0}>
+            <Download className="mr-2 size-4" />
+            <span className="hidden sm:inline">{label(t, "actions.exportCsv", "CSV")}</span>
           </Button>
           <Button size="sm" asChild>
             <Link href="/admin/offer/new">
@@ -156,7 +242,7 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
           <CardTitle className="text-base">{t("filters.title")}</CardTitle>
           <CardDescription>{t("filters.description")}</CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <CardContent className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
           <div className="space-y-2">
             <Label>{t("filters.searchLabel")}</Label>
             <div className="relative">
@@ -168,6 +254,24 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
                 className="pl-9"
               />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>{label(t, "filters.sourceLabel", "Kaynak")}</Label>
+            <Input
+              value={filters.source}
+              onChange={(e) => setFilters((p) => ({ ...p, source: e.target.value }))}
+              placeholder={label(t, "filters.sourcePlaceholder", "ensotek, kompozit")}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>{label(t, "filters.sectorLabel", "Sektor")}</Label>
+            <Input
+              value={filters.sector}
+              onChange={(e) => setFilters((p) => ({ ...p, sector: e.target.value }))}
+              placeholder={label(t, "filters.sectorPlaceholder", "Sektor / kategori")}
+            />
           </div>
 
           <div className="space-y-2">
@@ -206,6 +310,24 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
                 <SelectItem value="asc">{t("filters.orderAsc")}</SelectItem>
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="space-y-2">
+            <Label>{label(t, "filters.createdFromLabel", "Baslangic")}</Label>
+            <Input
+              type="date"
+              value={filters.createdFrom}
+              onChange={(e) => setFilters((p) => ({ ...p, createdFrom: e.target.value }))}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label>{label(t, "filters.createdToLabel", "Bitis")}</Label>
+            <Input
+              type="date"
+              value={filters.createdTo}
+              onChange={(e) => setFilters((p) => ({ ...p, createdTo: e.target.value }))}
+            />
           </div>
         </CardContent>
       </Card>

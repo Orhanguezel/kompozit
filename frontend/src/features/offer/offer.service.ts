@@ -1,12 +1,13 @@
 import api from '@/lib/axios';
 
 export interface OfferPayload {
-  name: string;
+  customer_name: string;
   email: string;
   phone?: string;
-  company?: string;
+  company_name?: string;
   message?: string;
-  product_interest?: string;
+  subject?: string;
+  form_data?: Record<string, unknown>;
   quantity?: string;
   source?: string;
 }

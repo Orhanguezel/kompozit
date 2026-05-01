@@ -34,14 +34,17 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'gallery' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'gallery' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   return buildPageMetadata({
     locale,
     pathname: '/gallery',
     title: locale.startsWith('en')
       ? `${t('title')} - Composite Production and Project Visuals`
       : `${t('title')} - Kompozit Uretim ve Proje Gorselleri`,
-    description: t('description'),
+    description: seoT('galleryDescription'),
   });
 }
 
@@ -58,7 +61,7 @@ export default async function GalleryPage({
   return (
     <main className="relative bg-[var(--carbon)]">
       <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
-      
+
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
@@ -78,7 +81,7 @@ export default async function GalleryPage({
               }),
             ])}
           />
-          
+
           <Reveal>
             <div className="mb-16">
               <span className="section-label-cc">Portfolio</span>
@@ -105,7 +108,7 @@ export default async function GalleryPage({
                 </p>
               </div>
             )}
-            
+
             <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-4">
               {visibleGalleries.map((g: any, index: number) => {
                 const isLarge = index === 0 || index === 3;
@@ -118,9 +121,9 @@ export default async function GalleryPage({
                 });
 
                 return (
-                  <Reveal 
-                    key={g.id ?? g.title} 
-                    delay={index * 50} 
+                  <Reveal
+                    key={g.id ?? g.title}
+                    delay={index * 50}
                     className={`grid-item-cc group relative overflow-hidden ${isLarge ? 'lg:row-span-2 h-[450px] lg:h-[900px]' : 'h-[450px]'}`}
                   >
                     <MediaOverlayCard

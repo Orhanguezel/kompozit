@@ -12,11 +12,13 @@ import { FileJson, Plus, RefreshCw, Save, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useAdminTranslations } from "@/i18n";
+import { useLocaleShort } from "@/i18n/useLocaleShort";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import {
   useListProductSpecsAdminQuery,
   useReplaceProductSpecsAdminMutation,
@@ -37,15 +39,17 @@ function getObj(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
 }
 
-function getErrMessage(err: unknown): string {
+function getErrMessage(err: unknown, fallback: string): string {
   const errObj = getObj(err);
   const data = getObj(errObj?.data);
   const nestedError = getObj(data?.error);
   const message = nestedError?.message ?? data?.message ?? errObj?.message;
-  return typeof message === "string" && message.trim() ? message : "Kayıt sırasında hata oluştu.";
+  return typeof message === "string" && message.trim() ? message : fallback;
 }
 
 export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTabProps) {
+  const adminLocale = useLocaleShort();
+  const t = useAdminTranslations(adminLocale);
   const [items, setItems] = React.useState<AdminProductSpecCreatePayload[]>([]);
   const [viewMode, setViewMode] = React.useState<"form" | "json">("form");
 
@@ -73,7 +77,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
 
   const handleSave = async () => {
     if (!locale) {
-      toast.error("Lütfen önce bir dil seçin.");
+      toast.error(t("admin.products.specsTab.selectLocaleError"));
       return;
     }
     try {
@@ -85,10 +89,10 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
         order_num: typeof raw.order_num === "number" ? raw.order_num : parseInt(String(raw.order_num ?? "0"), 10) || 0,
       }));
       await replaceSpecs({ productId, locale, payload: { items: normalized } }).unwrap();
-      toast.success("Teknik özellikler kaydedildi.");
+      toast.success(t("admin.products.specsTab.saveSuccess"));
       void refetch();
     } catch (err: unknown) {
-      toast.error(getErrMessage(err));
+      toast.error(getErrMessage(err, t("admin.products.specsTab.defaultError")));
     }
   };
 
@@ -110,7 +114,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
 
   const handleJsonChange = (next: unknown) => {
     if (!Array.isArray(next)) {
-      toast.error("Geçersiz format. Array bekleniyor.");
+      toast.error(t("admin.products.specsTab.invalidArray"));
       return;
     }
     setItems(next as AdminProductSpecCreatePayload[]);
@@ -121,9 +125,9 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
       <CardHeader>
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-base">Teknik Özellikler</CardTitle>
+            <CardTitle className="text-base">{t("admin.products.specsTab.title")}</CardTitle>
             <CardDescription>
-              Aktif dil: <code className="text-xs">{locale}</code>
+              {t("admin.products.specsTab.activeLocale")} <code className="text-xs">{locale}</code>
             </CardDescription>
           </div>
           <div className="flex items-center gap-2">
@@ -132,7 +136,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
             </Button>
             <Button onClick={handleSave} disabled={busy} size="sm">
               <Save className="mr-2 h-4 w-4" />
-              {isSaving ? "Kaydediliyor..." : "Kaydet"}
+              {isSaving ? t("admin.common.saving") : t("admin.common.save")}
             </Button>
           </div>
         </div>
@@ -150,7 +154,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
             {viewMode === "form" && (
               <Button variant="outline" size="sm" onClick={handleAddRow} disabled={busy}>
                 <Plus className="mr-2 h-4 w-4" />
-                Satır Ekle
+                {t("admin.products.specsTab.addRow")}
               </Button>
             )}
           </div>
@@ -158,16 +162,16 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
           <TabsContent value="form" className="mt-4">
             {items.length === 0 ? (
               <p className="py-4 text-center text-muted-foreground text-sm">
-                Henüz teknik özellik yok. "Satır Ekle" ile başlayın.
+                {t("admin.products.specsTab.empty")}
               </p>
             ) : (
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Alan (name)</TableHead>
-                    <TableHead>Değer (value)</TableHead>
-                    <TableHead className="w-35">Kategori</TableHead>
-                    <TableHead className="w-20 text-center">Sıra</TableHead>
+                    <TableHead>{t("admin.products.specsTab.columns.name")}</TableHead>
+                    <TableHead>{t("admin.products.specsTab.columns.value")}</TableHead>
+                    <TableHead className="w-35">{t("admin.products.specsTab.columns.category")}</TableHead>
+                    <TableHead className="w-20 text-center">{t("admin.products.specsTab.columns.order")}</TableHead>
                     <TableHead className="w-15" />
                   </TableRow>
                 </TableHeader>
@@ -179,7 +183,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
                           value={spec.name ?? ""}
                           onChange={(e) => handleItemChange(index, "name", e.target.value)}
                           disabled={busy}
-                          placeholder="capacity, fanType..."
+                          placeholder={t("admin.products.specsTab.placeholders.name")}
                           className="h-8 text-sm"
                         />
                       </TableCell>
@@ -188,7 +192,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
                           value={spec.value ?? ""}
                           onChange={(e) => handleItemChange(index, "value", e.target.value)}
                           disabled={busy}
-                          placeholder="1.500 m³/h – 4.500 m³/h"
+                          placeholder={t("admin.products.specsTab.placeholders.value")}
                           className="h-8 text-sm"
                         />
                       </TableCell>
@@ -197,7 +201,7 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
                           value={spec.category ?? "custom"}
                           onChange={(e) => handleItemChange(index, "category", e.target.value)}
                           disabled={busy}
-                          placeholder="physical, performance..."
+                          placeholder={t("admin.products.specsTab.placeholders.category")}
                           className="h-8 text-sm"
                         />
                       </TableCell>

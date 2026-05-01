@@ -17,7 +17,10 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'references' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'references' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
 
   return buildPageMetadata({
     locale,
@@ -25,7 +28,7 @@ export async function generateMetadata({
     title: locale.startsWith('en')
       ? `${t('title')} - Enterprise Collaboration and Delivery Discipline`
       : `${t('title')} - Kurumsal Is Birligi ve Teslim Disiplini`,
-    description: t('description'),
+    description: seoT('referencesDescription'),
   });
 }
 

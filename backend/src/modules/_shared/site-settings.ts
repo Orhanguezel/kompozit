@@ -1,6 +1,6 @@
 import { and, eq, inArray } from 'drizzle-orm';
 import { db } from '@/db/client';
-import { siteSettings } from '@agro/shared-backend/modules/siteSettings/schema';
+import { siteSettings } from '@ensotek/shared-backend/modules/siteSettings/schema';
 
 const GLOBAL_LOCALE = '*';
 

@@ -20,7 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@ensotek/shared-ui/admin/ui/dropdown-menu";
 import { useGetMyProfileQuery, useLogoutMutation, useStatusQuery } from "@/integrations/hooks";
 import { getInitials } from "@/lib/utils";
 

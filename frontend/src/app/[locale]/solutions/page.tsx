@@ -19,12 +19,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'solutions' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'solutions' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   return buildPageMetadata({
     locale,
     pathname: '/solutions',
     title: t('metaTitle'),
-    description: t('metaDescription'),
+    description: seoT('solutionsDescription'),
   });
 }
 

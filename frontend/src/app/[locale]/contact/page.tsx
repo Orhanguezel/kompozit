@@ -23,14 +23,17 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: 'contact' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'contact' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   return buildPageMetadata({
     locale,
     pathname: '/contact',
     title: locale.startsWith('en')
       ? `${t('title')} - Technical Contact for Sampling and Quotes`
       : `${t('title')} - Numune ve Teklif Icin Teknik Iletisim`,
-    description: t('description'),
+    description: seoT('contactDescription'),
   });
 }
 
@@ -52,7 +55,7 @@ export default async function ContactPage({
   return (
     <main className="relative bg-[var(--carbon)]">
       <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
-      
+
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
@@ -73,7 +76,7 @@ export default async function ContactPage({
               }),
             ])}
           />
-          
+
           <Reveal>
             <div className="mb-20">
               <span className="section-label-cc">{t('contact.label')}</span>
@@ -99,7 +102,7 @@ export default async function ContactPage({
                         {info.address}
                       </p>
                     </div>
-                    
+
                     <div className="grid gap-8 sm:grid-cols-2">
                        {info.phone && (
                         <div>
@@ -162,7 +165,7 @@ export default async function ContactPage({
                 </p>
               </div>
             </Reveal>
-            
+
             <div className="space-y-2">
               {[1, 2, 3, 4, 5].map((i) => (
                 <Reveal key={i} delay={i * 50}>

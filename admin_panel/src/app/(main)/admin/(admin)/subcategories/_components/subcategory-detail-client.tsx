@@ -20,14 +20,14 @@ import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJson
 import { AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import { useListCategoriesAdminQuery } from "@/integrations/endpoints/admin/categories_admin.endpoints";
 import {
   useCreateSubCategoryAdminMutation,
@@ -142,15 +142,15 @@ export default function SubcategoryDetailClient({ id }: Props) {
     e?.preventDefault();
 
     if (!formData.name.trim()) {
-      toast.error("Ad (name) zorunludur");
+      toast.error(t("detail.nameRequired"));
       return;
     }
     if (!formData.slug.trim()) {
-      toast.error("Slug zorunludur");
+      toast.error(t("detail.slugRequired"));
       return;
     }
     if (!formData.category_id) {
-      toast.error("Üst kategori seçilmelidir");
+      toast.error(t("detail.categoryRequired"));
       return;
     }
 
@@ -172,17 +172,17 @@ export default function SubcategoryDetailClient({ id }: Props) {
     try {
       if (isNew) {
         const result = await createSubCategory(payload).unwrap();
-        toast.success("Alt kategori oluşturuldu");
+        toast.success(t("detail.createSuccess"));
         if (result?.id) {
           router.push(`/admin/subcategories/${result.id}`);
         }
       } else {
         await updateSubCategory({ id, patch: payload }).unwrap();
-        toast.success("Alt kategori güncellendi");
+        toast.success(t("detail.updateSuccess"));
       }
     } catch (error: any) {
-      const msg = error?.data?.error?.message || error?.message || "Hata oluştu";
-      toast.error(`Hata: ${msg}`);
+      const msg = error?.data?.error?.message || error?.message || t("detail.defaultError");
+      toast.error(t("detail.errorPrefix", { message: msg }));
     }
   };
 
@@ -207,7 +207,9 @@ export default function SubcategoryDetailClient({ id }: Props) {
               </Button>
               <div>
                 <CardTitle className="text-base">{isNew ? t("actions.create") : t("actions.edit")}</CardTitle>
-                <CardDescription>{isNew ? "Yeni alt kategori oluştur" : `${item?.name || ""} düzenle`}</CardDescription>
+                <CardDescription>
+                  {isNew ? t("detail.createDescription") : t("detail.editDescription", { title: item?.name || "" })}
+                </CardDescription>
               </div>
             </div>
             <AdminLocaleSelect
@@ -223,7 +225,7 @@ export default function SubcategoryDetailClient({ id }: Props) {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "form" | "json")}>
         <TabsList>
-          <TabsTrigger value="form">Form</TabsTrigger>
+          <TabsTrigger value="form">{t("detail.formTab")}</TabsTrigger>
           <TabsTrigger value="json">
             <FileJson className="mr-2 h-4 w-4" />
             JSON
@@ -248,10 +250,10 @@ export default function SubcategoryDetailClient({ id }: Props) {
                         disabled={isLoading}
                       >
                         <SelectTrigger id="category_id">
-                          <SelectValue placeholder="Kategori seçin..." />
+                          <SelectValue placeholder={t("detail.selectCategory")} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="none">— Seçiniz —</SelectItem>
+                          <SelectItem value="none">{t("detail.selectNone")}</SelectItem>
                           {categories.map((cat: any) => (
                             <SelectItem key={cat.id} value={String(cat.id)}>
                               {cat.name || cat.slug}
@@ -393,8 +395,8 @@ export default function SubcategoryDetailClient({ id }: Props) {
         <TabsContent value="json">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Alt Kategori Verisi (JSON)</CardTitle>
-              <CardDescription>Tüm alt kategori alanlarını JSON olarak düzenleyebilirsiniz.</CardDescription>
+              <CardTitle className="text-base">{t("detail.jsonTitle")}</CardTitle>
+              <CardDescription>{t("detail.jsonDescription")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">

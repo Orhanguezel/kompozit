@@ -1,9 +1,13 @@
+"use client";
+
 // =============================================================
 // FILE: src/components/admin/subcategories/SubCategoryFormHeader.tsx
 // Ensotek – Alt Kategori Form Header (Category pattern)
 // =============================================================
 
 import type React from "react";
+
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 
 export type SubCategoryFormMode = "create" | "edit";
 export type SubCategoryEditMode = "form" | "json";
@@ -27,7 +31,8 @@ export const SubCategoryFormHeader: React.FC<SubCategoryFormHeaderProps> = ({
   saving,
   isLocaleLoading,
 }) => {
-  const title = mode === "create" ? "Yeni Alt Kategori" : "Alt Kategori Düzenle";
+  const t = useAdminT("admin.subcategories");
+  const title = mode === "create" ? t("legacyForm.createTitle") : t("legacyForm.editTitle");
 
   return (
     <div className="card-header d-flex justify-content-between py-2 align-items-center">
@@ -36,11 +41,11 @@ export const SubCategoryFormHeader: React.FC<SubCategoryFormHeaderProps> = ({
         <div className="small text-muted">
           {locale ? (
             <>
-              Dil: <strong>{locale.toUpperCase()}</strong>
+              {t("legacyForm.localeLabel")}: <strong>{locale.toUpperCase()}</strong>
             </>
           ) : (
             <>
-              Dil: <strong>-</strong>
+              {t("legacyForm.localeLabel")}: <strong>-</strong>
             </>
           )}
         </div>
@@ -54,7 +59,7 @@ export const SubCategoryFormHeader: React.FC<SubCategoryFormHeaderProps> = ({
             onClick={() => onChangeEditMode("form")}
             disabled={saving}
           >
-            Form
+            {t("legacyForm.formTab")}
           </button>
           <button
             type="button"
@@ -68,7 +73,7 @@ export const SubCategoryFormHeader: React.FC<SubCategoryFormHeaderProps> = ({
 
         {(saving || isLocaleLoading) && (
           <span className="badge small bg-secondary">
-            {isLocaleLoading ? "Dil değiştiriliyor..." : "Kaydediliyor..."}
+            {isLocaleLoading ? t("legacyForm.switchingLocale") : t("legacyForm.saving")}
           </span>
         )}
       </div>

@@ -17,7 +17,7 @@ import { ArrowDown, ArrowUp, Pencil, Save, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
 import { useDeleteCustomPageAdminMutation, useUpdateCustomPageAdminMutation } from "@/integrations/hooks";
 import type { CustomPageDto } from "@/integrations/shared";
 
@@ -164,7 +164,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
           size="sm"
           onClick={() => onMoveUp?.(idx)}
           disabled={busy || idx === 0 || !onMoveUp}
-          title="Yukarı"
+          title={t("admin.customPage.list.moveUp")}
         >
           <ArrowUp className="size-4" />
         </Button>
@@ -173,7 +173,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
           size="sm"
           onClick={() => onMoveDown?.(idx)}
           disabled={busy || idx === rows.length - 1 || !onMoveDown}
-          title="Aşağı"
+          title={t("admin.customPage.list.moveDown")}
         >
           <ArrowDown className="size-4" />
         </Button>
@@ -202,7 +202,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
                       {renderFeatured(p)}
                       {localeResolved ? (
                         <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
-                          Locale: <code className="ml-1">{localeResolved}</code>
+                          {t("admin.customPage.list.locale")}: <code className="ml-1">{localeResolved}</code>
                         </span>
                       ) : null}
                     </div>
@@ -213,12 +213,12 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
 
                     {p.meta_title ? (
                       <div className="mt-1 truncate text-muted-foreground text-xs" title={p.meta_title}>
-                        SEO: {p.meta_title}
+                        {t("admin.customPage.list.seo")}: {p.meta_title}
                       </div>
                     ) : null}
 
                     <div className="mt-1 truncate text-muted-foreground text-xs">
-                      Slug: <code className="break-all">{p.slug ?? "-"}</code>
+                      {t("admin.customPage.list.slug")}: <code className="break-all">{p.slug ?? "-"}</code>
                     </div>
 
                     <div className="mt-2 text-muted-foreground text-xs">

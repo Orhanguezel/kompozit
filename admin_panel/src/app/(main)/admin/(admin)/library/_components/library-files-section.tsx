@@ -6,10 +6,11 @@ import { useMemo, useRef, useState } from "react";
 import { ExternalLink, FileText, Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import {
   useCreateAssetAdminMutation,
   useCreateLibraryFileAdminMutation,
@@ -38,7 +39,7 @@ function getObj(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
 }
 
-function extractErrMsg(err: unknown): string {
+function extractErrMsg(err: unknown, fallback: string): string {
   const errObj = getObj(err);
   const data = getObj(errObj?.data);
   const nestedError = getObj(data?.error);
@@ -48,11 +49,12 @@ function extractErrMsg(err: unknown): string {
     safeText(data?.message) ||
     safeText(errObj?.error) ||
     safeText(errObj?.message) ||
-    "İşlem sırasında hata oluştu."
+    fallback
   );
 }
 
 export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ libraryId, locale, disabled = false }) => {
+  const t = useAdminT("admin.library");
   const effectiveLocale = useMemo(() => normalizeLocale(locale, "tr"), [locale]);
 
   const {
@@ -80,7 +82,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
     if (!libraryId) return;
 
     if (!selectedFile) {
-      toast.error("Lütfen bir dosya seç.");
+      toast.error(t("filesSection.selectFileError"));
       return;
     }
 
@@ -104,8 +106,8 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
       const storageMime = norm(uploadedAsset.mime) || norm(selectedFile.type) || "application/octet-stream";
       const storageSize = uploadedAsset.size;
 
-      if (!storageId) throw new Error("Upload başarılı ama asset_id alınamadı.");
-      if (!storageUrl) throw new Error("Upload başarılı ama public url alınamadı.");
+      if (!storageId) throw new Error(t("filesSection.uploadMissingAssetId"));
+      if (!storageUrl) throw new Error(t("filesSection.uploadMissingUrl"));
 
       const displayName = overrideName.trim() || selectedFile.name;
       const payload: LibraryFileCreatePayload = {
@@ -122,7 +124,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
         payload,
       }).unwrap();
 
-      toast.success("Dosya yüklendi ve kaydedildi.");
+      toast.success(t("filesSection.uploadSuccess"));
 
       setSelectedFile(null);
       setOverrideName("");
@@ -130,7 +132,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
 
       void refetch();
     } catch (err: unknown) {
-      toast.error(extractErrMsg(err));
+      toast.error(extractErrMsg(err, t("filesSection.defaultError")));
     }
   };
 
@@ -138,16 +140,16 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
     const fileId = norm(file.id);
     if (!libraryId || !fileId) return;
 
-    if (!confirm(`"${safeText(file.name)}" dosyasını silmek istiyor musun?`)) return;
+    if (!confirm(t("filesSection.confirmDelete", { title: safeText(file.name) }))) return;
 
     try {
       await removeFile({ id: libraryId, fileId, locale: effectiveLocale }).unwrap();
-      toast.success("Dosya silindi.");
+      toast.success(t("filesSection.deleteSuccess"));
     } catch (err: unknown) {
       const errObj = getObj(err);
       const status = errObj?.status ?? errObj?.originalStatus;
-      if (status === 404) toast.success("Dosya zaten silinmiş.");
-      else toast.error(extractErrMsg(err));
+      if (status === 404) toast.success(t("filesSection.alreadyDeleted"));
+      else toast.error(extractErrMsg(err, t("filesSection.defaultError")));
     } finally {
       void refetch();
     }
@@ -161,7 +163,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2 font-semibold text-sm">
             <FileText className="h-4 w-4 text-primary" />
-            PDF / Dosyalar
+            {t("filesSection.title")}
           </CardTitle>
           {loading && <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />}
         </div>
@@ -170,7 +172,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
       <CardContent className="space-y-4 pt-4">
         {list.length === 0 && !loading && (
           <div className="rounded-lg border-2 border-dashed bg-muted/10 py-6 text-center text-muted-foreground text-xs italic">
-            Henüz dosya eklenmemiş.
+            {t("filesSection.empty")}
           </div>
         )}
 
@@ -178,7 +180,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
           <div className="space-y-2">
             {list.map((f) => {
               const href = norm(f.file_url);
-              const label = safeText(f.name) || "Dosya";
+              const label = safeText(f.name) || t("filesSection.fileFallback");
               const fileTypeLabel = norm(f.mime_type?.split("/")?.pop()) || "file";
               const sizeKb =
                 typeof f.size_bytes === "number" && f.size_bytes > 0 ? (f.size_bytes / 1024).toFixed(1) : null;
@@ -232,7 +234,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
                 htmlFor="library-file-upload"
                 className="font-bold text-[10px] text-muted-foreground uppercase tracking-wider"
               >
-                PDF / Dosya Seç
+                {t("filesSection.fileInputLabel")}
               </Label>
               <Input
                 id="library-file-upload"
@@ -250,7 +252,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
                 htmlFor="library-file-display-name"
                 className="font-bold text-[10px] text-muted-foreground uppercase tracking-wider"
               >
-                Görünen Ad
+                {t("filesSection.displayName")}
               </Label>
               <Input
                 id="library-file-display-name"
@@ -258,7 +260,7 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
                 value={overrideName}
                 onChange={(e) => setOverrideName(e.target.value)}
                 disabled={disabled || uploading}
-                placeholder="Boş bırakılırsa dosya adı kullanılır"
+                placeholder={t("filesSection.displayNamePlaceholder")}
               />
             </div>
 
@@ -303,12 +305,12 @@ export const LibraryFilesSection: React.FC<LibraryFilesSectionProps> = ({ librar
               {uploading ? (
                 <>
                   <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-                  Yükleniyor...
+                  {t("filesSection.uploading")}
                 </>
               ) : (
                 <>
                   <Upload className="mr-2 h-3 w-3" />
-                  Yükle ve Kaydet
+                  {t("filesSection.uploadAndSave")}
                 </>
               )}
             </Button>

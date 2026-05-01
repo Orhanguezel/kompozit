@@ -1,5 +1,17 @@
 {
   "admin": {
+    "kompozit": {
+      "routeGate": {
+        "title": "Dieser Bildschirm ist im MOE Kompozit-Panel nicht aktiv",
+        "description": "Dieses Admin-Panel ist für Komposit-Operationen vereinfacht. Die aktuelle Route gehört zu einem verbliebenen Shared-Ensotek-Bildschirm.",
+        "dashboard": "Dashboard",
+        "siteSettings": "Site-Einstellungen"
+      },
+      "comingSoon": {
+        "title": "Demnächst",
+        "description": "Diese Seite befindet sich in Entwicklung und wird in einem kommenden Update aktiviert."
+      }
+    },
     "reports": {
       "title": "Berichte",
       "description": "System-Verkehrsanalyse, Leistungsmetriken und Benutzeraktivitäten.",
@@ -392,7 +404,85 @@
       "total": "Gesamt",
       "operationFailed": "Vorgang fehlgeschlagen. Bitte versuchen Sie es erneut.",
       "active": "Aktiv",
-      "inactive": "Inaktiv"
+      "inactive": "Inaktiv",
+      "imageField": {
+        "image": "Bild",
+        "images": "Bilder",
+        "uploading": "Wird hochgeladen...",
+        "urlCopied": "URL kopiert.",
+        "copyFailed": "Kopieren fehlgeschlagen.",
+        "selectedImageAdded": "Bild hinzugefügt.",
+        "selectedImageChosen": "Bild ausgewählt.",
+        "imageUploaded": "Bild hochgeladen.",
+        "imagesUploaded": "{count} Bilder hochgeladen.",
+        "urlMissing": "Bild-URL konnte nicht ermittelt werden.",
+        "uploadFailed": "Beim Hochladen des Bildes ist ein Fehler aufgetreten.",
+        "bulkUploadFailed": "Einige Bilder konnten nicht hochgeladen werden.",
+        "noneSelected": "Noch kein Bild ausgewählt.",
+        "galleryEmpty": "Noch keine Galeriebilder vorhanden.",
+        "gallery": "Galerie",
+        "urlLabel": "URL:",
+        "cover": "Titelbild",
+        "imageN": "Bild {index}",
+        "makeCover": "Als Titelbild",
+        "coverCannotDelete": "Titelbild kann nicht gelöscht werden",
+        "remove": "Entfernen",
+        "parentNote": "Hinweis: Da `onChangeMultiple` nicht übergeben wurde, wird die Galerie nicht vom Parent verwaltet.",
+        "uploadButtonSingle": "Bild hochladen",
+        "uploadButtonMultiple": "Bilder hochladen",
+        "dialogTitleSingle": "Bild hochladen",
+        "dialogTitleMultiple": "Bilder hochladen",
+        "dialogDescription": "Laden Sie vom Computer hoch oder wählen Sie aus der Bibliothek.",
+        "tabUpload": "Hochladen",
+        "tabLibrary": "Bibliothek",
+        "selectImage": "Bild auswählen",
+        "singleHelp": "Sie können ein einzelnes Bild hochladen.",
+        "multipleHelp": "Sie können mehrere Bilder hochladen.",
+        "selectFile": "Datei auswählen",
+        "libraryEmpty": "Bibliothek ist leer",
+        "libraryEmptyHelp": "Es sind noch keine Bilder hochgeladen. Sie können im Tab \"Hochladen\" ein Bild hinzufügen.",
+        "selected": "Ausgewählt"
+      },
+      "editor": {
+        "content": "Inhalt",
+        "livePreview": "Live-Vorschau",
+        "visualEditor": "Visueller Editor",
+        "sourceHtml": "Quelle (HTML)",
+        "paragraph": "Absatz",
+        "heading2": "Überschrift (H2)",
+        "heading3": "Unterüberschrift (H3)",
+        "bold": "Fett",
+        "italic": "Kursiv",
+        "underline": "Unterstrichen",
+        "unorderedList": "Aufzählungsliste",
+        "orderedList": "Nummerierte Liste",
+        "insertTable": "Tabelle einfügen",
+        "insertImage": "Bild einfügen",
+        "uploadAndInsertImage": "Bild hochladen und einfügen",
+        "clearFormatting": "Formatierung entfernen",
+        "htmlSource": "HTML-Quelle",
+        "htmlPlaceholder": "<p>HTML-Inhalt hier eingeben...</p>",
+        "preview": "Vorschau",
+        "emptyPreview": "Es gibt noch keinen Inhalt. Während Sie schreiben, erscheint er hier live.",
+        "compatibilityNote": "Hinweis: Der visuelle Editor basiert auf `execCommand`; das Verhalten kann je nach Browser variieren.",
+        "promptImageUrl": "Bild-URL eingeben:",
+        "tableHeader1": "Kopf 1",
+        "tableHeader2": "Kopf 2",
+        "tableCell1": "Zelle 1",
+        "tableCell2": "Zelle 2"
+      },
+      "passive": "Inaktiv",
+      "all": "Alle",
+      "category": "Kategorie",
+      "subcategory": "Unterkategorie",
+      "language": "Sprache",
+      "featured": "Hervorgehoben",
+      "order": "Reihenfolge",
+      "published": "Veröffentlicht",
+      "viewsShort": "Aufrufe",
+      "downloads": "Downloads",
+      "date": "Datum",
+      "delete": "Löschen"
     },
     "slider": {
       "header": {
@@ -664,6 +754,9 @@
         "noTitle": "Kein Titel",
         "created": "Erstellt",
         "updated": "Aktualisiert",
+        "locale": "Sprache",
+        "seo": "SEO",
+        "slug": "Slug",
         "moveUp": "Hoch",
         "moveDown": "Runter",
         "reorderHelp": "Reihenfolge: Hoch/Runter bewegen, dann speichern.",
@@ -717,7 +810,12 @@
         "altTextPlaceholder": "Alternativtext (optional)",
         "addManualUrl": "URL zum Inhalt hinzufügen",
         "coverHelperText": "Laden Sie ein Cover-/Vorschaubild für diese Seite hoch.",
-        "galleryHelperText": "Laden Sie mehrere Bilder hoch und definieren Sie eine Galerie für diese Seite."
+        "galleryHelperText": "Laden Sie mehrere Bilder hoch und definieren Sie eine Galerie für diese Seite.",
+        "tagsPlaceholder": "z. B. guezelwebdesign, kampagne, blog",
+        "richContentLabel": "Inhalt (Rich Text / HTML)",
+        "richContentHelperPrefix": "Der Editor erzeugt HTML. Das Backend kann dieses Feld mit",
+        "richContentHelperMiddle": "in das",
+        "richContentHelperSuffix": "Format umwandeln."
       },
       "detail": {
         "noLocales": "Keine Sprachen gefunden",
@@ -744,6 +842,7 @@
       "updateFailed": "Profilaktualisierung fehlgeschlagen.",
       "avatarSet": "Benutzerdefiniertes Profilbild gesetzt",
       "noAvatar": "Standard-Avatar wird verwendet",
+      "defaultName": "Admin",
       "name": "Vollständiger Name",
       "email": "E-Mail",
       "security": "Sicherheit",
@@ -825,6 +924,7 @@
         "audit": "Audit-Protokolle",
         "notifications": "Benachrichtigungen",
         "storage": "Dateimanager",
+        "cache": "Cache-Verwaltung",
         "contacts": "Kontaktanfragen",
         "users": "Benutzer",
         "reviews": "Bewertungen",
@@ -1988,6 +2088,35 @@
         "custom": "Benutzerdefiniert"
       }
     },
+    "cache": {
+      "title": "Cache-Verwaltung",
+      "description": "Leeren Sie den Cache der Frontend-Seiten. Stellt sicher, dass Inhaltsaktualisierungen sofort sichtbar sind.",
+      "quickClear": "Schnell leeren",
+      "quickClearDesc": "Leeren Sie den Cache einer bestimmten Seite oder der gesamten Website.",
+      "clearButton": "Leeren",
+      "cleared": "Cache geleert",
+      "clearedAll": "Gesamter Website-Cache geleert",
+      "clearError": "Cache konnte nicht geleert werden",
+      "info": "Information",
+      "infoText1": "Frontend-Seiten werden 5 Minuten (300 Sekunden) lang zwischengespeichert. Wenn der Cache geleert wird, rufen die Seiten beim nachsten Besuch frische Daten von der API ab.",
+      "infoText2": "Nachdem Sie Inhalte im Admin-Panel aktualisiert haben, leeren Sie den Cache der entsprechenden Seite, um die Anderungen sofort zu sehen.",
+      "actions": {
+        "allSite": "Gesamter Website-Cache",
+        "allSiteDesc": "Leert den Cache aller Seiten.",
+        "home": "Startseite",
+        "homeDesc": "Leert den Cache der Startseite.",
+        "products": "Produkte",
+        "productsDesc": "Leert den Cache der Produktseite.",
+        "services": "Dienstleistungen",
+        "servicesDesc": "Leert den Cache der Dienstleistungsseite.",
+        "news": "Neuigkeiten",
+        "newsDesc": "Leert den Cache der Nachrichtenseite.",
+        "contact": "Kontakt",
+        "contactDesc": "Leert den Cache der Kontaktseite.",
+        "references": "Referenzen",
+        "referencesDesc": "Leert den Cache der Referenzenseite."
+      }
+    },
     "audit": {
       "header": {
         "title": "Audit-Protokolle",
@@ -2039,6 +2168,17 @@
         "pathPrefix": "Pfad-Präfix",
         "chartTitle": "Tägliches Diagramm",
         "lastNDays": "Letzte {n} Tage"
+      },
+      "chart": {
+        "lastDaysSummary": "Letzte {count} Tage",
+        "requests": "requests",
+        "bar": "Balken",
+        "unique": "unique",
+        "uniqueIp": "Unique IP",
+        "errors": "errors",
+        "loading": "Wird geladen...",
+        "empty": "Diagrammdaten sind leer. (Backend-Response-Format / Datumsformat könnte inkompatibel sein.)",
+        "ariaLabel": "Audit-Tagesmetriken-Diagramm"
       },
       "map": {
         "title": "Geografische Verteilung",
@@ -2250,6 +2390,75 @@
     "siteSettings": {
       "title": "Site-Einstellungen",
       "description": "Schlüssel-Wert-Einstellungen verwalten. Listen-Tabs können mit Suche gefiltert werden.",
+      "homeSettings": {
+        "header": {
+          "title": "Startseiten-Inhaltseinstellungen",
+          "localePrefix": "Sprache: {locale} · Präfix: {prefix}"
+        },
+        "sections": {
+          "hero": {
+            "title": "Hero-Bereich",
+            "description": "Titel- und CTA-Texte für den Hero-Bereich der Startseite."
+          },
+          "about": {
+            "title": "Über-uns-Bereich",
+            "description": "Kurzer Einführungsbereich im Über-uns-Abschnitt der Startseite."
+          },
+          "testimonial": {
+            "title": "Kundenzitat",
+            "description": "Kundenzitat-Bereich auf der Startseite."
+          },
+          "stats": {
+            "title": "Statistikleiste",
+            "description": "Vier numerische Statistiken auf der Startseite."
+          }
+        },
+        "messages": {
+          "aboutSaved": "Über-uns-Inhalt gespeichert.",
+          "testimonialSaved": "Kundenzitat gespeichert.",
+          "statsSaved": "Statistiken gespeichert.",
+          "heroSaved": "Hero-Inhalt gespeichert.",
+          "saveError": "Beim Speichern ist ein Fehler aufgetreten."
+        },
+        "fields": {
+          "titleHtml": "Titel (HTML unterstützt, <em> kann verwendet werden)",
+          "subtitle": "Untertitel",
+          "primaryCtaLabel": "Primärer CTA-Text",
+          "primaryCtaUrl": "Primäre CTA-URL",
+          "secondaryCtaLabel": "Sekundärer CTA-Text",
+          "label": "Label (kleine Oberzeile)",
+          "ctaLabel": "CTA-Button-Text",
+          "tagline": "Slogan",
+          "intro": "Einleitungstext",
+          "quote": "Zitat",
+          "attribution": "Quelle (Name / Titel)",
+          "number": "Zahl",
+          "suffix": "Suffix (+, Jahr usw.)",
+          "statLabel": "Label",
+          "description": "Beschreibung"
+        },
+        "placeholders": {
+          "heroTitle": "Ingenieurskunst für die <em>Industriewelt</em>",
+          "heroSubtitle": "Hochleistungs-Kompositlösungen...",
+          "heroCtaLabel": "Angebot anfordern",
+          "heroCtaHref": "/de/offer",
+          "heroSecondaryLabel": "Produkte entdecken",
+          "aboutLabel": "Über uns",
+          "aboutCtaLabel": "Mehr erfahren",
+          "aboutTitle": "Ingenieur-<em>Disziplin</em>",
+          "aboutTagline": "Wo Wissenschaft auf Handwerk trifft",
+          "aboutIntro": "Als MOE Kompozit seit über 15 Jahren...",
+          "testimonialQuote": "In Bezug auf Qualität und Lieferzeit...",
+          "testimonialAttribution": "Ahmet Yildiz · Projektleiter, Savunma A.S.",
+          "statNumber": "15",
+          "statSuffix": "+",
+          "statLabel": "Jahre",
+          "statDescription": "Branchenerfahrung"
+        },
+        "stats": {
+          "itemTitle": "Statistik {index}"
+        }
+      },
       "tabs": {
         "general": "Allgemein",
         "seo": "SEO",
@@ -2260,7 +2469,12 @@
         "list": "Liste (Sprache)",
         "globalList": "Liste (Global *)",
         "locales": "Sprachen",
-        "branding": "Branding"
+        "branding": "Branding",
+        "home": "Startseite"
+      },
+      "scoped": {
+        "note": "Dieser Bildschirm ist projektspezifisch für Kompozit. Änderungen hier beeinflussen nicht die gemeinsamen `site_settings`-Einträge von Ensotek oder anderen Seiten.",
+        "description": "Verwalten Sie Key-Value-Einstellungen. Listentabs können per Suche gefiltert werden. Dieser Bildschirm betrifft nur Einstellungen im Namespace {brand}."
       },
       "filters": {
         "title": "Filter",
@@ -2284,7 +2498,8 @@
         "title": "Verwaltung",
         "localeRecords": "Datensätze der ausgewählten Sprache",
         "globalRecords": "Globale (*) Datensätze",
-        "loadingMeta": "Locale-Meta wird geladen…"
+        "loadingMeta": "Locale-Meta wird geladen…",
+        "homeContent": "Startseiteninhalt"
       },
       "locales": {
         "title": "Sprachen",
@@ -2301,7 +2516,8 @@
         "presetDeEnTr": "Preset de/en/tr setzen",
         "presetTop20": "20 Sprachen hinzufügen",
         "saved": "Sprachen aktualisiert.",
-        "saveError": "Sprachen konnten nicht aktualisiert werden."
+        "saveError": "Sprachen konnten nicht aktualisiert werden.",
+        "frontendFallbackNote": "Die Standard-Frontend-Sprache wird nicht mehr über dieses Panel verwaltet. Jedes Projekt definiert seine eigene Fallback-Locale in seiner Frontend-Schicht."
       },
       "list": {
         "title": "Einstellungsliste",
@@ -3469,11 +3685,26 @@
         "total": "Gesamt",
         "loading": "Unterkategorien werden geladen...",
         "noData": "Keine Einträge gefunden.",
+        "busy": "Vorgang läuft...",
+        "saveOrder": "Reihenfolge speichern",
+        "savingOrder": "Reihenfolge wird gespeichert...",
+        "caption": "Die Sortierung per Drag & Drop ist nur in der Tabelle auf sehr großen Bildschirmen (xxl+) aktiv. Verwenden Sie die Schaltfläche \"Reihenfolge speichern\", um sie dauerhaft zu machen.",
+        "unnamed": "(Kein Name)",
+        "notFound": "Noch keine Unterkategorien vorhanden.",
+        "categoryLabel": "Kategorie: {value}",
+        "slugLabel": "Slug:",
         "refreshing": "Liste wird aktualisiert...",
         "activated": "Aktiviert",
         "deactivated": "Deaktiviert",
         "featured": "Hervorgehoben",
         "unfeatured": "Hervorhebung entfernt"
+      },
+      "messages": {
+        "toggleActiveError": "Aktivstatus konnte nicht geändert werden",
+        "toggleFeaturedError": "Hervorhebungsstatus konnte nicht geändert werden",
+        "confirmDelete": "\"{title}\" löschen?",
+        "deleted": "Gelöscht",
+        "deleteError": "Löschen fehlgeschlagen"
       },
       "table": {
         "name": "Name",
@@ -3483,7 +3714,8 @@
         "order": "Reihenfolge",
         "active": "Aktiv",
         "featured": "Hervorgehoben",
-        "actions": "Aktionen"
+        "actions": "Aktionen",
+        "subcategory": "Unterkategorie"
       },
       "form": {
         "name": "Name",
@@ -3499,6 +3731,63 @@
         "namePlaceholder": "z. B. Industriekühler",
         "slugPlaceholder": "z. B. industriekuehler",
         "descriptionPlaceholder": "Unterkategoriebeschreibung"
+      },
+      "detail": {
+        "createDescription": "Neue Unterkategorie erstellen",
+        "editDescription": "{title} bearbeiten",
+        "nameRequired": "Name ist erforderlich",
+        "slugRequired": "Slug ist erforderlich",
+        "categoryRequired": "Es muss eine übergeordnete Kategorie ausgewählt werden",
+        "createSuccess": "Unterkategorie erstellt",
+        "updateSuccess": "Unterkategorie aktualisiert",
+        "defaultError": "Ein Fehler ist aufgetreten",
+        "errorPrefix": "Fehler: {message}",
+        "formTab": "Formular",
+        "jsonTitle": "Unterkategoriedaten (JSON)",
+        "jsonDescription": "Sie können alle Unterkategorie-Felder als JSON bearbeiten.",
+        "selectCategory": "Kategorie auswählen...",
+        "selectNone": "— Auswählen —"
+      },
+      "legacyForm": {
+        "createTitle": "Neue Unterkategorie",
+        "editTitle": "Unterkategorie bearbeiten",
+        "localeLabel": "Sprache",
+        "parentCategoryField": "Übergeordnete Kategorie (category_id)",
+        "displayOrderField": "Reihenfolge (display_order)",
+        "slugHelp": "Kurzer Name für die URL. Er kann je Sprache unterschiedlich sein.",
+        "iconOptional": "Icon (optional)",
+        "descriptionOptional": "Beschreibung (optional)",
+        "formTab": "Formular",
+        "switchingLocale": "Sprache wird gewechselt...",
+        "saving": "Wird gespeichert...",
+        "createAction": "Erstellen",
+        "localeRecordMissing": "Für die ausgewählte Sprache wurde kein Unterkategorie-Datensatz gefunden. Beim Speichern wird für diese Sprache eine neue Übersetzung erstellt (mit derselben Unterkategorie-ID).",
+        "localeLoadError": "Beim Laden der Unterkategorie für die ausgewählte Sprache ist ein Fehler aufgetreten.",
+        "jsonFixError": "JSON ist ungültig. Bitte beheben Sie den JSON-Fehler.",
+        "saveError": "Beim Speichern der Unterkategorie ist ein Fehler aufgetreten.",
+        "loadingSubcategory": "Unterkategorie wird geladen...",
+        "notFound": "Unterkategorie wurde nicht gefunden oder wurde möglicherweise gelöscht.",
+        "createNeedsCategory": "Sie müssen zuerst mindestens eine Kategorie erstellen, bevor Sie eine Unterkategorie anlegen.",
+        "preparingForm": "Formular wird vorbereitet...",
+        "backToList": "← Zur Liste zurück",
+        "backToSubcategoryList": "← Zur Unterkategorieliste zurück",
+        "imageLabel": "Unterkategoriebild",
+        "imageHelperBefore": "Sie können über das Storage-Modul ein Bild für die Unterkategorie hochladen. Die URL des hochgeladenen Bildes erscheint hier sofort als Vorschau und wird auch in das Feld",
+        "imageHelperStrong": "Icon / Bild-URL",
+        "imageHelperAfter": "übernommen.",
+        "jsonLabel": "Unterkategorie JSON",
+        "jsonEmpty": "Der JSON-Inhalt darf nicht leer sein.",
+        "jsonInvalid": "Ungültiges JSON.",
+        "jsonHelper": "Mit diesem Feld können Sie die JSON-Nutzlast, die vom Formular an das Backend gesendet wird, direkt bearbeiten."
+      },
+      "legacyHeader": {
+        "allLocales": "Alle Sprachen",
+        "description": "Listet mehrsprachige, an Kategorien gebundene Unterkategorie-Einträge auf und ermöglicht die Verwaltung von Sortierung (Drag & Drop), Aktiv-/Hervorgehoben-Status und Grundinformationen.",
+        "searchPlaceholder": "Innerhalb von Name oder Slug suchen",
+        "locale": "Sprache",
+        "category": "Kategorie",
+        "refresh": "Aktualisieren",
+        "create": "+ Neue Unterkategorie"
       }
     },
     "categories": {
@@ -3546,6 +3835,12 @@
         "featured": "Hervorgehoben",
         "unfeatured": "Hervorhebung entfernt"
       },
+      "messages": {
+        "confirmDelete": "Möchten Sie die Kategorie \"{title}\" wirklich löschen?",
+        "deleted": "{title} gelöscht",
+        "deleteError": "Löschfehler: {message}",
+        "defaultError": "Fehler: {message}"
+      },
       "table": {
         "name": "Name",
         "slug": "Slug",
@@ -3554,6 +3849,24 @@
         "active": "Aktiv",
         "featured": "Hervorgehoben",
         "actions": "Aktionen"
+      },
+      "detail": {
+        "createDescription": "Neue Kategorie erstellen",
+        "editDescription": "{title} bearbeiten",
+        "requiredError": "Name und Slug sind erforderlich",
+        "createSuccess": "Kategorie erstellt",
+        "updateSuccess": "Kategorie aktualisiert",
+        "defaultError": "Ein Fehler ist aufgetreten",
+        "errorPrefix": "Fehler: {message}",
+        "formTab": "Formular",
+        "description": "Beschreibung",
+        "displayOrder": "Reihenfolge",
+        "categoryImage": "Kategoriebild",
+        "jsonTitle": "Kategoriedaten (JSON)",
+        "jsonDescription": "Sie können alle Kategorie-Felder als JSON bearbeiten.",
+        "namePlaceholder": "z. B. Industrial Coolers",
+        "slugPlaceholder": "z. B. industrial-coolers",
+        "descriptionPlaceholder": "Kategoriebeschreibung"
       }
     },
     "library": {
@@ -3562,13 +3875,111 @@
         "description": "Mehrsprachige Bibliotheksdateien auflisten, bearbeiten und verwalten."
       },
       "filters": {
-        "search": "Nach Name oder Slug suchen..."
+        "search": "Nach Name oder Slug suchen...",
+        "allTypes": "Alle Typen"
       },
       "actions": {
         "create": "Neue Datei hinzufügen",
         "edit": "Datei bearbeiten",
         "save": "Speichern",
         "cancel": "Abbrechen"
+      },
+      "list": {
+        "loading": "Wird geladen...",
+        "empty": "Keine Einträge gefunden.",
+        "unnamed": "(ohne Namen)"
+      },
+      "table": {
+        "name": "Name / Slug",
+        "type": "Typ",
+        "active": "Aktiv",
+        "published": "Veröff.",
+        "featured": "Hervorgehoben",
+        "views": "Aufrufe",
+        "downloads": "Downloads",
+        "order": "Reihenfolge",
+        "actions": "Aktionen"
+      },
+      "messages": {
+        "toggleActiveError": "Aktivstatus konnte nicht geändert werden",
+        "togglePublishedError": "Veröffentlichungsstatus konnte nicht geändert werden",
+        "toggleFeaturedError": "Hervorhebungsstatus konnte nicht geändert werden",
+        "confirmDelete": "\"{title}\" löschen?",
+        "deleted": "Gelöscht",
+        "deleteError": "Löschen fehlgeschlagen"
+      },
+      "filesSection": {
+        "title": "PDF / Dateien",
+        "empty": "Es wurden noch keine Dateien hinzugefügt.",
+        "fileFallback": "Datei",
+        "fileInputLabel": "PDF / Datei auswählen",
+        "displayName": "Anzeigename",
+        "displayNamePlaceholder": "Wenn leer, wird der Dateiname verwendet",
+        "selectFileError": "Bitte wählen Sie eine Datei aus.",
+        "uploadMissingAssetId": "Upload erfolgreich, aber asset_id wurde nicht zurückgegeben.",
+        "uploadMissingUrl": "Upload erfolgreich, aber öffentliche URL wurde nicht zurückgegeben.",
+        "uploadSuccess": "Datei hochgeladen und gespeichert.",
+        "confirmDelete": "Möchten Sie die Datei \"{title}\" löschen?",
+        "deleteSuccess": "Datei gelöscht.",
+        "alreadyDeleted": "Datei wurde bereits gelöscht.",
+        "uploading": "Wird hochgeladen...",
+        "uploadAndSave": "Hochladen und speichern",
+        "defaultError": "Während des Vorgangs ist ein Fehler aufgetreten."
+      },
+      "imagesSection": {
+        "title": "Galeriebilder",
+        "uploadLabel": "Neues Bild hochladen",
+        "copyUrlTitle": "URL kopieren",
+        "copyUrlSuccess": "URL kopiert.",
+        "copyUrlError": "URL konnte nicht kopiert werden.",
+        "createSuccess": "Galeriebild hinzugefügt.",
+        "createError": "Bildeintrag konnte nicht erstellt werden.",
+        "orderSuccess": "Reihenfolge aktualisiert.",
+        "orderError": "Reihenfolge konnte nicht aktualisiert werden.",
+        "confirmDelete": "Möchten Sie dieses Bild löschen?",
+        "deleteSuccess": "Bild gelöscht.",
+        "deleteError": "Löschfehler.",
+        "coverImage": "Titelbild",
+        "makeCover": "Als Titelbild",
+        "displayOrder": "Anzeigereihenfolge:"
+      },
+      "detail": {
+        "createDescription": "Neuen Bibliothekseintrag erstellen",
+        "editDescription": "{title} bearbeiten",
+        "nameRequired": "Name ist erforderlich",
+        "slugRequired": "Slug ist erforderlich",
+        "createSuccess": "Bibliothekseintrag erstellt",
+        "updateSuccess": "Bibliothekseintrag aktualisiert",
+        "defaultError": "Ein Fehler ist aufgetreten",
+        "errorPrefix": "Fehler: {message}",
+        "formTab": "Formular",
+        "jsonTitle": "Bibliotheksdaten (JSON)",
+        "jsonDescription": "Sie können alle Felder als JSON bearbeiten.",
+        "name": "Name",
+        "namePlaceholder": "Bibliothekstitel",
+        "slugPlaceholder": "bibliothek-slug",
+        "type": "Typ",
+        "displayOrder": "Reihenfolge",
+        "description": "Beschreibung",
+        "imageAlt": "Bild-Alt-Text",
+        "tags": "Tags",
+        "tagsPlaceholder": "durch Kommas trennen",
+        "publishedAt": "Veröffentlichungsdatum",
+        "seoTitle": "SEO",
+        "metaTitle": "Meta-Titel",
+        "metaDescription": "Meta-Beschreibung",
+        "metaKeywords": "Meta-Schlüsselwörter",
+        "isActive": "Aktiv",
+        "isPublished": "Veröffentlicht",
+        "isFeatured": "Hervorgehoben",
+        "coverImage": "Titelbild",
+        "types": {
+          "brochure": "Broschüre",
+          "catalog": "Katalog",
+          "manual": "Handbuch",
+          "technical": "Technisches Dokument",
+          "other": "Sonstiges"
+        }
       }
     },
     "products": {
@@ -3594,6 +4005,7 @@
         "description": "Alle Produkteinträge anzeigen.",
         "loading": "Wird geladen...",
         "empty": "Keine Einträge gefunden.",
+        "unnamed": "(ohne Titel)",
         "allCategories": "Alle Kategorien",
         "columns": {
           "title": "Titel / Slug",
@@ -3603,6 +4015,126 @@
           "stock": "Lager",
           "active": "Aktiv",
           "featured": "Hervorgehoben",
+          "actions": "Aktionen"
+        }
+      },
+      "detail": {
+        "createDescription": "Neues Produkt erstellen",
+        "editDescription": "{title} bearbeiten",
+        "titleRequired": "Titel ist erforderlich",
+        "createSuccess": "Produkt erstellt",
+        "updateSuccess": "Produkt aktualisiert",
+        "errorPrefix": "Fehler: {message}",
+        "defaultError": "Ein Fehler ist aufgetreten",
+        "tabs": {
+          "form": "Formular",
+          "specs": "Eigenschaften",
+          "faqs": "FAQ",
+          "reviews": "Bewertungen",
+          "json": "JSON"
+        },
+        "fields": {
+          "title": "Titel *",
+          "slug": "Slug",
+          "price": "Preis",
+          "stock": "Lager",
+          "productCode": "Produktcode",
+          "description": "Beschreibung",
+          "imageAlt": "Bild-Alt-Text",
+          "tags": "Tags",
+          "seo": "SEO",
+          "metaTitle": "Meta-Titel",
+          "metaDescription": "Meta-Beschreibung",
+          "active": "Aktiv",
+          "featured": "Hervorgehoben",
+          "category": "Kategorie",
+          "subcategory": "Unterkategorie",
+          "coverImage": "Titelbild"
+        },
+        "placeholders": {
+          "title": "Produkttitel",
+          "slug": "produkt-slug",
+          "tags": "mit Kommas trennen",
+          "category": "Kategorie auswählen",
+          "subcategory": "Unterkategorie auswählen"
+        },
+        "emptyStates": {
+          "specs": "Speichern Sie das Produkt, bevor Sie technische Eigenschaften hinzufügen.",
+          "faqs": "Speichern Sie das Produkt, bevor Sie FAQ-Einträge hinzufügen.",
+          "reviews": "Speichern Sie das Produkt, bevor Sie Bewertungen hinzufügen."
+        },
+        "json": {
+          "title": "Produktdaten (JSON)",
+          "description": "Sie können alle Felder als JSON bearbeiten."
+        }
+      },
+      "faqTab": {
+        "title": "Häufig gestellte Fragen (FAQ)",
+        "activeLocale": "Aktive Sprache:",
+        "saveSuccess": "FAQ-Einträge gespeichert.",
+        "selectLocaleError": "Bitte zuerst eine Sprache auswählen.",
+        "invalidArray": "Ungültiges Format. Array erwartet.",
+        "defaultError": "Beim Speichern ist ein Fehler aufgetreten.",
+        "addQuestion": "Frage hinzufügen",
+        "empty": "Noch keine Fragen. Beginnen Sie mit \"Frage hinzufügen\".",
+        "columns": {
+          "question": "Frage",
+          "answer": "Antwort",
+          "order": "Reihenfolge",
+          "active": "Aktiv"
+        },
+        "placeholders": {
+          "question": "Wie lange ist die Lieferzeit?",
+          "answer": "Je nach Projektdetails 4-6 Wochen..."
+        }
+      },
+      "specsTab": {
+        "title": "Technische Eigenschaften",
+        "activeLocale": "Aktive Sprache:",
+        "saveSuccess": "Technische Eigenschaften gespeichert.",
+        "selectLocaleError": "Bitte zuerst eine Sprache auswählen.",
+        "invalidArray": "Ungültiges Format. Array erwartet.",
+        "defaultError": "Beim Speichern ist ein Fehler aufgetreten.",
+        "addRow": "Zeile hinzufügen",
+        "empty": "Noch keine technischen Eigenschaften. Beginnen Sie mit \"Zeile hinzufügen\".",
+        "columns": {
+          "name": "Feld (name)",
+          "value": "Wert",
+          "category": "Kategorie",
+          "order": "Reihenfolge"
+        },
+        "placeholders": {
+          "name": "capacity, fanType...",
+          "value": "1.500 m³/h - 4.500 m³/h",
+          "category": "physical, performance..."
+        }
+      },
+      "reviewsTab": {
+        "title": "Bewertungen ({count})",
+        "defaultError": "Beim Vorgang ist ein Fehler aufgetreten.",
+        "ratingError": "Die Bewertung muss zwischen 0 und 5 liegen.",
+        "createSuccess": "Bewertung hinzugefügt.",
+        "toggleSuccess": "Status aktualisiert.",
+        "deleteConfirm": "Diese Bewertung wirklich löschen?",
+        "deleteSuccess": "Bewertung gelöscht.",
+        "addReview": "Bewertung hinzufügen",
+        "cancel": "Abbrechen",
+        "creating": "Wird hinzugefügt...",
+        "loading": "Wird geladen...",
+        "empty": "Für dieses Produkt gibt es noch keine Bewertungen.",
+        "fields": {
+          "rating": "Bewertung (0-5)",
+          "customer": "Kundenname",
+          "date": "Datum",
+          "active": "Aktiv",
+          "comment": "Bewertung"
+        },
+        "columns": {
+          "rating": "Bewertung",
+          "customer": "Kunde",
+          "comment": "Bewertung",
+          "date": "Datum",
+          "status": "Status",
           "actions": "Aktionen"
         }
       },

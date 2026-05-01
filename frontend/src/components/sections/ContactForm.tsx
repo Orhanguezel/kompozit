@@ -107,7 +107,7 @@ export function ContactFormClient({ locale }: { locale: string }) {
           className={inputClasses}
         />
       </div>
-      
+
       <div className="pt-4">
         <button
           type="submit"

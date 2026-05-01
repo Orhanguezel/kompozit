@@ -29,12 +29,13 @@ import {
   Underline,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader } from "@ensotek/shared-ui/admin/ui/card";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import { cn } from "@/lib/utils";
 
 export type RichContentEditorProps = {
@@ -96,13 +97,14 @@ function insertHtmlAtCursor(html: string) {
 }
 
 const RichContentEditor: React.FC<RichContentEditorProps> = ({
-  label = "İçerik",
+  label,
   value,
   onChange,
   disabled = false,
   height = DEFAULT_HEIGHT,
   onUploadImage,
 }) => {
+  const t = useAdminT();
   const editorRef = useRef<HTMLDivElement | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -169,14 +171,14 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
       <table style="width:100%; border-collapse:collapse;" border="1">
         <thead>
           <tr>
-            <th style="padding:8px; text-align:left;">Başlık 1</th>
-            <th style="padding:8px; text-align:left;">Başlık 2</th>
+            <th style="padding:8px; text-align:left;">${t("common.editor.tableHeader1")}</th>
+            <th style="padding:8px; text-align:left;">${t("common.editor.tableHeader2")}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td style="padding:8px;">Hücre 1</td>
-            <td style="padding:8px;">Hücre 2</td>
+            <td style="padding:8px;">${t("common.editor.tableCell1")}</td>
+            <td style="padding:8px;">${t("common.editor.tableCell2")}</td>
           </tr>
         </tbody>
       </table>
@@ -195,7 +197,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
     }
 
     if (typeof window !== "undefined") {
-      const url = window.prompt("Resim URL'si girin:");
+      const url = window.prompt(t("common.editor.promptImageUrl"));
       if (url?.trim()) {
         const safeUrl = url.trim();
         const imgHtml = `<img src="${safeUrl}" alt="" style="max-width:100%; height:auto;" />`;
@@ -235,10 +237,10 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
     <Card>
       <CardHeader className="space-y-2">
         <div className="flex items-center justify-between gap-2">
-          <Label className="text-sm">{label}</Label>
+          <Label className="text-sm">{label || t("common.editor.content")}</Label>
           <Badge variant="secondary" className="gap-1">
             <Eye className="size-3.5" />
-            Live preview
+            {t("common.editor.livePreview")}
           </Badge>
         </div>
       </CardHeader>
@@ -247,10 +249,10 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
         <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as ActiveTab)}>
           <TabsList className="w-fit">
             <TabsTrigger value="visual" disabled={disabled}>
-              Görsel editör
+              {t("common.editor.visualEditor")}
             </TabsTrigger>
             <TabsTrigger value="source" disabled={disabled}>
-              Kaynak (HTML)
+              {t("common.editor.sourceHtml")}
             </TabsTrigger>
           </TabsList>
 
@@ -260,21 +262,21 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("bold"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Kalın"
+                title={t("common.editor.bold")}
               >
                 <Bold className="size-4" />
               </ToolbarButton>
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("italic"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="İtalik"
+                title={t("common.editor.italic")}
               >
                 <Italic className="size-4" />
               </ToolbarButton>
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("underline"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Altı çizili"
+                title={t("common.editor.underline")}
               >
                 <Underline className="size-4" />
               </ToolbarButton>
@@ -284,21 +286,21 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("formatBlock", "<p>"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Paragraf"
+                title={t("common.editor.paragraph")}
               >
                 <Type className="size-4" />
               </ToolbarButton>
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("formatBlock", "<h2>"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Başlık (H2)"
+                title={t("common.editor.heading2")}
               >
                 <Heading2 className="size-4" />
               </ToolbarButton>
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("formatBlock", "<h3>"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Alt başlık (H3)"
+                title={t("common.editor.heading3")}
               >
                 <Heading3 className="size-4" />
               </ToolbarButton>
@@ -308,14 +310,14 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("insertUnorderedList"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Madde işaretli liste"
+                title={t("common.editor.unorderedList")}
               >
                 <List className="size-4" />
               </ToolbarButton>
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("insertOrderedList"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Numaralı liste"
+                title={t("common.editor.orderedList")}
               >
                 <ListOrdered className="size-4" />
               </ToolbarButton>
@@ -325,7 +327,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), insertTable())}
                 disabled={disabled || activeTab !== "visual"}
-                title="Tablo ekle"
+                title={t("common.editor.insertTable")}
               >
                 <Table2 className="size-4" />
               </ToolbarButton>
@@ -333,7 +335,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), void insertImage())}
                 disabled={disabled || activeTab !== "visual"}
-                title={onUploadImage ? "Resim yükle ve ekle" : "Resim URL'si ile ekle"}
+                title={onUploadImage ? t("common.editor.uploadAndInsertImage") : t("common.editor.insertImage")}
               >
                 <ImageIcon className="size-4" />
               </ToolbarButton>
@@ -343,7 +345,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <ToolbarButton
                 onMouseDown={(e) => (e.preventDefault(), exec("removeFormat"))}
                 disabled={disabled || activeTab !== "visual"}
-                title="Biçimlendirmeyi temizle"
+                title={t("common.editor.clearFormatting")}
               >
                 <Eraser className="size-4" />
               </ToolbarButton>
@@ -381,7 +383,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               <div className="p-2">
                 <div className="mb-2 flex items-center gap-2 text-muted-foreground text-xs">
                   <Code2 className="size-4" />
-                  HTML kaynak
+                  {t("common.editor.htmlSource")}
                 </div>
                 <Textarea
                   value={html}
@@ -389,7 +391,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
                   disabled={disabled}
                   className="font-mono text-xs leading-5"
                   style={{ height, maxHeight: "600px", resize: "vertical" }}
-                  placeholder="<p>HTML içeriği buraya yaz...</p>"
+                  placeholder={t("common.editor.htmlPlaceholder")}
                 />
               </div>
             </TabsContent>
@@ -397,7 +399,7 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
         </Tabs>
 
         <div className="space-y-2">
-          <div className="text-muted-foreground text-xs">Önizleme</div>
+          <div className="text-muted-foreground text-xs">{t("common.editor.preview")}</div>
           <div className="rounded-md border bg-background p-3">
             {html?.trim() ? (
               <div
@@ -407,12 +409,12 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
               />
             ) : (
               <div className="text-muted-foreground text-sm">
-                Henüz içerik yok. Yazdıkça burada anlık olarak gözükecek.
+                {t("common.editor.emptyPreview")}
               </div>
             )}
           </div>
           <div className="text-muted-foreground text-xs">
-            Not: Görsel editör <code>execCommand</code> tabanlıdır; tarayıcı davranışları farklılık gösterebilir.
+            {t("common.editor.compatibilityNote")}
           </div>
         </div>
       </CardContent>

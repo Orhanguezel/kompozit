@@ -32,10 +32,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const page = await fetchAboutCustomPage(locale);
-  const t = await getTranslations({ locale, namespace: 'about' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'about' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   const title = page?.meta_title || page?.title || t('title');
   const description =
-    page?.meta_description || page?.description || page?.summary || t('description');
+    page?.meta_description || page?.description || page?.summary || seoT('aboutDescription');
   return buildPageMetadata({
     locale,
     pathname: '/about',
@@ -64,7 +67,7 @@ export default async function AboutPage({
   return (
     <main className="relative bg-[var(--carbon)]">
       <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
-      
+
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
@@ -81,7 +84,7 @@ export default async function AboutPage({
               }),
             ])}
           />
-          
+
           <Reveal>
             <div className="mb-20">
               <span className="section-label-cc">{t('about.label')}</span>
@@ -172,6 +175,27 @@ export default async function AboutPage({
                   </div>
                 </Reveal>
               </div>
+
+              <Reveal delay={300}>
+                <section className="border-l-2 border-[var(--gold)]/40 bg-[var(--gold)]/[0.04] px-8 py-10">
+                  <span className="section-label-cc">{t('about.ensotek.label')}</span>
+                  <h2 className="mt-4 font-display text-[2rem] font-normal uppercase tracking-[4px] text-[var(--white)]">
+                    {t('about.ensotek.title')}
+                  </h2>
+                  <p className="mt-6 max-w-3xl text-sm font-light leading-relaxed text-[var(--silver)]">
+                    {t('about.ensotek.description')}
+                  </p>
+                  <a
+                    href="https://www.ensotek.com.tr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[3px] text-[var(--gold)] transition-colors hover:text-[var(--white)]"
+                  >
+                    {t('about.ensotek.cta')}
+                    <ArrowRight className="size-4" />
+                  </a>
+                </section>
+              </Reveal>
             </div>
 
             <aside>

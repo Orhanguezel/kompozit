@@ -100,6 +100,9 @@ export default async function ProductDetailPage({
       image: heroImage,
       url: localizedUrl(locale, `/products/${slug}`),
       brand: 'MOE Kompozit',
+      manufacturer: 'MOE Kompozit',
+      category: product.category?.name || (localeKey === 'en' ? 'Composite parts' : 'Kompozit parcalar'),
+      sku: product.product_code || product.sku,
     }),
     jsonld.breadcrumb(
       breadcrumbs.map((item) => ({
@@ -156,7 +159,7 @@ export default async function ProductDetailPage({
                     />
                   )}
                 </div>
-                
+
                 {/* Image thumbnails/gallery if they exist would go here */}
               </div>
             </div>
@@ -173,7 +176,7 @@ export default async function ProductDetailPage({
                 <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-off-white)] lg:text-6xl">
                   {product.title}
                 </h1>
-                
+
                 {product.tags?.length > 0 && (
                   <div className="flex flex-wrap gap-2 pt-2">
                     {product.tags.map((tag: string) => (
@@ -202,9 +205,9 @@ export default async function ProductDetailPage({
 
               {/* Technical Specifications Section */}
               <div className="border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-10">
-                <TechnicalSpecs 
+                <TechnicalSpecs
                   specs={
-                    product.specs_json 
+                    product.specs_json
                       ? (typeof product.specs_json === 'string' ? JSON.parse(product.specs_json) : product.specs_json)
                       : [
                         { label: 'Material Base', value: (product.tags?.[0] || 'Carbon/GRP Hybrid') },
@@ -212,7 +215,7 @@ export default async function ProductDetailPage({
                         { label: 'Process Origin', value: 'Precision Compression / Hand-lay' },
                         { label: 'Production Fit', value: 'B2B Batch & High-Volume' }
                       ]
-                  } 
+                  }
                 />
               </div>
 

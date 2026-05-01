@@ -65,7 +65,7 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
   return (
     <section className="section-py relative overflow-hidden bg-[var(--color-graphite)]" id="contact">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[var(--color-gold)]/20 to-transparent" />
-      
+
       <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           {/* Left: Info */}
@@ -150,15 +150,15 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
             <Reveal delay={500}>
               <div className="relative rounded-[2.5rem] border border-white/5 bg-[var(--color-carbon)] p-8 lg:p-12">
                 <div className="absolute inset-0 gold-grid-bg opacity-[0.05] pointer-events-none" />
-                
+
                 <form className="relative z-10 space-y-6" onSubmit={handleSubmit}>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
                       <label className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-silver)] opacity-60">
                         {labels.namePlaceholder}
                       </label>
-                      <input 
-                        type="text" 
+                      <input
+                        type="text"
                         required
                         className="w-full rounded-xl border border-white/5 bg-white/[0.02] px-6 py-4 text-sm font-light text-[var(--color-off-white)] outline-none transition-all focus:border-[var(--color-gold)]/30 focus:bg-white/[0.04]"
                         placeholder="John Doe"
@@ -168,8 +168,8 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                       <label className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-silver)] opacity-60">
                         {labels.emailPlaceholder}
                       </label>
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         required
                         className="w-full rounded-xl border border-white/5 bg-white/[0.02] px-6 py-4 text-sm font-light text-[var(--color-off-white)] outline-none transition-all focus:border-[var(--color-gold)]/30 focus:bg-white/[0.04]"
                         placeholder="john@company.com"
@@ -181,7 +181,7 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     <label className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-silver)] opacity-60">
                       {labels.messagePlaceholder}
                     </label>
-                    <textarea 
+                    <textarea
                       required
                       rows={4}
                       className="w-full rounded-xl border border-white/5 bg-white/[0.02] px-6 py-4 text-sm font-light text-[var(--color-off-white)] outline-none transition-all focus:border-[var(--color-gold)]/30 focus:bg-white/[0.04]"
@@ -189,15 +189,15 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     />
                   </div>
 
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     disabled={sending}
                     className="hero-btn-primary w-full justify-center py-5 font-bold disabled:opacity-50"
                   >
                     {sending ? '...' : labels.submit}
                     <Send className="size-4" />
                   </button>
-                  
+
                   <p className="text-center text-[10px] font-medium text-[var(--color-silver)] opacity-40 uppercase tracking-[1px]">
                     {labels.response}
                   </p>

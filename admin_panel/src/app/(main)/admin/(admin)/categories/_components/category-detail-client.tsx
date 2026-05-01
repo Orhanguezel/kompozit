@@ -18,14 +18,14 @@ import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJson
 import { type AdminLocaleOption, AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import {
   useCreateCategoryAdminMutation,
   useGetCategoryAdminQuery,
@@ -145,7 +145,7 @@ export default function CategoryDetailClient({ id }: Props) {
     e.preventDefault();
 
     if (!formData.name || !formData.slug) {
-      toast.error("Name ve Slug zorunludur");
+      toast.error(t("detail.requiredError"));
       return;
     }
 
@@ -154,16 +154,16 @@ export default function CategoryDetailClient({ id }: Props) {
 
       if (isNew) {
         await createCategory(payload).unwrap();
-        toast.success("Kategori oluşturuldu");
+        toast.success(t("detail.createSuccess"));
       } else {
         await updateCategory({ id, patch: payload }).unwrap();
-        toast.success("Kategori güncellendi");
+        toast.success(t("detail.updateSuccess"));
       }
       router.push("/admin/categories");
     } catch (error: unknown) {
       const err = error as MutationError;
-      const errMsg = err.data?.error?.message || err.message || "Hata oluştu";
-      toast.error(`Hata: ${errMsg}`);
+      const errMsg = err.data?.error?.message || err.message || t("detail.defaultError");
+      toast.error(t("detail.errorPrefix", { message: errMsg }));
     }
   };
 
@@ -200,7 +200,9 @@ export default function CategoryDetailClient({ id }: Props) {
               </Button>
               <div>
                 <CardTitle className="text-base">{isNew ? t("actions.create") : t("actions.edit")}</CardTitle>
-                <CardDescription>{isNew ? "Yeni kategori oluştur" : `${category?.name || ""} düzenle`}</CardDescription>
+                <CardDescription>
+                  {isNew ? t("detail.createDescription") : t("detail.editDescription", { title: category?.name || "" })}
+                </CardDescription>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -218,7 +220,7 @@ export default function CategoryDetailClient({ id }: Props) {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "form" | "json")}>
         <TabsList>
-          <TabsTrigger value="form">Form</TabsTrigger>
+          <TabsTrigger value="form">{t("detail.formTab")}</TabsTrigger>
           <TabsTrigger value="json">
             <FileJson className="mr-2 h-4 w-4" />
             JSON
@@ -241,7 +243,7 @@ export default function CategoryDetailClient({ id }: Props) {
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
                         disabled={isLoading}
-                        placeholder="Örn: İndustrial Coolers"
+                        placeholder={t("detail.namePlaceholder")}
                       />
                     </div>
 
@@ -253,20 +255,20 @@ export default function CategoryDetailClient({ id }: Props) {
                         value={formData.slug}
                         onChange={(e) => handleChange("slug", e.target.value)}
                         disabled={isLoading}
-                        placeholder="Örn: industrial-coolers"
+                        placeholder={t("detail.slugPlaceholder")}
                       />
                     </div>
 
                     {/* Description */}
                     <div className="space-y-2">
-                      <Label htmlFor="description">Açıklama</Label>
+                      <Label htmlFor="description">{t("detail.description")}</Label>
                       <Textarea
                         id="description"
                         value={formData.description}
                         onChange={(e) => handleChange("description", e.target.value)}
                         disabled={isLoading}
                         rows={4}
-                        placeholder="Kategori açıklaması"
+                        placeholder={t("detail.descriptionPlaceholder")}
                       />
                     </div>
 
@@ -318,7 +320,7 @@ export default function CategoryDetailClient({ id }: Props) {
 
                     {/* Display Order */}
                     <div className="space-y-2">
-                      <Label htmlFor="display_order">Sıralama</Label>
+                      <Label htmlFor="display_order">{t("detail.displayOrder")}</Label>
                       <Input
                         id="display_order"
                         type="number"
@@ -358,7 +360,7 @@ export default function CategoryDetailClient({ id }: Props) {
                   {/* Sidebar - Image */}
                   <div className="space-y-6">
                     <AdminImageUploadField
-                      label="Kategori Görseli"
+                      label={t("detail.categoryImage")}
                       value={formData.image_url}
                       onChange={handleImageChange}
                       disabled={isLoading}
@@ -385,8 +387,8 @@ export default function CategoryDetailClient({ id }: Props) {
         <TabsContent value="json">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Kategori Verisi (JSON)</CardTitle>
-              <CardDescription>Tüm kategori alanlarını JSON olarak düzenleyebilirsiniz.</CardDescription>
+              <CardTitle className="text-base">{t("detail.jsonTitle")}</CardTitle>
+              <CardDescription>{t("detail.jsonDescription")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -395,7 +397,7 @@ export default function CategoryDetailClient({ id }: Props) {
                 </div>
                 <div className="space-y-4">
                   <AdminImageUploadField
-                    label="Kategori Görseli"
+                    label={t("detail.categoryImage")}
                     value={formData.image_url}
                     onChange={handleImageChange}
                     disabled={isLoading}

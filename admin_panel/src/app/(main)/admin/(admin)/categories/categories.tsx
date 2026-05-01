@@ -7,8 +7,8 @@
 "use client";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Card, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 
 import CategoriesListPanel from "./_components/categories-list-panel";
 

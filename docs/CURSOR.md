@@ -1,8 +1,8 @@
 # Cursor — V2 Görsel Eşleştirme Checklist
 
-> **Hedef:** `compositecraft-website.html` görünümüne piksel düzeyinde yaklaşmak.  
-> **Referans:** Repo kökündeki `compositecraft-website.html` — her section için CSS orada.  
-> **Kural:** Her öğeyi bitirince işaretle. Codex'in aynı dosyaya dokunmasını bekleme.  
+> **Hedef:** `compositecraft-website.html` görünümüne piksel düzeyinde yaklaşmak.
+> **Referans:** Repo kökündeki `compositecraft-website.html` — her section için CSS orada.
+> **Kural:** Her öğeyi bitirince işaretle. Codex'in aynı dosyaya dokunmasını bekleme.
 > **Backend:** `http://localhost:8186` üzerinde çalışıyor. Frontend: `http://localhost:3020`
 
 ---

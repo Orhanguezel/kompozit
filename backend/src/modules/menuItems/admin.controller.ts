@@ -81,7 +81,7 @@ function baseSelect(i18nReq: any, i18nDef: any) {
       COALESCE(${i18nReq.url}, ${i18nDef.url})
     `.as("url"),
     locale_resolved: sql<string>`
-      CASE 
+      CASE
         WHEN ${i18nReq.id} IS NOT NULL THEN ${i18nReq.locale}
         ELSE ${i18nDef.locale}
       END

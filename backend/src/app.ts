@@ -4,7 +4,7 @@ import cookie from '@fastify/cookie';
 import multipart from '@fastify/multipart';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
-import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import { jsonSchemaTransform, serializerCompiler } from 'fastify-type-provider-zod';
 import type { FastifyInstance } from 'fastify';
 
 import authPlugin from './plugins/authPlugin';
@@ -16,8 +16,8 @@ import { registerErrorHandlers } from '@/core/error';
 import { parseCorsOrigins } from './app.helpers';
 import { registerAllRoutes } from './routes';
 
-import { shouldSkipAuditLog, writeRequestAuditLog } from '@agro/shared-backend/modules/audit';
-import { startRetentionJob } from '@agro/shared-backend/modules/audit/service';
+import { shouldSkipAuditLog, writeRequestAuditLog } from '@ensotek/shared-backend/modules/audit';
+import { startRetentionJob } from '@ensotek/shared-backend/modules/audit/service';
 
 export async function createApp() {
   const { default: buildFastify } = (await import('fastify')) as unknown as {
@@ -28,7 +28,6 @@ export async function createApp() {
     logger: env.NODE_ENV !== 'production',
   }) as FastifyInstance;
 
-  app.setValidatorCompiler(validatorCompiler);
   app.setSerializerCompiler(serializerCompiler);
 
   await app.register(cors, {

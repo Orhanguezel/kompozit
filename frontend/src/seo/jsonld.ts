@@ -87,6 +87,9 @@ export function product(input: {
   image?: string;
   url?: string;
   brand?: string;
+  manufacturer?: string;
+  category?: string;
+  sku?: string;
 }): Thing {
   return {
     '@type': 'Product',
@@ -97,6 +100,11 @@ export function product(input: {
     ...(input.brand
       ? { brand: { '@type': 'Brand', name: input.brand } }
       : {}),
+    ...(input.manufacturer
+      ? { manufacturer: { '@type': 'Organization', name: input.manufacturer } }
+      : {}),
+    ...(input.category ? { category: input.category } : {}),
+    ...(input.sku ? { sku: input.sku } : {}),
   };
 }
 

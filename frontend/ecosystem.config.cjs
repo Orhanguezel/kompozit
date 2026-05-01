@@ -1,13 +1,13 @@
 // =============================================================
 // FILE: ecosystem.config.cjs
-// MOE Kompozit (karbonkompozit.com.tr) — PM2 config
+// Kompozit frontend (karbonkompozit.com.tr) — PM2 config
 // =============================================================
 
 module.exports = {
   apps: [
     {
-      name: 'karbonkompozit',
-      cwd: '/var/www/Ensotek/karbonkompozit',
+      name: 'kompozit-frontend',
+      cwd: '/var/www/Ensotek/kompozit/frontend',
       script: 'node',
       args: '.next/standalone/server.js',
       exec_mode: 'fork',

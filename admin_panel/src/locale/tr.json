@@ -1,5 +1,17 @@
 {
   "admin": {
+    "kompozit": {
+      "routeGate": {
+        "title": "Bu ekran MOE Kompozit panelinde aktif değil",
+        "description": "Bu admin panel kompozit operasyonları için sadeleştirildi. Şu anki route shared Ensotek panelinden kalan bir ekrana ait.",
+        "dashboard": "Dashboard",
+        "siteSettings": "Site Ayarları"
+      },
+      "comingSoon": {
+        "title": "Yakında",
+        "description": "Bu sayfa geliştirme aşamasında. Bir sonraki güncellemelerde aktif olacaktır."
+      }
+    },
     "reports": {
       "title": "Raporlar",
       "description": "Sistem trafik analizi, performans metrikleri ve kullanıcı aktiviteleri.",
@@ -392,7 +404,85 @@
       "total": "Toplam",
       "operationFailed": "İşlem başarısız. Lütfen tekrar deneyin.",
       "active": "Aktif",
-      "inactive": "Pasif"
+      "inactive": "Pasif",
+      "imageField": {
+        "image": "Görsel",
+        "images": "Görseller",
+        "uploading": "Yükleniyor...",
+        "urlCopied": "URL kopyalandı.",
+        "copyFailed": "Kopyalanamadı.",
+        "selectedImageAdded": "Görsel eklendi.",
+        "selectedImageChosen": "Görsel seçildi.",
+        "imageUploaded": "Görsel yüklendi.",
+        "imagesUploaded": "{count} görsel yüklendi.",
+        "urlMissing": "Görsel URL'i alınamadı.",
+        "uploadFailed": "Görsel yüklenirken hata oluştu.",
+        "bulkUploadFailed": "Bazı görseller yüklenirken hata oluştu.",
+        "noneSelected": "Henüz görsel seçilmedi.",
+        "galleryEmpty": "Henüz galeri görseli yok.",
+        "gallery": "Galeri",
+        "urlLabel": "URL:",
+        "cover": "Kapak",
+        "imageN": "Görsel {index}",
+        "makeCover": "Kapak yap",
+        "coverCannotDelete": "Kapak silinemez",
+        "remove": "Sil",
+        "parentNote": "Not: `onChangeMultiple` verilmediği için galeri parent tarafından yönetilmiyor.",
+        "uploadButtonSingle": "Görsel Yükle",
+        "uploadButtonMultiple": "Görseller Yükle",
+        "dialogTitleSingle": "Görsel Yükle",
+        "dialogTitleMultiple": "Görseller Yükle",
+        "dialogDescription": "Bilgisayarınızdan yükleyin veya kütüphaneden seçin.",
+        "tabUpload": "Yükle",
+        "tabLibrary": "Kütüphane",
+        "selectImage": "Görsel seçin",
+        "singleHelp": "Tek bir görsel yükleyebilirsiniz.",
+        "multipleHelp": "Birden fazla görsel yükleyebilirsiniz.",
+        "selectFile": "Dosya Seç",
+        "libraryEmpty": "Kütüphane boş",
+        "libraryEmptyHelp": "Henüz yüklenmiş görsel yok. \"Yükle\" sekmesinden görsel yükleyebilirsiniz.",
+        "selected": "Seçildi"
+      },
+      "editor": {
+        "content": "İçerik",
+        "livePreview": "Canlı önizleme",
+        "visualEditor": "Görsel editör",
+        "sourceHtml": "Kaynak (HTML)",
+        "paragraph": "Paragraf",
+        "heading2": "Başlık (H2)",
+        "heading3": "Alt başlık (H3)",
+        "bold": "Kalın",
+        "italic": "İtalik",
+        "underline": "Altı çizili",
+        "unorderedList": "Madde işaretli liste",
+        "orderedList": "Numaralı liste",
+        "insertTable": "Tablo ekle",
+        "insertImage": "Resim ekle",
+        "uploadAndInsertImage": "Resim yükle ve ekle",
+        "clearFormatting": "Biçimlendirmeyi temizle",
+        "htmlSource": "HTML kaynak",
+        "htmlPlaceholder": "<p>HTML içeriği buraya yaz...</p>",
+        "preview": "Önizleme",
+        "emptyPreview": "Henüz içerik yok. Yazdıkça burada anlık olarak gözükecek.",
+        "compatibilityNote": "Not: Görsel editör `execCommand` tabanlıdır; tarayıcı davranışları farklılık gösterebilir.",
+        "promptImageUrl": "Resim URL'si girin:",
+        "tableHeader1": "Başlık 1",
+        "tableHeader2": "Başlık 2",
+        "tableCell1": "Hücre 1",
+        "tableCell2": "Hücre 2"
+      },
+      "passive": "Pasif",
+      "all": "Tümü",
+      "category": "Kategori",
+      "subcategory": "Alt Kategori",
+      "language": "Dil",
+      "featured": "Öne Çıkan",
+      "order": "Sıra",
+      "published": "Yayın",
+      "viewsShort": "Görünt.",
+      "downloads": "İndirme",
+      "date": "Tarih",
+      "delete": "Sil"
     },
     "slider": {
       "header": {
@@ -664,6 +754,9 @@
         "noTitle": "Başlık yok",
         "created": "Oluşturulma",
         "updated": "Güncelleme",
+        "locale": "Dil",
+        "seo": "SEO",
+        "slug": "Slug",
         "moveUp": "Yukarı",
         "moveDown": "Aşağı",
         "reorderHelp": "Sıralama: Yukarı/Aşağı ile taşı, sonra kaydet.",
@@ -717,7 +810,12 @@
         "altTextPlaceholder": "Alt metin (opsiyonel)",
         "addManualUrl": "Serbest URL'yi İçeriğe Ekle",
         "coverHelperText": "Bu sayfa için kapak/öne çıkan görsel yükleyebilirsin.",
-        "galleryHelperText": "Birden fazla görsel yükleyip sayfaya galeri tanımlayabilirsin."
+        "galleryHelperText": "Birden fazla görsel yükleyip sayfaya galeri tanımlayabilirsin.",
+        "tagsPlaceholder": "ör: guezelwebdesign, kampanya, blog",
+        "richContentLabel": "İçerik (zengin metin / HTML)",
+        "richContentHelperPrefix": "Editör HTML üretir. Backend, bu alanı",
+        "richContentHelperMiddle": "ile",
+        "richContentHelperSuffix": "formatına çevirebilir."
       },
       "detail": {
         "noLocales": "Dil listesi bulunamadı",
@@ -744,6 +842,7 @@
       "updateFailed": "Profil güncellenemedi.",
       "avatarSet": "Özel profil resmi ayarlandı",
       "noAvatar": "Varsayılan avatar kullanılıyor",
+      "defaultName": "Admin",
       "name": "Tam Ad",
       "email": "E-posta",
       "security": "Güvenlik",
@@ -825,6 +924,7 @@
         "audit": "Denetim Kayıtları",
         "notifications": "Bildirimler",
         "storage": "Dosya Yöneticisi",
+        "cache": "Cache Yonetimi",
         "contacts": "İletişim Mesajları",
         "users": "Kullanıcılar",
         "reviews": "Yorumlar",
@@ -1988,6 +2088,35 @@
         "custom": "Özel"
       }
     },
+    "cache": {
+      "title": "Cache Yonetimi",
+      "description": "Frontend sayfalarinin cache'ini temizleyin. Icerik guncellemelerinin aninda gorunmesini saglar.",
+      "quickClear": "Hizli Temizle",
+      "quickClearDesc": "Belirli bir sayfanin veya tum sitenin cache'ini temizleyin.",
+      "clearButton": "Temizle",
+      "cleared": "Cache temizlendi",
+      "clearedAll": "Tum site cache temizlendi",
+      "clearError": "Cache temizlenemedi",
+      "info": "Bilgi",
+      "infoText1": "Frontend sayfalari 5 dakika (300 saniye) boyunca cache'lenir. Cache temizlendiginde sayfalar bir sonraki ziyarette API'den taze veri ceker.",
+      "infoText2": "Admin panelden icerik guncelledikten sonra degisikliklerin hemen gorunmesini istiyorsaniz ilgili sayfanin cache'ini temizleyin.",
+      "actions": {
+        "allSite": "Tum Site Cache",
+        "allSiteDesc": "Tum sayfalarin cache'ini temizler.",
+        "home": "Ana Sayfa",
+        "homeDesc": "Ana sayfanin cache'ini temizler.",
+        "products": "Urunler",
+        "productsDesc": "Urunler sayfasinin cache'ini temizler.",
+        "services": "Hizmetler",
+        "servicesDesc": "Hizmetler sayfasinin cache'ini temizler.",
+        "news": "Haberler",
+        "newsDesc": "Haberler sayfasinin cache'ini temizler.",
+        "contact": "Iletisim",
+        "contactDesc": "Iletisim sayfasinin cache'ini temizler.",
+        "references": "Referanslar",
+        "referencesDesc": "Referanslar sayfasinin cache'ini temizler."
+      }
+    },
     "audit": {
       "header": {
         "title": "Denetim Kayıtları",
@@ -2039,6 +2168,17 @@
         "pathPrefix": "Yol Ön Eki",
         "chartTitle": "Günlük Grafik",
         "lastNDays": "Son {n} gün"
+      },
+      "chart": {
+        "lastDaysSummary": "Son {count} gün",
+        "requests": "requests",
+        "bar": "bar",
+        "unique": "unique",
+        "uniqueIp": "Unique IP",
+        "errors": "errors",
+        "loading": "Yükleniyor...",
+        "empty": "Grafik verisi boş. (Backend response shape / date format uyumsuz olabilir.)",
+        "ariaLabel": "Audit günlük metrik grafiği"
       },
       "map": {
         "title": "Coğrafi Dağılım",
@@ -2250,6 +2390,75 @@
     "siteSettings": {
       "title": "Site Ayarları",
       "description": "Key-value ayarlarını yönetin. Liste sekmeleri arama ile filtrelenebilir.",
+      "homeSettings": {
+        "header": {
+          "title": "Ana Sayfa İçerik Ayarları",
+          "localePrefix": "Dil: {locale} · Prefix: {prefix}"
+        },
+        "sections": {
+          "hero": {
+            "title": "Hero Bölümü",
+            "description": "Ana sayfa hero alanı başlık ve CTA metinleri."
+          },
+          "about": {
+            "title": "Hakkımızda Bölümü",
+            "description": "Ana sayfadaki hakkımızda kısa tanıtım alanı."
+          },
+          "testimonial": {
+            "title": "Referans Alıntısı",
+            "description": "Ana sayfadaki müşteri alıntı bölümü."
+          },
+          "stats": {
+            "title": "İstatistik Çubuğu",
+            "description": "Ana sayfada gösterilen 4 adet sayısal istatistik."
+          }
+        },
+        "messages": {
+          "aboutSaved": "Hakkımızda içeriği kaydedildi.",
+          "testimonialSaved": "Referans alıntısı kaydedildi.",
+          "statsSaved": "İstatistik verileri kaydedildi.",
+          "heroSaved": "Hero içeriği kaydedildi.",
+          "saveError": "Kayıt sırasında hata oluştu."
+        },
+        "fields": {
+          "titleHtml": "Başlık (HTML desteklenir, <em> kullanılabilir)",
+          "subtitle": "Alt Başlık",
+          "primaryCtaLabel": "Ana CTA Metni",
+          "primaryCtaUrl": "Ana CTA URL",
+          "secondaryCtaLabel": "İkincil CTA Metni",
+          "label": "Etiket (Küçük üst başlık)",
+          "ctaLabel": "CTA Buton Metni",
+          "tagline": "Slogan",
+          "intro": "Giriş Metni",
+          "quote": "Alıntı",
+          "attribution": "Kaynak (İsim / Unvan)",
+          "number": "Sayı",
+          "suffix": "Sonek (+, yıl, vb.)",
+          "statLabel": "Etiket",
+          "description": "Açıklama"
+        },
+        "placeholders": {
+          "heroTitle": "Endüstriyel Dünya İçin <em>Mühendislik</em> Sanatı",
+          "heroSubtitle": "Yüksek performanslı kompozit çözümler...",
+          "heroCtaLabel": "Teklif Al",
+          "heroCtaHref": "/tr/offer",
+          "heroSecondaryLabel": "Ürünleri Keşfet",
+          "aboutLabel": "Hakkımızda",
+          "aboutCtaLabel": "Daha Fazlası",
+          "aboutTitle": "Mühendislik <em>Disiplini</em>",
+          "aboutTagline": "Bilimin zanaatla buluştuğu nokta",
+          "aboutIntro": "MOE Kompozit olarak 15+ yıl...",
+          "testimonialQuote": "Kalite ve teslimat süresi konusunda...",
+          "testimonialAttribution": "Ahmet Yıldız · Proje Müdürü, Savunma A.Ş.",
+          "statNumber": "15",
+          "statSuffix": "+",
+          "statLabel": "Yıl",
+          "statDescription": "Sektörde deneyim"
+        },
+        "stats": {
+          "itemTitle": "İstatistik {index}"
+        }
+      },
       "tabs": {
         "general": "Genel",
         "seo": "SEO",
@@ -2260,7 +2469,12 @@
         "list": "Liste (Dil)",
         "globalList": "Liste (Global *)",
         "locales": "Diller",
-        "branding": "Marka"
+        "branding": "Marka",
+        "home": "Ana Sayfa"
+      },
+      "scoped": {
+        "note": "Bu ekran kompozit projesine ozeldir. Buradaki degisiklikler Ensotek ve diger sitelerin ortak `site_settings` kayitlarini etkilemez.",
+        "description": "Key-value ayarlarini yonetin. Liste sekmeleri arama ile filtrelenebilir. Bu ekran yalnizca {brand} namespace ayarlarini etkiler."
       },
       "filters": {
         "title": "Filtreler",
@@ -2284,7 +2498,8 @@
         "title": "Yönetim",
         "localeRecords": "Seçili dil kayıtları",
         "globalRecords": "Global (*) kayıtları",
-        "loadingMeta": "Locale meta yükleniyor…"
+        "loadingMeta": "Locale meta yükleniyor…",
+        "homeContent": "Ana Sayfa İçeriği"
       },
       "locales": {
         "title": "Diller",
@@ -2301,7 +2516,8 @@
         "presetDeEnTr": "de/en/tr preset uygula",
         "presetTop20": "20 yaygın dil ekle",
         "saved": "Diller güncellendi.",
-        "saveError": "Diller güncellenemedi."
+        "saveError": "Diller güncellenemedi.",
+        "frontendFallbackNote": "Frontend varsayılan dili artık bu panelden yönetilmiyor. Her proje kendi fallback locale ayarını kendi frontend katmanında belirliyor."
       },
       "list": {
         "title": "Ayar Listesi",
@@ -3468,11 +3684,26 @@
         "total": "Toplam",
         "loading": "Alt kategoriler yükleniyor...",
         "noData": "Kayıt bulunamadı.",
+        "busy": "İşlem yapılıyor...",
+        "saveOrder": "Sıralamayı Kaydet",
+        "savingOrder": "Sıralama kaydediliyor...",
+        "caption": "Sıralama değişikliği (DnD) sadece çok büyük ekranlarda (xxl+) tabloda aktiftir. Kalıcı yapmak için \"Sıralamayı Kaydet\" butonunu kullan.",
+        "unnamed": "(Ad yok)",
+        "notFound": "Henüz alt kategori bulunmuyor.",
+        "categoryLabel": "Kategori: {value}",
+        "slugLabel": "Slug:",
         "refreshing": "Liste yenileniyor...",
         "activated": "Aktif edildi",
         "deactivated": "Pasif edildi",
         "featured": "Öne çıkarıldı",
         "unfeatured": "Öne çıkarmaktan kaldırıldı"
+      },
+      "messages": {
+        "toggleActiveError": "Aktiflik değiştirilemedi",
+        "toggleFeaturedError": "Öne çıkarma değiştirilemedi",
+        "confirmDelete": "\"{title}\" silinsin mi?",
+        "deleted": "Silindi",
+        "deleteError": "Silinemedi"
       },
       "table": {
         "name": "Ad",
@@ -3482,7 +3713,8 @@
         "order": "Sıra",
         "active": "Aktif",
         "featured": "Öne Çıkan",
-        "actions": "İşlemler"
+        "actions": "İşlemler",
+        "subcategory": "Alt Kategori"
       },
       "form": {
         "name": "Ad",
@@ -3498,6 +3730,63 @@
         "namePlaceholder": "Örn: Endüstriyel Soğutucular",
         "slugPlaceholder": "Örn: endustriyel-sogutucular",
         "descriptionPlaceholder": "Alt kategori açıklaması"
+      },
+      "detail": {
+        "createDescription": "Yeni alt kategori oluştur",
+        "editDescription": "{title} düzenle",
+        "nameRequired": "Ad (name) zorunludur",
+        "slugRequired": "Slug zorunludur",
+        "categoryRequired": "Üst kategori seçilmelidir",
+        "createSuccess": "Alt kategori oluşturuldu",
+        "updateSuccess": "Alt kategori güncellendi",
+        "defaultError": "Hata oluştu",
+        "errorPrefix": "Hata: {message}",
+        "formTab": "Form",
+        "jsonTitle": "Alt Kategori Verisi (JSON)",
+        "jsonDescription": "Tüm alt kategori alanlarını JSON olarak düzenleyebilirsiniz.",
+        "selectCategory": "Kategori seçin...",
+        "selectNone": "— Seçiniz —"
+      },
+      "legacyForm": {
+        "createTitle": "Yeni Alt Kategori",
+        "editTitle": "Alt Kategori Düzenle",
+        "localeLabel": "Dil",
+        "parentCategoryField": "Üst Kategori (category_id)",
+        "displayOrderField": "Sıralama (display_order)",
+        "slugHelp": "URL için kullanılacak kısa ad. Dil başına farklı olabilir.",
+        "iconOptional": "Icon (opsiyonel)",
+        "descriptionOptional": "Açıklama (opsiyonel)",
+        "formTab": "Form",
+        "switchingLocale": "Dil değiştiriliyor...",
+        "saving": "Kaydediliyor...",
+        "createAction": "Oluştur",
+        "localeRecordMissing": "Seçilen dil için alt kategori kaydı bulunamadı. Kaydettiğinde bu dil için yeni bir çeviri oluşturulacak (aynı alt kategori id ile).",
+        "localeLoadError": "Seçilen dil için alt kategori yüklenirken bir hata oluştu.",
+        "jsonFixError": "JSON geçerli değil. Lütfen JSON hatasını düzeltin.",
+        "saveError": "Alt kategori kaydedilirken bir hata oluştu.",
+        "loadingSubcategory": "Alt kategori yükleniyor...",
+        "notFound": "Alt kategori bulunamadı veya silinmiş olabilir.",
+        "createNeedsCategory": "Alt kategori oluşturmak için önce en az 1 adet kategori oluşturmalısın.",
+        "preparingForm": "Form hazırlanıyor...",
+        "backToList": "← Listeye dön",
+        "backToSubcategoryList": "← Alt kategori listesine dön",
+        "imageLabel": "Alt Kategori Görseli",
+        "imageHelperBefore": "Storage modülü üzerinden alt kategori için bir görsel yükleyebilirsin. Yüklenen görselin URL'i anında burada önizleme olarak görünür ve formdaki",
+        "imageHelperStrong": "Icon / Görsel URL",
+        "imageHelperAfter": "alanına da yansır.",
+        "jsonLabel": "Alt Kategori JSON",
+        "jsonEmpty": "JSON içerik boş olamaz.",
+        "jsonInvalid": "Geçersiz JSON.",
+        "jsonHelper": "Bu alan, formun backend'e giden JSON payload'ını doğrudan düzenlemeni sağlar."
+      },
+      "legacyHeader": {
+        "allLocales": "Tüm Diller",
+        "description": "Kategorilere bağlı çok dilli alt kategori kayıtlarını listeler, sıralama (drag & drop), aktif/öne çıkan durumlarını ve temel bilgileri yönetebilirsin.",
+        "searchPlaceholder": "İsim veya slug içinde ara",
+        "locale": "Dil",
+        "category": "Kategori",
+        "refresh": "Yenile",
+        "create": "+ Yeni Alt Kategori"
       }
     },
     "categories": {
@@ -3545,6 +3834,12 @@
         "featured": "Öne çıkarıldı",
         "unfeatured": "Öne çıkarmaktan kaldırıldı"
       },
+      "messages": {
+        "confirmDelete": "\"{title}\" kategorisini silmek istediğinize emin misiniz?",
+        "deleted": "{title} silindi",
+        "deleteError": "Silme hatası: {message}",
+        "defaultError": "Hata: {message}"
+      },
       "table": {
         "name": "Ad",
         "slug": "Slug",
@@ -3553,6 +3848,24 @@
         "active": "Aktif",
         "featured": "Öne Çıkan",
         "actions": "İşlemler"
+      },
+      "detail": {
+        "createDescription": "Yeni kategori oluştur",
+        "editDescription": "{title} düzenle",
+        "requiredError": "Name ve Slug zorunludur",
+        "createSuccess": "Kategori oluşturuldu",
+        "updateSuccess": "Kategori güncellendi",
+        "defaultError": "Hata oluştu",
+        "errorPrefix": "Hata: {message}",
+        "formTab": "Form",
+        "description": "Açıklama",
+        "displayOrder": "Sıralama",
+        "categoryImage": "Kategori Görseli",
+        "jsonTitle": "Kategori Verisi (JSON)",
+        "jsonDescription": "Tüm kategori alanlarını JSON olarak düzenleyebilirsiniz.",
+        "namePlaceholder": "Örn: Industrial Coolers",
+        "slugPlaceholder": "Örn: industrial-coolers",
+        "descriptionPlaceholder": "Kategori açıklaması"
       }
     },
     "library": {
@@ -3561,13 +3874,111 @@
         "description": "Çok dilli kütüphane dosyalarını listele, düzenle ve yönet."
       },
       "filters": {
-        "search": "İsim veya slug ile ara..."
+        "search": "İsim veya slug ile ara...",
+        "allTypes": "Tüm Tipler"
       },
       "actions": {
         "create": "Yeni Dosya Ekle",
         "edit": "Dosyayı Düzenle",
         "save": "Kaydet",
         "cancel": "İptal"
+      },
+      "list": {
+        "loading": "Yükleniyor...",
+        "empty": "Kayıt bulunamadı.",
+        "unnamed": "(adsız)"
+      },
+      "table": {
+        "name": "Ad / Slug",
+        "type": "Tip",
+        "active": "Aktif",
+        "published": "Yayın",
+        "featured": "Öne Çıkan",
+        "views": "Görünt.",
+        "downloads": "İndirme",
+        "order": "Sıra",
+        "actions": "İşlemler"
+      },
+      "messages": {
+        "toggleActiveError": "Aktiflik değiştirilemedi",
+        "togglePublishedError": "Yayın durumu değiştirilemedi",
+        "toggleFeaturedError": "Öne çıkarma değiştirilemedi",
+        "confirmDelete": "\"{title}\" silinsin mi?",
+        "deleted": "Silindi",
+        "deleteError": "Silinemedi"
+      },
+      "filesSection": {
+        "title": "PDF / Dosyalar",
+        "empty": "Henüz dosya eklenmemiş.",
+        "fileFallback": "Dosya",
+        "fileInputLabel": "PDF / Dosya Seç",
+        "displayName": "Görünen Ad",
+        "displayNamePlaceholder": "Boş bırakılırsa dosya adı kullanılır",
+        "selectFileError": "Lütfen bir dosya seç.",
+        "uploadMissingAssetId": "Upload başarılı ama asset_id alınamadı.",
+        "uploadMissingUrl": "Upload başarılı ama public url alınamadı.",
+        "uploadSuccess": "Dosya yüklendi ve kaydedildi.",
+        "confirmDelete": "\"{title}\" dosyasını silmek istiyor musun?",
+        "deleteSuccess": "Dosya silindi.",
+        "alreadyDeleted": "Dosya zaten silinmiş.",
+        "uploading": "Yükleniyor...",
+        "uploadAndSave": "Yükle ve Kaydet",
+        "defaultError": "İşlem sırasında hata oluştu."
+      },
+      "imagesSection": {
+        "title": "Galeri Görselleri",
+        "uploadLabel": "Yeni görsel yükle",
+        "copyUrlTitle": "URL'i kopyala",
+        "copyUrlSuccess": "URL kopyalandı.",
+        "copyUrlError": "URL kopyalanamadı.",
+        "createSuccess": "Galeri görseli eklendi.",
+        "createError": "Resim kaydı oluşturulamadı.",
+        "orderSuccess": "Sıralama güncellendi.",
+        "orderError": "Sıralama güncellenemedi.",
+        "confirmDelete": "Bu görseli silmek istiyor musun?",
+        "deleteSuccess": "Görsel silindi.",
+        "deleteError": "Silme hatası.",
+        "coverImage": "Kapak Görseli",
+        "makeCover": "Kapak Yap",
+        "displayOrder": "Görüntüleme Sırası:"
+      },
+      "detail": {
+        "createDescription": "Yeni kütüphane kaydı oluştur",
+        "editDescription": "{title} düzenle",
+        "nameRequired": "Ad (name) zorunludur",
+        "slugRequired": "Slug zorunludur",
+        "createSuccess": "Kütüphane kaydı oluşturuldu",
+        "updateSuccess": "Kütüphane kaydı güncellendi",
+        "defaultError": "Hata oluştu",
+        "errorPrefix": "Hata: {message}",
+        "formTab": "Form",
+        "jsonTitle": "Kütüphane Verisi (JSON)",
+        "jsonDescription": "Tüm alanları JSON olarak düzenleyebilirsiniz.",
+        "name": "Ad",
+        "namePlaceholder": "Kütüphane başlığı",
+        "slugPlaceholder": "kutuphane-slug",
+        "type": "Tip",
+        "displayOrder": "Sıralama",
+        "description": "Açıklama",
+        "imageAlt": "Görsel Alt Text",
+        "tags": "Etiketler",
+        "tagsPlaceholder": "virgülle ayır",
+        "publishedAt": "Yayın Tarihi",
+        "seoTitle": "SEO",
+        "metaTitle": "Meta Başlık",
+        "metaDescription": "Meta Açıklama",
+        "metaKeywords": "Meta Anahtar Kelimeler",
+        "isActive": "Aktif",
+        "isPublished": "Yayında",
+        "isFeatured": "Öne Çıkan",
+        "coverImage": "Kapak Görseli",
+        "types": {
+          "brochure": "Broşür",
+          "catalog": "Katalog",
+          "manual": "Kılavuz",
+          "technical": "Teknik Döküman",
+          "other": "Diğer"
+        }
       }
     },
     "products": {
@@ -3593,6 +4004,7 @@
         "description": "Tüm ürün kayıtlarını görüntüle.",
         "loading": "Yükleniyor...",
         "empty": "Kayıt bulunamadı.",
+        "unnamed": "(adsız)",
         "allCategories": "Tüm Kategoriler",
         "columns": {
           "title": "Başlık / Slug",
@@ -3602,6 +4014,126 @@
           "stock": "Stok",
           "active": "Aktif",
           "featured": "Öne Çıkan",
+          "actions": "İşlemler"
+        }
+      },
+      "detail": {
+        "createDescription": "Yeni ürün oluştur",
+        "editDescription": "{title} düzenle",
+        "titleRequired": "Başlık (title) zorunludur",
+        "createSuccess": "Ürün oluşturuldu",
+        "updateSuccess": "Ürün güncellendi",
+        "errorPrefix": "Hata: {message}",
+        "defaultError": "Hata oluştu",
+        "tabs": {
+          "form": "Form",
+          "specs": "Özellikler",
+          "faqs": "SSS",
+          "reviews": "Değerlendirmeler",
+          "json": "JSON"
+        },
+        "fields": {
+          "title": "Başlık *",
+          "slug": "Slug",
+          "price": "Fiyat",
+          "stock": "Stok",
+          "productCode": "Ürün Kodu",
+          "description": "Açıklama",
+          "imageAlt": "Görsel Alt Text",
+          "tags": "Etiketler",
+          "seo": "SEO",
+          "metaTitle": "Meta Başlık",
+          "metaDescription": "Meta Açıklama",
+          "active": "Aktif",
+          "featured": "Öne Çıkan",
+          "category": "Kategori",
+          "subcategory": "Alt Kategori",
+          "coverImage": "Kapak Görseli"
+        },
+        "placeholders": {
+          "title": "Ürün başlığı",
+          "slug": "urun-slug",
+          "tags": "virgülle ayır",
+          "category": "Kategori seç",
+          "subcategory": "Alt kategori seç"
+        },
+        "emptyStates": {
+          "specs": "Teknik özellikler eklemek için önce ürünü kaydedin.",
+          "faqs": "SSS eklemek için önce ürünü kaydedin.",
+          "reviews": "Değerlendirmeler eklemek için önce ürünü kaydedin."
+        },
+        "json": {
+          "title": "Ürün Verisi (JSON)",
+          "description": "Tüm alanları JSON olarak düzenleyebilirsiniz."
+        }
+      },
+      "faqTab": {
+        "title": "Sık Sorulan Sorular (SSS)",
+        "activeLocale": "Aktif dil:",
+        "saveSuccess": "SSS kayıtları kaydedildi.",
+        "selectLocaleError": "Lütfen önce bir dil seçin.",
+        "invalidArray": "Geçersiz format. Array bekleniyor.",
+        "defaultError": "Kayıt sırasında hata oluştu.",
+        "addQuestion": "Soru Ekle",
+        "empty": "Henüz soru yok. \"Soru Ekle\" ile başlayın.",
+        "columns": {
+          "question": "Soru",
+          "answer": "Cevap",
+          "order": "Sıra",
+          "active": "Aktif"
+        },
+        "placeholders": {
+          "question": "Teslim süresi nedir?",
+          "answer": "Proje detayına göre 4-6 hafta..."
+        }
+      },
+      "specsTab": {
+        "title": "Teknik Özellikler",
+        "activeLocale": "Aktif dil:",
+        "saveSuccess": "Teknik özellikler kaydedildi.",
+        "selectLocaleError": "Lütfen önce bir dil seçin.",
+        "invalidArray": "Geçersiz format. Array bekleniyor.",
+        "defaultError": "Kayıt sırasında hata oluştu.",
+        "addRow": "Satır Ekle",
+        "empty": "Henüz teknik özellik yok. \"Satır Ekle\" ile başlayın.",
+        "columns": {
+          "name": "Alan (name)",
+          "value": "Değer (value)",
+          "category": "Kategori",
+          "order": "Sıra"
+        },
+        "placeholders": {
+          "name": "capacity, fanType...",
+          "value": "1.500 m³/h – 4.500 m³/h",
+          "category": "physical, performance..."
+        }
+      },
+      "reviewsTab": {
+        "title": "Değerlendirmeler ({count})",
+        "defaultError": "İşlem sırasında hata oluştu.",
+        "ratingError": "Rating 0-5 arasında olmalı.",
+        "createSuccess": "Yorum eklendi.",
+        "toggleSuccess": "Durum güncellendi.",
+        "deleteConfirm": "Bu yorumu silmek istediğine emin misin?",
+        "deleteSuccess": "Yorum silindi.",
+        "addReview": "Yorum Ekle",
+        "cancel": "İptal",
+        "creating": "Ekleniyor...",
+        "loading": "Yükleniyor...",
+        "empty": "Bu ürün için henüz yorum yok.",
+        "fields": {
+          "rating": "Rating (0-5)",
+          "customer": "Müşteri Adı",
+          "date": "Tarih",
+          "active": "Aktif",
+          "comment": "Yorum"
+        },
+        "columns": {
+          "rating": "Rating",
+          "customer": "Müşteri",
+          "comment": "Yorum",
+          "date": "Tarih",
+          "status": "Durum",
           "actions": "İşlemler"
         }
       },

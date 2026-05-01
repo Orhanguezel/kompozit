@@ -12,12 +12,12 @@ import * as React from "react";
 import { RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import { type AdminBrandingConfig, DEFAULT_BRANDING } from "@/config/app-config";
 import { useAdminTranslations } from "@/i18n";
 import { useGetSiteSettingAdminByKeyQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
@@ -101,6 +101,8 @@ export type BrandingSettingsTabProps = {
   locale: string;
 };
 
+const ADMIN_CONFIG_KEY = "kompozit__ui_admin_config";
+
 export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale }) => {
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
   const t = useAdminTranslations(adminLocale || undefined);
@@ -110,7 +112,7 @@ export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale
     isLoading,
     isFetching,
     refetch,
-  } = useGetSiteSettingAdminByKeyQuery({ key: "ui_admin_config", locale }, { refetchOnMountOrArgChange: true });
+  } = useGetSiteSettingAdminByKeyQuery({ key: ADMIN_CONFIG_KEY, locale: "*" }, { refetchOnMountOrArgChange: true });
 
   React.useEffect(() => {
     if (locale) void refetch();
@@ -163,9 +165,9 @@ export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale
       };
 
       await updateSetting({
-        key: "ui_admin_config",
+        key: ADMIN_CONFIG_KEY,
         value: merged,
-        locale: locale,
+        locale: "*",
       }).unwrap();
 
       toast.success(t("admin.siteSettings.branding.saved"));

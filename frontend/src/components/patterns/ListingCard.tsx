@@ -51,7 +51,7 @@ export function ListingCard({
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--graphite)] to-[var(--steel)]" />
         )}
-        
+
         {/* Absolute Overlays */}
         <div className="absolute inset-x-0 top-0 z-10 p-6">
           <div className="flex items-center justify-between">
@@ -73,7 +73,7 @@ export function ListingCard({
         <h3 className="line-clamp-1 font-display text-[1.4rem] font-normal uppercase tracking-[3px] text-[var(--white)] transition-colors duration-300 group-hover:text-[var(--gold)]">
           {title}
         </h3>
-        
+
         {description && (
           <p className="mt-4 line-clamp-3 text-sm font-light leading-relaxed text-[var(--silver)] opacity-80">
             {description}

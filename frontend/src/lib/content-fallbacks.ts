@@ -341,11 +341,11 @@ export function getFallbackSolutionBySlug(slug: string, locale: string) {
   const normalized = normalizeLocale(locale);
   const data = (fallbackSolutions as any)[normalized];
   if (!data || !Array.isArray(data) || data.length === 0) return null;
-  
+
   const firstToken = slug.replace(/-/g, ' ').split(' ')[0] ?? '';
   const search = firstToken.toLowerCase();
-  
-  const match = data.find((item: any) => 
+
+  const match = data.find((item: any) =>
     item?.title?.toLowerCase()?.includes(search)
   );
   return match || data[0];

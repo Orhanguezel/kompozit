@@ -115,12 +115,12 @@ Design approach:
       <stop offset="100%" style="stop-color:#D88D7E;stop-opacity:1" />
     </linearGradient>
   </defs>
-  
+
   <!-- Flower of Life + Hands Symbol (simplified for illustration) -->
   <g id="symbol" transform="translate(200, 140)">
     <!-- Outer circle -->
     <circle cx="0" cy="0" r="80" fill="none" stroke="url(#symbolGradient)" stroke-width="2"/>
-    
+
     <!-- Flower of Life pattern (simplified - 7 circles) -->
     <circle cx="0" cy="0" r="25" fill="none" stroke="#D88D7E" stroke-width="1.5"/>
     <circle cx="22" cy="0" r="25" fill="none" stroke="#D88D7E" stroke-width="1.5"/>
@@ -129,24 +129,24 @@ Design approach:
     <circle cx="-11" cy="19" r="25" fill="none" stroke="#D88D7E" stroke-width="1.5"/>
     <circle cx="11" cy="-19" r="25" fill="none" stroke="#D88D7E" stroke-width="1.5"/>
     <circle cx="-11" cy="-19" r="25" fill="none" stroke="#D88D7E" stroke-width="1.5"/>
-    
+
     <!-- Hands silhouette (abstract representation) -->
     <path d="M -60 50 Q -50 40 -40 50 L -30 60 L -50 70 Z" fill="#F4BDB3" opacity="0.7"/>
     <path d="M 60 50 Q 50 40 40 50 L 30 60 L 50 70 Z" fill="#F4BDB3" opacity="0.7"/>
   </g>
-  
+
   <!-- Text -->
-  <text x="200" y="320" font-family="Inter, sans-serif" font-size="32" font-weight="700" 
+  <text x="200" y="320" font-family="Inter, sans-serif" font-size="32" font-weight="700"
         text-anchor="middle" letter-spacing="4.8" fill="#2D2520">
     KÖNIG ENERGETIK
   </text>
-  
-  <text x="200" y="355" font-family="Crimson Pro, serif" font-size="20" font-weight="300" 
+
+  <text x="200" y="355" font-family="Crimson Pro, serif" font-size="20" font-weight="300"
         text-anchor="middle" letter-spacing="1" fill="#4A4139">
     Anastasia König
   </text>
-  
-  <text x="200" y="385" font-family="Inter, sans-serif" font-size="14" font-weight="400" 
+
+  <text x="200" y="385" font-family="Inter, sans-serif" font-size="14" font-weight="400"
         text-anchor="middle" letter-spacing="0.3" fill="#C9BFB3">
     Heilende Berührung mit Herz
   </text>
@@ -166,11 +166,11 @@ Design approach:
       <stop offset="100%" style="stop-color:#D88D7E;stop-opacity:1" />
     </linearGradient>
   </defs>
-  
+
   <!-- Symbol (compact) -->
   <g id="symbol-compact" transform="translate(40, 40)">
     <circle cx="0" cy="0" r="32" fill="none" stroke="url(#symbolGradH)" stroke-width="1.5"/>
-    
+
     <!-- Simplified Flower of Life -->
     <circle cx="0" cy="0" r="12" fill="none" stroke="#D88D7E" stroke-width="1"/>
     <circle cx="10" cy="0" r="12" fill="none" stroke="#D88D7E" stroke-width="1"/>
@@ -179,19 +179,19 @@ Design approach:
     <circle cx="-5" cy="8.7" r="12" fill="none" stroke="#D88D7E" stroke-width="1"/>
     <circle cx="5" cy="-8.7" r="12" fill="none" stroke="#D88D7E" stroke-width="1"/>
     <circle cx="-5" cy="-8.7" r="12" fill="none" stroke="#D88D7E" stroke-width="1"/>
-    
+
     <!-- Hands hint -->
     <path d="M -25 20 Q -20 17 -15 20" fill="none" stroke="#F4BDB3" stroke-width="2" opacity="0.6"/>
     <path d="M 25 20 Q 20 17 15 20" fill="none" stroke="#F4BDB3" stroke-width="2" opacity="0.6"/>
   </g>
-  
+
   <!-- Text -->
-  <text x="100" y="38" font-family="Inter, sans-serif" font-size="20" font-weight="700" 
+  <text x="100" y="38" font-family="Inter, sans-serif" font-size="20" font-weight="700"
         letter-spacing="3" fill="#2D2520">
     KÖNIG ENERGETIK
   </text>
-  
-  <text x="100" y="58" font-family="Crimson Pro, serif" font-size="14" font-weight="300" 
+
+  <text x="100" y="58" font-family="Crimson Pro, serif" font-size="14" font-weight="300"
         letter-spacing="0.7" fill="#4A4139">
     Anastasia König
   </text>
@@ -215,18 +215,18 @@ Design approach:
       <stop offset="100%" style="stop-color:#C77665;stop-opacity:1" />
     </linearGradient>
   </defs>
-  
+
   <!-- Background -->
   <rect width="256" height="256" rx="48" fill="url(#bgGradient)"/>
-  
+
   <!-- Symbol centered -->
   <g transform="translate(128, 128)">
     <!-- Outer glow circle -->
     <circle cx="0" cy="0" r="90" fill="none" stroke="#E8A598" stroke-width="8" opacity="0.2"/>
-    
+
     <!-- Main circle -->
     <circle cx="0" cy="0" r="80" fill="none" stroke="url(#iconGrad)" stroke-width="3"/>
-    
+
     <!-- Flower of Life (7 circles) -->
     <g stroke="#D88D7E" stroke-width="2" fill="none">
       <circle cx="0" cy="0" r="28"/>
@@ -237,7 +237,7 @@ Design approach:
       <circle cx="12" cy="-20.8" r="28"/>
       <circle cx="-12" cy="-20.8" r="28"/>
     </g>
-    
+
     <!-- Hands silhouette -->
     <g fill="#F4BDB3" opacity="0.8">
       <path d="M -55 45 Q -48 38 -42 42 L -38 50 Q -45 55 -52 52 Z"/>
@@ -259,7 +259,7 @@ Design approach:
 <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
   <rect width="16" height="16" rx="3" fill="#FFF5F3"/>
-  
+
   <!-- Super simplified: Just 3 circles -->
   <g transform="translate(8, 8)" stroke="#D88D7E" stroke-width="1.2" fill="none">
     <circle cx="0" cy="0" r="6"/>
@@ -275,7 +275,7 @@ Design approach:
 <!-- favicon-32.svg -->
 <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
   <rect width="32" height="32" rx="6" fill="#FFF5F3"/>
-  
+
   <g transform="translate(16, 16)" stroke="#D88D7E" stroke-width="1.5" fill="none">
     <circle cx="0" cy="0" r="12"/>
     <circle cx="0" cy="0" r="5"/>
@@ -284,7 +284,7 @@ Design approach:
     <circle cx="2" cy="3.5" r="5"/>
     <circle cx="-2" cy="3.5" r="5"/>
   </g>
-  
+
   <!-- Hands hint -->
   <path d="M 6 22 Q 8 20 10 22" stroke="#F4BDB3" stroke-width="1.5" fill="none"/>
   <path d="M 26 22 Q 24 20 22 22" stroke="#F4BDB3" stroke-width="1.5" fill="none"/>
@@ -331,42 +331,42 @@ public/
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Primary Meta Tags -->
   <title>König Energetik - Energetische Massage Berlin | Anastasia König</title>
   <meta name="title" content="König Energetik - Energetische Massage Berlin | Anastasia König" />
   <meta name="description" content="König Energetik: Ganzheitliche energetische Massage in Berlin. Anastasia König bietet mobile Körperarbeit bei Ihnen zu Hause. Heilende Berührung mit Herz." />
-  
+
   <!-- Favicons -->
   <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
-  
+
   <!-- Apple Touch Icon -->
   <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-  
+
   <!-- Android Chrome -->
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon/android-chrome-192x192.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="/favicon/android-chrome-512x512.png" />
-  
+
   <!-- Safari Pinned Tab -->
   <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#D88D7E" />
-  
+
   <!-- MS Tiles -->
   <meta name="msapplication-TileColor" content="#FFF5F3" />
   <meta name="msapplication-TileImage" content="/favicon/mstile-150x150.png" />
-  
+
   <!-- Theme Color -->
   <meta name="theme-color" content="#FDFCFB" />
-  
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://koenig-energetik.de/" />
   <meta property="og:title" content="König Energetik - Energetische Massage Berlin" />
   <meta property="og:description" content="Ganzheitliche energetische Massage in Berlin. Heilende Berührung mit Herz. Mobile Körperarbeit von Anastasia König." />
   <meta property="og:image" content="https://koenig-energetik.de/logo/png/logo-primary-512.png" />
-  
+
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://koenig-energetik.de/" />
@@ -389,13 +389,13 @@ public/
   --logo-coral-medium: #D88D7E;     /* Default logo on light */
   --logo-coral-dark: #C77665;       /* Logo on very light bg */
   --logo-coral-darkest: #A6604F;    /* Text, details */
-  
+
   /* Background Colors for Logo */
   --logo-bg-light: #FDFCFB;         /* Light mode primary */
   --logo-bg-white: #FFFFFF;         /* Pure white */
   --logo-bg-dark: #1A1512;          /* Dark mode */
   --logo-bg-black: #0A0806;         /* Pure black */
-  
+
   /* Logo Accents */
   --logo-gold: #E8C57A;             /* Accent touch */
   --logo-shadow: rgba(232, 165, 152, 0.15);  /* Soft glow */
@@ -433,7 +433,7 @@ export function Header() {
             </div>
           </div>
         </Link>
-        
+
         {/* Navigation */}
         <nav>...</nav>
       </div>

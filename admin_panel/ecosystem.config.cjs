@@ -7,8 +7,8 @@ module.exports = {
   apps: [
     {
       name: "kompozit-admin-panel",
-      cwd: "/var/www/Ensotek/kompozit_admin_panel",
-      script: "/home/orhan/.bun/bin/bun",
+      cwd: "/var/www/Ensotek/kompozit/admin_panel",
+      script: "/usr/local/bin/bun",
       args: "run start -- -p 3004 -H 127.0.0.1",
       exec_mode: "fork",
       instances: 1,

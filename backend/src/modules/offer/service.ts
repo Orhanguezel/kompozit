@@ -17,8 +17,8 @@ import { randomUUID } from 'crypto';
 import { eq, and, inArray, desc } from 'drizzle-orm';
 
 import { db } from '@/db/client';
-import { siteSettings } from '@agro/shared-backend/modules/siteSettings/schema';
-import { notifications, type NotificationType } from '@agro/shared-backend/modules/notifications/schema';
+import { siteSettings } from '@ensotek/shared-backend/modules/siteSettings/schema';
+import { notifications, type NotificationType } from '@ensotek/shared-backend/modules/notifications/schema';
 
 import { offersTable, type OfferRow } from './schema';
 import { updateOffer } from './repository';

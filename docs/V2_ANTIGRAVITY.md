@@ -1,6 +1,6 @@
 # V2 — Antigravity / Manuel QA
 
-> **Amaç:** `docs/CURSOR.md` V2-C1…C17 maddelerinin tarayıcıda hızlı doğrulanması.  
+> **Amaç:** `docs/CURSOR.md` V2-C1…C17 maddelerinin tarayıcıda hızlı doğrulanması.
 > **Referans görsel:** Repo kökü `compositecraft-website.html` (yan yana karşılaştırma).
 
 ## Ortam

@@ -1,1 +1,1 @@
-export { default } from '@agro/shared-backend/plugins/authPlugin';
+export { default } from '@ensotek/shared-backend/plugins/authPlugin';

@@ -13,13 +13,13 @@ import * as React from "react";
 import { RefreshCcw, Search } from "lucide-react";
 import { toast } from "sonner";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import { useAdminTranslations } from "@/i18n";
 import { useDeleteSiteSettingAdminMutation, useListSiteSettingsAdminQuery } from "@/integrations/hooks";
 import type { SiteSetting } from "@/integrations/shared";
@@ -71,6 +71,14 @@ type ErrorWithMessage = {
   error?: string;
 };
 
+function getLocaleDisplayName(code: string): string {
+  try {
+    return new Intl.DisplayNames([code], { type: "language" }).of(code) || code;
+  } catch {
+    return code;
+  }
+}
+
 function safeStr(v: unknown) {
   return v === null || v === undefined ? "" : String(v);
 }
@@ -115,9 +123,14 @@ function buildLocalesOptions(appLocales: LocaleConfigItem[] | undefined, default
 
   if (!mapped.length) {
     return [
-      { value: def || "de", label: def || "de", isDefault: true, isActive: true },
-      { value: "en", label: "English (en)", isDefault: false, isActive: true },
-      { value: "tr", label: "Türkçe (tr)", isDefault: false, isActive: true },
+      {
+        value: def || "de",
+        label: `${getLocaleDisplayName(def || "de")} (${def || "de"})`,
+        isDefault: true,
+        isActive: true,
+      },
+      { value: "en", label: `${getLocaleDisplayName("en")} (en)`, isDefault: false, isActive: true },
+      { value: "tr", label: `${getLocaleDisplayName("tr")} (tr)`, isDefault: false, isActive: true },
     ];
   }
   return mapped;
@@ -276,8 +289,7 @@ export default function AdminSiteSettingsClient() {
             </Badge>
           </div>
           <p className="mt-2 text-orange-900 text-sm">
-            Bu ekran kompozit projesine ozeldir. Buradaki degisiklikler Ensotek ve diger sitelerin ortak `site_settings`
-            kayitlarini etkilemez.
+            {t("admin.siteSettings.scoped.note")}
           </p>
         </div>
       ) : null}
@@ -297,7 +309,7 @@ export default function AdminSiteSettingsClient() {
         </div>
         <p className="text-muted-foreground text-sm">
           {isScopedBrand
-            ? `${t("admin.siteSettings.description")} Bu ekran yalnizca ${brand} namespace ayarlarini etkiler.`
+            ? t("admin.siteSettings.scoped.description", { brand: String(brand || "") })
             : t("admin.siteSettings.description")}
         </p>
       </div>
@@ -412,7 +424,7 @@ export default function AdminSiteSettingsClient() {
                 {tab === "api" ? t("admin.siteSettings.api.title") : null}
                 {tab === "locales" ? t("admin.siteSettings.locales.title") : null}
                 {tab === "branding" ? t("admin.siteSettings.branding.title") : null}
-                {tab === "home" ? "Ana Sayfa İçeriği" : null}
+                {tab === "home" ? t("admin.siteSettings.management.homeContent") : null}
               </CardDescription>
             </div>
 
@@ -473,7 +485,7 @@ export default function AdminSiteSettingsClient() {
                   </TabsTrigger>
                   {isScopedBrand ? (
                     <TabsTrigger value="home" className="whitespace-nowrap">
-                      Ana Sayfa
+                      {t("admin.siteSettings.tabs.home")}
                     </TabsTrigger>
                   ) : null}
                   {!isScopedBrand ? (

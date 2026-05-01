@@ -1,9 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { MessageCircle, X } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+const FALLBACK_WHATSAPP_NUMBER = '+90 531 880 31 51';
 
 export function WhatsAppButton() {
   const [visible, setVisible] = useState(false);
@@ -13,9 +13,11 @@ export function WhatsAppButton() {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!WHATSAPP_NUMBER || !visible) return null;
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || FALLBACK_WHATSAPP_NUMBER;
+  const cleanNumber = whatsappNumber.replace(/\D/g, '');
+  if (!cleanNumber || !visible) return null;
 
-  const url = `https://wa.me/${WHATSAPP_NUMBER.replace(/\D/g, '')}`;
+  const url = `https://wa.me/${cleanNumber}`;
 
   return (
     <a
@@ -23,7 +25,7 @@ export function WhatsAppButton() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp"
-      className="fab-success fixed bottom-6 right-6 z-50 flex size-14 items-center justify-center rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95"
+      className="fab-success fixed bottom-6 left-6 z-50 flex size-14 items-center justify-center rounded-full shadow-lg transition-transform hover:scale-110 active:scale-95"
     >
       <MessageCircle className="size-7" />
     </a>

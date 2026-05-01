@@ -85,6 +85,18 @@ export function Footer({
               {t('description')}
             </p>
 
+            <p className="max-w-xs border-l border-(--gold)/30 pl-4 text-xs font-light leading-relaxed text-(--silver) opacity-75">
+              {t('ensotekRelation')}{' '}
+              <a
+                href="https://www.ensotek.com.tr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-(--gold) transition-colors hover:text-(--white)"
+              >
+                Ensotek
+              </a>
+            </p>
+
             {/* Contact info */}
             {hasContact && (
               <div className="space-y-3 pt-2">

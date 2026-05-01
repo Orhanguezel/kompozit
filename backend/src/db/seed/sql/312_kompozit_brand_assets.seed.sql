@@ -12,28 +12,24 @@ START TRANSACTION;
 
 UPDATE `site_settings`
 SET
-  `value` = JSON_MERGE_PATCH(
-    CAST(`value` AS JSON),
-    JSON_OBJECT(
-      'logo_dark_url', '/uploads/kompozit/brand/logo-dark.png',
-      'logo_light_url', '/uploads/kompozit/brand/logo-light.png',
-      'favicon_url', '/uploads/kompozit/brand/favicon-32.png',
-      'apple_touch_icon_url', '/uploads/kompozit/brand/apple-touch-icon.png'
-    )
+  `value` = JSON_SET(
+    COALESCE(NULLIF(`value`, ''), JSON_OBJECT()),
+    '$.logo_dark_url', '/uploads/kompozit/brand/logo-dark.png',
+    '$.logo_light_url', '/uploads/kompozit/brand/logo-light.png',
+    '$.favicon_url', '/uploads/kompozit/brand/favicon-32.png',
+    '$.apple_touch_icon_url', '/uploads/kompozit/brand/apple-touch-icon.png'
   ),
   `updated_at` = NOW(3)
 WHERE `key` = 'kompozit__site_logo' AND `locale` = '*';
 
 UPDATE `site_settings`
 SET
-  `value` = JSON_MERGE_PATCH(
-    CAST(`value` AS JSON),
-    JSON_OBJECT(
-      'logo_dark_url', '/uploads/kompozit/brand/logo-dark.png',
-      'logo_light_url', '/uploads/kompozit/brand/logo-light.png',
-      'favicon_url', '/uploads/kompozit/brand/favicon-32.png',
-      'logo_url', '/uploads/kompozit/brand/logo-light.png'
-    )
+  `value` = JSON_SET(
+    COALESCE(NULLIF(`value`, ''), JSON_OBJECT()),
+    '$.logo_dark_url', '/uploads/kompozit/brand/logo-dark.png',
+    '$.logo_light_url', '/uploads/kompozit/brand/logo-light.png',
+    '$.favicon_url', '/uploads/kompozit/brand/favicon-32.png',
+    '$.logo_url', '/uploads/kompozit/brand/logo-light.png'
   ),
   `updated_at` = NOW(3)
 WHERE `key` = 'kompozit__logo' AND `locale` = '*';

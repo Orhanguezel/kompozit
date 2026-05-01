@@ -10,6 +10,7 @@
 import type React from "react";
 import { useMemo, useState } from "react";
 
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 import type { AuditMetricsDailyRowDto } from "@/integrations/shared";
 
 type Props = {
@@ -77,6 +78,7 @@ function normalizeAuditRow(row: AuditDailyChartLooseRow) {
 }
 
 export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }) => {
+  const t = useAdminT("admin.audit");
   const [showUnique, setShowUnique] = useState(true);
   const [showErrors, setShowErrors] = useState(true);
 
@@ -117,33 +119,34 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
     <div>
       <div className="mb-2 flex flex-wrap items-center gap-3">
         <div className="text-muted-foreground text-sm">
-          Son {data.length || 0} gün: <strong>requests</strong> bar
-          {showUnique ? ", unique" : ""} {showErrors ? ", errors" : ""}
+          {t("chart.lastDaysSummary", { count: String(data.length || 0) })}: <strong>{t("chart.requests")}</strong>{" "}
+          {t("chart.bar")}
+          {showUnique ? `, ${t("chart.unique")}` : ""} {showErrors ? `, ${t("chart.errors")}` : ""}
         </div>
 
         <div className="ml-auto flex items-center gap-3">
           <label className="mb-0 flex items-center gap-2 text-sm">
             <input type="checkbox" checked={showUnique} onChange={(e) => setShowUnique(e.target.checked)} />
-            Unique IP
+            {t("chart.uniqueIp")}
           </label>
 
           <label className="mb-0 flex items-center gap-2 text-sm">
             <input type="checkbox" checked={showErrors} onChange={(e) => setShowErrors(e.target.checked)} />
-            Errors
+            {t("chart.errors")}
           </label>
 
-          {loading && <span className="text-muted-foreground text-sm">Yükleniyor...</span>}
+          {loading && <span className="text-muted-foreground text-sm">{t("chart.loading")}</span>}
         </div>
       </div>
 
       {!hasAny && !loading && (
         <div className="rounded-md border border-muted bg-muted/40 px-3 py-2 text-sm">
-          Grafik verisi boş. (Backend response shape / date format uyumsuz olabilir.)
+          {t("chart.empty")}
         </div>
       )}
 
       <div className="overflow-hidden rounded border bg-card">
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} role="img" aria-label="Audit günlük metrik grafiği">
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} role="img" aria-label={t("chart.ariaLabel")}>
           <rect x="0" y="0" width={W} height={H} fill="white" />
 
           {tickVals.map((tv, i) => {
@@ -191,16 +194,16 @@ export const AuditDailyChart: React.FC<Props> = ({ rows, loading, height = 220 }
             <div>{data[data.length - 1]?.date ? fmtIsoNice(data[data.length - 1].date) : "-"}</div>
             <div className="flex gap-3">
               <span>
-                requests: <strong className="text-foreground">{data[data.length - 1]?.requests ?? 0}</strong>
+                {t("chart.requests")}: <strong className="text-foreground">{data[data.length - 1]?.requests ?? 0}</strong>
               </span>
               {showUnique && (
                 <span>
-                  unique: <strong className="text-foreground">{data[data.length - 1]?.unique_ips ?? 0}</strong>
+                  {t("chart.unique")}: <strong className="text-foreground">{data[data.length - 1]?.unique_ips ?? 0}</strong>
                 </span>
               )}
               {showErrors && (
                 <span>
-                  errors: <strong className="text-foreground">{data[data.length - 1]?.errors ?? 0}</strong>
+                  {t("chart.errors")}: <strong className="text-foreground">{data[data.length - 1]?.errors ?? 0}</strong>
                 </span>
               )}
             </div>

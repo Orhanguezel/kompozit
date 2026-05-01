@@ -1,7 +1,7 @@
 # MOE Kompozit — Premium Tasarım Planı
 
-> **Referans HTML:** `compositecraft-website.html` (repo kökü)  
-> **Hedef:** CompositeCraft tasarım dilini MOE Kompozit'e adapte etmek.  
+> **Referans HTML:** `compositecraft-website.html` (repo kökü)
+> **Hedef:** CompositeCraft tasarım dilini MOE Kompozit'e adapte etmek.
 > **Orkestrasyon:** Claude Code (mimar) → Cursor (uygulama) → Antigravity (görsel onay) → Codex (toplu iş)
 
 ---
@@ -79,11 +79,11 @@
                     ── KARBON & CAM ELYAFı İMALATI ──   ← gold, uppercase, ls:8px
           GÜÇLÜ. HAFİF.        ← Bebas Neue, clamp(3.5rem, 10vw, 8rem)
             KOMPOZİT.          ← em içinde: Cormorant Garamond italic, gold
-    
+
     Premium kompozit çözümler — savunma, enerji, peyzaj
-    
+
        [ÜRÜNLER]    [TEKLİF AL]
-    
+
                 ↓ SCROLL
 ```
 
@@ -170,7 +170,7 @@ Command Center görünümü — radial gold glow animasyonlu, büyük Bebas baş
 
 ### 14. Footer
 
-4 kolon: Marka açıklaması | Ürünler | Şirket | İletişim  
+4 kolon: Marka açıklaması | Ürünler | Şirket | İletişim
 Alt: telif + sosyal medya linkleri
 
 ---
@@ -207,7 +207,7 @@ Alt: telif + sosyal medya linkleri
 
 ```
 1. Token güncelleme (renk + font)          → Cursor
-2. Layout.tsx font import güncelleme        → Cursor  
+2. Layout.tsx font import güncelleme        → Cursor
 3. Nav bileşeni scroll davranışı            → Cursor
 4. Hero bölümü grid + glow arkaplan        → Cursor
 5. Stats bar yeni bileşeni                  → Cursor

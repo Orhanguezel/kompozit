@@ -7,10 +7,10 @@ import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import { useCreateAssetAdminMutation } from "@/integrations/endpoints/admin/storage_admin.endpoints";
 import {
   useAuthUpdateMutation,
@@ -58,10 +58,10 @@ export function ProfileForm() {
 
       if (asset.url) {
         setAvatarUrl(asset.url);
-        toast.success(t("admin.profile.avatarUploaded") || "Profil resmi yüklendi.");
+        toast.success(t("admin.profile.avatarUploaded"));
       }
     } catch (_err) {
-      toast.error(t("admin.profile.avatarUploadFailed") || "Resim yüklenemedi.");
+      toast.error(t("admin.profile.avatarUploadFailed"));
     }
   };
 
@@ -84,9 +84,9 @@ export function ProfileForm() {
         }).unwrap();
       }
 
-      toast.success(t("admin.profile.updated") || "Profil başarıyla güncellendi.");
+      toast.success(t("admin.profile.updated"));
     } catch (_err) {
-      toast.error(t("admin.profile.updateFailed") || "Profil güncellenemedi.");
+      toast.error(t("admin.profile.updateFailed"));
     }
   };
 
@@ -96,10 +96,8 @@ export function ProfileForm() {
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>{t("admin.profile.personalInfo") || "Kişisel Bilgiler"}</CardTitle>
-          <CardDescription>
-            {t("admin.profile.personalInfoDesc") || "Adınız, e-posta adresiniz ve profil resminiz."}
-          </CardDescription>
+          <CardTitle>{t("admin.profile.personalInfo")}</CardTitle>
+          <CardDescription>{t("admin.profile.personalInfoDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col items-center gap-4 sm:flex-row">
@@ -124,18 +122,14 @@ export function ProfileForm() {
               />
             </div>
             <div className="flex-1 space-y-1 text-center sm:text-left">
-              <h4 className="font-semibold">{fullName || email || "Admin"}</h4>
-              <p className="text-muted-foreground text-sm">
-                {avatarUrl
-                  ? t("admin.profile.avatarSet") || "Özel profil resmi ayarlandı"
-                  : t("admin.profile.noAvatar") || "Varsayılan avatar kullanılıyor"}
-              </p>
+              <h4 className="font-semibold">{fullName || email || t("admin.profile.defaultName")}</h4>
+              <p className="text-muted-foreground text-sm">{avatarUrl ? t("admin.profile.avatarSet") : t("admin.profile.noAvatar")}</p>
             </div>
           </div>
 
           <div className="grid gap-4">
             <div className="grid gap-2">
-              <Label htmlFor="full-name">{t("admin.profile.name") || "Tam Ad"}</Label>
+              <Label htmlFor="full-name">{t("admin.profile.name")}</Label>
               <Input
                 id="full-name"
                 value={fullName}
@@ -145,7 +139,7 @@ export function ProfileForm() {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="email">{t("admin.profile.email") || "E-posta"}</Label>
+              <Label htmlFor="email">{t("admin.profile.email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -162,12 +156,12 @@ export function ProfileForm() {
             {isUpdatingProfile || isUpdatingAuth ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t("admin.common.saving") || "Kaydediliyor..."}
+                {t("admin.common.saving")}
               </>
             ) : (
               <>
                 <Save className="mr-2 h-4 w-4" />
-                {t("admin.common.save") || "Kaydet"}
+                {t("admin.common.save")}
               </>
             )}
           </Button>

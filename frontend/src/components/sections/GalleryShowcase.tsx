@@ -43,8 +43,8 @@ export async function GalleryShowcase({ locale, items = [] }: { locale: string; 
           const isLarge = index === 0 || index === 3;
           const title = typeof row.title === 'string' ? row.title : '';
           return (
-            <Reveal 
-              key={(row.id as string | number) || index} 
+            <Reveal
+              key={(row.id as string | number) || index}
               delay={index * 100}
               className={`grid-item-cc group relative overflow-hidden ${isLarge ? 'lg:row-span-2 h-[400px] lg:h-[800px]' : 'h-[400px]'}`}
             >
@@ -55,7 +55,7 @@ export async function GalleryShowcase({ locale, items = [] }: { locale: string; 
                 unoptimized
                 className="object-cover transition-transform duration-1000 group-hover:scale-110"
               />
-              
+
               {/* Overlay Caption */}
               <div className="absolute inset-0 z-10 flex flex-col justify-end bg-gradient-to-t from-black/80 via-transparent to-transparent p-10 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
                  <span className="font-display text-[0.7rem] uppercase tracking-[3px] text-[var(--gold)]">

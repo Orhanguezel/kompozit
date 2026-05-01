@@ -14,6 +14,7 @@
 import type React from "react";
 import { useEffect, useMemo, useState } from "react";
 
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 import {
   Pagination,
   PaginationContent,
@@ -74,6 +75,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
   onSaveOrder,
   savingOrder,
 }) => {
+  const t = useAdminT("admin.subcategories");
   const rows = items ?? [];
   const totalItems = rows.length;
   const hasData = totalItems > 0;
@@ -172,18 +174,20 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
     return (
       <div className="d-flex flex-wrap gap-2">
         <span className="badge small border bg-light text-dark">
-          Dil: <code>{loc}</code>
+          {t("table.locale")}: <code>{loc}</code>
         </span>
         <span className="badge small border bg-light text-dark">
-          Sıra: <strong>{(item as any).display_order ?? 0}</strong>
+          {t("table.order")}: <strong>{(item as any).display_order ?? 0}</strong>
         </span>
         {(item as any).is_featured ? (
-          <span className="badge small border border-warning-subtle bg-warning-subtle text-warning">Öne çıkan</span>
+          <span className="badge small border border-warning-subtle bg-warning-subtle text-warning">
+            {t("table.featured")}
+          </span>
         ) : null}
         {(item as any).is_active ? (
-          <span className="badge small border border-success-subtle bg-success-subtle text-success">Aktif</span>
+          <span className="badge small border border-success-subtle bg-success-subtle text-success">{t("table.active")}</span>
         ) : (
-          <span className="badge small border border-secondary-subtle bg-secondary-subtle text-secondary">Pasif</span>
+          <span className="badge small border border-secondary-subtle bg-secondary-subtle text-secondary">{t("admin.common.inactive")}</span>
         )}
       </div>
     );
@@ -191,8 +195,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
 
   const captionText = (
     <span className="small text-muted">
-      Sıralama değişikliği (DnD) sadece çok büyük ekranlarda (xxl+) tabloda aktiftir. Kalıcı yapmak için{" "}
-      <strong>&quot;Sıralamayı Kaydet&quot;</strong> butonunu kullan.
+      {t("list.caption")}
     </span>
   );
 
@@ -200,10 +203,10 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
     <div className="card">
       <div className="card-header py-2">
         <div className="d-flex justify-content-between flex-wrap gap-2 align-items-md-center align-items-start">
-          <div className="small fw-semibold">Alt Kategori Listesi</div>
+          <div className="small fw-semibold">{t("list.title")}</div>
 
           <div className="d-flex flex-wrap gap-2 align-items-center">
-            {busy && <span className="badge small bg-secondary">İşlem yapılıyor...</span>}
+            {busy && <span className="badge small bg-secondary">{t("list.busy")}</span>}
 
             <button
               type="button"
@@ -211,11 +214,11 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
               onClick={onSaveOrder}
               disabled={!hasData || savingOrder || loading}
             >
-              {savingOrder ? "Sıralama kaydediliyor..." : "Sıralamayı Kaydet"}
+              {savingOrder ? t("list.savingOrder") : t("list.saveOrder")}
             </button>
 
             <span className="small text-muted">
-              Toplam: <strong>{totalItems}</strong>
+              {t("list.total")}: <strong>{totalItems}</strong>
             </span>
           </div>
         </div>
@@ -229,20 +232,20 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
               <thead className="table-light">
                 <tr>
                   <th style={{ width: 56 }} />
-                  <th style={{ width: "34%" }}>Alt Kategori</th>
-                  <th style={{ width: "26%" }}>Kategori</th>
-                  <th style={{ width: 120 }}>Dil</th>
+                  <th style={{ width: "34%" }}>{t("table.subcategory")}</th>
+                  <th style={{ width: "26%" }}>{t("table.category")}</th>
+                  <th style={{ width: 120 }}>{t("table.locale")}</th>
                   <th className="text-center" style={{ width: 90 }}>
-                    Aktif
+                    {t("table.active")}
                   </th>
                   <th className="text-center" style={{ width: 110 }}>
-                    Öne Çıkan
+                    {t("table.featured")}
                   </th>
                   <th className="text-center" style={{ width: 90 }}>
-                    Sıra
+                    {t("table.order")}
                   </th>
                   <th style={{ width: 170 }} className="text-nowrap text-end">
-                    İşlemler
+                    {t("table.actions")}
                   </th>
                 </tr>
               </thead>
@@ -251,14 +254,14 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                 {!hasData ? (
                   <tr>
                     <td colSpan={8} className="small py-4 text-center text-muted">
-                      {loading ? "Alt kategoriler yükleniyor..." : "Henüz alt kategori bulunmuyor."}
+                      {loading ? t("list.loading") : t("list.notFound")}
                     </td>
                   </tr>
                 ) : (
                   pageRows.map((item, index) => {
                     const globalIndex = startIndex + index;
 
-                    const name = safeText((item as any).name) || "(Ad yok)";
+                    const name = safeText((item as any).name) || t("list.unnamed");
                     const slug = safeText((item as any).slug) || "-";
                     const locale = safeText((item as any).locale) || "-";
 
@@ -357,7 +360,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                               onClick={() => onEdit(item)}
                               disabled={busy}
                             >
-                              Düzenle
+                              {t("actions.edit")}
                             </button>
                             <button
                               type="button"
@@ -365,7 +368,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                               onClick={() => onDelete(item)}
                               disabled={busy}
                             >
-                              Sil
+                              {t("actions.delete")}
                             </button>
                           </div>
                         </td>
@@ -383,14 +386,14 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
         {/* ===================== < XXL : CARDS (tablet + mobile) ===================== */}
         <div className="d-block d-xxl-none">
           {loading ? (
-            <div className="small px-3 py-3 text-center text-muted">Alt kategoriler yükleniyor...</div>
+            <div className="small px-3 py-3 text-center text-muted">{t("list.loading")}</div>
           ) : hasData ? (
             <div className="p-3">
               <div className="row g-3">
                 {pageRows.map((item, index) => {
                   const globalIndex = startIndex + index;
 
-                  const name = safeText((item as any).name) || "(Ad yok)";
+                  const name = safeText((item as any).name) || t("list.unnamed");
                   const slug = safeText((item as any).slug) || "-";
                   const desc = safeText((item as any).description);
                   const img = safeText((item as any).image_url);
@@ -402,7 +405,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                           <div className="d-flex flex-wrap gap-2 align-items-center">
                             <span className="badge border bg-light text-dark">#{globalIndex + 1}</span>
                             <span className="badge small border bg-light text-dark">
-                              Kategori: {formatText(getCategoryLabel(item), 40)}
+                              {t("list.categoryLabel", { value: formatText(getCategoryLabel(item), 40) })}
                             </span>
                           </div>
                         </div>
@@ -435,7 +438,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                               {name}
                             </div>
                             <div className="small text-muted" style={{ wordBreak: "break-word" }}>
-                              Slug: <code>{slug}</code>
+                              {t("list.slugLabel")} <code>{slug}</code>
                             </div>
                             {desc ? (
                               <div className="small mt-1 text-muted" style={{ wordBreak: "break-word" }}>
@@ -459,7 +462,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                                 onChange={(e) => onToggleActive(item, e.target.checked)}
                               />
                               <label className="form-check-label small" htmlFor={`subcat-list-active-${item.id}`}>
-                                Aktif
+                                {t("table.active")}
                               </label>
                             </div>
 
@@ -473,7 +476,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                                 onChange={(e) => onToggleFeatured(item, e.target.checked)}
                               />
                               <label className="form-check-label small" htmlFor={`subcat-list-featured-${item.id}`}>
-                                Öne çıkan
+                                {t("table.featured")}
                               </label>
                             </div>
                           </div>
@@ -485,7 +488,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                               onClick={() => onEdit(item)}
                               disabled={busy}
                             >
-                              Düzenle
+                              {t("actions.edit")}
                             </button>
                             <button
                               type="button"
@@ -493,7 +496,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
                               onClick={() => onDelete(item)}
                               disabled={busy}
                             >
-                              Sil
+                              {t("actions.delete")}
                             </button>
                           </div>
                         </div>
@@ -506,7 +509,7 @@ export const SubCategoriesList: React.FC<SubCategoriesListProps> = ({
               <div className="pt-3">{captionText}</div>
             </div>
           ) : (
-            <div className="small px-3 py-3 text-center text-muted">Henüz alt kategori bulunmuyor.</div>
+            <div className="small px-3 py-3 text-center text-muted">{t("list.notFound")}</div>
           )}
         </div>
 

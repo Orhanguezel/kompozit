@@ -3,8 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { useAdminTranslations } from "@/i18n";
+import { useLocaleShort } from "@/i18n/useLocaleShort";
 
 const ALLOWED_PREFIXES = [
   "/admin",
@@ -14,6 +16,7 @@ const ALLOWED_PREFIXES = [
   "/admin/subcategories",
   "/admin/gallery",
   "/admin/offer",
+  "/admin/quote-requests",
   "/admin/custompage",
   "/admin/reviews",
   "/admin/site-settings",
@@ -35,6 +38,8 @@ function isAllowed(pathname: string | null): boolean {
 
 export function KompozitAdminRouteGate({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const locale = useLocaleShort();
+  const t = useAdminTranslations(locale);
 
   if (isAllowed(pathname)) {
     return <>{children}</>;
@@ -44,18 +49,17 @@ export function KompozitAdminRouteGate({ children }: { children: React.ReactNode
     <div className="mx-auto flex min-h-[50vh] max-w-3xl items-center justify-center">
       <Card className="w-full border-orange-200 bg-orange-50/60">
         <CardHeader>
-          <CardTitle>Bu ekran MOE Kompozit panelinde aktif değil</CardTitle>
+          <CardTitle>{t("admin.kompozit.routeGate.title")}</CardTitle>
           <CardDescription>
-            Bu admin panel kompozit operasyonlari icin sadeleştirildi. Su anki route shared Ensotek panelinden kalan bir
-            ekrana ait.
+            {t("admin.kompozit.routeGate.description")}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-3">
           <Button asChild>
-            <Link href="/admin/dashboard">Dashboard</Link>
+            <Link href="/admin/dashboard">{t("admin.kompozit.routeGate.dashboard")}</Link>
           </Button>
           <Button asChild variant="outline">
-            <Link href="/admin/site-settings">Site Settings</Link>
+            <Link href="/admin/site-settings">{t("admin.kompozit.routeGate.siteSettings")}</Link>
           </Button>
         </CardContent>
       </Card>

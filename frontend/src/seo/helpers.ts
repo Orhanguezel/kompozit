@@ -35,7 +35,7 @@ export function localizedPath(
 ): string {
   const shortLocale = normLocaleShort(locale);
   const p = pathname.startsWith('/') ? pathname : `/${pathname}`;
-  
+
   // Prevent double localization if the path already starts with a valid locale
   const isAlreadyLocalized = AVAILABLE_LOCALES.some(l => p.startsWith(`/${l}/`) || p === `/${l}`);
   if (isAlreadyLocalized) return p;

@@ -22,14 +22,14 @@ import { AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLo
 import RichContentEditor from "@/app/(main)/admin/_components/common/RichContentEditor";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import {
   useCreateLibraryAdminMutation,
   useGetLibraryAdminQuery,
@@ -42,13 +42,7 @@ import { LibraryImagesSection } from "./library-images-section";
 
 // ─── Sabitler ────────────────────────────────────────────────
 
-const LIBRARY_TYPES = [
-  { value: "brochure", label: "Broşür" },
-  { value: "catalog", label: "Katalog" },
-  { value: "manual", label: "Kılavuz" },
-  { value: "technical", label: "Teknik Döküman" },
-  { value: "other", label: "Diğer" },
-];
+const LIBRARY_TYPE_VALUES = ["brochure", "catalog", "manual", "technical", "other"] as const;
 
 // ─── Props ───────────────────────────────────────────────────
 
@@ -83,12 +77,12 @@ function getObj(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
 }
 
-function getErrorMessage(error: unknown): string {
+function getErrorMessage(error: unknown, fallback: string): string {
   const errorObj = getObj(error);
   const data = getObj(errorObj?.data);
   const nestedError = getObj(data?.error);
 
-  return String(nestedError?.message || data?.message || errorObj?.message || "Hata oluştu");
+  return String(nestedError?.message || data?.message || errorObj?.message || fallback);
 }
 
 // ─── Bileşen ─────────────────────────────────────────────────
@@ -185,11 +179,11 @@ export default function LibraryDetailClient({ id }: Props) {
     e?.preventDefault();
 
     if (!formData.name.trim()) {
-      toast.error("Ad (name) zorunludur");
+      toast.error(t("detail.nameRequired"));
       return;
     }
     if (!formData.slug.trim() && !isNew) {
-      toast.error("Slug zorunludur");
+      toast.error(t("detail.slugRequired"));
       return;
     }
 
@@ -219,14 +213,14 @@ export default function LibraryDetailClient({ id }: Props) {
     try {
       if (isNew) {
         await createLibrary(payload).unwrap();
-        toast.success("Library kaydı oluşturuldu");
+        toast.success(t("detail.createSuccess"));
       } else {
         await updateLibrary({ id, patch: payload }).unwrap();
-        toast.success("Library kaydı güncellendi");
+        toast.success(t("detail.updateSuccess"));
       }
       router.push("/admin/library");
     } catch (error: unknown) {
-      toast.error(`Hata: ${getErrorMessage(error)}`);
+      toast.error(t("detail.errorPrefix", { message: getErrorMessage(error, t("detail.defaultError")) }));
     }
   };
 
@@ -238,6 +232,15 @@ export default function LibraryDetailClient({ id }: Props) {
       label: String(locale.label || locale.value || ""),
     }));
   }, [localeOptions]);
+
+  const libraryTypes = React.useMemo(
+    () =>
+      LIBRARY_TYPE_VALUES.map((value) => ({
+        value,
+        label: t(`detail.types.${value}`),
+      })),
+    [t],
+  );
 
   // ─── Render ──────────────────────────────────────────────────
 
@@ -254,7 +257,7 @@ export default function LibraryDetailClient({ id }: Props) {
               <div>
                 <CardTitle className="text-base">{isNew ? t("actions.create") : t("actions.edit")}</CardTitle>
                 <CardDescription>
-                  {isNew ? "Yeni library kaydı oluştur" : `${item?.name || ""} düzenle`}
+                  {isNew ? t("detail.createDescription") : t("detail.editDescription", { title: item?.name || "" })}
                 </CardDescription>
               </div>
             </div>
@@ -271,7 +274,7 @@ export default function LibraryDetailClient({ id }: Props) {
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "form" | "json")}>
         <TabsList>
-          <TabsTrigger value="form">Form</TabsTrigger>
+          <TabsTrigger value="form">{t("detail.formTab")}</TabsTrigger>
           <TabsTrigger value="json">
             <FileJson className="mr-2 h-4 w-4" />
             JSON
@@ -288,13 +291,13 @@ export default function LibraryDetailClient({ id }: Props) {
                   <div className="space-y-6 lg:col-span-2">
                     {/* Ad */}
                     <div className="space-y-2">
-                      <Label htmlFor="name">Ad *</Label>
+                      <Label htmlFor="name">{t("detail.name")} *</Label>
                       <Input
                         id="name"
                         value={formData.name}
                         onChange={(e) => handleChange("name", e.target.value)}
                         disabled={isLoading}
-                        placeholder="Library başlığı"
+                        placeholder={t("detail.namePlaceholder")}
                       />
                     </div>
 
@@ -306,14 +309,14 @@ export default function LibraryDetailClient({ id }: Props) {
                         value={formData.slug}
                         onChange={(e) => handleChange("slug", e.target.value)}
                         disabled={isLoading}
-                        placeholder="library-slug"
+                        placeholder={t("detail.slugPlaceholder")}
                       />
                     </div>
 
                     {/* Tip + Sıralama */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="type">Tip</Label>
+                        <Label htmlFor="type">{t("detail.type")}</Label>
                         <Select
                           value={formData.type}
                           onValueChange={(v) => handleChange("type", v)}
@@ -323,9 +326,9 @@ export default function LibraryDetailClient({ id }: Props) {
                             <SelectValue />
                           </SelectTrigger>
                           <SelectContent>
-                            {LIBRARY_TYPES.map((t) => (
-                              <SelectItem key={t.value} value={t.value}>
-                                {t.label}
+                            {libraryTypes.map((libraryType) => (
+                              <SelectItem key={libraryType.value} value={libraryType.value}>
+                                {libraryType.label}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -333,7 +336,7 @@ export default function LibraryDetailClient({ id }: Props) {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="display_order">Sıralama</Label>
+                        <Label htmlFor="display_order">{t("detail.displayOrder")}</Label>
                         <Input
                           id="display_order"
                           type="number"
@@ -346,7 +349,7 @@ export default function LibraryDetailClient({ id }: Props) {
 
                     {/* Açıklama */}
                     <div className="space-y-2">
-                      <Label htmlFor="description">Açıklama</Label>
+                      <Label htmlFor="description">{t("detail.description")}</Label>
                       <RichContentEditor
                         value={formData.description}
                         onChange={(v) => handleChange("description", v)}
@@ -358,7 +361,7 @@ export default function LibraryDetailClient({ id }: Props) {
                     {/* Alt + Etiketler */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="image_alt">Görsel Alt Text</Label>
+                        <Label htmlFor="image_alt">{t("detail.imageAlt")}</Label>
                         <Input
                           id="image_alt"
                           value={formData.image_alt}
@@ -367,20 +370,20 @@ export default function LibraryDetailClient({ id }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="tags">Etiketler</Label>
+                        <Label htmlFor="tags">{t("detail.tags")}</Label>
                         <Input
                           id="tags"
                           value={formData.tags}
                           onChange={(e) => handleChange("tags", e.target.value)}
                           disabled={isLoading}
-                          placeholder="virgülle ayır"
+                          placeholder={t("detail.tagsPlaceholder")}
                         />
                       </div>
                     </div>
 
                     {/* Yayın tarihi */}
                     <div className="space-y-2">
-                      <Label htmlFor="published_at">Yayın Tarihi</Label>
+                      <Label htmlFor="published_at">{t("detail.publishedAt")}</Label>
                       <Input
                         id="published_at"
                         type="datetime-local"
@@ -392,9 +395,9 @@ export default function LibraryDetailClient({ id }: Props) {
 
                     {/* SEO */}
                     <div className="space-y-4 rounded-md border p-4">
-                      <p className="font-medium text-muted-foreground text-sm">SEO</p>
+                      <p className="font-medium text-muted-foreground text-sm">{t("detail.seoTitle")}</p>
                       <div className="space-y-2">
-                        <Label htmlFor="meta_title">Meta Başlık</Label>
+                        <Label htmlFor="meta_title">{t("detail.metaTitle")}</Label>
                         <Input
                           id="meta_title"
                           value={formData.meta_title}
@@ -403,7 +406,7 @@ export default function LibraryDetailClient({ id }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="meta_description">Meta Açıklama</Label>
+                        <Label htmlFor="meta_description">{t("detail.metaDescription")}</Label>
                         <Textarea
                           id="meta_description"
                           value={formData.meta_description}
@@ -413,7 +416,7 @@ export default function LibraryDetailClient({ id }: Props) {
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="meta_keywords">Meta Anahtar Kelimeler</Label>
+                        <Label htmlFor="meta_keywords">{t("detail.metaKeywords")}</Label>
                         <Input
                           id="meta_keywords"
                           value={formData.meta_keywords}
@@ -433,7 +436,7 @@ export default function LibraryDetailClient({ id }: Props) {
                           disabled={isLoading}
                         />
                         <Label htmlFor="is_active" className="cursor-pointer">
-                          Aktif
+                          {t("detail.isActive")}
                         </Label>
                       </div>
                       <div className="flex items-center gap-2">
@@ -444,7 +447,7 @@ export default function LibraryDetailClient({ id }: Props) {
                           disabled={isLoading}
                         />
                         <Label htmlFor="is_published" className="cursor-pointer">
-                          Yayında
+                          {t("detail.isPublished")}
                         </Label>
                       </div>
                       <div className="flex items-center gap-2">
@@ -455,7 +458,7 @@ export default function LibraryDetailClient({ id }: Props) {
                           disabled={isLoading}
                         />
                         <Label htmlFor="featured" className="cursor-pointer">
-                          Öne Çıkan
+                          {t("detail.isFeatured")}
                         </Label>
                       </div>
                     </div>
@@ -464,7 +467,7 @@ export default function LibraryDetailClient({ id }: Props) {
                   {/* Sağ: görsel sidebar */}
                   <div className="space-y-4">
                     <AdminImageUploadField
-                      label="Kapak Görseli"
+                      label={t("detail.coverImage")}
                       value={formData.image_url}
                       onChange={handleImageChange}
                       disabled={isLoading}
@@ -503,8 +506,8 @@ export default function LibraryDetailClient({ id }: Props) {
         <TabsContent value="json">
           <Card>
             <CardHeader>
-              <CardTitle className="text-base">Library Verisi (JSON)</CardTitle>
-              <CardDescription>Tüm alanları JSON olarak düzenleyebilirsiniz.</CardDescription>
+              <CardTitle className="text-base">{t("detail.jsonTitle")}</CardTitle>
+              <CardDescription>{t("detail.jsonDescription")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -516,7 +519,7 @@ export default function LibraryDetailClient({ id }: Props) {
                 {/* Sağ: görsel önizleme/yükleme */}
                 <div className="space-y-4">
                   <AdminImageUploadField
-                    label="Kapak Görseli"
+                    label={t("detail.coverImage")}
                     value={formData.image_url}
                     onChange={handleImageChange}
                     disabled={isLoading}

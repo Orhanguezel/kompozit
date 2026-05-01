@@ -5,6 +5,8 @@
 
 import React from "react";
 
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+
 export type LocaleOption = {
   value: string;
   label: string;
@@ -62,21 +64,22 @@ export const SubCategoriesHeader: React.FC<SubCategoriesHeaderProps> = ({
   categoriesLoading = false,
   onCreateClick,
 }) => {
+  const t = useAdminT();
+
   // “Tüm Diller” option’u her zaman tekil olsun
   const localeList = React.useMemo(() => {
     const list = Array.isArray(locales) ? locales : [];
     if (list.some((x) => x.value === "")) return list;
-    return [{ value: "", label: "Tüm Diller" }, ...list];
+    return [{ value: "", label: t("legacyHeader.allLocales") }, ...list];
   }, [locales]);
 
   return (
     <div className="row mb-3">
       {/* Sol: başlık */}
       <div className="col-12 col-lg-6 mb-2 mb-lg-0">
-        <h1 className="h4 mb-1">Alt Kategoriler</h1>
+        <h1 className="h4 mb-1">{t("header.title")}</h1>
         <p className="small mb-0 text-muted">
-          Kategorilere bağlı çok dilli alt kategori kayıtlarını listeler, sıralama (drag &amp; drop), aktif/öne çıkan
-          durumlarını ve temel bilgileri yönetebilirsin.
+          {t("legacyHeader.description")}
         </p>
       </div>
 
@@ -85,11 +88,11 @@ export const SubCategoriesHeader: React.FC<SubCategoriesHeaderProps> = ({
         <div className="d-flex w-100 w-sm-auto flex-column flex-sm-row gap-2">
           {/* Arama */}
           <div className="input-group input-group-sm">
-            <span className="input-group-text">Ara</span>
+            <span className="input-group-text">{t("common.search")}</span>
             <input
               type="text"
               className="form-control"
-              placeholder="İsim veya slug içinde ara"
+              placeholder={t("legacyHeader.searchPlaceholder")}
               value={search}
               onChange={(e) => onSearchChange(e.target.value)}
               disabled={loading}
@@ -99,7 +102,7 @@ export const SubCategoriesHeader: React.FC<SubCategoriesHeaderProps> = ({
           {/* Locale filtre */}
           <div className="input-group input-group-sm">
             <span className="input-group-text">
-              Dil
+              {t("legacyHeader.locale")}
               {localesLoading && <span className="spinner-border spinner-border-sm ms-1" />}
             </span>
             <select
@@ -119,7 +122,7 @@ export const SubCategoriesHeader: React.FC<SubCategoriesHeaderProps> = ({
           {/* Kategori filtre */}
           <div className="input-group input-group-sm">
             <span className="input-group-text">
-              Kategori
+              {t("legacyHeader.category")}
               {categoriesLoading && <span className="spinner-border spinner-border-sm ms-1" />}
             </span>
             <select
@@ -151,7 +154,7 @@ export const SubCategoriesHeader: React.FC<SubCategoriesHeaderProps> = ({
               disabled={loading}
             />
             <label className="form-check-label" htmlFor="sub-filter-active">
-              Sadece aktif
+              {t("filters.onlyActive")}
             </label>
           </div>
 
@@ -165,17 +168,17 @@ export const SubCategoriesHeader: React.FC<SubCategoriesHeaderProps> = ({
               disabled={loading}
             />
             <label className="form-check-label" htmlFor="sub-filter-featured">
-              Sadece öne çıkan
+              {t("filters.onlyFeatured")}
             </label>
           </div>
         </div>
 
         <div className="d-flex justify-content-end mt-2 mt-md-0 gap-2">
           <button type="button" className="btn btn-outline-secondary btn-sm" onClick={onRefresh} disabled={loading}>
-            Yenile
+            {t("legacyHeader.refresh")}
           </button>
           <button type="button" className="btn btn-primary btn-sm" onClick={onCreateClick} disabled={loading}>
-            + Yeni Alt Kategori
+            {t("legacyHeader.create")}
           </button>
         </div>
       </div>

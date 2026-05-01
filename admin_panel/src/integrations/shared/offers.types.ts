@@ -33,6 +33,7 @@ export type OfferListQuery = {
   offset?: number;
 
   status?: OfferStatus;
+  source?: string;
 
   country_code?: string;
   q?: string;
@@ -42,8 +43,6 @@ export type OfferListQuery = {
 
   created_from?: string;
   created_to?: string;
-
-  source?: string;
 };
 
 export type OfferPublicCreateBody = {
@@ -96,6 +95,7 @@ export type OfferRowRaw = {
   id: string;
   offer_no?: string | null;
   status: string;
+  source?: string | null;
 
   locale?: string | null;
   country_code?: string | null;
@@ -142,6 +142,7 @@ export type OfferView = {
   id: string;
   offer_no: string | null;
   status: OfferStatus;
+  source: string | null;
 
   locale: string | null;
   country_code: string | null;
@@ -211,6 +212,7 @@ export const normalizeOffer = (raw: unknown): OfferView => {
     id: s(r.id),
     offer_no: (r.offer_no ?? null) ? s(r.offer_no) : null,
     status: toStatus(r.status),
+    source: r.source == null ? null : s(r.source),
 
     locale: (r.locale ?? null) ? s(r.locale) : null,
     country_code: (r.country_code ?? null) ? s(r.country_code) : null,
@@ -268,6 +270,7 @@ export const toOfferListQueryParams = (q: OfferListQuery = {}): Record<string, a
   if (typeof q.offset === "number") out.offset = q.offset;
 
   if (q.status) out.status = q.status;
+  if (q.source) out.source = q.source;
 
   if (q.country_code) out.country_code = q.country_code;
   if (q.q) out.q = q.q;
@@ -277,8 +280,6 @@ export const toOfferListQueryParams = (q: OfferListQuery = {}): Record<string, a
 
   if (q.created_from) out.created_from = q.created_from;
   if (q.created_to) out.created_to = q.created_to;
-
-  if (q.source) out.source = q.source;
 
   return out;
 };

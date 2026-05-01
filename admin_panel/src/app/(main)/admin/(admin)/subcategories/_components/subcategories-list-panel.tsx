@@ -16,14 +16,14 @@ import { toast } from "sonner";
 import { type AdminLocaleOption, AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
 import { useListCategoriesAdminQuery } from "@/integrations/endpoints/admin/categories_admin.endpoints";
 import {
   useDeleteSubCategoryAdminMutation,
@@ -101,7 +101,7 @@ export default function SubcategoriesListPanel() {
     try {
       await toggleActive({ id: item.id, is_active: value }).unwrap();
     } catch {
-      toast.error("Aktiflik değiştirilemedi");
+      toast.error(t("messages.toggleActiveError"));
     }
   };
 
@@ -109,18 +109,18 @@ export default function SubcategoriesListPanel() {
     try {
       await toggleFeatured({ id: item.id, is_featured: value }).unwrap();
     } catch {
-      toast.error("Öne çıkarma değiştirilemedi");
+      toast.error(t("messages.toggleFeaturedError"));
     }
   };
 
   const handleDelete = async (item: SubCategoryDto) => {
-    if (!confirm(`"${item.name || item.slug}" silinsin mi?`)) return;
+    if (!confirm(t("messages.confirmDelete", { title: item.name || item.slug || "" }))) return;
     try {
       await deleteSubCategory(item.id).unwrap();
-      toast.success("Silindi");
+      toast.success(t("messages.deleted"));
       refetch();
     } catch {
-      toast.error("Silinemedi");
+      toast.error(t("messages.deleteError"));
     }
   };
 
@@ -252,7 +252,7 @@ export default function SubcategoriesListPanel() {
 
                     <TableCell>
                       <div className="max-w-[240px] truncate font-medium text-sm" title={item.name || ""}>
-                        {item.name || <span className="text-muted-foreground italic">(adsız)</span>}
+                        {item.name || <span className="text-muted-foreground italic">{t("list.unnamed")}</span>}
                       </div>
                       <div className="text-muted-foreground text-xs">
                         <code>{item.slug || "—"}</code>

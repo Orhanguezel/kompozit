@@ -29,7 +29,7 @@ export function ReferenceLogos({ references, label = 'TRUSTED BY' }: ReferenceLo
             <div className="h-px w-full bg-border/20" />
          </div>
       </Reveal>
-      
+
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 lg:gap-8">
         {references.map((ref, i) => (
           <Reveal key={ref.id || ref.title} delay={i * 50}>

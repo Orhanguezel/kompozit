@@ -5,6 +5,8 @@
 
 import type React from "react";
 
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+
 import type { CategoryOption, LocaleOption } from "./SubCategoriesHeader";
 
 export type SubCategoryFormStateLike = {
@@ -44,12 +46,14 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
   onNameChange,
   onSlugChange,
 }) => {
+  const t = useAdminT("admin.subcategories");
+
   return (
     <div className="row g-2">
       {/* Dil */}
       <div className="col-md-4">
         <label className="form-label small" htmlFor="subcat-field-locale">
-          Dil
+          {t("legacyForm.localeLabel")}
         </label>
         <select
           id="subcat-field-locale"
@@ -69,7 +73,7 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
       {/* Üst kategori */}
       <div className="col-md-8">
         <label className="form-label small" htmlFor="subcat-field-category">
-          Üst Kategori (category_id)
+          {t("legacyForm.parentCategoryField")}
         </label>
         <select
           id="subcat-field-category"
@@ -89,7 +93,7 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
       {/* Sıralama */}
       <div className="col-md-4">
         <label className="form-label small" htmlFor="subcat-field-display-order">
-          Sıralama (display_order)
+          {t("legacyForm.displayOrderField")}
         </label>
         <input
           id="subcat-field-display-order"
@@ -104,7 +108,7 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
       {/* Ad */}
       <div className="col-md-4">
         <label className="form-label small" htmlFor="subcat-field-name">
-          Ad
+          {t("form.name")}
         </label>
         <input
           id="subcat-field-name"
@@ -129,13 +133,13 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
           onChange={(e) => onSlugChange(e.target.value)}
           disabled={disabled}
         />
-        <div className="form-text small">URL için kullanılacak kısa ad. Dil başına farklı olabilir.</div>
+        <div className="form-text small">{t("legacyForm.slugHelp")}</div>
       </div>
 
       {/* Icon */}
       <div className="col-md-6">
         <label className="form-label small" htmlFor="subcat-field-icon">
-          Icon (opsiyonel)
+          {t("legacyForm.iconOptional")}
         </label>
         <input
           id="subcat-field-icon"
@@ -160,7 +164,7 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
               disabled={disabled}
             />
             <label className="form-check-label" htmlFor="subcat-active">
-              Aktif
+              {t("form.isActive")}
             </label>
           </div>
           <div className="form-check form-switch">
@@ -173,7 +177,7 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
               disabled={disabled}
             />
             <label className="form-check-label" htmlFor="subcat-featured">
-              Öne çıkan
+              {t("form.isFeatured")}
             </label>
           </div>
         </div>
@@ -182,7 +186,7 @@ export const SubCategoryFormFields: React.FC<SubCategoryFormFieldsProps> = ({
       {/* Açıklama */}
       <div className="col-12">
         <label className="form-label small" htmlFor="subcat-field-description">
-          Açıklama (opsiyonel)
+          {t("legacyForm.descriptionOptional")}
         </label>
         <textarea
           id="subcat-field-description"

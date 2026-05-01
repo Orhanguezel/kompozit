@@ -11,7 +11,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog"
+} from "@ensotek/shared-ui/admin/ui/dialog"
 
 function Command({
   className,

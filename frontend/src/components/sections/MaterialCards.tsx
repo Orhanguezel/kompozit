@@ -36,7 +36,7 @@ export async function MaterialCards({ locale }: { locale: string }) {
               <p className="mt-6 text-base font-light leading-relaxed text-[var(--silver)] opacity-80">
                 {t(`${key}.description`)}
               </p>
-              
+
               <div className="mt-12 grid grid-cols-2 gap-0.5 bg-[var(--gold)]/10">
                 {specKeys.map((sk) => (
                   <div key={sk} className="bg-[var(--carbon)] p-6 transition-colors hover:bg-[var(--graphite)]">

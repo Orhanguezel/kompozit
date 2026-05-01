@@ -6,10 +6,10 @@ import { Key, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import { useAuthUpdateMutation } from "@/integrations/hooks";
 
 export function PasswordForm() {
@@ -23,12 +23,12 @@ export function PasswordForm() {
     e.preventDefault();
 
     if (!password) {
-      toast.error(t("admin.profile.passwordRequired") || "Yeni şifre gerekli.");
+      toast.error(t("admin.profile.passwordRequired"));
       return;
     }
 
     if (password !== confirmPassword) {
-      toast.error(t("admin.profile.passwordsDontMatch") || "Şifreler uyuşmuyor.");
+      toast.error(t("admin.profile.passwordsDontMatch"));
       return;
     }
 
@@ -39,9 +39,9 @@ export function PasswordForm() {
 
       setPassword("");
       setConfirmPassword("");
-      toast.success(t("admin.profile.passwordUpdated") || "Şifre başarıyla güncellendi.");
+      toast.success(t("admin.profile.passwordUpdated"));
     } catch (_err) {
-      toast.error(t("admin.profile.passwordUpdateFailed") || "Şifre güncellenemedi.");
+      toast.error(t("admin.profile.passwordUpdateFailed"));
     }
   };
 
@@ -49,14 +49,12 @@ export function PasswordForm() {
     <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
-          <CardTitle>{t("admin.profile.security") || "Güvenlik"}</CardTitle>
-          <CardDescription>
-            {t("admin.profile.securityDesc") || "Hesap güvenliğiniz için şifrenizi güncelleyin."}
-          </CardDescription>
+          <CardTitle>{t("admin.profile.security")}</CardTitle>
+          <CardDescription>{t("admin.profile.securityDesc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid gap-2">
-            <Label htmlFor="new-password">{t("admin.profile.newPassword") || "Yeni Şifre"}</Label>
+            <Label htmlFor="new-password">{t("admin.profile.newPassword")}</Label>
             <Input
               id="new-password"
               type="password"
@@ -67,7 +65,7 @@ export function PasswordForm() {
             />
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="confirm-password">{t("admin.profile.confirmPassword") || "Şifreyi Onayla"}</Label>
+            <Label htmlFor="confirm-password">{t("admin.profile.confirmPassword")}</Label>
             <Input
               id="confirm-password"
               type="password"
@@ -83,12 +81,12 @@ export function PasswordForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                {t("admin.common.saving") || "Kaydediliyor..."}
+                {t("admin.common.saving")}
               </>
             ) : (
               <>
                 <Key className="mr-2 h-4 w-4" />
-                {t("admin.profile.changePassword") || "Şifre Değiştir"}
+                {t("admin.profile.changePassword")}
               </>
             )}
           </Button>

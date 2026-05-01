@@ -7,10 +7,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Checkbox } from "@ensotek/shared-ui/admin/ui/checkbox";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
 import { useAdminTranslations } from "@/i18n";
 import { useLocaleShort } from "@/i18n/useLocaleShort";
 import { useAuthSignupMutation } from "@/integrations/hooks";

@@ -19,7 +19,7 @@ export type ResourceListItemDTO = {
 
 
 export const resourceTypeEnum = ['therapist', 'doctor', 'table', 'room', 'staff', 'other'] as const;
-  
+
 export type ResourceType = 'therapist' | 'doctor' | 'table' | 'room' | 'staff' | 'other';
 // ✅ single source of truth for narrowing
 export const RESOURCE_TYPES = new Set<ResourceType>([
@@ -80,7 +80,3 @@ export type ResourceAdminUpdatePatch = Partial<{
   external_ref_id: Id36 | null;
   is_active: 0 | 1;
 }>;
-
-
-
-  

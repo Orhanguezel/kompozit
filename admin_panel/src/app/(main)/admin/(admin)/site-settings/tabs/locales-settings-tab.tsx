@@ -5,11 +5,11 @@ import * as React from "react";
 import { RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
 import { normLocaleTag, useAdminTranslations } from "@/i18n";
 import { useListSiteSettingsAdminQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
@@ -19,6 +19,14 @@ type LocaleRow = {
   label: string;
   is_active: boolean;
 };
+
+function nativeLocaleLabel(code: string): string {
+  try {
+    return new Intl.DisplayNames([code], { type: "language" }).of(code) || code.toUpperCase();
+  } catch {
+    return code.toUpperCase();
+  }
+}
 
 function toShortLocale(v: unknown): string {
   return normLocaleTag(v);
@@ -56,27 +64,31 @@ function normalizeRows(raw: unknown): LocaleRow[] {
 }
 
 const TOP_20_LOCALES_PRESET: LocaleRow[] = [
-  { code: "de", label: "Deutsch", is_active: true },
-  { code: "en", label: "English", is_active: true },
-  { code: "tr", label: "Türkçe", is_active: true },
-  { code: "es", label: "Español", is_active: false },
-  { code: "fr", label: "Français", is_active: false },
-  { code: "it", label: "Italiano", is_active: false },
-  { code: "pt", label: "Português", is_active: false },
-  { code: "ru", label: "Русский", is_active: false },
-  { code: "ar", label: "العربية", is_active: false },
-  { code: "hi", label: "हिन्दी", is_active: false },
-  { code: "bn", label: "বাংলা", is_active: false },
-  { code: "pa", label: "ਪੰਜਾਬੀ", is_active: false },
-  { code: "ja", label: "日本語", is_active: false },
-  { code: "ko", label: "한국어", is_active: false },
-  { code: "zh", label: "中文", is_active: false },
-  { code: "id", label: "Bahasa Indonesia", is_active: false },
-  { code: "vi", label: "Tiếng Việt", is_active: false },
-  { code: "th", label: "ไทย", is_active: false },
-  { code: "nl", label: "Nederlands", is_active: false },
-  { code: "pl", label: "Polski", is_active: false },
-];
+  "de",
+  "en",
+  "tr",
+  "es",
+  "fr",
+  "it",
+  "pt",
+  "ru",
+  "ar",
+  "hi",
+  "bn",
+  "pa",
+  "ja",
+  "ko",
+  "zh",
+  "id",
+  "vi",
+  "th",
+  "nl",
+  "pl",
+].map((code, index) => ({
+  code,
+  label: nativeLocaleLabel(code),
+  is_active: index < 3,
+}));
 
 export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }) {
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
@@ -142,9 +154,9 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
 
     setTouched(true);
     const nextRows: LocaleRow[] = [
-      { code: "de", label: "Deutsch", is_active: true },
-      { code: "en", label: "English", is_active: true },
-      { code: "tr", label: "Türkçe", is_active: true },
+      { code: "de", label: nativeLocaleLabel("de"), is_active: true },
+      { code: "en", label: nativeLocaleLabel("en"), is_active: true },
+      { code: "tr", label: nativeLocaleLabel("tr"), is_active: true },
     ];
     setRows(nextRows);
 
@@ -208,8 +220,7 @@ export function LocalesSettingsTab({ settingPrefix }: { settingPrefix?: string }
 
       <CardContent className="space-y-4">
         <div className="rounded-md border border-dashed p-3 text-muted-foreground text-sm">
-          Frontend varsayılan dili artık bu panelden yönetilmiyor. Her proje kendi fallback locale ayarını kendi
-          frontend katmanında belirliyor.
+          {t("admin.siteSettings.locales.frontendFallbackNote")}
         </div>
 
         {!rows.length ? (

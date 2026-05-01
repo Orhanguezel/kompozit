@@ -58,14 +58,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const { category, tag } = await searchParams;
-  const t = await getTranslations({ locale, namespace: 'products' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'products' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   return buildPageMetadata({
     locale,
     pathname: '/products',
     title: locale.startsWith('en')
       ? `${t('title')} - Carbon Fiber, FRP and Fiberglass Parts`
       : `${t('title')} - Karbon Fiber, CTP ve Cam Elyaf Parcalar`,
-    description: t('description'),
+    description: seoT('productsDescription'),
     noIndex: Boolean(category || tag),
   });
 }
@@ -109,7 +112,7 @@ export default async function ProductsPage({
               }),
             ])}
           />
-          
+
           <Reveal>
             <div className="mb-16">
               <span className="section-label-cc">Catalogue</span>
@@ -168,7 +171,7 @@ export default async function ProductsPage({
                 </p>
               </div>
             )}
-            
+
             <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {visibleProducts.map((p: any, index: number) => (
                 <Reveal key={p.id ?? p.title} delay={index * 40} className="grid-item-cc">

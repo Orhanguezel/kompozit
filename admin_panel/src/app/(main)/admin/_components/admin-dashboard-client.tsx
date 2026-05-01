@@ -12,14 +12,14 @@ import * as React from "react";
 
 import Link from "next/link";
 
-import { RefreshCcw } from "lucide-react";
+import { Plus, RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 import { useAdminUiCopy } from "@/app/(main)/admin/_components/common/useAdminUiCopy";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Button, buttonVariants } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Skeleton } from "@ensotek/shared-ui/admin/ui/skeleton";
 import { useGetDashboardSummaryAdminQuery } from "@/integrations/hooks";
 import type { DashboardSummaryItem } from "@/integrations/shared";
 
@@ -46,6 +46,14 @@ const ROUTE_MAP: Record<string, string> = {
 };
 
 const ALLOWED_DASHBOARD_KEYS = new Set(Object.keys(ROUTE_MAP));
+
+const QUICK_CREATE_ACTIONS = [
+  { key: "product", href: "/admin/products/new", labelKey: "admin.dashboard.quick.product", fallback: "+ Yeni ürün" },
+  { key: "reference", href: "/admin/references/new", labelKey: "admin.dashboard.quick.reference", fallback: "+ Yeni referans" },
+  { key: "blog", href: "/admin/custompage/new?module=blog", labelKey: "admin.dashboard.quick.blog", fallback: "+ Yeni blog yazısı" },
+  { key: "testimonial", href: "/admin/reviews/new", labelKey: "admin.dashboard.quick.testimonial", fallback: "+ Yeni testimonial" },
+  { key: "gallery", href: "/admin/gallery/new", labelKey: "admin.dashboard.quick.gallery", fallback: "+ Yeni galeri" },
+];
 
 function getErrMessage(err: unknown): string {
   const anyErr = err as any;
@@ -113,6 +121,20 @@ export default function AdminDashboardClient() {
           <RefreshCcw className={`mr-2 size-4${q.isFetching ? "animate-spin" : ""}`} />
           {copy.common?.actions?.refresh || t("admin.common.refresh")}
         </Button>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {QUICK_CREATE_ACTIONS.map((action) => (
+          <Link
+            key={action.key}
+            href={action.href}
+            prefetch={false}
+            className={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            <Plus className="mr-2 size-4" />
+            {t(action.labelKey as any, undefined, action.fallback)}
+          </Link>
+        ))}
       </div>
 
       {/* Loading skeleton */}

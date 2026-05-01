@@ -66,7 +66,7 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
           id={tagsInputId}
           type="text"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-          placeholder="ör: guezelwebdesign, kampanya, blog"
+          placeholder={t("admin.customPage.form.tagsPlaceholder")}
           value={values.tags}
           onChange={(e) => setValues((prev) => ({ ...prev, tags: e.target.value }))}
           disabled={disabled}

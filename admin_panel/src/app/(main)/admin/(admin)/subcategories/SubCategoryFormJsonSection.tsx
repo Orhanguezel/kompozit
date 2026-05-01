@@ -1,3 +1,5 @@
+"use client";
+
 // =============================================================
 // FILE: src/components/admin/subcategories/SubCategoryFormJsonSection.tsx
 // Ensotek – Alt Kategori JSON Editör Bölümü
@@ -5,6 +7,8 @@
 
 import type React from "react";
 import { useEffect, useState } from "react";
+
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 
 export type SubCategoryFormJsonSectionProps = {
   jsonModel: any;
@@ -19,6 +23,7 @@ export const SubCategoryFormJsonSection: React.FC<SubCategoryFormJsonSectionProp
   onChangeJson,
   onErrorChange,
 }) => {
+  const t = useAdminT("admin.subcategories");
   const [text, setText] = useState("");
 
   useEffect(() => {
@@ -34,7 +39,7 @@ export const SubCategoryFormJsonSection: React.FC<SubCategoryFormJsonSectionProp
     setText(value);
 
     if (!value.trim()) {
-      onErrorChange("JSON içerik boş olamaz.");
+      onErrorChange(t("legacyForm.jsonEmpty"));
       return;
     }
 
@@ -43,14 +48,14 @@ export const SubCategoryFormJsonSection: React.FC<SubCategoryFormJsonSectionProp
       onErrorChange(null);
       onChangeJson(parsed);
     } catch (err: any) {
-      onErrorChange(err?.message || "Geçersiz JSON.");
+      onErrorChange(err?.message || t("legacyForm.jsonInvalid"));
     }
   };
 
   return (
     <div className="mb-3">
       <label className="form-label small" htmlFor="subcat-json-editor">
-        Alt Kategori JSON
+        {t("legacyForm.jsonLabel")}
       </label>
       <textarea
         id="subcat-json-editor"
@@ -61,7 +66,7 @@ export const SubCategoryFormJsonSection: React.FC<SubCategoryFormJsonSectionProp
         onChange={handleChange}
       />
       <div className="form-text small">
-        Bu alan, formun backend’e giden JSON payload’ını doğrudan düzenlemeni sağlar.
+        {t("legacyForm.jsonHelper")}
       </div>
     </div>
   );

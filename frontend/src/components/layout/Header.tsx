@@ -207,7 +207,7 @@ export function Header({
         aria-hidden={!mobileOpen}
       >
         <div className="gold-grid-bg absolute inset-0 opacity-10" />
-        
+
         {/* Mobile Header Bar */}
         <div className="flex h-24 items-center justify-between border-b border-[var(--gold)]/10 px-6">
            <Link href={localizedPath(locale, '/')} className="flex items-center gap-4" onClick={() => setMobileOpen(false)}>

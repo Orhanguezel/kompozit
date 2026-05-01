@@ -1,5 +1,5 @@
 // =============================================================
-// FILE: /var/www/Ensotek/kompozit_backend/ecosystem.config.cjs
+// FILE: /var/www/Ensotek/kompozit/backend/ecosystem.config.cjs
 // FINAL — MOE Kompozit Backend (Bun)
 // - binds to 127.0.0.1:8186 (reverse proxy only)
 // - crash-loop protection + graceful shutdown
@@ -10,10 +10,10 @@ module.exports = {
   apps: [
     {
       name: 'kompozit-backend',
-      cwd: '/var/www/Ensotek/kompozit_backend',
+      cwd: '/var/www/Ensotek/kompozit/backend',
 
       // ✅ run bun directly (deterministic)
-      script: '/home/orhan/.bun/bin/bun',
+      script: '/usr/local/bin/bun',
       args: 'dist/index.js',
 
       exec_mode: 'fork',

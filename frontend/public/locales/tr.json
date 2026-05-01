@@ -19,6 +19,7 @@
   },
   "footer": {
     "description": "Karbon fiber, CTP ve cam elyaf kompozit uretiminde endustriyel cozumler.",
+    "ensotekRelation": "MOE Kompozit, Ensotek'in kompozit üretim alt markasıdır.",
     "rights": "Tüm hakları saklıdır",
     "privacy": "Gizlilik Politikası",
     "terms": "Kullanım Koşulları",
@@ -509,11 +510,23 @@
     },
     "form": {
       "productInterest": "İlgilenilen Ürün/Hizmet",
+      "productCategory": "Ürün kategorisi",
+      "productCategories": {
+        "carbon_fiber": "Karbon fiber",
+        "frp_ctp": "CTP / FRP",
+        "fiberglass": "Cam elyaf",
+        "panel": "Panel / levha",
+        "profile": "Profil / boru",
+        "tank": "Tank / depo",
+        "custom_part": "Özel parça"
+      },
+      "sector": "Sektör / kullanım alanı",
       "quantity": "Miktar",
       "deadline": "Termin",
       "details": "Proje Detayları",
       "detailsPlaceholder": "Projeniz hakkında bize bilgi verin (malzeme, boyut, adet vb.)",
       "attachFile": "Dosya Ekle (teknik çizim, şartname vb.)",
+      "attachHint": "PDF, STEP, IGES, DXF/DWG veya görsel dosyalar yüklenebilir.",
       "submit": "Teklif İste",
       "success": "Teklif talebiniz alındı. Ekibimiz en kısa sürede sizinle iletişime geçecek.",
       "error": "Talep gönderilemedi. Lütfen tekrar deneyin."
@@ -573,6 +586,13 @@
       "sectorsHeading": "Uzman olduğumuz sektörler"
     },
     "tagline": "Bilimin zanaatla buluştuğu nokta"
+    ,
+    "ensotek": {
+      "label": "Ensotek Bağı",
+      "title": "Ensotek mühendislik birikimiyle kompozit üretim",
+      "description": "MOE Kompozit, Ensotek'in endüstriyel üretim, kalite yönetimi ve proje disiplini üzerine kurulu kompozit alt markasıdır. Soğutma kulesi sektöründe oluşan CTP/FRP malzeme deneyimi; karbon fiber, cam elyaf, özel panel, kapak, muhafaza ve proje bazlı kompozit parça üretimine aktarılır.",
+      "cta": "Ensotek Türkiye'yi ziyaret et"
+    }
   },
   "legal": {
     "title": "Yasal",
@@ -582,6 +602,15 @@
   "seo": {
     "defaultTitle": "MOE Kompozit | Karbon Fiber, CTP ve Cam Elyaf Kompozit Cozumleri",
     "defaultDescription": "Karbon fiber, CTP ve cam elyaf kompozit uretiminde muhendislik, numune dogrulama ve seri uretim planlamasi odakli B2B cozumler.",
+    "homeDescription": "MOE Kompozit; karbon fiber, CTP ve cam elyaf üretiminde numune, mühendislik ve seri üretim desteği sunan B2B kompozit markasıdır.",
+    "productsDescription": "Karbon fiber, CTP ve cam elyaf kompozit ürünleri; hafiflik, dayanım, yüzey kalitesi ve tekrarlanabilir B2B üretim için inceleyin.",
+    "solutionsDescription": "Saksı, tank, defin grubu ve özel B2B kompozit imalat çözümlerinde malzeme seçimi, üretim disiplini ve teklif adımlarını görün.",
+    "referencesDescription": "MOE Kompozit referansları; kurumsal iş birlikleri, uygulama tipleri ve tekrarlanabilir kompozit üretim disiplinini özetler.",
+    "galleryDescription": "Kompozit üretim tesisi, kalıplama, montaj, ürün detayları ve tamamlanan proje görsellerini MOE Kompozit galerisinde inceleyin.",
+    "blogDescription": "Karbon fiber, CTP, cam elyaf, kalıplama, yüzey kalitesi ve kompozit sektör uygulamaları hakkında teknik blog içerikleri.",
+    "aboutDescription": "MOE Kompozit'in Ensotek mühendislik birikimiyle karbon fiber, CTP ve cam elyaf projelerinde nasıl çalıştığını keşfedin.",
+    "contactDescription": "Karbon fiber, CTP ve cam elyaf projeniz için teknik uygunluk, numune, termin ve teklif görüşmesi yapmak üzere bize ulaşın.",
+    "offerDescription": "Kompozit projeniz için ürün kategorisi, sektör, miktar, termin ve teknik dosyalarla hızlı B2B teklif talebi oluşturun.",
     "keywords": "karbon fiber, CTP, cam elyaf, kompozit, endüstriyel üretim, özel üretim"
   },
   "error": {

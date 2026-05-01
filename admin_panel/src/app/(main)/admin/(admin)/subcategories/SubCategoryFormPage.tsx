@@ -18,6 +18,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 
 import { useAdminLocales } from "@/components/common/useAdminLocales";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 import {
   useCreateSubCategoryAdminMutation,
   useLazyGetSubCategoryAdminQuery,
@@ -121,6 +122,7 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
   onDone,
 }) => {
   const router = useRouter();
+  const t = useAdminT("admin.subcategories");
 
   const [formState, setFormState] = useState<SubCategoryFormState | null>(null);
   const [slugTouched, setSlugTouched] = useState(false);
@@ -343,12 +345,12 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
         setFormState((prev) => (prev ? { ...prev, locale: nextLocale } : prev));
         setSlugTouched(false);
         toast.info(
-          "Seçilen dil için alt kategori kaydı bulunamadı. Kaydettiğinde bu dil için yeni bir çeviri oluşturulacak (aynı alt kategori id ile).",
+          t("legacyForm.localeRecordMissing"),
         );
       } else {
         console.error("Locale change error (subcategory):", err);
         setFormState((prev) => (prev ? { ...prev, locale: nextLocale } : prev));
-        toast.error("Seçilen dil için alt kategori yüklenirken bir hata oluştu.");
+        toast.error(t("legacyForm.localeLoadError"));
       }
     }
   };
@@ -360,7 +362,7 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
     if (!formState) return;
 
     if (editMode === "json" && jsonError) {
-      toast.error("JSON geçerli değil. Lütfen JSON hatasını düzeltin.");
+      toast.error(t("legacyForm.jsonFixError"));
       return;
     }
 
@@ -377,29 +379,29 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
     };
 
     if (!payloadBase.category_id) {
-      toast.error("Bir üst kategori seçmelisin.");
+      toast.error(t("detail.categoryRequired"));
       return;
     }
     if (!payloadBase.name || !payloadBase.slug) {
-      toast.error("Ad ve slug alanları zorunludur.");
+      toast.error(t("detail.nameRequired"));
       return;
     }
 
     try {
       if (mode === "create") {
         const created = (await createSubCategory(payloadBase as any).unwrap()) as SubCategoryDto | undefined;
-        toast.success("Alt kategori oluşturuldu.");
+        toast.success(t("detail.createSuccess"));
         if (created) setFormState(mapDtoToFormState(created)); // ✅ refresh gerekmesin
       } else if (mode === "edit" && formState.id) {
         const updated = (await updateSubCategory({
           id: formState.id,
           patch: payloadBase as any,
         }).unwrap()) as SubCategoryDto | undefined;
-        toast.success("Alt kategori güncellendi.");
+        toast.success(t("detail.updateSuccess"));
         if (updated) setFormState(mapDtoToFormState(updated)); // ✅ refresh gerekmesin
       } else {
         const created = (await createSubCategory(payloadBase as any).unwrap()) as SubCategoryDto | undefined;
-        toast.success("Alt kategori oluşturuldu.");
+        toast.success(t("detail.createSuccess"));
         if (created) setFormState(mapDtoToFormState(created));
       }
 
@@ -407,7 +409,7 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
       else router.push("/admin/subcategories");
     } catch (err: any) {
       console.error("Subcategory save error:", err);
-      const msg = err?.data?.error?.message || err?.message || "Alt kategori kaydedilirken bir hata oluştu.";
+      const msg = err?.data?.error?.message || err?.message || t("legacyForm.saveError");
       toast.error(msg);
     }
   };
@@ -424,7 +426,7 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
       <div className="container-fluid py-4">
         <div className="small py-5 text-center text-muted">
           <div className="spinner-border spinner-border-sm me-2" />
-          Alt kategori yükleniyor...
+          {t("legacyForm.loadingSubcategory")}
         </div>
       </div>
     );
@@ -433,9 +435,9 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
   if (mode === "edit" && !externalLoading && !initialData) {
     return (
       <div className="container-fluid py-4">
-        <div className="alert alert-warning small">Alt kategori bulunamadı veya silinmiş olabilir.</div>
+        <div className="alert alert-warning small">{t("legacyForm.notFound")}</div>
         <button type="button" className="btn btn-outline-secondary btn-sm" onClick={handleCancel}>
-          ← Listeye dön
+          {t("legacyForm.backToList")}
         </button>
       </div>
     );
@@ -444,11 +446,9 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
   if (mode === "create" && !loading && categoryOptions.length === 0) {
     return (
       <div className="container-fluid py-4">
-        <div className="alert alert-warning small mb-3">
-          Alt kategori oluşturmak için önce en az 1 adet kategori oluşturmalısın.
-        </div>
+        <div className="alert alert-warning small mb-3">{t("legacyForm.createNeedsCategory")}</div>
         <button type="button" className="btn btn-outline-secondary btn-sm" onClick={handleCancel}>
-          ← Listeye dön
+          {t("legacyForm.backToList")}
         </button>
       </div>
     );
@@ -459,7 +459,7 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
       <div className="container-fluid py-4">
         <div className="small py-5 text-center text-muted">
           <div className="spinner-border spinner-border-sm me-2" />
-          Form hazırlanıyor...
+          {t("legacyForm.preparingForm")}
         </div>
       </div>
     );
@@ -471,7 +471,7 @@ const SubCategoryFormPage: React.FC<SubCategoryFormPageProps> = ({
     <div className="container-fluid py-4">
       <div className="mb-3">
         <button type="button" className="btn btn-link btn-sm px-0" onClick={handleCancel}>
-          ← Alt kategori listesine dön
+          {t("legacyForm.backToSubcategoryList")}
         </button>
       </div>
 

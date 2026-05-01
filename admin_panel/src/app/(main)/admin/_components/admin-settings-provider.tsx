@@ -23,6 +23,9 @@ import { useAppDispatch } from "@/stores/hooks";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 import { preferencesActions } from "@/stores/preferencesSlice";
 
+const ADMIN_CONFIG_KEY = "kompozit__ui_admin_config";
+const ADMIN_PAGES_KEY = "kompozit__ui_admin_pages";
+
 export type AdminPageMeta = Record<string, { title: string; description?: string; metrics?: string[] }>;
 
 type AdminSettingsContextValue = {
@@ -90,7 +93,7 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
   };
 
   // 1. Fetch Global Config
-  const { data: configRow, isLoading: configLoading } = useGetSiteSettingAdminByKeyQuery("ui_admin_config");
+  const { data: configRow, isLoading: configLoading } = useGetSiteSettingAdminByKeyQuery(ADMIN_CONFIG_KEY);
 
   const config = useMemo(() => {
     if (!configRow?.value) return null;
@@ -107,7 +110,7 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
   // 2. Fetch Page Meta
   const locale = adminLocale || config?.default_locale || "de";
   const { data: pagesRow, isLoading: pagesLoading } = useGetSiteSettingAdminByKeyQuery({
-    key: "ui_admin_pages",
+    key: ADMIN_PAGES_KEY,
     locale,
   });
 
@@ -228,7 +231,7 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
         },
       };
 
-      updateSetting({ key: "ui_admin_config", value: newValue, locale: "*" });
+      updateSetting({ key: ADMIN_CONFIG_KEY, value: newValue, locale: "*" });
     }, 1000);
   }, [updateSetting]);
 

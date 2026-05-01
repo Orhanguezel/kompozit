@@ -20,7 +20,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@ensotek/shared-ui/admin/ui/*": ["../../packages/shared-ui/admin/components/ui/*"],
+      "@ensotek/shared-ui/admin/data-table/*": ["../../packages/shared-ui/admin/components/data-table/*"],
+      "@ensotek/shared-ui/admin/stores/*": ["../../packages/shared-ui/admin/stores/*"],
+      "@ensotek/shared-ui/admin/lib/*": ["../../packages/shared-ui/admin/lib/*"],
+      "@ensotek/shared-ui/public/seo/*": ["../../packages/shared-ui/public/components/seo/*"],
+      "@ensotek/shared-ui/public/lib/*": ["../../packages/shared-ui/public/lib/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", ".next/dev/types/**/*.ts"],

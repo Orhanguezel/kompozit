@@ -19,6 +19,7 @@
   },
   "footer": {
     "description": "Industrial solutions in carbon fiber, FRP and fiberglass composite manufacturing.",
+    "ensotekRelation": "MOE Kompozit is the composite manufacturing sub-brand of Ensotek.",
     "rights": "All rights reserved",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
@@ -509,11 +510,23 @@
     },
     "form": {
       "productInterest": "Product/Service of Interest",
+      "productCategory": "Product category",
+      "productCategories": {
+        "carbon_fiber": "Carbon fiber",
+        "frp_ctp": "FRP / GRP",
+        "fiberglass": "Fiberglass",
+        "panel": "Panel / sheet",
+        "profile": "Profile / tube",
+        "tank": "Tank / storage",
+        "custom_part": "Custom part"
+      },
+      "sector": "Sector / use case",
       "quantity": "Quantity",
       "deadline": "Deadline",
       "details": "Project Details",
       "detailsPlaceholder": "Tell us about your project (material, dimensions, quantity, etc.)",
       "attachFile": "Attach File (technical drawing, specification, etc.)",
+      "attachHint": "PDF, STEP, IGES, DXF/DWG or image files can be uploaded.",
       "submit": "Request Quote",
       "success": "Your quote request has been received. Our team will contact you shortly.",
       "error": "Failed to submit request. Please try again."
@@ -572,7 +585,13 @@
       "partnershipCta": "Request a technical quote",
       "sectorsHeading": "Expert sectors"
     },
-    "tagline": "Where science meets craftsmanship"
+    "tagline": "Where science meets craftsmanship",
+    "ensotek": {
+      "label": "Ensotek Link",
+      "title": "Composite manufacturing backed by Ensotek engineering",
+      "description": "MOE Kompozit is Ensotek's composite sub-brand, built on industrial production, quality management and project discipline. Ensotek's CTP/FRP material know-how from the cooling tower sector is transferred into carbon fiber, fiberglass, custom panels, covers, housings and project-specific composite parts.",
+      "cta": "Visit Ensotek Turkey"
+    }
   },
   "legal": {
     "title": "Legal",
@@ -582,6 +601,15 @@
   "seo": {
     "defaultTitle": "MOE Kompozit | Carbon Fiber, FRP and Fiberglass Composite Solutions",
     "defaultDescription": "B2B composite solutions in carbon fiber, FRP and fiberglass manufacturing with engineering, sample validation and production planning support.",
+    "homeDescription": "MOE Kompozit is a B2B composite brand for carbon fiber, FRP and fiberglass projects, supporting sampling, engineering and repeatable production.",
+    "productsDescription": "Browse carbon fiber, FRP and fiberglass composite products built for lightweighting, durability, surface quality and repeatable B2B production.",
+    "solutionsDescription": "Explore planter, tank, funeral-sector and custom B2B composite solutions with material selection, production discipline and quote steps.",
+    "referencesDescription": "MOE Kompozit references summarize enterprise collaboration, application types and repeatable composite production delivery discipline.",
+    "galleryDescription": "View composite production facility, molding, assembly, product detail and completed project visuals in the MOE Kompozit gallery.",
+    "blogDescription": "Technical blog content on carbon fiber, FRP, fiberglass, molding, surface quality and industrial composite applications.",
+    "aboutDescription": "Discover how MOE Kompozit applies Ensotek engineering experience to carbon fiber, FRP and fiberglass composite projects.",
+    "contactDescription": "Contact MOE Kompozit for technical fit, sampling, lead time and quote discussions for carbon fiber, FRP and fiberglass projects.",
+    "offerDescription": "Create a fast B2B quote request for your composite project with category, sector, quantity, lead time and technical files.",
     "keywords": "carbon fiber, FRP, fiberglass, composite, industrial manufacturing, custom production"
   },
   "error": {

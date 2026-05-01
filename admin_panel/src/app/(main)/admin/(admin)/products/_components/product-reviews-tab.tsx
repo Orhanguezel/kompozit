@@ -11,20 +11,22 @@ import * as React from "react";
 import { Plus, RefreshCw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import {
   useCreateProductReviewAdminMutation,
   useDeleteProductReviewAdminMutation,
   useListProductReviewsAdminQuery,
   useToggleProductReviewActiveAdminMutation,
 } from "@/integrations/endpoints/admin/products_admin.reviews.endpoints";
+import { useAdminTranslations } from "@/i18n";
+import { useLocaleShort } from "@/i18n/useLocaleShort";
 import type {
   AdminProductReviewCreatePayload,
   AdminProductReviewDto,
@@ -39,12 +41,12 @@ function getObj(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
 }
 
-function getErrMessage(err: unknown): string {
+function getErrMessage(err: unknown, fallback: string): string {
   const errObj = getObj(err);
   const data = getObj(errObj?.data);
   const nestedError = getObj(data?.error);
   const message = nestedError?.message ?? data?.message ?? errObj?.message;
-  return typeof message === "string" && message.trim() ? message : "İşlem sırasında hata oluştu.";
+  return typeof message === "string" && message.trim() ? message : fallback;
 }
 
 const EMPTY_REVIEW: AdminProductReviewCreatePayload = {
@@ -56,6 +58,8 @@ const EMPTY_REVIEW: AdminProductReviewCreatePayload = {
 };
 
 export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProps) {
+  const adminLocale = useLocaleShort();
+  const t = useAdminTranslations(adminLocale);
   const [newReview, setNewReview] = React.useState<AdminProductReviewCreatePayload>({ ...EMPTY_REVIEW });
   const [showForm, setShowForm] = React.useState(false);
 
@@ -73,7 +77,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
 
   const handleCreate = async () => {
     if (!newReview.rating || newReview.rating < 0 || newReview.rating > 5) {
-      toast.error("Rating 0-5 arasında olmalı.");
+      toast.error(t("admin.products.reviewsTab.ratingError"));
       return;
     }
     try {
@@ -81,33 +85,33 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
         productId,
         payload: { ...newReview, rating: Number(newReview.rating) },
       }).unwrap();
-      toast.success("Yorum eklendi.");
+      toast.success(t("admin.products.reviewsTab.createSuccess"));
       setNewReview({ ...EMPTY_REVIEW });
       setShowForm(false);
       void refetch();
     } catch (err: unknown) {
-      toast.error(getErrMessage(err));
+      toast.error(getErrMessage(err, t("admin.products.reviewsTab.defaultError")));
     }
   };
 
   const handleToggle = async (review: AdminProductReviewDto) => {
     try {
       await toggleActive({ productId, reviewId: review.id, is_active: !review.is_active }).unwrap();
-      toast.success("Durum güncellendi.");
+      toast.success(t("admin.products.reviewsTab.toggleSuccess"));
       void refetch();
     } catch (err: unknown) {
-      toast.error(getErrMessage(err));
+      toast.error(getErrMessage(err, t("admin.products.reviewsTab.defaultError")));
     }
   };
 
   const handleDelete = async (review: AdminProductReviewDto) => {
-    if (!confirm("Bu yorumu silmek istediğine emin misin?")) return;
+    if (!confirm(t("admin.products.reviewsTab.deleteConfirm"))) return;
     try {
       await deleteReview({ productId, reviewId: review.id }).unwrap();
-      toast.success("Yorum silindi.");
+      toast.success(t("admin.products.reviewsTab.deleteSuccess"));
       void refetch();
     } catch (err: unknown) {
-      toast.error(getErrMessage(err));
+      toast.error(getErrMessage(err, t("admin.products.reviewsTab.defaultError")));
     }
   };
 
@@ -117,7 +121,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-base">Değerlendirmeler ({reviews.length})</CardTitle>
+            <CardTitle className="text-base">{t("admin.products.reviewsTab.title", { count: reviews.length })}</CardTitle>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="icon" onClick={() => refetch()} disabled={busy}>
                 <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
@@ -129,7 +133,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
                 disabled={busy}
               >
                 <Plus className="mr-2 h-4 w-4" />
-                {showForm ? "İptal" : "Yorum Ekle"}
+                {showForm ? t("admin.products.reviewsTab.cancel") : t("admin.products.reviewsTab.addReview")}
               </Button>
             </div>
           </div>
@@ -139,7 +143,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
           <CardContent className="border-t pt-4">
             <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <div className="space-y-2">
-                <Label htmlFor="review_rating">Rating (0-5)</Label>
+                <Label htmlFor="review_rating">{t("admin.products.reviewsTab.fields.rating")}</Label>
                 <Input
                   id="review_rating"
                   type="number"
@@ -152,7 +156,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="review_customer">Müşteri Adı</Label>
+                <Label htmlFor="review_customer">{t("admin.products.reviewsTab.fields.customer")}</Label>
                 <Input
                   id="review_customer"
                   value={newReview.customer_name ?? ""}
@@ -161,7 +165,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="review_date">Tarih</Label>
+                <Label htmlFor="review_date">{t("admin.products.reviewsTab.fields.date")}</Label>
                 <Input
                   id="review_date"
                   type="date"
@@ -179,13 +183,13 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
                     disabled={isCreating || !!disabled}
                   />
                   <Label htmlFor="review_active" className="cursor-pointer">
-                    Aktif
+                    {t("admin.products.reviewsTab.fields.active")}
                   </Label>
                 </div>
               </div>
             </div>
             <div className="mb-4 space-y-2">
-              <Label htmlFor="review_comment">Yorum</Label>
+              <Label htmlFor="review_comment">{t("admin.products.reviewsTab.fields.comment")}</Label>
               <Textarea
                 id="review_comment"
                 value={newReview.comment ?? ""}
@@ -196,7 +200,7 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
             </div>
             <div className="flex justify-end">
               <Button onClick={handleCreate} disabled={isCreating || !!disabled} size="sm">
-                {isCreating ? "Ekleniyor..." : "Yorum Ekle"}
+                {isCreating ? t("admin.products.reviewsTab.creating") : t("admin.products.reviewsTab.addReview")}
               </Button>
             </div>
           </CardContent>
@@ -207,19 +211,19 @@ export function ProductReviewsTab({ productId, disabled }: ProductReviewsTabProp
       <Card>
         <CardContent className="p-0">
           {isFetching && reviews.length === 0 ? (
-            <p className="py-8 text-center text-muted-foreground text-sm">Yükleniyor...</p>
+            <p className="py-8 text-center text-muted-foreground text-sm">{t("admin.products.reviewsTab.loading")}</p>
           ) : reviews.length === 0 ? (
-            <p className="py-8 text-center text-muted-foreground text-sm">Bu ürün için henüz yorum yok.</p>
+            <p className="py-8 text-center text-muted-foreground text-sm">{t("admin.products.reviewsTab.empty")}</p>
           ) : (
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="w-17.5 text-center">Rating</TableHead>
-                  <TableHead className="w-40">Müşteri</TableHead>
-                  <TableHead>Yorum</TableHead>
-                  <TableHead className="w-27.5">Tarih</TableHead>
-                  <TableHead className="w-20 text-center">Durum</TableHead>
-                  <TableHead className="w-30 text-right">İşlemler</TableHead>
+                  <TableHead className="w-17.5 text-center">{t("admin.products.reviewsTab.columns.rating")}</TableHead>
+                  <TableHead className="w-40">{t("admin.products.reviewsTab.columns.customer")}</TableHead>
+                  <TableHead>{t("admin.products.reviewsTab.columns.comment")}</TableHead>
+                  <TableHead className="w-27.5">{t("admin.products.reviewsTab.columns.date")}</TableHead>
+                  <TableHead className="w-20 text-center">{t("admin.products.reviewsTab.columns.status")}</TableHead>
+                  <TableHead className="w-30 text-right">{t("admin.products.reviewsTab.columns.actions")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

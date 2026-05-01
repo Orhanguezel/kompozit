@@ -2,7 +2,7 @@
 
 ## Amac
 
-Bu dokuman, `/home/orhan/Documents/Projeler/Ensotek/admin_panel` icindeki tema sistemini referans alarak
+Bu dokuman, `/home/orhan/Documents/Projeler/Ensotek/kompozit/admin_panel` icindeki tema sistemini referans alarak
 `karbonkompozit` projesinde kurulacak tema mimarisinin temel contract'ini tanimlar.
 
 Hedef:
@@ -17,13 +17,13 @@ Hedef:
 Admin paneldeki tema sistemi su parcalardan olusuyor:
 
 - Global token kaynagi:
-  - [globals.css](/home/orhan/Documents/Projeler/Ensotek/admin_panel/src/app/globals.css)
+  - [globals.css](/home/orhan/Documents/Projeler/Ensotek/kompozit/admin_panel/src/app/globals.css)
 - Theme mode ve preset sabitleri:
-  - [theme.ts](/home/orhan/Documents/Projeler/Ensotek/admin_panel/src/lib/preferences/theme.ts)
+  - [theme.ts](/home/orhan/Documents/Projeler/Ensotek/kompozit/admin_panel/src/lib/preferences/theme.ts)
 - Theme apply utility'leri:
-  - [theme-utils.ts](/home/orhan/Documents/Projeler/Ensotek/admin_panel/src/lib/preferences/theme-utils.ts)
+  - [theme-utils.ts](/home/orhan/Documents/Projeler/Ensotek/kompozit/admin_panel/src/lib/preferences/theme-utils.ts)
 - Pre-hydration boot:
-  - [theme-boot.tsx](/home/orhan/Documents/Projeler/Ensotek/admin_panel/src/scripts/theme-boot.tsx)
+  - [theme-boot.tsx](/home/orhan/Documents/Projeler/Ensotek/kompozit/admin_panel/src/scripts/theme-boot.tsx)
 
 ## Admin Panelden Alinacak Dogru Prensipler
 

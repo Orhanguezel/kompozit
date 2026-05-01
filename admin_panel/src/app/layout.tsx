@@ -22,6 +22,17 @@ import { PreferencesStoreProvider } from "@/stores/preferences/preferences-provi
 
 import "./globals.css";
 
+const ADMIN_ROBOTS: Metadata["robots"] = {
+  index: false,
+  follow: false,
+  nocache: true,
+  googleBot: {
+    index: false,
+    follow: false,
+    noimageindex: true,
+  },
+};
+
 export async function generateMetadata(): Promise<Metadata> {
   const branding = await fetchBrandingConfig();
   const fallbackSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3004";
@@ -30,6 +41,7 @@ export async function generateMetadata(): Promise<Metadata> {
     metadataBase: new URL(branding.meta.og_url || fallbackSiteUrl),
     title: branding.meta.title,
     description: branding.meta.description,
+    robots: ADMIN_ROBOTS,
     icons: {
       icon: [
         { url: branding.favicon_16, sizes: "16x16" },

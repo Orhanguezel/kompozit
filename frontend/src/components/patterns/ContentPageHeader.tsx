@@ -13,7 +13,7 @@ export function ContentPageHeader({
   label?: string;
   features?: string[] | Record<string, string>;
 }) {
-  const featureList = features 
+  const featureList = features
     ? (Array.isArray(features) ? features : Object.values(features))
     : [];
 

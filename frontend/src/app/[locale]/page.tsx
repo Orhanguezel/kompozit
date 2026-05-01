@@ -84,7 +84,7 @@ export async function generateMetadata({
     title: locale.startsWith('en')
       ? 'Carbon Fiber, FRP and Fiberglass Composite Manufacturing'
       : 'Karbon Fiber, CTP ve Cam Elyaf Kompozit Uretimi',
-    description: t('defaultDescription'),
+    description: t('homeDescription'),
   });
 }
 
@@ -142,39 +142,39 @@ export default async function HomePage({
       <section className="hero">
         <div className="hero-bg" />
         <div className="gold-grid-bg absolute inset-0 z-[1]" />
-        
+
         <div className="container relative z-10 mx-auto px-8 text-center">
           <Reveal>
             <span className="hero-label">
               {heroApi?.badge ?? 'Foundational Engineering'}
             </span>
           </Reveal>
-          
+
           <Reveal delay={200}>
-            <h1 
-              dangerouslySetInnerHTML={{ 
+            <h1
+              dangerouslySetInnerHTML={{
                 __html: heroApi?.title ?? (t.raw('home.hero.title') as string)
               }}
             />
           </Reveal>
-          
+
           <Reveal delay={400}>
             <p className="hero-subtitle">
               {heroApi?.subtitle ?? t('home.hero.subtitle')}
             </p>
           </Reveal>
-          
+
           <Reveal delay={600}>
             <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8">
-              <Link 
+              <Link
                 href={heroApi?.primaryCtaHref ? homeHref(locale, heroApi.primaryCtaHref) : localizedPath(locale, '/products')}
                 className="hero-btn-primary shimmer-btn"
               >
                 {heroApi?.primaryCtaLabel ?? t('home.hero.cta')}
                 <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
-              
-              <Link 
+
+              <Link
                 href={heroApi?.secondaryCtaHref ? homeHref(locale, heroApi.secondaryCtaHref) : localizedPath(locale, '/offer')}
                 className="hero-btn-outline"
               >
@@ -203,15 +203,15 @@ export default async function HomePage({
               <Reveal>
                 <span className="section-label-cc">{aboutApi?.label || t('home.whyUs.sectionLabel')}</span>
                 <h2 className="section-title-cc" dangerouslySetInnerHTML={{ __html: aboutApi?.title || t('home.whyUs.title') }} />
-                
+
                 <h3 className="font-serif text-[1.4rem] font-normal italic leading-snug text-[var(--gold)] lg:text-[1.8rem] opacity-90">
                    {aboutApi?.tagline || t('home.testimonial.quote')}
                 </h3>
-                
+
                 <p className="mt-8 text-base font-light leading-[1.8] text-[var(--silver)] lg:text-lg">
                   {aboutApi?.intro || t('home.whyUs.subtitle')}
                 </p>
-                
+
                 <div className="mt-12 grid gap-8 sm:grid-cols-2">
                   <div className="group space-y-4">
                     <div className="flex size-14 items-center justify-center border border-[var(--gold)]/20 bg-[var(--gold)]/5 transition-all group-hover:bg-[var(--gold)]/10">
@@ -224,7 +224,7 @@ export default async function HomePage({
                       {t('home.hero.metrics.engineeringDesc')}
                     </p>
                   </div>
-                  
+
                   <div className="group space-y-4">
                     <div className="flex size-14 items-center justify-center border border-[var(--gold)]/20 bg-[var(--gold)]/5 transition-all group-hover:bg-[var(--gold)]/10">
                       <Zap className="size-6 text-[var(--gold)]" />
@@ -267,7 +267,7 @@ export default async function HomePage({
                     />
                   </div>
                   <div className="about-accent-square hidden lg:block" />
-                  
+
                   {/* Floating Metric */}
                   <div className="absolute -left-8 -top-8 z-30 hidden lg:block">
                     <div className="border border-[var(--gold)]/30 bg-[var(--carbon)] p-8 shadow-2xl backdrop-blur-3xl">
@@ -300,7 +300,7 @@ export default async function HomePage({
                 <span className="section-label-cc">{t('home.products.sectionLabel') || 'Solutions'}</span>
                 <h2 className="section-title-cc mb-0">{t('home.products.title')}</h2>
               </div>
-              <Link 
+              <Link
                 href={localizedPath(locale, '/products')}
                 className="hidden items-center gap-3 text-[0.75rem] font-bold uppercase tracking-[3px] text-[var(--gold)] transition-all hover:gap-4 lg:flex"
               >
@@ -354,7 +354,7 @@ export default async function HomePage({
               <p className="mb-14 text-lg font-light leading-relaxed text-[var(--silver)]">
                 {t('common.offerCtaDescription')}
               </p>
-              
+
               <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
                 <Link
                   href={localizedPath(locale, '/contact')}
@@ -376,7 +376,7 @@ export default async function HomePage({
       </section>
 
       {/* --- CONTACT FORM --- */}
-      <HomeContact 
+      <HomeContact
         contactInfo={contactForLd}
         labels={{
           label: t('contact.label'),

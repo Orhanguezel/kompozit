@@ -12,11 +12,12 @@ import * as React from "react";
 import { RefreshCcw, Save } from "lucide-react";
 import { toast } from "sonner";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import { useGetSiteSettingAdminByKeyQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
 
 export type HomeSettingsTabProps = {
@@ -140,6 +141,7 @@ function Section({ title, description, children }: { title: string; description?
 // ---- Main component ----
 
 export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settingPrefix = "" }) => {
+  const t = useAdminT("admin.siteSettings.homeSettings");
   const prefix = settingPrefix;
 
   // -- About --
@@ -206,36 +208,36 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
   const handleSaveAbout = async () => {
     try {
       await updateSetting({ key: `${prefix}home.about`, value: about, locale }).unwrap();
-      toast.success("Hakkımızda içeriği kaydedildi.");
+      toast.success(t("messages.aboutSaved"));
     } catch {
-      toast.error("Kayıt sırasında hata oluştu.");
+      toast.error(t("messages.saveError"));
     }
   };
 
   const handleSaveTestimonial = async () => {
     try {
       await updateSetting({ key: `${prefix}home.testimonial`, value: testimonial, locale }).unwrap();
-      toast.success("Referans alıntısı kaydedildi.");
+      toast.success(t("messages.testimonialSaved"));
     } catch {
-      toast.error("Kayıt sırasında hata oluştu.");
+      toast.error(t("messages.saveError"));
     }
   };
 
   const handleSaveStats = async () => {
     try {
       await updateSetting({ key: `${prefix}home.stats`, value: stats, locale }).unwrap();
-      toast.success("İstatistik verileri kaydedildi.");
+      toast.success(t("messages.statsSaved"));
     } catch {
-      toast.error("Kayıt sırasında hata oluştu.");
+      toast.error(t("messages.saveError"));
     }
   };
 
   const handleSaveHero = async () => {
     try {
       await updateSetting({ key: `${prefix}home.hero`, value: hero, locale }).unwrap();
-      toast.success("Hero içeriği kaydedildi.");
+      toast.success(t("messages.heroSaved"));
     } catch {
-      toast.error("Kayıt sırasında hata oluştu.");
+      toast.error(t("messages.saveError"));
     }
   };
 
@@ -251,8 +253,8 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium">Ana Sayfa İçerik Ayarları</p>
-          <p className="text-muted-foreground text-xs">Dil: {locale} · Prefix: {prefix || "(yok)"}</p>
+          <p className="text-sm font-medium">{t("header.title")}</p>
+          <p className="text-muted-foreground text-xs">{t("header.localePrefix", { locale, prefix: prefix || "(yok)" })}</p>
         </div>
         <Button type="button" variant="ghost" size="sm" onClick={handleRefresh} disabled={busy}>
           <RefreshCcw className="size-4" />
@@ -260,52 +262,52 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
       </div>
 
       {/* Hero */}
-      <Section title="Hero Bölümü" description="Ana sayfa hero alanı başlık ve CTA metinleri.">
+      <Section title={t("sections.hero.title")} description={t("sections.hero.description")}>
         <div className="space-y-3">
           <div className="space-y-1">
-            <Label>Başlık (HTML desteklenir, &lt;em&gt; kullanılabilir)</Label>
+            <Label>{t("fields.titleHtml")}</Label>
             <Input
               value={hero.title}
               onChange={(e) => setHero((p) => ({ ...p, title: e.target.value }))}
-              placeholder='Endüstriyel Dünya İçin <em>Mühendislik</em> Sanatı'
+              placeholder={t("placeholders.heroTitle")}
               disabled={busy}
             />
           </div>
           <div className="space-y-1">
-            <Label>Alt Başlık</Label>
+            <Label>{t("fields.subtitle")}</Label>
             <Textarea
               rows={2}
               value={hero.subtitle}
               onChange={(e) => setHero((p) => ({ ...p, subtitle: e.target.value }))}
-              placeholder="Yüksek performanslı kompozit çözümler..."
+              placeholder={t("placeholders.heroSubtitle")}
               disabled={busy}
             />
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="space-y-1">
-              <Label>Ana CTA Metni</Label>
+              <Label>{t("fields.primaryCtaLabel")}</Label>
               <Input
                 value={hero.ctaLabel}
                 onChange={(e) => setHero((p) => ({ ...p, ctaLabel: e.target.value }))}
-                placeholder="Teklif Al"
+                placeholder={t("placeholders.heroCtaLabel")}
                 disabled={busy}
               />
             </div>
             <div className="space-y-1">
-              <Label>Ana CTA URL</Label>
+              <Label>{t("fields.primaryCtaUrl")}</Label>
               <Input
                 value={hero.ctaHref}
                 onChange={(e) => setHero((p) => ({ ...p, ctaHref: e.target.value }))}
-                placeholder="/tr/offer"
+                placeholder={t("placeholders.heroCtaHref")}
                 disabled={busy}
               />
             </div>
             <div className="space-y-1">
-              <Label>İkincil CTA Metni</Label>
+              <Label>{t("fields.secondaryCtaLabel")}</Label>
               <Input
                 value={hero.secondaryLabel}
                 onChange={(e) => setHero((p) => ({ ...p, secondaryLabel: e.target.value }))}
-                placeholder="Ürünleri Keşfet"
+                placeholder={t("placeholders.heroSecondaryLabel")}
                 disabled={busy}
               />
             </div>
@@ -313,140 +315,140 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
         </div>
         <div className="flex justify-end pt-2">
           <Button type="button" size="sm" onClick={handleSaveHero} disabled={busy}>
-            <Save className="mr-2 size-3.5" /> Kaydet
+            <Save className="mr-2 size-3.5" /> {t("admin.common.save")}
           </Button>
         </div>
       </Section>
 
       {/* About */}
-      <Section title="Hakkımızda Bölümü" description="Ana sayfadaki hakkımızda kısa tanıtım alanı.">
+      <Section title={t("sections.about.title")} description={t("sections.about.description")}>
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="space-y-1">
-            <Label>Etiket (Küçük üst başlık)</Label>
+            <Label>{t("fields.label")}</Label>
             <Input
               value={about.label}
               onChange={(e) => setAbout((p) => ({ ...p, label: e.target.value }))}
-              placeholder="Hakkımızda"
+              placeholder={t("placeholders.aboutLabel")}
               disabled={busy}
             />
           </div>
           <div className="space-y-1">
-            <Label>CTA Buton Metni</Label>
+            <Label>{t("fields.ctaLabel")}</Label>
             <Input
               value={about.ctaLabel}
               onChange={(e) => setAbout((p) => ({ ...p, ctaLabel: e.target.value }))}
-              placeholder="Daha Fazlası"
+              placeholder={t("placeholders.aboutCtaLabel")}
               disabled={busy}
             />
           </div>
         </div>
         <div className="space-y-1">
-          <Label>Başlık (HTML desteklenir, &lt;em&gt; kullanılabilir)</Label>
+          <Label>{t("fields.titleHtml")}</Label>
           <Input
             value={about.title}
             onChange={(e) => setAbout((p) => ({ ...p, title: e.target.value }))}
-            placeholder='Mühendislik <em>Disiplini</em>'
+            placeholder={t("placeholders.aboutTitle")}
             disabled={busy}
           />
         </div>
         <div className="space-y-1">
-          <Label>Slogan</Label>
+          <Label>{t("fields.tagline")}</Label>
           <Input
             value={about.tagline}
             onChange={(e) => setAbout((p) => ({ ...p, tagline: e.target.value }))}
-            placeholder="Bilimin zanaatla buluştuğu nokta"
+            placeholder={t("placeholders.aboutTagline")}
             disabled={busy}
           />
         </div>
         <div className="space-y-1">
-          <Label>Giriş Metni</Label>
+          <Label>{t("fields.intro")}</Label>
           <Textarea
             rows={3}
             value={about.intro}
             onChange={(e) => setAbout((p) => ({ ...p, intro: e.target.value }))}
-            placeholder="MOE Kompozit olarak 15+ yıl..."
+            placeholder={t("placeholders.aboutIntro")}
             disabled={busy}
           />
         </div>
         <div className="flex justify-end pt-2">
           <Button type="button" size="sm" onClick={handleSaveAbout} disabled={busy}>
-            <Save className="mr-2 size-3.5" /> Kaydet
+            <Save className="mr-2 size-3.5" /> {t("admin.common.save")}
           </Button>
         </div>
       </Section>
 
       {/* Testimonial */}
-      <Section title="Referans Alıntısı" description="Ana sayfadaki müşteri alıntı bölümü.">
+      <Section title={t("sections.testimonial.title")} description={t("sections.testimonial.description")}>
         <div className="space-y-3">
           <div className="space-y-1">
-            <Label>Alıntı</Label>
+            <Label>{t("fields.quote")}</Label>
             <Textarea
               rows={3}
               value={testimonial.quote}
               onChange={(e) => setTestimonial((p) => ({ ...p, quote: e.target.value }))}
-              placeholder="Kalite ve teslimat süresi konusunda..."
+              placeholder={t("placeholders.testimonialQuote")}
               disabled={busy}
             />
           </div>
           <div className="space-y-1">
-            <Label>Kaynak (İsim / Unvan)</Label>
+            <Label>{t("fields.attribution")}</Label>
             <Input
               value={testimonial.attribution}
               onChange={(e) => setTestimonial((p) => ({ ...p, attribution: e.target.value }))}
-              placeholder="Ahmet Yıldız · Proje Müdürü, Savunma A.Ş."
+              placeholder={t("placeholders.testimonialAttribution")}
               disabled={busy}
             />
           </div>
         </div>
         <div className="flex justify-end pt-2">
           <Button type="button" size="sm" onClick={handleSaveTestimonial} disabled={busy}>
-            <Save className="mr-2 size-3.5" /> Kaydet
+            <Save className="mr-2 size-3.5" /> {t("admin.common.save")}
           </Button>
         </div>
       </Section>
 
       {/* Stats */}
-      <Section title="İstatistik Çubuğu" description="Ana sayfada gösterilen 4 adet sayısal istatistik.">
+      <Section title={t("sections.stats.title")} description={t("sections.stats.description")}>
         <div className="space-y-4">
           {stats.items.map((item, i) => (
             <div key={i} className="rounded-lg border p-3">
               <p className="mb-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                İstatistik {i + 1}
+                {t("stats.itemTitle", { index: i + 1 })}
               </p>
               <div className="grid gap-2 sm:grid-cols-4">
                 <div className="space-y-1">
-                  <Label className="text-xs">Sayı</Label>
+                  <Label className="text-xs">{t("fields.number")}</Label>
                   <Input
                     value={item.number}
                     onChange={(e) => updateStat(i, "number", e.target.value)}
-                    placeholder="15"
+                    placeholder={t("placeholders.statNumber")}
                     disabled={busy}
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Sonek (+, yıl, vb.)</Label>
+                  <Label className="text-xs">{t("fields.suffix")}</Label>
                   <Input
                     value={item.suffix}
                     onChange={(e) => updateStat(i, "suffix", e.target.value)}
-                    placeholder="+"
+                    placeholder={t("placeholders.statSuffix")}
                     disabled={busy}
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Etiket</Label>
+                  <Label className="text-xs">{t("fields.statLabel")}</Label>
                   <Input
                     value={item.label}
                     onChange={(e) => updateStat(i, "label", e.target.value)}
-                    placeholder="Yıl"
+                    placeholder={t("placeholders.statLabel")}
                     disabled={busy}
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label className="text-xs">Açıklama</Label>
+                  <Label className="text-xs">{t("fields.description")}</Label>
                   <Input
                     value={item.description}
                     onChange={(e) => updateStat(i, "description", e.target.value)}
-                    placeholder="Sektörde deneyim"
+                    placeholder={t("placeholders.statDescription")}
                     disabled={busy}
                   />
                 </div>
@@ -456,7 +458,7 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
         </div>
         <div className="flex justify-end pt-2">
           <Button type="button" size="sm" onClick={handleSaveStats} disabled={busy}>
-            <Save className="mr-2 size-3.5" /> Kaydet
+            <Save className="mr-2 size-3.5" /> {t("admin.common.save")}
           </Button>
         </div>
       </Section>

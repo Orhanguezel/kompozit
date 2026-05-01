@@ -5,18 +5,30 @@
 
 import { type AdminBrandingConfig, DEFAULT_BRANDING } from "@/config/app-config";
 
+const BRANDING_FETCH_TIMEOUT_MS = 3000;
+
 /**
  * Backend API base URL (server-side only).
  * PANEL_API_URL > NEXT_PUBLIC_API_URL > fallback
  */
 function getServerApiUrl(): string {
   const panel = (process.env.PANEL_API_URL || "").trim().replace(/\/+$/, "");
-  if (panel) return `${panel}/api`;
+  if (panel) return panel.endsWith("/api") ? panel : `${panel}/api`;
 
   const pub = (process.env.NEXT_PUBLIC_API_URL || "").trim().replace(/\/+$/, "");
-  if (pub) return pub;
+  if (pub) return pub.endsWith("/api") ? pub : `${pub}/api`;
 
   return "http://127.0.0.1:8186/api";
+}
+
+function createTimeoutSignal() {
+  if (typeof AbortSignal !== "undefined" && "timeout" in AbortSignal) {
+    return AbortSignal.timeout(BRANDING_FETCH_TIMEOUT_MS);
+  }
+
+  const controller = new AbortController();
+  setTimeout(() => controller.abort(), BRANDING_FETCH_TIMEOUT_MS).unref?.();
+  return controller.signal;
 }
 
 function parseSettingValue(value: unknown): unknown {
@@ -51,6 +63,7 @@ export async function fetchBrandingConfig(): Promise<AdminBrandingConfig> {
     for (const key of ["kompozit__ui_admin_config", "ui_admin_config"]) {
       const res = await fetch(`${base}/site_settings/${key}`, {
         next: { revalidate: 300 },
+        signal: createTimeoutSignal(),
       });
 
       if (!res.ok) continue;

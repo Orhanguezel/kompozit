@@ -10,7 +10,7 @@ Amac:
 Gecici durum:
 - iskelet `admin_panel` reposundan klonlandi
 - port `3004` olarak ayrildi
-- API hedefi `kompozit_backend` (`8186`) olacak sekilde ayarlandi
+- API hedefi `kompozit/backend` (`8186`) olacak sekilde ayarlandi
 - sidebar kompozit odakli sadeleştirildi
 
 Calistirma:

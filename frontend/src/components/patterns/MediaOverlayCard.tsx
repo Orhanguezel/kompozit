@@ -36,11 +36,11 @@ export function MediaOverlayCard({
         className="object-cover transition-transform duration-1000 ease-out group-hover:scale-110"
         sizes={sizes}
       />
-      
+
       {/* Texture and Overlay */}
       <div className="absolute inset-0 carbon-texture opacity-10 pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 transition-all duration-700 group-hover:opacity-90 group-hover:via-black/70" />
-      
+
       <div className="absolute inset-0 flex flex-col justify-end p-8">
         <div className="translate-y-6 transition-all duration-500 ease-out group-hover:translate-y-0">
           {meta ? (

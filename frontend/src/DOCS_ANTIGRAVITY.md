@@ -11,7 +11,7 @@ This document outlines the industrial-luxury design system implemented for the K
 
 ## 2. Typography System (EDITORIAL WEIGHTS)
 
-- **Display (Bebas Neue)**: Used for all uppercase headings, labels, and primary navigation links. 
+- **Display (Bebas Neue)**: Used for all uppercase headings, labels, and primary navigation links.
   - `section-label-cc`: 0.75rem, tracking 8px, gold.
   - `section-title-cc`: clamp(3rem, 8vw, 5rem), tracking-normal, white.
 - **Serif (Cormorant Garamond)**: Used for italics, emphasis, and quote-led intros.

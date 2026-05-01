@@ -7,9 +7,9 @@ import { PanelLeftIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Separator } from "@/components/ui/separator"
+import { Button } from "@ensotek/shared-ui/admin/ui/button"
+import { Input } from "@ensotek/shared-ui/admin/ui/input"
+import { Separator } from "@ensotek/shared-ui/admin/ui/separator"
 import {
   Sheet,
   SheetContent,
@@ -17,7 +17,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@ensotek/shared-ui/admin/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { Search } from "lucide-react";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
-import { Button } from "@/components/ui/button";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
 import {
   CommandDialog,
   CommandEmpty,

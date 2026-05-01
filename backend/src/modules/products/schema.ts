@@ -21,8 +21,8 @@ import {
   primaryKey,
 } from 'drizzle-orm/mysql-core';
 import { sql } from 'drizzle-orm';
-import { categories } from '@agro/shared-backend/modules/categories/schema';
-import { subCategories } from '@agro/shared-backend/modules/subcategories/schema';
+import { categories } from '@ensotek/shared-backend/modules/categories/schema';
+import { subCategories } from '@ensotek/shared-backend/modules/subcategories/schema';
 
 export type ProductItemType = 'product' | 'sparepart' | 'kompozit';
 

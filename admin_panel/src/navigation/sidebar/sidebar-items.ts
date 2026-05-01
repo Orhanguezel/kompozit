@@ -18,6 +18,7 @@ import {
   type LucideIcon,
   MessageSquare,
   Newspaper,
+  RefreshCcw,
   Settings,
   Users,
 } from "lucide-react";
@@ -70,6 +71,7 @@ export type AdminNavItemKey =
   | "email_templates"
   | "notifications"
   | "storage"
+  | "cache"
   | "db"
   | "audit"
   | "reports"
@@ -131,6 +133,7 @@ export const adminNavConfig: AdminNavConfigGroup[] = [
       { key: "users", url: "/admin/users", icon: Users },
       { key: "notifications", url: "/admin/notifications", icon: Bell },
       { key: "storage", url: "/admin/storage", icon: HardDrive },
+      { key: "cache", url: "/admin/cache", icon: RefreshCcw },
       { key: "audit", url: "/admin/audit", icon: FileSearch },
     ],
   },
@@ -166,6 +169,7 @@ const FALLBACK_TITLES: Record<AdminNavItemKey, string> = {
   notifications: "Notifications",
   support: "Support Tickets",
   storage: "Storage",
+  cache: "Cache Management",
   db: "Database",
   audit: "Audit",
   reports: "Reports",

@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
-import { requireAuth } from '@agro/shared-backend/middleware/auth';
-import { requireAdmin } from '@agro/shared-backend/middleware/roles';
+import { requireAuth } from '@ensotek/shared-backend/middleware/auth';
+import { requireAdmin } from '@ensotek/shared-backend/middleware/roles';
 import { registerSharedPublic, registerSharedAdmin } from './routes/shared';
 import { registerProjectPublic, registerProjectAdmin } from './routes/project';
 

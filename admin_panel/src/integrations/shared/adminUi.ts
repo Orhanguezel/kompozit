@@ -99,6 +99,7 @@ const emptyNav: AdminNavCopy = {
     email_templates: "",
     notifications: "",
     storage: "",
+    cache: "",
     db: "",
     audit: "",
 
@@ -157,6 +158,7 @@ export function normalizeAdminUiCopy(raw: unknown): AdminUiCopy {
     email_templates: uiText(itemsRaw.email_templates),
     notifications: uiText(itemsRaw.notifications),
     storage: uiText(itemsRaw.storage),
+    cache: uiText(itemsRaw.cache),
     db: uiText(itemsRaw.db),
     audit: uiText(itemsRaw.audit),
 

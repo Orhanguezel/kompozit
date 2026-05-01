@@ -16,14 +16,17 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const { product } = await searchParams;
-  const t = await getTranslations({ locale, namespace: 'offer' });
+  const [t, seoT] = await Promise.all([
+    getTranslations({ locale, namespace: 'offer' }),
+    getTranslations({ locale, namespace: 'seo' }),
+  ]);
   return buildPageMetadata({
     locale,
     pathname: '/offer',
     title: locale.startsWith('en')
       ? `${t('title')} - Composite Quote, Feasibility and Lead Time`
       : `${t('title')} - Kompozit Teklif, Uygunluk ve Termin`,
-    description: t('description'),
+    description: seoT('offerDescription'),
     noIndex: Boolean(product),
   });
 }

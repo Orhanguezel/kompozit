@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { localizedUrl } from '@/seo/helpers';
+import { localeAlternates, localizedUrl } from '@/seo/helpers';
 import { AVAILABLE_LOCALES } from '@/i18n/locales';
 import { API_BASE_URL } from '@/lib/utils';
 import { KOMPOZIT_SOLUTIONS_MODULE_KEY } from '@/features/solutions';
@@ -13,6 +13,20 @@ type SitemapItem = {
   image_url?: string | null;
   image_alt?: string | null;
 };
+
+function sitemapEntry(
+  locale: string,
+  path: string,
+  entry: Omit<MetadataRoute.Sitemap[number], 'url' | 'alternates'> = {},
+): MetadataRoute.Sitemap[number] {
+  return {
+    url: localizedUrl(locale, path),
+    alternates: {
+      languages: localeAlternates(path),
+    },
+    ...entry,
+  };
+}
 
 function withDefaultParams(endpoint: string): string {
   const joiner = endpoint.includes('?') ? '&' : '?';
@@ -152,59 +166,53 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
     for (const route of staticRoutes) {
-      entries.push({
-        url: localizedUrl(locale, route.path || '/'),
+      entries.push(sitemapEntry(locale, route.path || '/', {
         changeFrequency: route.changeFrequency,
         priority: route.priority,
-      });
+      }));
     }
 
     for (const item of products) {
-      entries.push({
-        url: localizedUrl(locale, `/products/${item.slug}`),
+      entries.push(sitemapEntry(locale, `/products/${item.slug}`, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'weekly',
         priority: 0.8,
         images: resolveSitemapImages(item),
-      });
+      }));
     }
 
     for (const item of galleries) {
-      entries.push({
-        url: localizedUrl(locale, `/gallery/${item.slug}`),
+      entries.push(sitemapEntry(locale, `/gallery/${item.slug}`, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'monthly',
         priority: 0.6,
         images: resolveSitemapImages(item),
-      });
+      }));
     }
 
     for (const item of blogPosts) {
-      entries.push({
-        url: localizedUrl(locale, `/blog/${item.slug}`),
+      entries.push(sitemapEntry(locale, `/blog/${item.slug}`, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'monthly',
         priority: 0.7,
         images: resolveSitemapImages(item),
-      });
+      }));
     }
 
     for (const item of solutionPages) {
-      entries.push({
-        url: localizedUrl(locale, `/solutions/${item.slug}`),
+      entries.push(sitemapEntry(locale, `/solutions/${item.slug}`, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'monthly',
         priority: 0.72,
-      });
+      }));
     }
 
     for (const item of legalPages) {
-      entries.push({
-        url: localizedUrl(locale, `/legal/${item.slug}`),
+      entries.push(sitemapEntry(locale, `/legal/${item.slug}`, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'yearly',
         priority: 0.3,
-      });
+      }));
     }
   }
 

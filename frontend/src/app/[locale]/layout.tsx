@@ -2,14 +2,13 @@ import 'server-only';
 
 import type { CSSProperties, ReactNode } from 'react';
 import type { Metadata } from 'next';
-import { Bebas_Neue, Cormorant_Garamond, DM_Sans } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { getLocaleSettings } from '@/i18n/locale-settings';
 import { fetchSetting, fetchMenuItems, fetchFooterSections } from '@/i18n/server';
 import { getTranslations } from 'next-intl/server';
-import { siteUrlBase, asStr, asObj } from '@/seo';
+import { siteUrlBase, asStr, asObj, localeAlternates, localizedUrl } from '@/seo';
 import { resolvePublicAssetUrl } from '@/lib/utils';
 import { ensureFooterSections, ensureMenuItems } from '@/lib/navigation-fallback';
 import { buildFooterSocialNavFromSetting } from '@/lib/footer-social';
@@ -20,6 +19,7 @@ import { ClientShell } from '@/components/layout/ClientShell';
 import { THEME_INTENT, THEME_TEMPLATE } from '@/theme/templates';
 import { ThemeBootScript } from '@/scripts/theme-boot';
 import { DeferredToaster } from '@/components/layout/DeferredToaster';
+import { JsonLd, jsonld } from '@/seo';
 
 function readSettingValue(input: unknown): Record<string, unknown> {
   const raw = (input as { value?: unknown } | null)?.value;
@@ -35,28 +35,9 @@ function pickFirstString(...values: unknown[]): string {
   return '';
 }
 
-const bebasNeue = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '600'],
-  style: ['normal', 'italic'],
-  variable: '--font-serif',
-  display: 'swap',
-  preload: false,
-});
-
-const dmSans = DM_Sans({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600'],
-  variable: '--font-sans',
-  display: 'swap',
-});
+const bebasNeue = { variable: 'font-display' };
+const cormorant = { variable: 'font-serif' };
+const dmSans = { variable: 'font-sans' };
 
 export async function generateStaticParams() {
   const { activeLocales } = await getLocaleSettings();
@@ -102,6 +83,10 @@ export async function generateMetadata({
     title: { default: title, template: `%s | MOE Kompozit` },
     description,
     metadataBase: new URL(siteUrl),
+    alternates: {
+      canonical: localizedUrl(locale, '/'),
+      languages: localeAlternates('/'),
+    },
     icons: {
       ...(faviconUrl
         ? {
@@ -171,6 +156,37 @@ export default async function LocaleLayout({
   const stableFooterSections = ensureFooterSections(footerSections, locale, navT, footerT);
   const footerSocialNav = buildFooterSocialNavFromSetting(readSettingValue(socialsSetting));
   const contactInfo = readSettingValue(contactInfoSetting);
+  const siteUrl = siteUrlBase();
+  const sameAs = Object.values(readSettingValue(socialsSetting))
+    .filter((value): value is string => typeof value === 'string' && /^https?:\/\//i.test(value));
+  const orgGraph = jsonld.graph([
+    jsonld.org({
+      '@id': `${siteUrl}#/schema/organization`,
+      name: 'MOE Kompozit',
+      url: siteUrl,
+      logo: `${siteUrl}/icon`,
+      description:
+        'Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan Ensotek alt markasi.',
+      email: asStr(contactInfo.email) || 'offers@moekompozit.com',
+      telephone: asStr(contactInfo.phone) || undefined,
+      address: asStr(contactInfo.address) || undefined,
+      sameAs,
+      knowsAbout: [
+        'Karbon fiber',
+        'CTP tank',
+        'FRP boru',
+        'Pultruzyon profil',
+        'Kompozit malzeme',
+      ],
+    }),
+    jsonld.website({
+      name: 'MOE Kompozit',
+      url: siteUrl,
+      description: 'Endustriyel kompozit uretim ve B2B proje cozumleri.',
+      publisher: { '@id': `${siteUrl}#/schema/organization` },
+      inLanguage: ['tr', 'en'],
+    }),
+  ]);
 
   return (
     <html
@@ -186,6 +202,7 @@ export default async function LocaleLayout({
       <head>
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
         <ThemeBootScript />
+        <JsonLd data={orgGraph} />
       </head>
       <body
         className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text-primary)] antialiased"
