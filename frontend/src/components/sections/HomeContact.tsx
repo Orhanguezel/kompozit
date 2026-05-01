@@ -85,9 +85,9 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     <Mail className="size-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <h4 className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
+                    <p className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
                       {labels.infoLabels.email}
-                    </h4>
+                    </p>
                     <a href={`mailto:${info.email}`} className="mt-1 block text-sm font-light text-[var(--color-silver)] hover:text-[var(--color-gold)] transition-colors">
                       {info.email}
                     </a>
@@ -101,9 +101,9 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     <Phone className="size-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <h4 className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
+                    <p className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
                       {labels.infoLabels.phone}
-                    </h4>
+                    </p>
                     <a href={`tel:${info.phone}`} className="mt-1 block text-sm font-light text-[var(--color-silver)] hover:text-[var(--color-gold)] transition-colors">
                       {info.phone}
                     </a>
@@ -117,9 +117,9 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     <MapPin className="size-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <h4 className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
+                    <p className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
                       {labels.infoLabels.address}
-                    </h4>
+                    </p>
                     <p className="mt-1 text-sm font-light text-[var(--color-silver)]">
                       {info.address}
                     </p>
@@ -133,9 +133,9 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     <Clock className="size-5 text-[var(--color-gold)]" />
                   </div>
                   <div>
-                    <h4 className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
+                    <p className="font-[var(--font-display)] text-xs uppercase tracking-[3px] text-[var(--color-off-white)]">
                       {labels.infoLabels.hours}
-                    </h4>
+                    </p>
                     <p className="mt-1 text-sm font-light text-[var(--color-silver)]">
                       {info.workingHours}
                     </p>
