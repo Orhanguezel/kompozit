@@ -107,22 +107,13 @@ export function Header({
               }`}
             >
               <Image
-                src={logo.default}
+                src={logo.dark || logo.default}
                 alt="MOE Kompozit"
                 fill
                 sizes="(max-width: 768px) 200px, 260px"
-                className="block object-contain object-left brightness-110 transition-all duration-300 group-hover:brightness-125 drop-shadow-sm dark:hidden"
+                className="block object-contain object-left brightness-110 transition-all duration-300 group-hover:brightness-125 drop-shadow-sm"
                 priority
-                unoptimized
-              />
-              <Image
-                src={logo.dark}
-                alt="MOE Kompozit"
-                fill
-                sizes="(max-width: 768px) 200px, 260px"
-                className="hidden object-contain object-left brightness-110 transition-all duration-300 group-hover:brightness-125 drop-shadow-sm dark:block"
-                priority
-                unoptimized
+                fetchPriority="high"
               />
             </div>
           ) : (

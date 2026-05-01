@@ -262,7 +262,7 @@ export default async function HomePage({
                       src={aboutVisualSrc}
                       alt="Kompozit üretim görseli"
                       fill
-                      unoptimized
+                      sizes="(max-width: 1024px) 100vw, 500px"
                       className="object-cover"
                     />
                   </div>
