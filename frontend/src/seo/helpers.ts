@@ -40,10 +40,9 @@ export function localizedPath(
   const isAlreadyLocalized = AVAILABLE_LOCALES.some(l => p.startsWith(`/${l}/`) || p === `/${l}`);
   if (isAlreadyLocalized) return p;
 
-  const isDefaultLocale = !shortLocale || shortLocale === FALLBACK_LOCALE;
-
-  if (p === '/') return isDefaultLocale ? '/' : `/${shortLocale}`;
-  return isDefaultLocale ? p : `/${shortLocale}${p}`;
+  const localePrefix = shortLocale || FALLBACK_LOCALE;
+  if (p === '/') return `/${localePrefix}`;
+  return `/${localePrefix}${p}`;
 }
 
 export function localizedUrl(locale: string, pathname: string): string {

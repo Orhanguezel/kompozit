@@ -36,20 +36,22 @@ export async function IndustryStrip({ locale }: { locale: string }) {
           {INDUSTRY_KEYS.map((key, index) => {
             const Icon = icons[key];
             return (
-              <Reveal key={key} delay={index * 100} className="grid-item-cc">
-                <Link
-                  href={solutionsHref}
-                  className="group relative flex h-full flex-col p-10 text-center transition-all duration-500 hover:bg-[var(--carbon)]"
-                >
-                  <Icon className="mx-auto mb-8 size-10 text-[var(--gold)] opacity-80 transition-transform duration-500 group-hover:scale-110" />
-                  <h3 className="font-display text-[1.2rem] font-normal uppercase tracking-[3px] text-[var(--white)]">
-                    {t(`items.${key}.title`)}
-                  </h3>
-                  <p className="mt-4 text-xs font-light leading-relaxed text-[var(--silver)] opacity-80">
-                    {t(`items.${key}.description`)}
-                  </p>
-                </Link>
-              </Reveal>
+              <li key={key} className="grid-item-cc">
+                <Reveal delay={index * 100} className="h-full">
+                  <Link
+                    href={solutionsHref}
+                    className="group relative flex h-full flex-col p-10 text-center transition-all duration-500 hover:bg-[var(--carbon)]"
+                  >
+                    <Icon className="mx-auto mb-8 size-10 text-[var(--gold)] opacity-80 transition-transform duration-500 group-hover:scale-110" />
+                    <h3 className="font-display text-[1.2rem] font-normal uppercase tracking-[3px] text-[var(--white)]">
+                      {t(`items.${key}.title`)}
+                    </h3>
+                    <p className="mt-4 text-xs font-light leading-relaxed text-[var(--silver)] opacity-80">
+                      {t(`items.${key}.description`)}
+                    </p>
+                  </Link>
+                </Reveal>
+              </li>
             );
           })}
         </ul>

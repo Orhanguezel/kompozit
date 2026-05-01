@@ -38,7 +38,7 @@ export async function StatsBar({
             <p className="font-[var(--font-display)] font-normal text-[3.5rem] leading-none text-[var(--gold)]">
               {item.number}
             </p>
-            <p className="mt-3 text-[0.75rem] font-medium uppercase tracking-[4px] text-[var(--silver)] opacity-80">
+            <p className="mt-3 text-[0.75rem] font-medium uppercase tracking-[4px] text-[var(--silver)]">
               {item.label}
             </p>
           </div>

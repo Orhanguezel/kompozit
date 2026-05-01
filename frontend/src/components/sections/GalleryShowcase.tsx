@@ -61,9 +61,9 @@ export async function GalleryShowcase({ locale, items = [] }: { locale: string; 
                  <span className="font-display text-[0.7rem] uppercase tracking-[3px] text-[var(--gold)]">
                    {galleryItemCategory(row)}
                  </span>
-                 <h4 className="mt-2 font-display text-[1.4rem] font-normal uppercase tracking-[3px] text-[var(--white)]">
+                 <h3 className="mt-2 font-display text-[1.4rem] font-normal uppercase tracking-[3px] text-[var(--white)]">
                    {title}
-                 </h4>
+                 </h3>
               </div>
 
               {/* Decorative Weave Pattern */}

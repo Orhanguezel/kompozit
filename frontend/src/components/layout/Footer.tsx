@@ -81,11 +81,11 @@ export function Footer({
             </Link>
 
             {/* Tagline */}
-            <p className="max-w-xs text-sm font-light leading-relaxed text-(--silver) opacity-80">
+            <p className="max-w-xs text-sm font-light leading-relaxed text-(--silver)">
               {t('description')}
             </p>
 
-            <p className="max-w-xs border-l border-(--gold)/30 pl-4 text-xs font-light leading-relaxed text-(--silver) opacity-75">
+            <p className="max-w-xs border-l border-(--gold)/30 pl-4 text-xs font-light leading-relaxed text-(--silver)">
               {t('ensotekRelation')}{' '}
               <a
                 href="https://www.ensotek.com.tr"
@@ -100,9 +100,9 @@ export function Footer({
             {/* Contact info */}
             {hasContact && (
               <div className="space-y-3 pt-2">
-                <h4 className="font-display text-[10px] font-bold uppercase tracking-[3px] text-(--white)">
+                <p className="font-display text-[10px] font-bold uppercase tracking-[3px] text-(--white)">
                   {t('contact')}
-                </h4>
+                </p>
 
                 {phone && (
                   <a
@@ -129,7 +129,7 @@ export function Footer({
                 )}
 
                 {address && (
-                  <div className="flex items-start gap-2 text-xs font-light text-(--silver) opacity-75">
+                  <div className="flex items-start gap-2 text-xs font-light text-(--silver)">
                     <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 opacity-60" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
@@ -139,7 +139,7 @@ export function Footer({
                 )}
 
                 {hours && (
-                  <div className="flex items-start gap-2 text-xs font-light text-(--silver) opacity-60">
+                  <div className="flex items-start gap-2 text-xs font-light text-(--silver)">
                     <svg className="mt-0.5 h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
@@ -153,9 +153,9 @@ export function Footer({
           {/* Dynamic nav sections */}
           {normalized.map((section) => (
             <div key={section.title} className="space-y-6">
-              <h4 className="font-display text-[10px] font-bold uppercase tracking-[3px] text-(--white)">
+              <p className="font-display text-[10px] font-bold uppercase tracking-[3px] text-(--white)">
                 {section.title}
-              </h4>
+              </p>
               <ul className="space-y-3">
                 {section.items?.map((item) => (
                   <li key={item.url}>
@@ -174,7 +174,7 @@ export function Footer({
 
         {/* Bottom Bar */}
         <div className="footer-bottom-cc pt-10">
-          <p className="text-[10px] font-medium uppercase tracking-[2px] text-(--silver) opacity-60">
+          <p className="text-[10px] font-medium uppercase tracking-[2px] text-(--silver)">
             &copy; {year} MOE Kompozit. {t('rights')}
           </p>
 
@@ -199,7 +199,7 @@ export function Footer({
             ))}
 
             {/* GWD Design credit */}
-            <span className="text-[10px] font-medium uppercase tracking-[2px] text-(--silver) opacity-40">
+            <span className="text-[10px] font-medium uppercase tracking-[2px] text-(--silver)">
               {t('designed_by')}{' '}
               <a
                 href="https://guezelwebdesign.com"
