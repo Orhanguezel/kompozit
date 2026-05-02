@@ -328,6 +328,7 @@
         "passwordLabel": "Passwort",
         "passwordPlaceholder": "••••••••",
         "rememberMe": "30 Tage lang angemeldet bleiben",
+        "forgotPassword": "Passwort vergessen",
         "loginButton": "Anmelden",
         "loggingIn": "Anmelden...",
         "loginSuccess": "Erfolgreich angemeldet.",

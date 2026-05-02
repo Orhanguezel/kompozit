@@ -121,7 +121,7 @@ export function useResolvedLocale(explicitLocale?: string | null): string {
     if (firstActive) return firstActive;
 
     // ✅ 6) fallback
-    return normLocaleTag(FALLBACK_LOCALE) || "de";
+    return normLocaleTag(FALLBACK_LOCALE) || "tr";
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [explicitLocale, appLocalesMeta, defaultLocaleMeta]);
 }

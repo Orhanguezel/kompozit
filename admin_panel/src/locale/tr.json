@@ -328,6 +328,7 @@
         "passwordLabel": "Şifre",
         "passwordPlaceholder": "••••••••",
         "rememberMe": "30 gün boyunca beni hatırla",
+        "forgotPassword": "Şifremi unuttum",
         "loginButton": "Giriş Yap",
         "loggingIn": "Giriş yapılıyor...",
         "loginSuccess": "Başarıyla giriş yapıldı.",
