@@ -2,21 +2,20 @@
 "use client";
 
 import { Suspense } from "react";
-
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 import { useLocaleContext } from "@/i18n";
-
 import { AuthBrandPanel } from "../_components/auth-brand-panel";
 import { LoginForm } from "../_components/login-form";
 
 function LoginFormFallback() {
   return (
-    <div className="space-y-4">
-      <div className="h-10 w-full animate-pulse rounded-md bg-muted" />
-      <div className="h-10 w-full animate-pulse rounded-md bg-muted" />
-      <div className="h-10 w-full animate-pulse rounded-md bg-muted" />
-      <div className="h-10 w-full animate-pulse rounded-md bg-muted" />
+    <div className="space-y-6">
+      <div className="h-12 w-full animate-pulse rounded-xl bg-muted/50" />
+      <div className="h-12 w-full animate-pulse rounded-xl bg-muted/50" />
+      <div className="h-12 w-full animate-pulse rounded-xl bg-muted/50" />
+      <div className="h-12 w-full animate-pulse rounded-xl bg-muted/50" />
     </div>
   );
 }
@@ -24,30 +23,73 @@ function LoginFormFallback() {
 export default function Login() {
   const { t } = useLocaleContext();
   return (
-    <div className="flex min-h-dvh">
-      <AuthBrandPanel heading={t("admin.auth.login.welcomeBack")} subtext={t("admin.auth.login.continueLogin")} />
+    <div className="flex min-h-dvh bg-white dark:bg-slate-950">
+      <AuthBrandPanel 
+        heading={t("admin.auth.login.welcomeBack")} 
+        subtext={t("admin.auth.login.continueLogin")} 
+      />
 
       {/* Sağ (form) */}
-      <div className="flex w-full items-center justify-center bg-background p-8 lg:w-2/3">
-        <div className="w-full max-w-md space-y-10 py-24 lg:py-32">
-          <div className="space-y-4 text-center">
-            <div className="font-medium tracking-tight">{t("admin.auth.login.title")}</div>
-            <div className="mx-auto max-w-xl text-muted-foreground">{t("admin.auth.login.description")}</div>
+      <div className="relative flex w-full items-center justify-center p-8 lg:w-1/2">
+        {/* Subtle Background Pattern for Mobile */}
+        <div className="absolute inset-0 opacity-[0.03] lg:hidden" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, var(--primary) 1px, transparent 0)', backgroundSize: '32px 32px' }} />
+
+        <motion.div 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative z-10 w-full max-w-md space-y-12"
+        >
+          <div className="space-y-4">
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="text-4xl font-bold tracking-tight text-slate-900 dark:text-white"
+            >
+              {t("admin.auth.login.title")}
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="text-lg font-medium text-slate-500 dark:text-slate-400"
+            >
+              {t("admin.auth.login.description")}
+            </motion.p>
           </div>
 
-          <div className="space-y-4">
-            {/* ✅ Next 16: useSearchParams kullanan client component Suspense ister */}
+          <div className="space-y-8">
             <Suspense fallback={<LoginFormFallback />}>
               <LoginForm />
             </Suspense>
 
-            {/* Admin-only: self-register yok */}
-            <p className="text-center text-muted-foreground text-xs">
-              {t("admin.auth.login.noAccess")}{" "}
-              <Link prefetch={false} href="/auth/login" className="text-primary underline-offset-4 hover:underline">
-                {t("admin.auth.login.contactAdmin")}
-              </Link>
-            </p>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="border-t border-slate-100 pt-8 dark:border-slate-800"
+            >
+              <p className="text-center text-sm font-medium text-slate-500">
+                {t("admin.auth.login.noAccess")}{" "}
+                <Link 
+                  prefetch={false} 
+                  href="/auth/login" 
+                  className="font-bold text-primary underline-offset-4 decoration-2 hover:underline"
+                >
+                  {t("admin.auth.login.contactAdmin")}
+                </Link>
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
+
+        {/* Floating Decorative Elements */}
+        <div className="absolute right-0 top-0 p-12">
+          <div className="flex space-x-3">
+             <div className="size-2 rounded-full bg-slate-200 dark:bg-slate-800" />
+             <div className="size-2 rounded-full bg-slate-200 dark:bg-slate-800" />
+             <div className="size-2 animate-pulse rounded-full bg-primary" />
           </div>
         </div>
       </div>

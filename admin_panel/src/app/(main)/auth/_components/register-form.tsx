@@ -111,55 +111,64 @@ export function RegisterForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        {/* Optional profile fields */}
-        <FormField
-          control={form.control}
-          name="full_name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("admin.auth.register.fullNameLabel")}</FormLabel>
-              <FormControl>
-                <Input
-                  id="full_name"
-                  placeholder={t("admin.auth.register.fullNamePlaceholder")}
-                  autoComplete="name"
-                  disabled={isBusy}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {/* Optional profile fields */}
+          <FormField
+            control={form.control}
+            name="full_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.register.fullNameLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="full_name"
+                    placeholder={t("admin.auth.register.fullNamePlaceholder")}
+                    autoComplete="name"
+                    disabled={isBusy}
+                    className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-xs font-medium" />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("admin.auth.register.phoneLabel")}</FormLabel>
-              <FormControl>
-                <Input
-                  id="phone"
-                  placeholder={t("admin.auth.register.phonePlaceholder")}
-                  autoComplete="tel"
-                  disabled={isBusy}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.register.phoneLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="phone"
+                    placeholder={t("admin.auth.register.phonePlaceholder")}
+                    autoComplete="tel"
+                    disabled={isBusy}
+                    className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-xs font-medium" />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        {/* Required auth fields */}
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("admin.auth.register.emailLabel")}</FormLabel>
+              <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                {t("admin.auth.register.emailLabel")}
+              </FormLabel>
               <FormControl>
                 <Input
                   id="email"
@@ -167,81 +176,101 @@ export function RegisterForm() {
                   placeholder={t("admin.auth.register.emailPlaceholder")}
                   autoComplete="email"
                   disabled={isBusy}
+                  className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
                   {...field}
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-xs font-medium" />
             </FormItem>
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("admin.auth.register.passwordLabel")}</FormLabel>
-              <FormControl>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder={t("admin.auth.register.passwordPlaceholder")}
-                  autoComplete="new-password"
-                  disabled={isBusy}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.register.passwordLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder={t("admin.auth.register.passwordPlaceholder")}
+                    autoComplete="new-password"
+                    disabled={isBusy}
+                    className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-xs font-medium" />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="confirm_password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("admin.auth.register.confirmPasswordLabel")}</FormLabel>
-              <FormControl>
-                <Input
-                  id="confirm_password"
-                  type="password"
-                  placeholder={t("admin.auth.register.confirmPasswordPlaceholder")}
-                  autoComplete="new-password"
-                  disabled={isBusy}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="confirm_password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.register.confirmPasswordLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="confirm_password"
+                    type="password"
+                    placeholder={t("admin.auth.register.confirmPasswordPlaceholder")}
+                    autoComplete="new-password"
+                    disabled={isBusy}
+                    className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-xs font-medium" />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Terms */}
         <FormField
           control={form.control}
           name="accept_terms"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-center">
+            <FormItem className="flex flex-row items-center space-x-2 space-y-0">
               <FormControl>
                 <Checkbox
                   id="accept_terms"
                   checked={!!field.value}
                   onCheckedChange={(v) => field.onChange(!!v)}
                   disabled={isBusy}
-                  className="size-4"
+                  className="size-4 rounded border-slate-300 dark:border-slate-700"
                 />
               </FormControl>
-              <FormLabel htmlFor="accept_terms" className="ml-1 font-medium text-muted-foreground text-sm">
+              <FormLabel htmlFor="accept_terms" className="cursor-pointer select-none text-sm font-medium text-slate-500 dark:text-slate-400">
                 {t("admin.auth.register.acceptTerms")}
               </FormLabel>
-              <FormMessage />
+              <FormMessage className="text-xs font-medium" />
             </FormItem>
           )}
         />
 
-        <Button className="w-full" type="submit" disabled={isBusy}>
-          {isBusy ? t("admin.auth.register.creatingAccount") : t("admin.auth.register.registerButton")}
+        <Button 
+          className="h-12 w-full rounded-xl text-base font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98]" 
+          type="submit" 
+          disabled={isBusy}
+        >
+          {isBusy ? (
+            <div className="flex items-center space-x-2">
+              <div className="size-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+              <span>{t("admin.auth.register.creatingAccount")}</span>
+            </div>
+          ) : (
+            t("admin.auth.register.registerButton")
+          )}
         </Button>
       </form>
     </Form>

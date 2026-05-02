@@ -92,73 +92,97 @@ export function LoginForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("admin.auth.login.emailLabel")}</FormLabel>
-              <FormControl>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder={t("admin.auth.login.emailPlaceholder")}
-                  autoComplete="email"
-                  disabled={isBusy}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <div className="space-y-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.login.emailLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder={t("admin.auth.login.emailPlaceholder")}
+                    autoComplete="email"
+                    disabled={isBusy}
+                    className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-xs font-medium" />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("admin.auth.login.passwordLabel")}</FormLabel>
-              <FormControl>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder={t("admin.auth.login.passwordPlaceholder")}
-                  autoComplete="current-password"
-                  disabled={isBusy}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.login.passwordLabel")}
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder={t("admin.auth.login.passwordPlaceholder")}
+                    autoComplete="current-password"
+                    disabled={isBusy}
+                    className="h-12 rounded-xl border-slate-200 bg-slate-50/50 transition-all duration-200 focus:bg-white dark:border-slate-800 dark:bg-slate-900/50 dark:focus:bg-slate-900"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage className="text-xs font-medium" />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        {/* UI-only remember */}
-        <FormField
-          control={form.control}
-          name="remember"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-center">
-              <FormControl>
-                <Checkbox
-                  id="login-remember"
-                  checked={!!field.value}
-                  onCheckedChange={(v) => field.onChange(!!v)}
-                  disabled={isBusy}
-                  className="size-4"
-                />
-              </FormControl>
-              <FormLabel htmlFor="login-remember" className="ml-1 font-medium text-muted-foreground text-sm">
-                {t("admin.auth.login.rememberMe")}
-              </FormLabel>
-            </FormItem>
-          )}
-        />
+        <div className="flex items-center justify-between">
+          <FormField
+            control={form.control}
+            name="remember"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-center space-x-2 space-y-0">
+                <FormControl>
+                  <Checkbox
+                    id="login-remember"
+                    checked={!!field.value}
+                    onCheckedChange={(v) => field.onChange(!!v)}
+                    disabled={isBusy}
+                    className="size-4 rounded border-slate-300 dark:border-slate-700"
+                  />
+                </FormControl>
+                <FormLabel htmlFor="login-remember" className="cursor-pointer select-none text-sm font-medium text-slate-500 dark:text-slate-400">
+                  {t("admin.auth.login.rememberMe")}
+                </FormLabel>
+              </FormItem>
+            )}
+          />
+          
+          <button type="button" className="text-sm font-bold text-primary underline-offset-4 hover:underline">
+             {t("admin.auth.login.forgotPassword") || "Şifremi Unuttum"}
+          </button>
+        </div>
 
-        <Button className="w-full" type="submit" disabled={isBusy}>
-          {isBusy ? t("admin.auth.login.loggingIn") : t("admin.auth.login.loginButton")}
+        <Button 
+          className="h-12 w-full rounded-xl text-base font-bold shadow-lg shadow-primary/20 transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98]" 
+          type="submit" 
+          disabled={isBusy}
+        >
+          {isBusy ? (
+            <div className="flex items-center space-x-2">
+              <div className="size-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
+              <span>{t("admin.auth.login.loggingIn")}</span>
+            </div>
+          ) : (
+            t("admin.auth.login.loginButton")
+          )}
         </Button>
       </form>
     </Form>
