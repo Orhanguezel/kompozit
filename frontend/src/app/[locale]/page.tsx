@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { ArrowRight, Shield, Zap, Settings, Truck, Cpu, Award, MoveRight } from 'lucide-react';
 
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
+import { fetchSetting } from '@/i18n/server';
 import { JsonLd, buildPageMetadata, localizedPath, siteUrlBase } from '@/seo';
 import { buildHomePageSchemaGraph } from '@/seo/home-jsonld';
 import { ReferencesTrustStrip } from '@/components/sections/ReferencesTrustStrip';
@@ -36,6 +37,19 @@ const ABOUT_VISUAL_DEFAULT_SRC = '/uploads/kompozit/karbon-fiber-panel-01.jpg';
 const NewsletterFormLazy = dynamic(() =>
   import('@/components/sections/NewsletterForm').then((m) => m.NewsletterForm),
 );
+
+function readSettingObject(input: unknown): Record<string, unknown> {
+  const value = (input as { value?: unknown } | null)?.value;
+  return typeof value === 'object' && value !== null && !Array.isArray(value) ? (value as Record<string, unknown>) : {};
+}
+
+function firstString(...values: unknown[]): string {
+  for (const value of values) {
+    const text = String(value ?? '').trim();
+    if (text) return text;
+  }
+  return '';
+}
 
 function homeHref(locale: string, path: string): string {
   const p = (path || '').trim();
@@ -78,6 +92,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: 'seo' });
+  const [siteOgDefaultImage, siteOgDefaultImageGlobal] = await Promise.all([
+    fetchSetting('site_og_default_image', locale),
+    fetchSetting('site_og_default_image', '*'),
+  ]);
+  const ogValue = {
+    ...readSettingObject(siteOgDefaultImageGlobal),
+    ...readSettingObject(siteOgDefaultImage),
+  };
+  const ogImage = resolvePublicAssetUrl(firstString(ogValue.url, ogValue.image_url)) ?? undefined;
 
   return buildPageMetadata({
     locale,
@@ -86,6 +109,7 @@ export async function generateMetadata({
       ? 'Carbon Fiber, FRP and Fiberglass Composite Manufacturing'
       : 'Karbon Fiber, CTP ve Cam Elyaf Kompozit Uretimi',
     description: t('homeDescription'),
+    ogImage,
   });
 }
 
