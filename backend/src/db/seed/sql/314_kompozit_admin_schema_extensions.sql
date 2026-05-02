@@ -7,9 +7,136 @@
 SET NAMES utf8mb4;
 SET time_zone = '+00:00';
 SET FOREIGN_KEY_CHECKS = 0;
+SET @db := DATABASE();
+
+-- products: ortak paket schema'si ile uyumlu ek alanlar
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'botanical_name'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `botanical_name` VARCHAR(255) NULL AFTER `review_count`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'planting_seasons'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `planting_seasons` JSON NULL DEFAULT (JSON_ARRAY()) AFTER `botanical_name`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'harvest_days'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `harvest_days` INT NULL AFTER `planting_seasons`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'climate_zones'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `climate_zones` JSON NULL DEFAULT (JSON_ARRAY()) AFTER `harvest_days`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'soil_types'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `soil_types` JSON NULL DEFAULT (JSON_ARRAY()) AFTER `climate_zones`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'water_need'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `water_need` VARCHAR(16) NULL AFTER `soil_types`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'sun_exposure'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `sun_exposure` VARCHAR(16) NULL AFTER `water_need`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'min_temp'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `min_temp` DECIMAL(5,2) NULL AFTER `sun_exposure`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'max_temp'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `max_temp` DECIMAL(5,2) NULL AFTER `min_temp`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'germination_days'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `germination_days` INT NULL AFTER `max_temp`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'seed_depth_cm'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `seed_depth_cm` DECIMAL(5,2) NULL AFTER `germination_days`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'row_spacing_cm'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `row_spacing_cm` INT NULL AFTER `seed_depth_cm`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'plant_spacing_cm'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `plant_spacing_cm` INT NULL AFTER `row_spacing_cm`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
+
+SET @col_exists := (
+  SELECT COUNT(*) FROM information_schema.COLUMNS
+  WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'products' AND COLUMN_NAME = 'yield_per_sqm'
+);
+SET @q := IF(@col_exists = 0,
+  'ALTER TABLE `products` ADD COLUMN `yield_per_sqm` VARCHAR(50) NULL AFTER `plant_spacing_cm`',
+  'SELECT 1');
+PREPARE st FROM @q; EXECUTE st; DEALLOCATE PREPARE st;
 
 -- category_i18n.i18n_data (Drizzle ile uyum)
-SET @db := DATABASE();
 SET @col_exists := (
   SELECT COUNT(*) FROM information_schema.COLUMNS
   WHERE TABLE_SCHEMA = @db AND TABLE_NAME = 'category_i18n' AND COLUMN_NAME = 'i18n_data'

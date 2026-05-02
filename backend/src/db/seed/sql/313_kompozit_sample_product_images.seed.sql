@@ -124,5 +124,24 @@ SET
   `updated_at` = NOW(3)
 WHERE `id` = 'bb010004-5004-4004-9004-bbbbbbbb0004';
 
+-- =============================================================
+-- Add kompozit brand logo to site_settings (override)
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__site_logo',
+  '*',
+  JSON_OBJECT(
+    'logo_url', '/uploads/kompozit/brand/kompozit_logo.jpeg',
+    'logo_alt', 'MOE Kompozit',
+    'logo_dark_url', '/uploads/kompozit/brand/kompozit_logo.jpeg',
+    'logo_light_url', '/uploads/kompozit/brand/kompozit_logo.jpeg',
+    'favicon_url', '/uploads/kompozit/brand/favicon-32.png'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
 COMMIT;
 SET FOREIGN_KEY_CHECKS = 1;

@@ -64,6 +64,27 @@ export const products = mysqlTable(
     rating: decimal('rating', { precision: 3, scale: 2 }).notNull().default('5.00'),
     review_count: int('review_count').notNull().default(0),
 
+    botanical_name: varchar('botanical_name', { length: 255 }),
+    planting_seasons: json('planting_seasons')
+      .$type<string[]>()
+      .default(sql`JSON_ARRAY()`),
+    harvest_days: int('harvest_days'),
+    climate_zones: json('climate_zones')
+      .$type<string[]>()
+      .default(sql`JSON_ARRAY()`),
+    soil_types: json('soil_types')
+      .$type<string[]>()
+      .default(sql`JSON_ARRAY()`),
+    water_need: varchar('water_need', { length: 16 }),
+    sun_exposure: varchar('sun_exposure', { length: 16 }),
+    min_temp: decimal('min_temp', { precision: 5, scale: 2 }),
+    max_temp: decimal('max_temp', { precision: 5, scale: 2 }),
+    germination_days: int('germination_days'),
+    seed_depth_cm: decimal('seed_depth_cm', { precision: 5, scale: 2 }),
+    row_spacing_cm: int('row_spacing_cm'),
+    plant_spacing_cm: int('plant_spacing_cm'),
+    yield_per_sqm: varchar('yield_per_sqm', { length: 50 }),
+
     created_at: datetime('created_at', { fsp: 3 })
       .notNull()
       .default(sql`CURRENT_TIMESTAMP(3)`),
