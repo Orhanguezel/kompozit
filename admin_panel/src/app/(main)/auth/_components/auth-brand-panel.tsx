@@ -26,7 +26,7 @@ export function AuthBrandPanel({ heading, subtext }: Props) {
     <div className="hidden flex-col items-center justify-center bg-primary p-12 text-center lg:flex lg:w-1/3">
       <div className="space-y-6">
         <div className="relative mx-auto size-24">
-          <Image src={logoUrl} alt={logoAlt} fill className="object-contain" />
+          <Image src={logoUrl} alt={logoAlt} fill unoptimized className="object-contain" />
         </div>
         <div className="space-y-2">
           <p className="font-semibold text-primary-foreground/60 text-xs uppercase tracking-widest">{appName}</p>
