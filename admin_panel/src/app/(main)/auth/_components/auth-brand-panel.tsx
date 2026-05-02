@@ -26,8 +26,8 @@ export function AuthBrandPanel({ heading, subtext }: Props) {
     <div className="relative hidden flex-col items-center justify-center overflow-hidden bg-slate-950 p-12 text-center lg:flex lg:w-1/2">
       {/* Premium Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
-        <Image 
-          src="/kompozit_login_bg.png" 
+        <Image
+          src="/uploads/kompozit/brand/kompozit_login_bg.png"
           alt="Industrial Background" 
           fill 
           className="object-cover opacity-20 mix-blend-luminosity" 
