@@ -292,7 +292,7 @@ export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale
                 id="branding_og_image"
                 value={form.og_image}
                 onChange={(e) => handleChange("og_image", e.target.value)}
-                placeholder="/logo/icon.svg"
+                placeholder="/uploads/kompozit/brand/logo-light.png"
                 disabled={busy}
               />
             </div>
@@ -303,7 +303,7 @@ export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale
                 id="branding_favicon_16"
                 value={form.favicon_16}
                 onChange={(e) => handleChange("favicon_16", e.target.value)}
-                placeholder="/favicon/favicon-16.svg"
+                placeholder="/uploads/kompozit/brand/favicon-32.png"
                 disabled={busy}
               />
             </div>
@@ -314,7 +314,7 @@ export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale
                 id="branding_favicon_32"
                 value={form.favicon_32}
                 onChange={(e) => handleChange("favicon_32", e.target.value)}
-                placeholder="/favicon/favicon-32.svg"
+                placeholder="/uploads/kompozit/brand/favicon-32.png"
                 disabled={busy}
               />
             </div>
@@ -327,7 +327,7 @@ export const BrandingSettingsTab: React.FC<BrandingSettingsTabProps> = ({ locale
                 id="branding_apple_touch_icon"
                 value={form.apple_touch_icon}
                 onChange={(e) => handleChange("apple_touch_icon", e.target.value)}
-                placeholder="/favicon/apple-touch-icon.svg"
+                placeholder="/uploads/kompozit/brand/apple-touch-icon.png"
                 disabled={busy}
               />
             </div>

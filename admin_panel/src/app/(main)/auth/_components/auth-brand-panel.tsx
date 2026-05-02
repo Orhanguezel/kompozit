@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { useGetSiteSettingByKeyQuery } from "@/integrations/hooks";
 
-const LOGO_FALLBACK = "/logo/png/ensotek_logo_512.png";
+const LOGO_FALLBACK = "/uploads/kompozit/brand/logo-light.png";
 
 type Props = {
   heading: string;

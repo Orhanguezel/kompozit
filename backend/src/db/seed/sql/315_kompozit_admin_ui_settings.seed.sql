@@ -12,7 +12,7 @@ VALUES (
   UUID(),
   'kompozit__ui_admin_config',
   '*',
-  '{"default_locale":"tr","theme":{"mode":"light","preset":"zinc","font":"inter"},"layout":{"sidebar_variant":"inset","sidebar_collapsible":"icon","navbar_style":"sticky","content_layout":"centered"},"branding":{"app_name":"MOE Kompozit Admin","app_copyright":"MOE Kompozit","html_lang":"tr","theme_color":"#C9A227","favicon_16":"/favicon/favicon-16.svg","favicon_32":"/favicon/favicon-32.svg","apple_touch_icon":"/favicon/apple-touch-icon.svg","meta":{"title":"MOE Kompozit Admin","description":"İçerik ve site yönetimi"}}}',
+  '{"default_locale":"tr","theme":{"mode":"light","preset":"zinc","font":"inter"},"layout":{"sidebar_variant":"inset","sidebar_collapsible":"icon","navbar_style":"sticky","content_layout":"centered"},"branding":{"app_name":"MOE Kompozit Admin","app_copyright":"MOE Kompozit","html_lang":"tr","theme_color":"#C9A227","favicon_16":"/uploads/kompozit/brand/favicon-32.png","favicon_32":"/uploads/kompozit/brand/favicon-32.png","apple_touch_icon":"/uploads/kompozit/brand/apple-touch-icon.png","meta":{"title":"MOE Kompozit Admin","description":"İçerik ve site yönetimi","og_url":"https://karbonkompozit.com.tr/admin","og_image":"/uploads/kompozit/brand/logo-light.png"}}}',
   NOW(3),
   NOW(3)
 )
