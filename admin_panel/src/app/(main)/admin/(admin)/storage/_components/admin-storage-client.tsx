@@ -119,7 +119,7 @@ export default function AdminStorageClient() {
 
   const [filters, setFilters] = React.useState<Filters>({
     search: "",
-    bucket: "uploads",
+    bucket: "kompozit",
     folder: "all",
     mime: "all",
   });
