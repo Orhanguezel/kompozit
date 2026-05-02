@@ -31,6 +31,7 @@ import { buildMediaAlt } from '@/lib/media-seo';
 
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 const PRODUCT_PLACEHOLDER_SRC = '/media/product-placeholder.svg';
+const ABOUT_VISUAL_DEFAULT_SRC = '/uploads/kompozit/karbon-fiber-panel-01.jpg';
 
 const NewsletterFormLazy = dynamic(() =>
   import('@/components/sections/NewsletterForm').then((m) => m.NewsletterForm),
@@ -110,12 +111,7 @@ export default async function HomePage({
 
   const visibleProducts = products.length > 0 ? products.slice(0, 6) : getFallbackProducts(locale).slice(0, 6);
   const visibleGalleries = galleries.length > 0 ? galleries.slice(0, 6) : getFallbackGalleries(locale);
-  const aboutVisualRaw =
-    (visibleGalleries[0] as { cover_image?: string | null; imageSrc?: string; image_url?: string })
-      ?.cover_image ||
-    (visibleGalleries[0] as { imageSrc?: string })?.imageSrc ||
-    (visibleGalleries[0] as { image_url?: string })?.image_url ||
-    (visibleProducts[0] as { image_url?: string | null })?.image_url;
+  const aboutVisualRaw = aboutApi?.imageUrl || ABOUT_VISUAL_DEFAULT_SRC;
   const aboutVisualSrc =
     resolvePublicAssetUrl(aboutVisualRaw) ?? aboutVisualRaw ?? GALLERY_PLACEHOLDER_SRC;
 

@@ -33,6 +33,7 @@ type AboutForm = {
   tagline: string;
   intro: string;
   ctaLabel: string;
+  imageUrl?: string;
 };
 
 const EMPTY_ABOUT: AboutForm = { label: "", title: "", tagline: "", intro: "", ctaLabel: "" };
@@ -46,6 +47,7 @@ function toAboutForm(v: unknown): AboutForm {
     tagline: String(o.tagline ?? ""),
     intro: String(o.intro ?? ""),
     ctaLabel: String(o.ctaLabel ?? ""),
+    imageUrl: String(o.imageUrl ?? ""),
   };
 }
 

@@ -503,7 +503,8 @@ VALUES (
     'title',    'Kompozit Teknolojilerinde <em>Mühendislik</em> Disiplini',
     'tagline',  'Bilimin zanaatla buluştuğu nokta',
     'intro',    'Karbon fiberden CTP\'ye kadar tüm kompozit uygulama ihtiyaçlarınızda, tasarımdan seri üretime kadar her aşamada mühendislik odaklı yaklaşımımızla yanınızdayız.',
-    'ctaLabel', 'Daha Fazlası'
+    'ctaLabel', 'Daha Fazlası',
+    'imageUrl',  '/uploads/kompozit/karbon-fiber-panel-01.jpg'
   ),
   NOW(3), NOW(3)
 )
@@ -522,7 +523,8 @@ VALUES (
     'title',    'Engineering <em>Discipline</em> in Composite Technologies',
     'tagline',  'Where science meets craftsmanship',
     'intro',    'From carbon fiber to GRP, we support all your composite application needs with an engineering-led approach from design to serial production.',
-    'ctaLabel', 'Read More'
+    'ctaLabel', 'Read More',
+    'imageUrl',  '/uploads/kompozit/karbon-fiber-panel-01.jpg'
   ),
   NOW(3), NOW(3)
 )

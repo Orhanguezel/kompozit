@@ -40,6 +40,7 @@ export type HomeAboutContent = {
   tagline: string;
   intro: string;
   ctaLabel: string;
+  imageUrl?: string;
 };
 
 export type HomeTestimonialContent = {
@@ -154,7 +155,11 @@ function normalizeAbout(value: unknown): HomeAboutContent | null {
     intro: String(source.intro ?? '').trim(),
     ctaLabel: String(source.ctaLabel ?? '').trim(),
   };
-  return Object.values(about).every(isNonEmptyString) ? about : null;
+  const imageUrl = String(source.imageUrl ?? '').trim();
+  if (imageUrl) about.imageUrl = imageUrl;
+  return [about.label, about.title, about.tagline, about.intro, about.ctaLabel].every(isNonEmptyString)
+    ? about
+    : null;
 }
 
 function normalizeTestimonial(value: unknown): HomeTestimonialContent | null {
