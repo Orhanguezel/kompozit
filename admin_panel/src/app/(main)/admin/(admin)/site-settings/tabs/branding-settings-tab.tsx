@@ -21,6 +21,7 @@ import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 import { type AdminBrandingConfig, DEFAULT_BRANDING } from "@/config/app-config";
 import { useAdminTranslations } from "@/i18n";
 import { useGetSiteSettingAdminByKeyQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
+import { normalizeAdminStoredAssetPath } from "@/lib/admin-asset-url";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 type BrandingForm = {
@@ -63,15 +64,15 @@ function brandingToForm(b: AdminBrandingConfig): BrandingForm {
     app_copyright: b.app_copyright || "",
     html_lang: b.html_lang || "",
     theme_color: b.theme_color || "",
-    favicon_16: b.favicon_16 || "",
-    favicon_32: b.favicon_32 || "",
-    apple_touch_icon: b.apple_touch_icon || "",
+    favicon_16: normalizeAdminStoredAssetPath(b.favicon_16),
+    favicon_32: normalizeAdminStoredAssetPath(b.favicon_32),
+    apple_touch_icon: normalizeAdminStoredAssetPath(b.apple_touch_icon),
     meta_title: b.meta?.title || "",
     meta_description: b.meta?.description || "",
     og_url: b.meta?.og_url || "",
     og_title: b.meta?.og_title || "",
     og_description: b.meta?.og_description || "",
-    og_image: b.meta?.og_image || "",
+    og_image: normalizeAdminStoredAssetPath(b.meta?.og_image),
     twitter_card: b.meta?.twitter_card || "",
   };
 }
@@ -82,16 +83,16 @@ function formToBranding(f: BrandingForm): AdminBrandingConfig {
     app_copyright: f.app_copyright.trim(),
     html_lang: f.html_lang.trim(),
     theme_color: f.theme_color.trim(),
-    favicon_16: f.favicon_16.trim(),
-    favicon_32: f.favicon_32.trim(),
-    apple_touch_icon: f.apple_touch_icon.trim(),
+    favicon_16: normalizeAdminStoredAssetPath(f.favicon_16),
+    favicon_32: normalizeAdminStoredAssetPath(f.favicon_32),
+    apple_touch_icon: normalizeAdminStoredAssetPath(f.apple_touch_icon),
     meta: {
       title: f.meta_title.trim(),
       description: f.meta_description.trim(),
       og_url: f.og_url.trim(),
       og_title: f.og_title.trim(),
       og_description: f.og_description.trim(),
-      og_image: f.og_image.trim(),
+      og_image: normalizeAdminStoredAssetPath(f.og_image),
       twitter_card: f.twitter_card.trim(),
     },
   };

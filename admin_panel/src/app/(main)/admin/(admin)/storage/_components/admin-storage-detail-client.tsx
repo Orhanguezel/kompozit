@@ -38,6 +38,7 @@ import {
   usePatchAssetAdminMutation,
 } from "@/integrations/hooks";
 import type { StorageUpdateInput } from "@/integrations/shared";
+import { normalizeAdminAssetUrl } from "@/lib/admin-asset-url";
 
 type FormData = {
   name: string;
@@ -98,7 +99,7 @@ export default function AdminStorageDetailClient({ id }: { id: string }) {
       });
 
       if (existingItem.url && existingItem.mime.startsWith("image/")) {
-        setPreviewUrl(existingItem.url);
+        setPreviewUrl(normalizeAdminAssetUrl(existingItem.url));
       }
     }
   }, [existingItem, isNew]);
@@ -128,6 +129,7 @@ export default function AdminStorageDetailClient({ id }: { id: string }) {
   };
 
   const busy = isCreating || isUpdating || isDeleting || loadingItem;
+  const currentPreviewUrl = previewUrl || normalizeAdminAssetUrl(existingItem?.url);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -245,16 +247,16 @@ export default function AdminStorageDetailClient({ id }: { id: string }) {
         </Card>
 
         {/* Preview */}
-        {(previewUrl || existingItem?.url) && (
+        {currentPreviewUrl && (
           <Card>
             <CardHeader>
               <CardTitle className="text-base">{t("detail.previewTitle")}</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-center rounded-lg border bg-muted p-8">
-                {previewUrl || existingItem?.url ? (
+                {currentPreviewUrl ? (
                   <img
-                    src={previewUrl || existingItem?.url || ""}
+                    src={currentPreviewUrl}
                     alt="Preview"
                     className="max-h-96 rounded object-contain"
                   />

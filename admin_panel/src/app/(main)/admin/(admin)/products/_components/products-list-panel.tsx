@@ -31,6 +31,7 @@ import {
   useUpdateProductAdminMutation,
 } from "@/integrations/endpoints/admin/products_admin.endpoints";
 import type { AdminProductDto, ProductItemType } from "@/integrations/shared/product_admin.types";
+import { normalizeAdminAssetUrl } from "@/lib/admin-asset-url";
 
 const isTruthy = (v: unknown) => v === 1 || v === true || v === "1" || v === "true";
 
@@ -252,15 +253,16 @@ export default function ProductsListPanel({ itemType }: Props) {
                 items.map((item: AdminProductDto, idx: number) => {
                   const isActive = isTruthy(item.is_active);
                   const isFeatured = isTruthy(item.is_featured);
+                  const imageUrl = normalizeAdminAssetUrl(item.image_url);
 
                   return (
                     <TableRow key={item.id} className={!isActive ? "opacity-50" : ""}>
                       <TableCell className="text-muted-foreground text-sm">{idx + 1}</TableCell>
 
                       <TableCell className="p-1">
-                        {item.image_url ? (
+                        {imageUrl ? (
                           <img
-                            src={item.image_url}
+                            src={imageUrl}
                             alt={item.title || ""}
                             className="h-10 w-10 rounded object-cover border border-border bg-muted"
                           />

@@ -55,6 +55,7 @@ import {
   useListFoldersAdminQuery,
 } from "@/integrations/hooks";
 import type { StorageAsset, StorageListQuery } from "@/integrations/shared";
+import { normalizeAdminAssetUrl } from "@/lib/admin-asset-url";
 import { cn } from "@/lib/utils";
 
 type Filters = {
@@ -416,6 +417,7 @@ export default function AdminStorageClient() {
                     const Icon = getMimeIcon(item.mime);
                     const colorClass = getMimeColor(item.mime);
                     const isSelected = selectedIds.has(item.id);
+                    const itemUrl = normalizeAdminAssetUrl(item.url);
 
                     return (
                       <TableRow key={item.id} className={cn(isSelected && "bg-muted/50")}>
@@ -430,8 +432,8 @@ export default function AdminStorageClient() {
                           </Button>
                         </TableCell>
                         <TableCell>
-                          {item.url && item.mime.startsWith("image/") ? (
-                            <img src={item.url} alt={item.name} className="size-10 rounded object-cover" />
+                          {itemUrl && item.mime.startsWith("image/") ? (
+                            <img src={itemUrl} alt={item.name} className="size-10 rounded object-cover" />
                           ) : (
                             <div className="flex size-10 items-center justify-center rounded bg-muted">
                               <Icon className={cn("size-5", colorClass)} />
@@ -468,9 +470,9 @@ export default function AdminStorageClient() {
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end gap-2">
-                            {item.url && (
+                            {itemUrl && (
                               <Button variant="ghost" size="icon-sm" asChild title={t("list.downloadTitle")}>
-                                <a href={item.url} download target="_blank" rel="noopener noreferrer">
+                                <a href={itemUrl} download target="_blank" rel="noopener noreferrer">
                                   <Download className="size-3.5" />
                                 </a>
                               </Button>
@@ -525,6 +527,7 @@ export default function AdminStorageClient() {
               const Icon = getMimeIcon(item.mime);
               const colorClass = getMimeColor(item.mime);
               const isSelected = selectedIds.has(item.id);
+              const itemUrl = normalizeAdminAssetUrl(item.url);
 
               return (
                 <Card key={item.id} className={cn(isSelected && "ring-2 ring-primary")}>
@@ -535,8 +538,8 @@ export default function AdminStorageClient() {
                         {isSelected ? <CheckSquare className="size-4" /> : <Square className="size-4" />}
                       </Button>
 
-                      {item.url && item.mime.startsWith("image/") ? (
-                        <img src={item.url} alt={item.name} className="size-20 rounded object-cover" />
+                      {itemUrl && item.mime.startsWith("image/") ? (
+                        <img src={itemUrl} alt={item.name} className="size-20 rounded object-cover" />
                       ) : (
                         <div className="flex size-20 items-center justify-center rounded bg-muted">
                           <Icon className={cn("size-8", colorClass)} />
@@ -565,9 +568,9 @@ export default function AdminStorageClient() {
 
                     {/* Actions */}
                     <div className="flex gap-2">
-                      {item.url && (
+                      {itemUrl && (
                         <Button variant="outline" size="sm" asChild className="flex-1 gap-2">
-                          <a href={item.url} download target="_blank" rel="noopener noreferrer">
+                          <a href={itemUrl} download target="_blank" rel="noopener noreferrer">
                             <Download className="size-3.5" />
                             {t("list.downloadTitle")}
                           </a>

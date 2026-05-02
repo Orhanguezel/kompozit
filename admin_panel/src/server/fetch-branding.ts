@@ -4,6 +4,7 @@
 // =============================================================
 
 import { type AdminBrandingConfig, DEFAULT_BRANDING } from "@/config/app-config";
+import { normalizeAdminStoredAssetPath } from "@/lib/admin-asset-url";
 
 const BRANDING_FETCH_TIMEOUT_MS = 3000;
 
@@ -74,10 +75,21 @@ export async function fetchBrandingConfig(): Promise<AdminBrandingConfig> {
 
       if (!branding?.meta?.title) continue;
 
-      return {
+      const merged = {
         ...DEFAULT_BRANDING,
         ...branding,
         meta: { ...DEFAULT_BRANDING.meta, ...branding.meta },
+      };
+
+      return {
+        ...merged,
+        favicon_16: normalizeAdminStoredAssetPath(merged.favicon_16),
+        favicon_32: normalizeAdminStoredAssetPath(merged.favicon_32),
+        apple_touch_icon: normalizeAdminStoredAssetPath(merged.apple_touch_icon),
+        meta: {
+          ...merged.meta,
+          og_image: normalizeAdminStoredAssetPath(merged.meta.og_image),
+        },
       };
     }
 

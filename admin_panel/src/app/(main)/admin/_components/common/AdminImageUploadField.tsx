@@ -28,6 +28,7 @@ import { Input } from "@ensotek/shared-ui/admin/ui/input";
 import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import { useCreateAssetAdminMutation, useListAssetsAdminQuery } from "@/integrations/hooks";
+import { normalizeAdminAssetUrl, normalizeAdminStoredAssetPath } from "@/lib/admin-asset-url";
 import { cn } from "@/lib/utils";
 
 export type AdminImageUploadFieldProps = {
@@ -110,10 +111,10 @@ const toMeta = (metadata?: Record<string, string | number | boolean>) => {
 };
 
 const uniqAppend = (arr: string[], items: string[]) => {
-  const set = new Set(arr.map((x) => norm(x)));
+  const set = new Set(arr.map((x) => normalizeAdminStoredAssetPath(x)));
   const out = [...arr];
   for (const it of items) {
-    const v = norm(it);
+    const v = normalizeAdminStoredAssetPath(it);
     if (v && !set.has(v)) {
       set.add(v);
       out.push(v);
@@ -219,7 +220,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
 
   const meta = useMemo(() => toMeta(metadata), [metadata]);
   const gallery = useMemo(
-    () => (Array.isArray(values) ? [...new Set(values.map(norm).filter(Boolean))] : []),
+    () => (Array.isArray(values) ? [...new Set(values.map(normalizeAdminStoredAssetPath).filter(Boolean))] : []),
     [values],
   );
 
@@ -236,13 +237,14 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
   };
 
   const handleSelectFromLibrary = (url: string) => {
-    if (!url) return;
+    const selectedUrl = normalizeAdminStoredAssetPath(url);
+    if (!selectedUrl) return;
 
     if (multiple && onChangeMultiple) {
-      onChangeMultiple(uniqAppend(gallery, [url]));
+      onChangeMultiple(uniqAppend(gallery, [selectedUrl]));
       toast.success(t("common.imageField.selectedImageAdded"));
     } else if (onChange) {
-      onChange(url);
+      onChange(selectedUrl);
       toast.success(t("common.imageField.selectedImageChosen"));
     }
 
@@ -277,7 +279,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
           folder,
           metadata: meta,
         } as any).unwrap();
-        const url = norm((res as any)?.url);
+        const url = normalizeAdminStoredAssetPath((res as any)?.url);
         if (!url) throw new Error(t("common.imageField.urlMissing"));
         onChange?.(url);
         toast.success(t("common.imageField.imageUploaded"));
@@ -312,7 +314,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
           folder,
           metadata: meta,
         } as any).unwrap();
-        const url = norm((res as any)?.url);
+        const url = normalizeAdminStoredAssetPath((res as any)?.url);
         if (url) {
           uploadedUrls.push(url);
           successCount += 1;
@@ -367,7 +369,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
       );
     }
 
-    const previewUrl = value;
+    const previewUrl = normalizeAdminAssetUrl(value);
 
     return (
       <div className="space-y-2">
@@ -430,9 +432,11 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
 
         <div className="flex flex-col gap-2">
           {gallery.map((u, idx) => {
-            const isCover = !!coverValue && norm(coverValue) === u;
+            const normalizedCover = normalizeAdminStoredAssetPath(coverValue);
+            const isCover = !!normalizedCover && normalizedCover === u;
             const svg = isSvgUrl(u);
-            const previewUrl = svg ? withCloudinarySanitizeIfSvg(u) : u;
+            const assetUrl = normalizeAdminAssetUrl(u);
+            const previewUrl = svg ? withCloudinarySanitizeIfSvg(assetUrl) : assetUrl;
 
             return (
               <div key={`${u}-${idx}`} className={cn("rounded-md border p-2", isCover && "border-primary")}>
@@ -639,8 +643,10 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
                 ) : (
                   <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
                     {assetsData.items.map((asset) => {
-                      const url = asset.url || "";
-                      const isSelected = multiple ? gallery.includes(url) : value === url;
+                      const url = normalizeAdminStoredAssetPath(asset.url || "");
+                      const previewUrl = normalizeAdminAssetUrl(url);
+                      const normalizedValue = normalizeAdminStoredAssetPath(value);
+                      const isSelected = multiple ? gallery.includes(url) : normalizedValue === url;
 
                       return (
                         <button
@@ -655,7 +661,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
                         >
                           <AspectRatio ratio={1}>
                             <img
-                              src={url}
+                              src={previewUrl}
                               alt={asset.name || "Asset"}
                               className="size-full object-cover transition-transform group-hover:scale-105"
                             />

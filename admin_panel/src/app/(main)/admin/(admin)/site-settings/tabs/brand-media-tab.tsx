@@ -23,6 +23,7 @@ import {
   useUpdateSiteSettingAdminMutation,
 } from "@/integrations/hooks";
 import type { SettingValue, SiteSettingRow } from "@/integrations/shared";
+import { normalizeAdminAssetUrl, normalizeAdminStoredAssetPath } from "@/lib/admin-asset-url";
 
 /* ----------------------------- constants ----------------------------- */
 
@@ -112,55 +113,9 @@ function extractUrlFromSettingValue(v: SettingValue): string {
 
 /** Save format: JSON object { url } */
 function toMediaValue(url: string): SettingValue {
-  const u = safeStr(url);
+  const u = normalizeAdminStoredAssetPath(url);
   if (!u) return null;
   return { url: u };
-}
-
-/**
- * Normalize image URL - if relative, try to make it absolute
- * Returns empty string if URL is invalid
- */
-function normalizeImageUrl(rawUrl: string): string {
-  const url = safeStr(rawUrl);
-  if (!url) return "";
-
-  // Already a full URL (http, https, data URI)
-  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:") || url.startsWith("//")) {
-    return url;
-  }
-
-  /*
-  if (typeof window !== 'undefined') {
-    console.warn(
-      `[BrandMediaTab] Relative URL detected: "${url}". ` +
-        'Database should store full URLs. Attempting to resolve...',
-    );
-  }
-  */
-
-  // Try to construct full URL using NEXT_PUBLIC_SITE_URL (public panel URL)
-  // This is where storage/assets are served from
-  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const base = publicSiteUrl.replace(/\/$/, "");
-
-  try {
-    // If URL starts with /, use it directly (absolute path)
-    // Otherwise, assume it's in storage folder
-    const fullUrl = url.startsWith("/") ? `${base}${url}` : `${base}/storage/${url}`;
-
-    /*
-    if (typeof window !== 'undefined') {
-      console.info(`[BrandMediaTab] Resolved "${url}" to: ${fullUrl}`);
-    }
-    */
-    return fullUrl;
-  } catch (_e) {
-    // console.error('[BrandMediaTab] Failed to normalize URL:', e);
-  }
-
-  // Return original if all else fails
-  return url;
 }
 
 /* ----------------------------- component ----------------------------- */
@@ -248,7 +203,7 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
 
   const quickUpload = useCallback(
     async (key: MediaKey, url: string) => {
-      const u = safeStr(url);
+      const u = normalizeAdminStoredAssetPath(url);
       if (!u) return;
 
       try {
@@ -321,7 +276,7 @@ export const BrandMediaTab: React.FC<BrandMediaTabProps> = ({ locale, settingPre
             const hasRow = Boolean(row);
 
             const rowValue = (row?.value ?? null) as SettingValue;
-            const rawUrl = normalizeImageUrl(extractUrlFromSettingValue(rowValue));
+            const rawUrl = normalizeAdminAssetUrl(extractUrlFromSettingValue(rowValue));
 
             const cfg = previewConfig[k];
 

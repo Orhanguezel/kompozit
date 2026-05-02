@@ -36,6 +36,7 @@ import {
   useUpdateSiteSettingAdminMutation,
 } from "@/integrations/hooks";
 import type { SettingValue, SiteSetting } from "@/integrations/shared";
+import { normalizeAdminAssetUrl, normalizeAdminStoredAssetPath } from "@/lib/admin-asset-url";
 import { DEFAULT_SEO_GLOBAL, DEFAULT_SITE_META_DEFAULT_BY_LOCALE } from "@/seo/seoSchema";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
@@ -172,52 +173,9 @@ function extractUrlFromSettingValue(v: SettingValue): string {
 
 /** Save format: JSON object { url } */
 function toMediaValue(url: string): SettingValue {
-  const u = safeStr(url);
+  const u = normalizeAdminStoredAssetPath(url);
   if (!u) return null;
   return { url: u };
-}
-
-/**
- * Normalize image URL - if relative, try to make it absolute
- * Returns empty string if URL is invalid
- */
-function normalizeImageUrl(rawUrl: string): string {
-  const url = safeStr(rawUrl);
-  if (!url) return "";
-
-  // Already a full URL (http, https, data URI)
-  if (url.startsWith("http://") || url.startsWith("https://") || url.startsWith("data:") || url.startsWith("//")) {
-    return url;
-  }
-
-  // Relative URL detected - log warning for debugging
-  if (typeof window !== "undefined") {
-    console.warn(
-      `[SeoSettingsTab] Relative URL detected: "${url}". ` +
-        "Database should store full URLs. Attempting to resolve...",
-    );
-  }
-
-  // Try to construct full URL using NEXT_PUBLIC_SITE_URL (public panel URL)
-  // This is where storage/assets are served from
-  const publicSiteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const base = publicSiteUrl.replace(/\/$/, "");
-
-  try {
-    // If URL starts with /, use it directly (absolute path)
-    // Otherwise, assume it's in storage folder
-    const fullUrl = url.startsWith("/") ? `${base}${url}` : `${base}/storage/${url}`;
-
-    if (typeof window !== "undefined") {
-      console.info(`[SeoSettingsTab] Resolved "${url}" to: ${fullUrl}`);
-    }
-    return fullUrl;
-  } catch (e) {
-    console.error("[SeoSettingsTab] Failed to normalize URL:", e);
-  }
-
-  // Return original if all else fails
-  return url;
 }
 
 /* ----------------------------- component ----------------------------- */
@@ -459,11 +417,11 @@ export const SeoSettingsTab: React.FC<SeoSettingsTabProps> = ({ locale, settingP
 
   const ogUrl = useMemo(() => {
     if (!ogRow) return "";
-    return normalizeImageUrl(extractUrlFromSettingValue(ogRow.value as SettingValue));
+    return normalizeAdminAssetUrl(extractUrlFromSettingValue(ogRow.value as SettingValue));
   }, [ogRow]);
 
   const handleOgChange = async (nextUrl: string) => {
-    const u = safeStr(nextUrl);
+    const u = normalizeAdminStoredAssetPath(nextUrl);
     if (!u) return;
 
     try {

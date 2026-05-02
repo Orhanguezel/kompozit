@@ -52,8 +52,9 @@ export async function generateMetadata({
   const { locale } = await params;
   const siteUrl = siteUrlBase();
 
-  const [seo, siteLogo, legacyLogo, siteOgDefaultImage] = await Promise.all([
+  const [seo, siteMetaDefault, siteLogo, legacyLogo, siteOgDefaultImage] = await Promise.all([
     fetchSetting('seo', locale),
+    fetchSetting('site_meta_default', locale),
     fetchSetting('site_logo', locale),
     fetchSetting('logo', locale),
     fetchSetting('site_og_default_image', locale),
@@ -61,11 +62,25 @@ export async function generateMetadata({
 
   const t = await getTranslations({ locale, namespace: 'seo' });
   const val = readSettingValue(seo);
+  const metaVal = readSettingValue(siteMetaDefault);
   const logoValue = { ...readSettingValue(legacyLogo), ...readSettingValue(siteLogo) };
   const ogValue = readSettingValue(siteOgDefaultImage);
+  const openGraphValue = asObj(val.open_graph);
+  const twitterValue = asObj(val.twitter);
+  const robotsValue = asObj(val.robots);
+  const ogImages = Array.isArray(openGraphValue.images)
+    ? openGraphValue.images.map((item) => asStr(item).trim()).filter(Boolean)
+    : [];
 
-  const title = asStr(val.site_title) || t('defaultTitle');
-  const description = asStr(val.site_description) || t('defaultDescription');
+  const siteName = pickFirstString(val.site_name, logoValue.logo_alt, 'MOE Kompozit');
+  const title = pickFirstString(metaVal.title, val.site_title, val.title_default, t('defaultTitle'));
+  const description = pickFirstString(
+    metaVal.description,
+    val.site_description,
+    val.description,
+    t('defaultDescription'),
+  );
+  const titleTemplate = pickFirstString(val.title_template) || `%s | ${siteName}`;
   const faviconUrl =
     resolvePublicAssetUrl(
       pickFirstString(logoValue.favicon_url, logoValue.favicon, logoValue.icon_url),
@@ -74,13 +89,16 @@ export async function generateMetadata({
     resolvePublicAssetUrl(
       pickFirstString(logoValue.apple_touch_icon_url, logoValue.apple_touch_icon),
     ) ?? undefined;
-  const ogImageRaw = pickFirstString(val.og_image, ogValue.url, ogValue.image_url);
+  const ogImageRaw = pickFirstString(ogImages[0], val.og_image, ogValue.url, ogValue.image_url);
   const ogImage = ogImageRaw
     ? (resolvePublicAssetUrl(ogImageRaw) ?? ogImageRaw)
     : undefined;
+  const robotsNoIndex = robotsValue.noindex === true;
+  const robotsIndex = robotsValue.index !== false && !robotsNoIndex;
+  const robotsFollow = robotsValue.follow !== false;
 
   return {
-    title: { default: title, template: `%s | MOE Kompozit` },
+    title: { default: title, template: titleTemplate },
     description,
     metadataBase: new URL(siteUrl),
     alternates: {
@@ -99,13 +117,21 @@ export async function generateMetadata({
       ...(appleTouchIconUrl ? { apple: appleTouchIconUrl } : {}),
     },
     openGraph: {
-      siteName: 'MOE Kompozit',
+      type: pickFirstString(openGraphValue.type, val.og_type, 'website') as 'website',
+      title,
+      description,
+      siteName,
       ...(ogImage ? { images: [ogImage] } : {}),
     },
     twitter: {
-      card: ogImage ? 'summary_large_image' : 'summary',
+      card: (pickFirstString(twitterValue.card) || (ogImage ? 'summary_large_image' : 'summary')) as
+        | 'summary'
+        | 'summary_large_image',
+      title,
+      description,
       ...(ogImage ? { images: [ogImage] } : {}),
     },
+    robots: { index: robotsIndex, follow: robotsFollow },
   };
 }
 
