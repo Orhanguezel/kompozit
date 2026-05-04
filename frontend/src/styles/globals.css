@@ -49,6 +49,18 @@ html[data-theme-mode='dark'],
   --color-text-primary: var(--cream);
   --color-text-secondary: var(--silver);
   --color-border: rgba(201, 169, 110, 0.15);
+
+  /* Brand / surface / form (dark) */
+  --color-brand: var(--gold);
+  --color-brand-dark: #a88b4a;
+  --color-bg-muted: var(--graphite);
+  --color-bg-dark: var(--carbon);
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-muted: rgba(255, 255, 255, 0.028);
+  --color-text-muted: var(--silver);
+  --color-input-border: rgba(232, 228, 223, 0.32);
+  --color-input-bg: rgba(255, 255, 255, 0.07);
+  --color-input-bg-hover: rgba(255, 255, 255, 0.1);
 }
 
 /* --- LIGHT MODE --- */
@@ -73,6 +85,18 @@ html[data-theme-mode='light'] {
 
   /* Kenarlık */
   --color-border: rgba(201, 169, 110, 0.25);
+
+  /* Brand / surface / form (light) */
+  --color-brand: #b8924a;
+  --color-brand-dark: #9a7b3c;
+  --color-bg-muted: #e8e4df;
+  --color-bg-dark: #1a1814;
+  --color-surface: #ffffff;
+  --color-surface-muted: rgba(26, 24, 20, 0.04);
+  --color-text-muted: #5a5550;
+  --color-input-border: rgba(26, 24, 20, 0.22);
+  --color-input-bg: #ffffff;
+  --color-input-bg-hover: #faf8f5;
 
   /* Kısa alias'lar */
   --carbon: #f5f2ed;
@@ -105,6 +129,116 @@ html[data-theme-mode='light'] ::-webkit-scrollbar-track {
 html[data-theme-mode='light'] ::-webkit-scrollbar-thumb {
   background: var(--color-steel);
   border-color: var(--color-bg);
+}
+
+/* --- SURFACE CARDS & FORM CONTROLS (token contract) --- */
+.surface-card {
+  border: 1px solid var(--color-input-border);
+  background: linear-gradient(
+    165deg,
+    var(--color-surface) 0%,
+    var(--color-surface-muted) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 28px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme-mode='light'] .surface-card {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 6px 20px rgba(26, 24, 20, 0.06);
+}
+
+.surface-card-muted {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+}
+
+input.field-input,
+textarea.field-input,
+select.field-input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--color-input-border);
+  background-color: var(--color-input-bg);
+  color: var(--color-text-primary);
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background-color 0.16s ease;
+}
+
+input.field-input::placeholder,
+textarea.field-input::placeholder {
+  color: var(--color-text-secondary);
+  opacity: 1;
+}
+
+select.field-input {
+  cursor: pointer;
+}
+
+input.field-input:hover:not(:disabled):not(:focus-visible),
+textarea.field-input:hover:not(:disabled):not(:focus-visible),
+select.field-input:hover:not(:disabled):not(:focus-visible) {
+  background-color: var(--color-input-bg-hover);
+  border-color: var(--color-brand);
+}
+
+.field-input:focus-visible {
+  outline: none;
+  border-color: var(--color-brand);
+  box-shadow:
+    0 0 0 1px var(--color-brand),
+    0 0 0 4px rgba(201, 169, 110, 0.22);
+}
+
+html[data-theme-mode='light'] .field-input:focus-visible {
+  box-shadow:
+    0 0 0 1px var(--color-brand),
+    0 0 0 4px rgba(184, 146, 74, 0.22);
+}
+
+.field-input:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+select.field-input option {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.btn-primary {
+  cursor: pointer;
+  border: 1px solid transparent;
+  background: var(--color-brand);
+  color: var(--carbon);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition:
+    background-color 0.16s ease,
+    transform 0.12s ease,
+    box-shadow 0.16s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--gold-bright);
+  box-shadow: 0 4px 18px rgba(201, 169, 110, 0.35);
+}
+
+html[data-theme-mode='light'] .btn-primary {
+  color: #14110d;
+}
+
+html[data-theme-mode='light'] .btn-primary:hover:not(:disabled) {
+  background: var(--color-brand-dark);
+  color: #faf8f5;
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
 }
 
 /* --- TRANSITION GUARD --- */
