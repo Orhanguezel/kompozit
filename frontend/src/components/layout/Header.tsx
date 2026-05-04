@@ -6,7 +6,7 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { ChevronDown, Mail, MoveRight, Phone, X } from 'lucide-react';
-import { localizedPath } from '@/seo';
+import { localizedPath } from '@/seo/helpers';
 
 const ThemeToggle = dynamic(
   () => import('@/components/theme/ThemeToggle').then((m) => m.ThemeToggle),
@@ -56,6 +56,12 @@ function normalizeItems(raw: Record<string, unknown>[], locale: string): MenuIte
     .filter((i) => i.title);
 }
 
+function isSolutionsItem(item: MenuItem): boolean {
+  const path = String(item.url || '').toLowerCase();
+  const normalized = path.replace(/^\/[a-z]{2}(?=\/)/, '');
+  return normalized === '/solutions' || normalized.startsWith('/solutions?');
+}
+
 const navLinkClass =
   "relative text-[0.8rem] font-medium uppercase tracking-[3px] text-[var(--light)] transition-colors duration-300 after:pointer-events-none after:absolute after:bottom-[-4px] after:left-0 after:h-px after:w-0 after:bg-[var(--gold)] after:transition-all after:duration-300 hover:text-[var(--gold)] hover:after:w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--carbon)]";
 
@@ -66,7 +72,7 @@ export function Header({
   activeLocales,
 }: {
   menuItems: Record<string, unknown>[];
-  logo?: { default: string; dark: string; light: string };
+  logo?: { default: string; dark: string; light: string; alt?: string };
   locale: string;
   /** `getLocaleSettings().activeLocales` — dil seçicide yalnızca bunlar listelenir */
   activeLocales?: string[];
@@ -75,6 +81,9 @@ export function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const items = normalizeItems(menuItems, locale);
+  const logoSrc = logo?.dark || logo?.default || logo?.light;
+  const mobileLogoSrc = logo?.light || logo?.default || logo?.dark;
+  const logoAlt = logo?.alt || 'MOE Kompozit';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -97,21 +106,21 @@ export function Header({
           href={localizedPath(locale, '/')}
           className="group relative flex shrink-0 items-center gap-3 transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-carbon)]"
         >
-          {logo ? (
+          {logoSrc ? (
             <div
               suppressHydrationWarning
-              className={`relative shrink-0 transition-all duration-500 ${
+              className={`relative transition-all duration-500 ${
                 scrolled
-                  ? 'h-10 w-[160px] lg:h-11 lg:w-[200px]'
-                  : 'h-14 w-[200px] lg:h-16 lg:w-[260px]'
+                  ? 'h-8 lg:h-9'
+                  : 'h-11 lg:h-12'
               }`}
             >
               <Image
-                src={logo.dark || logo.default}
-                alt="MOE Kompozit"
-                fill
-                sizes="(max-width: 768px) 200px, 260px"
-                className="block object-contain object-left brightness-110 transition-all duration-300 group-hover:brightness-125 drop-shadow-sm"
+                src={logoSrc}
+                alt={logoAlt}
+                width={300}
+                height={80}
+                className="h-full w-auto object-contain object-center transition-all duration-300 group-hover:opacity-80 drop-shadow-sm"
                 priority
                 fetchPriority="high"
               />
@@ -132,12 +141,12 @@ export function Header({
               <li key={item.url} className="group relative">
                 <Link href={item.url!} className={`inline-flex items-center gap-1.5 ${navLinkClass}`}>
                   {item.title}
-                  {(item.children?.length ?? 0) > 0 && (
+                  {(item.children?.length ?? 0) > 0 && !isSolutionsItem(item) && (
                     <ChevronDown className="size-3 opacity-50 transition-transform duration-300 group-hover:rotate-180" />
                   )}
                 </Link>
 
-                {(item.children?.length ?? 0) > 0 && (
+                {(item.children?.length ?? 0) > 0 && !isSolutionsItem(item) && (
                   <div className="invisible absolute -left-4 top-full z-[60] w-72 translate-y-3 pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
                     <div className="rounded-2xl border border-white/10 bg-[var(--color-bg-secondary)]/98 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.6)] backdrop-blur-3xl">
                       {item.children!.map((child) => (
@@ -202,10 +211,24 @@ export function Header({
         {/* Mobile Header Bar */}
         <div className="flex h-24 items-center justify-between border-b border-[var(--gold)]/10 px-6">
            <Link href={localizedPath(locale, '/')} className="flex items-center gap-4" onClick={() => setMobileOpen(false)}>
-              <div className="diamond-branding-icon"></div>
-              <span className="font-display text-[1.4rem] uppercase tracking-[6px] text-[var(--white)]">
-                MOE KOMPOZİT
-              </span>
+              {mobileLogoSrc ? (
+                <div className="relative h-8 w-[140px] shrink-0">
+                  <Image
+                    src={mobileLogoSrc}
+                    alt={logoAlt}
+                    fill
+                    sizes="210px"
+                    className="object-contain object-left"
+                  />
+                </div>
+              ) : (
+                <>
+                  <div className="diamond-branding-icon"></div>
+                  <span className="font-display text-[1.4rem] uppercase tracking-[6px] text-[var(--white)]">
+                    MOE KOMPOZİT
+                  </span>
+                </>
+              )}
            </Link>
            <button
              onClick={() => setMobileOpen(false)}
@@ -227,7 +250,7 @@ export function Header({
                 >
                   {item.title}
                 </Link>
-                {item.children?.length ? (
+                {item.children?.length && !isSolutionsItem(item) ? (
                   <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
                     {item.children.map((child) => (
                       <Link

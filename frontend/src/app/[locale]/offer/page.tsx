@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import { ContentPageHeader } from '@/components/patterns/ContentPageHeader';
 import { InfoListPanel } from '@/components/patterns/InfoListPanel';
 import { OfferFormClient } from '@/components/sections/OfferForm';
-import { JsonLd, buildPageMetadata, jsonld, localizedUrl } from '@/seo';
+import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedUrl } from '@/seo';
 
 export async function generateMetadata({
   params,
@@ -20,13 +20,16 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'offer' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/offer',
-    title: locale.startsWith('en')
-      ? `${t('title')} - Composite Quote, Feasibility and Lead Time`
-      : `${t('title')} - Kompozit Teklif, Uygunluk ve Termin`,
-    description: seoT('offerDescription'),
+    pageKey: 'offer',
+    fallback: {
+      title: locale.startsWith('en')
+        ? `${t('title')} - Composite Quote, Feasibility and Lead Time`
+        : `${t('title')} - Kompozit Teklif, Uygunluk ve Termin`,
+      description: seoT('offerDescription'),
+    },
     noIndex: Boolean(product),
   });
 }
@@ -52,9 +55,12 @@ export default async function OfferPage({
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
       <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-carbon)_80%)] opacity-80" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-bg)_80%)] opacity-80"
+        aria-hidden
+      />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -79,9 +85,9 @@ export default async function OfferPage({
           {summaryItems.map((item) => (
             <article
               key={item.title}
-              className="glass-premium rounded-[2rem] border border-white/5 bg-white/[0.02] p-6"
+              className="surface-card rounded-[2rem] p-6"
             >
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-brand/90">
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-brand)]">
                 {t('offer.summary.title')}
               </p>
               <h2 className="mt-3 text-lg font-bold tracking-tight">{item.title}</h2>
@@ -101,11 +107,11 @@ export default async function OfferPage({
             />
           </aside>
         </div>
-        <section className="mt-12 rounded-[2rem] border border-white/5 bg-white/[0.02] p-8">
+        <section className="surface-card mt-12 rounded-[2rem] p-8">
           <h2 className="text-2xl font-bold tracking-tight">{t('offer.faq.title')}</h2>
           <div className="mt-6 space-y-5">
             {faqEntries.map((item) => (
-              <article key={item.question} className="border-t border-white/5 pt-5 first:border-t-0 first:pt-0">
+              <article key={item.question} className="border-t border-[var(--color-border)] pt-5 first:border-t-0 first:pt-0">
                 <h3 className="text-base font-bold tracking-tight">{item.question}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--color-text-secondary)]">
                   {item.answer}

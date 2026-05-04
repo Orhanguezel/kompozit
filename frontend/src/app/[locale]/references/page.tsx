@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
-import { JsonLd, buildPageMetadata, jsonld, localizedUrl } from '@/seo';
+import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedUrl } from '@/seo';
 import { fetchReferences } from '@/features/references';
 import { getFallbackReferences } from '@/lib/content-fallbacks';
 import { absoluteAssetUrl } from '@/lib/utils';
@@ -22,13 +22,16 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'seo' }),
   ]);
 
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/references',
-    title: locale.startsWith('en')
-      ? `${t('title')} - Enterprise Collaboration and Delivery Discipline`
-      : `${t('title')} - Kurumsal Is Birligi ve Teslim Disiplini`,
-    description: seoT('referencesDescription'),
+    pageKey: 'references',
+    fallback: {
+      title: locale.startsWith('en')
+        ? `${t('title')} - Enterprise Collaboration and Delivery Discipline`
+        : `${t('title')} - Kurumsal Is Birligi ve Teslim Disiplini`,
+      description: seoT('referencesDescription'),
+    },
   });
 }
 
@@ -43,9 +46,12 @@ export default async function ReferencesPage({
   const visibleReferences = references.length > 0 ? references : getFallbackReferences(locale);
 
   return (
-    <div className="min-h-screen bg-[var(--color-carbon)] relative overflow-hidden text-[var(--color-cream)]">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
       <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-carbon)_80%)] opacity-80" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-bg)_80%)] opacity-80"
+        aria-hidden
+      />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -73,7 +79,7 @@ export default async function ReferencesPage({
           />
 
           {references.length === 0 ? (
-            <div className="glass-premium mt-12 rounded-[2rem] p-10 border-white/5 bg-white/[0.02]">
+            <div className="surface-card mt-12 rounded-[2rem] p-10">
               <p className="text-lg font-bold tracking-tight">{t('references.noReferences')}</p>
             </div>
           ) : null}

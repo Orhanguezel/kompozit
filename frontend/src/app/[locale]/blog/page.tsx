@@ -3,7 +3,7 @@ import 'server-only';
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
-import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
+import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { getFallbackBlogPosts } from '@/lib/content-fallbacks';
@@ -36,13 +36,16 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'blog' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/blog',
-    title: locale.startsWith('en')
-      ? `${t('title')} - Composite Engineering and Production Insights`
-      : `${t('title')} - Kompozit Muhendislik ve Uretim Notlari`,
-    description: seoT('blogDescription'),
+    pageKey: 'blog',
+    fallback: {
+      title: locale.startsWith('en')
+        ? `${t('title')} - Composite Engineering and Production Insights`
+        : `${t('title')} - Kompozit Muhendislik ve Uretim Notlari`,
+      description: seoT('blogDescription'),
+    },
   });
 }
 
@@ -58,9 +61,12 @@ export default async function BlogPage({
   const visiblePosts = posts.length > 0 ? posts : fallbackPosts;
 
   return (
-    <div className="min-h-screen bg-[var(--color-carbon)] relative overflow-hidden text-[var(--color-cream)]">
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
       <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-carbon)_85%)] opacity-90" aria-hidden />
+      <div
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,var(--color-bg)_85%)] opacity-90"
+        aria-hidden
+      />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -88,7 +94,7 @@ export default async function BlogPage({
 
           <div className="mt-12">
             {posts.length === 0 && (
-              <div className="glass-premium rounded-[2rem] p-12 text-center border-white/5 bg-white/[0.02] mb-12">
+              <div className="surface-card mb-12 rounded-[2rem] p-12 text-center">
                 <SeoIssueBeacon
                   type="soft-404"
                   pathname={localizedPath(locale, '/blog')}
