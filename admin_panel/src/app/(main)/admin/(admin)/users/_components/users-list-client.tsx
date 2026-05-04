@@ -12,7 +12,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-import { ChevronLeft, ChevronRight, Filter, RefreshCcw, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Filter, Plus, RefreshCcw, Search } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
@@ -138,9 +138,17 @@ export default function UsersListClient() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-1">
-        <h1 className="font-semibold text-lg">{t("list.title")}</h1>
-        <p className="text-muted-foreground text-sm">{t("list.description")}</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="space-y-1">
+          <h1 className="font-semibold text-lg">{t("list.title")}</h1>
+          <p className="text-muted-foreground text-sm">{t("list.description")}</p>
+        </div>
+        <Button asChild className="shrink-0">
+          <Link prefetch={false} href="/admin/users/new">
+            <Plus className="mr-2 size-4" />
+            {t("list.addUserButton")}
+          </Link>
+        </Button>
       </div>
 
       <Card>

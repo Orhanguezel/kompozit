@@ -80,7 +80,7 @@ function getErrMessage(error: unknown, fallback: string): string {
 
 interface Props {
   id: string;
-  itemType?: ProductItemType;
+  itemType: ProductItemType;
 }
 
 // ─── Bileşen ─────────────────────────────────────────────────
@@ -90,7 +90,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
   const router = useRouter();
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
   const isNew = id === "new";
-  const backUrl = itemType === "sparepart" ? "/admin/products?type=sparepart" : "/admin/products";
+  const backUrl = `/admin/products?type=${encodeURIComponent(itemType)}`;
 
   const { localeOptions } = useAdminLocales();
   const [activeLocale, setActiveLocale] = React.useState<string>(adminLocale || "tr");
@@ -101,7 +101,10 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     data: item,
     isFetching,
     refetch,
-  } = useGetProductAdminQuery({ id, locale: activeLocale, item_type: itemType }, { skip: isNew });
+  } = useGetProductAdminQuery(
+    { id, locale: activeLocale, item_type: itemType },
+    { skip: isNew },
+  );
 
   const { data: categories = [] } = useListProductCategoriesAdminQuery(
     { locale: activeLocale },
@@ -216,7 +219,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
       is_featured: formData.is_featured,
       meta_title: formData.meta_title || undefined,
       meta_description: formData.meta_description || undefined,
-      item_type: isNew ? (itemType ?? "product") : undefined,
+      item_type: isNew ? itemType : undefined,
     };
 
     try {
@@ -224,7 +227,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
         const result = await createProduct(payload).unwrap();
         toast.success(t("detail.createSuccess"));
         if (result?.id) {
-          const typeParam = itemType === "sparepart" ? "?type=sparepart" : "";
+          const typeParam = `?type=${encodeURIComponent(itemType)}`;
           router.push(`/admin/products/${result.id}${typeParam}`);
         }
       } else {

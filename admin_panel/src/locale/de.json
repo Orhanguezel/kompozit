@@ -1772,7 +1772,8 @@
           "limit": "Limit: {limit}",
           "previous": "Zurück",
           "next": "Weiter"
-        }
+        },
+        "addUserButton": "Neuer Benutzer"
       },
       "detail": {
         "title": "Benutzerdetails",
@@ -1825,6 +1826,17 @@
           "button": "Benutzer löschen",
           "confirm": "Dieser Benutzer wird gelöscht. Fortfahren?",
           "deleted": "Benutzer gelöscht."
+        },
+        "create": {
+          "title": "Neuer Benutzer",
+          "description": "Konto mit E-Mail und Passwort anlegen; Rolle wählen.",
+          "accountSection": "Konto",
+          "accountSectionDesc": "Pflichtfelder: E-Mail und Passwort (mindestens 8 Zeichen).",
+          "passwordLabel": "Passwort",
+          "submitButton": "Benutzer anlegen",
+          "success": "Benutzer angelegt.",
+          "emailRequired": "E-Mail ist erforderlich.",
+          "userExists": "Diese E-Mail-Adresse ist bereits registriert."
         },
         "errorFallback": "Vorgang fehlgeschlagen. Bitte versuchen Sie es erneut."
       },
@@ -2806,6 +2818,45 @@
           "source": "Quelle",
           "effective": "Effektiv (Zusammenfassung)",
           "actions": "Aktionen"
+        },
+        "inline": {
+          "title": "SEO-Einstellungen",
+          "description": "Pro Seite Titel, Beschreibung, OG-Bild und Indexierungs-Einstellung.",
+          "save": "Speichern",
+          "saveAll": "Alle speichern",
+          "saved": "SEO-Einstellungen gespeichert.",
+          "saveError": "Speichern fehlgeschlagen.",
+          "loading": "Wird geladen...",
+          "dirty": "Nicht gespeichert",
+          "expandAll": "Alle aufklappen",
+          "collapseAll": "Alle einklappen",
+          "fieldTitle": "Titel",
+          "fieldDescription": "Beschreibung",
+          "ogImage": "OG-Bild (1200×630)",
+          "noindex": "Diese Seite vor Suchmaschinen ausblenden (noindex)",
+          "googlePreview": "Google-Vorschau",
+          "socialPreview": "Social-Media-Vorschau",
+          "siteName": "Karbonkompozit",
+          "noDescription": "Noch keine Beschreibung.",
+          "noOgImage": "Noch kein OG-Bild",
+          "placeholderTitle": "Karbonkompozit — Carbon- und Glasfaser-Verbundlösungen",
+          "placeholderDescription": "Kurze Zusammenfassung der Seite — ideal 140-160 Zeichen."
+        },
+        "pageLabels": {
+          "home": "Startseite",
+          "about": "Über uns",
+          "contact": "Kontakt",
+          "products": "Produkte",
+          "product-detail": "Produktdetail",
+          "solutions": "Lösungen",
+          "solution-detail": "Lösungsdetail",
+          "gallery": "Galerie",
+          "gallery-detail": "Galerie-Detail",
+          "references": "Referenzen",
+          "blog": "Blog",
+          "blog-post": "Blogbeitrag",
+          "offer": "Angebot anfordern",
+          "legal": "Rechtliche Seiten"
         }
       },
       "structured": {
@@ -4008,6 +4059,12 @@
         "empty": "Keine Einträge gefunden.",
         "unnamed": "(ohne Titel)",
         "allCategories": "Alle Kategorien",
+        "status": {
+          "active": "Aktiv",
+          "inactive": "Inaktiv",
+          "featured": "Hervorgehoben",
+          "notFeatured": "Normal"
+        },
         "columns": {
           "title": "Titel / Slug",
           "locale": "Sprache",

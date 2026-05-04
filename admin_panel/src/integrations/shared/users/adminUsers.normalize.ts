@@ -3,7 +3,10 @@ import type { AdminUserRaw, AdminUserView, UserRoleName } from "./users";
 
 const asRole = (v: unknown): UserRoleName | null => {
   const s = String(v ?? "").toLowerCase();
-  return s === "admin" || s === "moderator" || s === "user" ? (s as UserRoleName) : null;
+  if (s === "admin" || s === "moderator" || s === "user") return s as UserRoleName;
+  if (s === "editor" || s === "carrier") return "moderator";
+  if (s === "customer" || s === "dealer") return "user";
+  return null;
 };
 
 const toBool = (v: unknown): boolean => (typeof v === "boolean" ? v : Number(v ?? 0) === 1);

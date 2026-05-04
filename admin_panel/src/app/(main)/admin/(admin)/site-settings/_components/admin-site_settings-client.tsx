@@ -10,7 +10,7 @@
 
 import * as React from "react";
 
-import { RefreshCcw, Search } from "lucide-react";
+import { LayoutList, RefreshCcw, Search, SlidersHorizontal } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
@@ -21,6 +21,7 @@ import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import { useAdminTranslations } from "@/i18n";
+import type { TranslateFn } from "@/i18n";
 import { useDeleteSiteSettingAdminMutation, useListSiteSettingsAdminQuery } from "@/integrations/hooks";
 import type { SiteSetting } from "@/integrations/shared";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
@@ -148,6 +149,34 @@ function pickInitialLocale(appLocales: LocaleConfigItem[] | undefined, defaultLo
 
 function editHref(key: string, locale: string) {
   return `/admin/site-settings/${encodeURIComponent(key)}?locale=${encodeURIComponent(locale)}`;
+}
+
+function tabTitle(tab: SettingsTab, t: TranslateFn): string {
+  if (tab === "list") return t("admin.siteSettings.tabs.list");
+  if (tab === "global_list") return t("admin.siteSettings.tabs.globalList");
+  if (tab === "general") return t("admin.siteSettings.tabs.general");
+  if (tab === "seo") return t("admin.siteSettings.tabs.seo");
+  if (tab === "smtp") return t("admin.siteSettings.tabs.smtp");
+  if (tab === "cloudinary") return t("admin.siteSettings.tabs.cloudinary");
+  if (tab === "brand_media") return t("admin.siteSettings.tabs.brandMedia");
+  if (tab === "api") return t("admin.siteSettings.tabs.api");
+  if (tab === "locales") return t("admin.siteSettings.tabs.locales");
+  if (tab === "branding") return t("admin.siteSettings.tabs.branding");
+  return t("admin.siteSettings.tabs.home");
+}
+
+function tabDescription(tab: SettingsTab, t: TranslateFn): string {
+  if (tab === "list") return t("admin.siteSettings.management.localeRecords");
+  if (tab === "global_list") return t("admin.siteSettings.management.globalRecords");
+  if (tab === "general") return t("admin.siteSettings.general.title");
+  if (tab === "seo") return t("admin.siteSettings.tabs.seo");
+  if (tab === "smtp") return t("admin.siteSettings.tabs.smtp");
+  if (tab === "cloudinary") return t("admin.siteSettings.cloudinary.title");
+  if (tab === "brand_media") return t("admin.siteSettings.brandMedia.title");
+  if (tab === "api") return t("admin.siteSettings.api.title");
+  if (tab === "locales") return t("admin.siteSettings.locales.title");
+  if (tab === "branding") return t("admin.siteSettings.branding.title");
+  return t("admin.siteSettings.management.homeContent");
 }
 
 /* ----------------------------- list panels ----------------------------- */
@@ -279,7 +308,7 @@ export default function AdminSiteSettingsClient() {
   return (
     <div className="w-full max-w-full space-y-6 overflow-x-hidden px-2 pb-6 md:px-0 md:pb-0">
       {isScopedBrand ? (
-        <div className="rounded-xl border border-orange-200 bg-gradient-to-r from-orange-50 via-amber-50 to-white px-4 py-3 shadow-sm">
+        <div className="rounded-xl border border-orange-200 bg-linear-to-r from-orange-50 via-amber-50 to-white px-4 py-3 shadow-sm">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="default" className="bg-orange-600 text-white hover:bg-orange-600">
               {String(brand || "").toUpperCase()} Workspace
@@ -412,20 +441,8 @@ export default function AdminSiteSettingsClient() {
         <CardHeader className="gap-2">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">
-              <CardTitle className="text-base">{t("admin.siteSettings.management.title")}</CardTitle>
-              <CardDescription>
-                {tab === "list" ? t("admin.siteSettings.management.localeRecords") : null}
-                {tab === "global_list" ? t("admin.siteSettings.management.globalRecords") : null}
-                {tab === "general" ? t("admin.siteSettings.general.title") : null}
-                {tab === "seo" ? t("admin.siteSettings.tabs.seo") : null}
-                {tab === "smtp" ? t("admin.siteSettings.tabs.smtp") : null}
-                {tab === "cloudinary" ? t("admin.siteSettings.cloudinary.title") : null}
-                {tab === "brand_media" ? t("admin.siteSettings.brandMedia.title") : null}
-                {tab === "api" ? t("admin.siteSettings.api.title") : null}
-                {tab === "locales" ? t("admin.siteSettings.locales.title") : null}
-                {tab === "branding" ? t("admin.siteSettings.branding.title") : null}
-                {tab === "home" ? t("admin.siteSettings.management.homeContent") : null}
-              </CardDescription>
+              <CardTitle className="text-base">{tabTitle(tab, t)}</CardTitle>
+              <CardDescription>{tabDescription(tab, t)}</CardDescription>
             </div>
 
             <div className="flex items-center gap-2">
@@ -442,6 +459,29 @@ export default function AdminSiteSettingsClient() {
         </CardHeader>
 
         <CardContent className="space-y-4">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+            <div className="rounded-lg border bg-muted/30 p-3">
+              <div className="mb-1 flex items-center gap-2 font-medium text-sm">
+                <LayoutList className="size-4 text-muted-foreground" />
+                {t("admin.siteSettings.management.title")}
+              </div>
+              <div className="text-muted-foreground text-xs">
+                {tabDescription(tab, t)}
+              </div>
+            </div>
+            <div className="rounded-lg border bg-muted/30 p-3">
+              <div className="mb-1 flex items-center gap-2 font-medium text-sm">
+                <SlidersHorizontal className="size-4 text-muted-foreground" />
+                {t("admin.siteSettings.filters.title")}
+              </div>
+              <div className="text-muted-foreground text-xs">
+                {isGlobalTab
+                  ? t("admin.siteSettings.filters.languageDisabledNote")
+                  : t("admin.siteSettings.filters.searchPlaceholder")}
+              </div>
+            </div>
+          </div>
+
           {!localeReady ? (
             <div className="rounded-md border p-4 text-muted-foreground text-sm">
               {t("admin.siteSettings.management.loadingMeta")}

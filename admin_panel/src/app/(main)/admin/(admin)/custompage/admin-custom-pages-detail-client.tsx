@@ -54,9 +54,12 @@ function getErrMessage(err: unknown, t: TranslateFn): string {
 export default function AdminCustomPageDetailClient({
   id,
   initialModuleKey = "",
+  initialLocaleHint = "",
 }: {
   id: string;
   initialModuleKey?: string;
+  /** URL ?locale=tr — liste ile aynı dilde düzenleme */
+  initialLocaleHint?: string;
 }) {
   const router = useRouter();
   const t = useAdminT();
@@ -79,11 +82,13 @@ export default function AdminCustomPageDetailClient({
     if (!localeOptions || localeOptions.length === 0) return;
 
     setActiveLocale((prev) => {
+      const fromUrl = localeShortClient(initialLocaleHint);
+      if (fromUrl && localeSet.has(fromUrl)) return fromUrl;
       const p = localeShortClient(prev);
       if (p && localeSet.has(p)) return p;
       return localeShortClientOr(apiLocaleFromDb, "tr");
     });
-  }, [localeOptions, localeSet, apiLocaleFromDb]);
+  }, [localeOptions, localeSet, apiLocaleFromDb, initialLocaleHint]);
 
   const queryLocale = React.useMemo(() => {
     const l = localeShortClient(activeLocale);
@@ -194,7 +199,10 @@ export default function AdminCustomPageDetailClient({
         }
 
         toast.success(t("admin.customPage.detail.createSuccess"));
-        router.replace(`/admin/custompage/${encodeURIComponent(nextId)}`);
+        const locQs = encodeURIComponent(loc);
+        const mod = String(values.module_key ?? "").trim();
+        const modQs = mod ? `&module=${encodeURIComponent(mod)}` : "";
+        router.replace(`/admin/custompage/${encodeURIComponent(nextId)}?locale=${locQs}${modQs}`);
         router.refresh();
         return;
       }

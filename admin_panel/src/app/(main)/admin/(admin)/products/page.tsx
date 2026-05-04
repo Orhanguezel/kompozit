@@ -1,4 +1,4 @@
-import type { ProductItemType } from "@/integrations/shared/product_admin.types";
+import { resolveKompozitAdminProductItemType } from "@/lib/kompozit-product-item-type";
 
 import ProductsListPanel from "./_components/products-list-panel";
 
@@ -8,9 +8,6 @@ interface Props {
 
 export default async function Page({ searchParams }: Props) {
   const { type } = await searchParams;
-  const validTypes: ProductItemType[] = ["product", "sparepart", "kompozit"];
-  const itemType: ProductItemType | undefined = validTypes.includes(type as ProductItemType)
-    ? (type as ProductItemType)
-    : undefined;
+  const itemType = resolveKompozitAdminProductItemType(type);
   return <ProductsListPanel itemType={itemType} />;
 }

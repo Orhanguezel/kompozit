@@ -1,0 +1,71 @@
+/* src/styles/presets/carbon.css */
+
+[data-theme-preset="carbon"] {
+  --radius: 0.4rem;
+  
+  /* Light Mode for Carbon Preset */
+  --background: oklch(0.98 0.005 285);
+  --foreground: oklch(0.12 0.01 285);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.12 0.01 285);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.12 0.01 285);
+  
+  --primary: oklch(0.7 0.15 30); /* Richer copper in light mode */
+  --primary-foreground: oklch(0.98 0.005 285);
+  
+  --secondary: oklch(0.92 0.01 285);
+  --secondary-foreground: oklch(0.2 0.01 285);
+  
+  --muted: oklch(0.92 0.01 285);
+  --muted-foreground: oklch(0.45 0.02 285);
+  
+  --accent: oklch(0.92 0.01 285);
+  --accent-foreground: oklch(0.2 0.01 285);
+  
+  --border: oklch(0.88 0.01 285);
+  --input: oklch(0.88 0.01 285);
+  --ring: oklch(0.7 0.15 30);
+  
+  --sidebar: oklch(0.96 0.005 285);
+  --sidebar-foreground: oklch(0.2 0.01 285);
+  --sidebar-primary: oklch(0.7 0.15 30);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.92 0.01 285);
+  --sidebar-accent-foreground: oklch(0.12 0.01 285);
+  --sidebar-border: oklch(0.88 0.01 285);
+}
+
+.dark[data-theme-preset="carbon"],
+.dark [data-theme-preset="carbon"] {
+  --background: oklch(0.1 0.01 285); /* Deepest Onyx */
+  --foreground: oklch(0.95 0.005 285);
+  --card: oklch(0.15 0.015 285); /* Carbon Graphite */
+  --card-foreground: oklch(0.95 0.005 285);
+  --popover: oklch(0.15 0.015 285);
+  --popover-foreground: oklch(0.95 0.005 285);
+  
+  --primary: oklch(0.75 0.12 85); /* Industrial Gold */
+  --primary-foreground: oklch(0.1 0.01 285);
+  
+  --secondary: oklch(0.2 0.015 285);
+  --secondary-foreground: oklch(0.95 0.005 285);
+  
+  --muted: oklch(0.2 0.015 285);
+  --muted-foreground: oklch(0.55 0.01 285);
+  
+  --accent: oklch(0.2 0.015 285);
+  --accent-foreground: oklch(0.95 0.005 285);
+  
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.75 0.12 85);
+  
+  --sidebar: oklch(0.12 0.01 285);
+  --sidebar-foreground: oklch(0.9 0.01 285);
+  --sidebar-primary: oklch(0.75 0.12 85);
+  --sidebar-primary-foreground: oklch(0.1 0.01 285);
+  --sidebar-accent: oklch(0.18 0.02 285);
+  --sidebar-accent-foreground: oklch(0.95 0.01 285);
+  --sidebar-border: oklch(1 0 0 / 6%);
+}

@@ -1,7 +1,7 @@
 // =============================================================
 // FILE: src/app/(main)/admin/_components/common/useAdminLocales.ts
 // guezelwebdesign – Admin Locales (Centralized)
-// Source: site_settings.app_locales + site_settings.default_locale
+// Source: site_settings.{prefix}app_locales (Kompozit: kompozit__app_locales)
 // - No static locale map
 // - Produces AdminLocaleOption[]
 // =============================================================
@@ -101,8 +101,12 @@ export type UseAdminLocalesResult = {
   fetching: boolean;
 };
 
+/** Kompozit admin tüm site_settings anahtarlarını bu namespace ile saklar. */
+const KOMPOZIT_SITE_SETTINGS_PREFIX = "kompozit__";
+
 export function useAdminLocales(settingPrefix?: string): UseAdminLocalesResult {
-  const appLocalesKey = `${settingPrefix || ""}app_locales`;
+  const effectivePrefix = settingPrefix !== undefined ? settingPrefix : KOMPOZIT_SITE_SETTINGS_PREFIX;
+  const appLocalesKey = `${effectivePrefix}app_locales`;
   const {
     data: rows,
     isLoading,

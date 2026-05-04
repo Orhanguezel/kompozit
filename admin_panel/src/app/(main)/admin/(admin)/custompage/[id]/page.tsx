@@ -7,7 +7,9 @@
 import AdminCustomPageDetailClient from "../admin-custom-pages-detail-client";
 
 type Params = { id: string };
-type SearchParams = Promise<{ module?: string | string[] }> | { module?: string | string[] };
+type SearchParams =
+  | Promise<{ module?: string | string[]; locale?: string | string[] }>
+  | { module?: string | string[]; locale?: string | string[] };
 
 // Next.js bazı sürümlerde params'ı Promise olarak verir (sync-dynamic-apis hatası)
 export default async function Page({
@@ -20,7 +22,12 @@ export default async function Page({
   const p = (await params) as Params;
   const s = (await searchParams) ?? {};
   const rawModule = Array.isArray(s.module) ? s.module[0] : s.module;
+  const rawLocale = Array.isArray(s.locale) ? s.locale[0] : s.locale;
   return (
-    <AdminCustomPageDetailClient id={p.id} initialModuleKey={typeof rawModule === "string" ? rawModule.trim() : ""} />
+    <AdminCustomPageDetailClient
+      id={p.id}
+      initialModuleKey={typeof rawModule === "string" ? rawModule.trim() : ""}
+      initialLocaleHint={typeof rawLocale === "string" ? rawLocale.trim() : ""}
+    />
   );
 }

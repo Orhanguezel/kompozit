@@ -1,6 +1,7 @@
 // src/integrations/endpoints/admin/auth_admin.endpoints.ts
 import { baseApi } from "@/integrations/baseApi";
 import type {
+  AdminCreateUserBody,
   AdminRemoveUserBody,
   AdminSetActiveBody,
   AdminSetPasswordBody,
@@ -10,9 +11,19 @@ import type {
   AdminUsersListParams,
   AdminUserView,
 } from "@/integrations/shared";
+import { uiRolesToApiRoles } from "@/lib/admin-user-role-api";
+import type { UserRoleName } from "@/integrations/shared/users/users";
 import { normalizeAdminUser } from "@/integrations/shared";
 
 const ADMIN_USERS_BASE = "/admin/users";
+
+/** Liste filtresi: UI rolleri → DB enum (backend adminListUsersQuery) */
+function listRoleToApi(role: UserRoleName | undefined): string | undefined {
+  if (!role) return undefined;
+  if (role === "admin") return "admin";
+  if (role === "moderator") return "editor";
+  return "customer";
+}
 
 type MaybeUsersListResponse = {
   data?: unknown;
@@ -48,7 +59,8 @@ export const authAdminApi = baseApi.injectEndpoints({
         const sp = new URLSearchParams();
 
         if (p.q) sp.set("q", p.q);
-        if (p.role) sp.set("role", p.role);
+        const apiRole = listRoleToApi(p.role);
+        if (apiRole) sp.set("role", apiRole);
         if (typeof p.is_active === "boolean") sp.set("is_active", p.is_active ? "1" : "0");
         if (p.limit != null) sp.set("limit", String(p.limit));
         if (p.offset != null) sp.set("offset", String(p.offset));
@@ -68,6 +80,26 @@ export const authAdminApi = baseApi.injectEndpoints({
               { type: "AdminUsers" as const, id: "LIST" },
             ]
           : [{ type: "AdminUsers" as const, id: "LIST" }],
+    }),
+
+    /** POST /users — admin yeni kullanıcı */
+    adminCreateUser: b.mutation<AdminUserView, AdminCreateUserBody>({
+      query: (body) => {
+        const apiRoles = uiRolesToApiRoles(body.roles ?? ["user"]);
+        return {
+          url: ADMIN_USERS_BASE,
+          method: "POST",
+          body: {
+            email: body.email.trim(),
+            password: body.password,
+            full_name: body.full_name?.trim() || undefined,
+            phone: body.phone?.trim() || undefined,
+            roles: apiRoles,
+          },
+        };
+      },
+      transformResponse: (res: unknown): AdminUserView => normalizeAdminUser(unwrapUser(res)),
+      invalidatesTags: [{ type: "AdminUsers" as const, id: "LIST" }],
     }),
 
     /** GET /users/:id */
@@ -110,7 +142,7 @@ export const authAdminApi = baseApi.injectEndpoints({
       query: ({ id, roles }) => ({
         url: `${ADMIN_USERS_BASE}/${encodeURIComponent(id)}/roles`,
         method: "POST",
-        body: { roles },
+        body: { roles: uiRolesToApiRoles(roles) },
       }),
       transformResponse: () => ({ ok: true as const }),
       invalidatesTags: (_r, _e, arg) => [
@@ -153,6 +185,7 @@ export const authAdminApi = baseApi.injectEndpoints({
 export const {
   useAdminListQuery,
   useAdminGetQuery,
+  useAdminCreateUserMutation,
   useAdminUpdateUserMutation,
   useAdminSetActiveMutation,
   useAdminSetRolesMutation,
@@ -163,6 +196,7 @@ export const {
 // Legacy/admin-panel aliases
 export const useListUsersAdminQuery = useAdminListQuery;
 export const useGetUserAdminQuery = useAdminGetQuery;
+export const useCreateUserAdminMutation = useAdminCreateUserMutation;
 export const useUpdateUserAdminMutation = useAdminUpdateUserMutation;
 export const useSetUserActiveAdminMutation = useAdminSetActiveMutation;
 export const useSetUserRolesAdminMutation = useAdminSetRolesMutation;

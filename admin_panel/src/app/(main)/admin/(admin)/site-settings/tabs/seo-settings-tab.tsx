@@ -1,755 +1,421 @@
 // =============================================================
-// FILE: src/components/admin/site-settings/tabs/SeoSettingsTab.tsx
-// guezelwebdesign – SEO Ayarları (GLOBAL '*' + Localized Override)
-// ✅ MODAL KALDIRILDI
-// - “Düzenle” artık /admin/site-settings/[id]?locale=... form sayfasına gider
-//
-// FIXES (korundu):
-// - Locale change => refetch (stale view engeli)
-// - RTK Query: refetchOnMountOrArgChange (global + locale)
-// - Deterministic preview
-// - site_meta_default GLOBAL(*) olamaz (override/create/restore guard)
-//
-// NEW:
-// - Global OG default image (site_og_default_image, locale='*')
-//   bu tab üzerinden de AdminImageUploadField ile yönetilebilir.
+// FILE: src/app/(main)/admin/(admin)/site-settings/tabs/seo-settings-tab.tsx
+// SEO Ayarları — Sayfa-bazlı inline düzenleme + canlı önizleme
+// (goldmoodastro pattern; kompozit tokens & pages)
 // =============================================================
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+"use client";
 
-import Link from "next/link";
+import React, { useMemo, useState } from "react";
 
-import { Search } from "lucide-react";
-import { toast } from "sonner";
-
-import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
 import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
 import { Button } from "@ensotek/shared-ui/admin/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@ensotek/shared-ui/admin/ui/card";
 import { Input } from "@ensotek/shared-ui/admin/ui/input";
 import { Label } from "@ensotek/shared-ui/admin/ui/label";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@ensotek/shared-ui/admin/ui/table";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
+import { ChevronDown, ChevronUp, Globe, Save } from "lucide-react";
+import { toast } from "sonner";
+
+import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
 import { useAdminTranslations } from "@/i18n";
-import {
-  useDeleteSiteSettingAdminMutation,
-  useListSiteSettingsAdminQuery,
-  useUpdateSiteSettingAdminMutation,
-} from "@/integrations/hooks";
-import type { SettingValue, SiteSetting } from "@/integrations/shared";
-import { normalizeAdminAssetUrl, normalizeAdminStoredAssetPath } from "@/lib/admin-asset-url";
-import { DEFAULT_SEO_GLOBAL, DEFAULT_SITE_META_DEFAULT_BY_LOCALE } from "@/seo/seoSchema";
+import { useGetSiteSettingAdminByKeyQuery, useUpdateSiteSettingAdminMutation } from "@/integrations/hooks";
+import { cn } from "@/lib/utils";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
-/* ----------------------------- helpers ----------------------------- */
+// karbonkompozit.com.tr sayfa haritası
+const PAGE_KEYS = [
+  { key: "home", path: "/" },
+  { key: "about", path: "/about" },
+  { key: "contact", path: "/contact" },
+  { key: "products", path: "/products" },
+  { key: "product-detail", path: "/products/[slug]" },
+  { key: "solutions", path: "/solutions" },
+  { key: "solution-detail", path: "/solutions/[slug]" },
+  { key: "gallery", path: "/gallery" },
+  { key: "gallery-detail", path: "/gallery/[slug]" },
+  { key: "references", path: "/references" },
+  { key: "blog", path: "/blog" },
+  { key: "blog-post", path: "/blog/[slug]" },
+  { key: "offer", path: "/offer" },
+  { key: "legal", path: "/legal/[slug]" },
+] as const;
 
-function stringifyValuePretty(v: SettingValue): string {
-  if (v === null || v === undefined) return "";
-  if (typeof v === "string" || typeof v === "number" || typeof v === "boolean") return String(v);
-  try {
-    return JSON.stringify(v, null, 2);
-  } catch {
-    return String(v);
-  }
-}
+const SITE_DOMAIN = "www.karbonkompozit.com.tr";
+const SITE_NAME_FALLBACK = "Karbonkompozit";
 
-function isSeoKey(key: string): boolean {
-  const k = String(key || "")
-    .trim()
-    .toLowerCase();
-  if (!k) return false;
-
-  return (
-    k === "seo" ||
-    k === "site_seo" ||
-    k === "site_meta_default" ||
-    k.startsWith("seo_") ||
-    k.startsWith("seo|") ||
-    k.startsWith("site_seo|") ||
-    k.startsWith("ui_seo") ||
-    k.startsWith("ui_seo_")
-  );
-}
-
-const PRIMARY_SEO_KEYS = ["seo", "site_seo", "site_meta_default"] as const;
-
-function orderSeoKeys(keys: string[]): string[] {
-  const uniqKeys = Array.from(new Set(keys.filter(Boolean)));
-  const primary = PRIMARY_SEO_KEYS.filter((k) => uniqKeys.includes(k));
-  const rest = uniqKeys.filter((k) => !PRIMARY_SEO_KEYS.includes(k as any)).sort((a, b) => a.localeCompare(b));
-  return [...primary, ...rest];
-}
-
-type RowGroup = {
-  key: string;
-  globalRow?: SiteSetting; // locale='*'
-  localeRow?: SiteSetting; // locale='{selected}'
-  effectiveValue: SettingValue | undefined;
-  effectiveSource: "locale" | "global" | "none";
+type PageSeo = {
+  title: string;
+  description: string;
+  og_image: string;
+  no_index: boolean;
 };
 
-function buildGroups(rows: any, locale: string): RowGroup[] {
-  const seoRows = rows.filter((r: any) => r && isSeoKey(r.key));
-  const keys = orderSeoKeys(seoRows.map((r: any) => r.key));
-
-  const byKey = new Map<string, { global?: SiteSetting; local?: SiteSetting }>();
-  for (const r of seoRows) {
-    const entry = byKey.get(r.key) || {};
-    if (r.locale === "*") entry.global = r;
-    if (r.locale === locale) entry.local = r;
-    byKey.set(r.key, entry);
-  }
-
-  return keys.map((k) => {
-    const entry = byKey.get(k) || {};
-    const effectiveSource: RowGroup["effectiveSource"] = entry.local ? "locale" : entry.global ? "global" : "none";
-
-    const effectiveValue =
-      effectiveSource === "locale"
-        ? entry.local?.value
-        : effectiveSource === "global"
-          ? entry.global?.value
-          : undefined;
-
-    return {
-      key: k,
-      globalRow: entry.global,
-      localeRow: entry.local,
-      effectiveSource,
-      effectiveValue,
-    };
-  });
-}
-
-function preview(v: SettingValue | undefined): string {
-  if (v === undefined) return "";
-  const pretty = stringifyValuePretty(v);
-  if (pretty.length <= 180) return pretty;
-  return `${pretty.slice(0, 180)}...`;
-}
-
-function isPrimaryKey(k: string) {
-  return k === "seo" || k === "site_seo" || k === "site_meta_default";
-}
-
-function getEditHref(key: string, targetLocale: string) {
-  return `/admin/site-settings/${encodeURIComponent(key)}?locale=${encodeURIComponent(targetLocale)}`;
-}
-
-/* ----- media helpers (OG default image) ----- */
-
-const safeStr = (v: unknown) => (v === null || v === undefined ? "" : String(v).trim());
-
-/**
- * DB'de media value:
- *  - string url
- *  - object: { url: "..." }
- *  - stringified json: "{ "url": "..." }"
- */
-function extractUrlFromSettingValue(v: SettingValue): string {
-  if (v === null || v === undefined) return "";
-
+function coerce(v: unknown): unknown {
   if (typeof v === "string") {
-    const s = v.trim();
-    if (!s) return "";
-
-    const looksJson = (s.startsWith("{") && s.endsWith("}")) || (s.startsWith("[") && s.endsWith("]"));
-
-    if (!looksJson) return s;
-
     try {
-      const parsed = JSON.parse(s);
-      return safeStr((parsed as any)?.url) || "";
+      return JSON.parse(v);
     } catch {
-      return s;
+      return v;
     }
   }
+  return v;
+}
 
-  if (typeof v === "object") {
-    return safeStr((v as any)?.url) || "";
+function extractPages(raw: any): Record<string, PageSeo> {
+  const obj = (coerce(raw?.value ?? raw) as Record<string, any>) ?? {};
+  const result: Record<string, PageSeo> = {};
+  for (const cfg of PAGE_KEYS) {
+    const p = obj[cfg.key];
+    result[cfg.key] = {
+      title: String(p?.title ?? ""),
+      description: String(p?.description ?? ""),
+      og_image: String(p?.og_image ?? ""),
+      no_index: Boolean(p?.no_index),
+    };
   }
-
-  return "";
+  return result;
 }
-
-/** Save format: JSON object { url } */
-function toMediaValue(url: string): SettingValue {
-  const u = normalizeAdminStoredAssetPath(url);
-  if (!u) return null;
-  return { url: u };
-}
-
-/* ----------------------------- component ----------------------------- */
 
 export type SeoSettingsTabProps = {
-  locale: string; // selected locale from header
+  locale: string;
   settingPrefix?: string;
 };
 
 export const SeoSettingsTab: React.FC<SeoSettingsTabProps> = ({ locale, settingPrefix }) => {
-  const [search, setSearch] = useState("");
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
   const t = useAdminTranslations(adminLocale || undefined);
-  const withPrefix = React.useCallback((key: string) => `${settingPrefix || ""}${key}`, [settingPrefix]);
-  const stripPrefix = React.useCallback(
-    (key: string) => (settingPrefix && key.startsWith(settingPrefix) ? key.slice(settingPrefix.length) : key),
-    [settingPrefix],
+  const fullKey = `${settingPrefix || ""}seo_pages`;
+
+  const { data, isLoading, isFetching, refetch } = useGetSiteSettingAdminByKeyQuery(
+    { key: fullKey, locale },
+    { refetchOnMountOrArgChange: true },
   );
-
-  const copyToClipboard = React.useCallback(
-    async (text: string) => {
-      const val = safeStr(text);
-      if (!val) return;
-
-      try {
-        await navigator.clipboard.writeText(val);
-        toast.success(t("admin.siteSettings.messages.copied"));
-      } catch {
-        toast.error(t("admin.siteSettings.messages.copyError"));
-      }
-    },
-    [t],
-  );
-
-  // ✅ Query args
-  const listArgsGlobal = useMemo(() => {
-    const q = search.trim() || undefined;
-    return { locale: "*", q, prefix: settingPrefix || undefined };
-  }, [search, settingPrefix]);
-
-  const listArgsLocale = useMemo(() => {
-    const q = search.trim() || undefined;
-    return { locale, q, prefix: settingPrefix || undefined };
-  }, [locale, search, settingPrefix]);
-
-  // OG default image (GLOBAL '*') – sadece site_og_default_image
-  const ogArgs = useMemo(
-    () => ({
-      locale: "*",
-      // IMPORTANT: "as const" KULLANMIYORUZ; ListParams.keys => string[]
-      keys: [withPrefix("site_og_default_image")],
-      sort: "key" as const,
-      order: "asc" as const,
-      limit: 1,
-      offset: 0,
-    }),
-    [withPrefix],
-  );
-
-  // ✅ IMPORTANT: refetchOnMountOrArgChange fixes stale locale switching in this tab
-  const qGlobal = useListSiteSettingsAdminQuery(listArgsGlobal, {
-    skip: !locale,
-    refetchOnMountOrArgChange: true,
-  });
-
-  const qLocale = useListSiteSettingsAdminQuery(listArgsLocale, {
-    skip: !locale,
-    refetchOnMountOrArgChange: true,
-  });
-
-  const qOg = useListSiteSettingsAdminQuery(ogArgs, {
-    refetchOnMountOrArgChange: true,
-  });
-
-  const rowsMerged = useMemo(() => {
-    const g = Array.isArray(qGlobal.data) ? qGlobal.data : [];
-    const l = Array.isArray(qLocale.data) ? qLocale.data : [];
-    return [...g, ...l].map((row) => ({ ...row, key: stripPrefix(String(row.key || "")) }));
-  }, [qGlobal.data, qLocale.data, stripPrefix]);
-
-  const groups = useMemo(() => {
-    const arr = rowsMerged || [];
-    const s = search.trim().toLowerCase();
-
-    const filtered =
-      s && s.length >= 2
-        ? arr.filter((r) => {
-            const k = String(r?.key || "").toLowerCase();
-            const v = stringifyValuePretty(r?.value as any).toLowerCase();
-            return k.includes(s) || v.includes(s);
-          })
-        : arr;
-
-    return buildGroups(filtered, locale);
-  }, [rowsMerged, locale, search]);
 
   const [updateSetting, { isLoading: isSaving }] = useUpdateSiteSettingAdminMutation();
-  const [deleteSetting, { isLoading: isDeleting }] = useDeleteSiteSettingAdminMutation();
+  const busy = isLoading || isFetching || isSaving;
 
-  const busy =
-    qGlobal.isLoading ||
-    qLocale.isLoading ||
-    qOg.isLoading ||
-    qGlobal.isFetching ||
-    qLocale.isFetching ||
-    qOg.isFetching ||
-    isSaving ||
-    isDeleting;
+  const serverPages = useMemo(() => extractPages(data), [data]);
+  const [localPages, setLocalPages] = useState<Record<string, PageSeo> | null>(null);
+  const [expandedKeys, setExpandedKeys] = useState<Set<string>>(new Set(["home"]));
 
-  const refetchAll = useCallback(async () => {
-    await Promise.all([qGlobal.refetch(), qLocale.refetch(), qOg.refetch()]);
-    // qGlobal/qLocale/qOg are intentionally excluded: their refetch() is stable
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  React.useEffect(() => {
+    if (data) setLocalPages(extractPages(data));
+  }, [data]);
 
-  // ✅ Locale changed => refetch; prevents “previous locale view”
-  useEffect(() => {
-    if (!locale) return;
-    void refetchAll();
-    // refetchAll is stable (empty deps useCallback), locale is the real trigger
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [locale]);
+  const pages = localPages ?? serverPages;
 
-  const deleteRow = async (key: string, targetLocale: string) => {
-    const ok = window.confirm(t("admin.siteSettings.seo.deleteConfirm", { key, locale: targetLocale }));
-    if (!ok) return;
+  const toggleExpand = (key: string) => {
+    setExpandedKeys((prev) => {
+      const next = new Set(prev);
+      if (next.has(key)) next.delete(key);
+      else next.add(key);
+      return next;
+    });
+  };
 
+  const expandAll = () => setExpandedKeys(new Set(PAGE_KEYS.map((c) => c.key)));
+  const collapseAll = () => setExpandedKeys(new Set());
+
+  const updatePage = (key: string, patch: Partial<PageSeo>) => {
+    setLocalPages((prev) => {
+      const base = prev ?? serverPages;
+      return { ...base, [key]: { ...base[key], ...patch } };
+    });
+  };
+
+  const handleSave = async () => {
+    if (!localPages) return;
     try {
-      await deleteSetting({ key: withPrefix(key), locale: targetLocale }).unwrap();
-      toast.success(t("admin.siteSettings.seo.deleted", { key, locale: targetLocale }));
-      await refetchAll();
+      await updateSetting({ key: fullKey, locale, value: localPages as any }).unwrap();
+      toast.success(t("admin.siteSettings.seo.inline.saved", undefined, "SEO ayarları kaydedildi"));
+      await refetch();
     } catch (err: any) {
-      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.seo.deleteError");
-      toast.error(msg);
+      toast.error(err?.data?.error?.message || t("admin.siteSettings.seo.inline.saveError", undefined, "Kayıt hatası"));
     }
   };
 
-  const createOverrideFromGlobal = async (g: RowGroup) => {
-    if (!g.globalRow) {
-      toast.error(t("admin.siteSettings.general.missingGlobalError"));
-      return;
-    }
-
-    // site_meta_default should not be global-copied; it must be locale based
-    if (g.key === "site_meta_default") {
-      toast.error(t("admin.siteSettings.seo.siteMetaDefaultGlobalError"));
-      return;
-    }
-
-    try {
-      await updateSetting({
-        key: withPrefix(g.key),
-        locale,
-        value: g.globalRow.value,
-      }).unwrap();
-
-      toast.success(t("admin.siteSettings.seo.overrideCreated", { key: g.key, locale }));
-      await refetchAll();
-    } catch (err: any) {
-      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.seo.overrideError");
-      toast.error(msg);
-    }
-  };
-
-  const restoreDefaults = async (key: string, targetLocale: string) => {
-    try {
-      if (key === "seo") {
-        await updateSetting({ key: withPrefix(key), locale: targetLocale, value: DEFAULT_SEO_GLOBAL }).unwrap();
-      } else if (key === "site_seo") {
-        // ✅ Artık site_seo için de aynı global schema kullanılıyor
-        await updateSetting({ key: withPrefix(key), locale: targetLocale, value: DEFAULT_SEO_GLOBAL }).unwrap();
-      } else if (key === "site_meta_default") {
-        if (targetLocale === "*") {
-          toast.error(t("admin.siteSettings.seo.siteMetaDefaultMustBeLocale"));
-          return;
-        }
-        const seed =
-          DEFAULT_SITE_META_DEFAULT_BY_LOCALE[targetLocale] ||
-          DEFAULT_SITE_META_DEFAULT_BY_LOCALE[locale] ||
-          DEFAULT_SITE_META_DEFAULT_BY_LOCALE.de;
-        await updateSetting({ key: withPrefix(key), locale: targetLocale, value: seed }).unwrap();
-      } else {
-        toast.error(t("admin.siteSettings.seo.defaultNotDefined"));
-        return;
-      }
-
-      toast.success(t("admin.siteSettings.seo.defaultsRestored", { key, locale: targetLocale }));
-      await refetchAll();
-    } catch (err: any) {
-      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.seo.defaultsRestoreError");
-      toast.error(msg);
-    }
-  };
-
-  const upsertEmptyGlobalDefaults = async () => {
-    const keys = ["seo", "site_seo"] as const;
-
-    try {
-      for (const k of keys) {
-        const exists = groups.find((g) => g.key === k)?.globalRow;
-        if (exists) continue;
-
-        await updateSetting({
-          key: withPrefix(k),
-          locale: "*",
-          value: DEFAULT_SEO_GLOBAL, // ✅ site_seo da aynı şemayı kullanıyor
-        }).unwrap();
-      }
-      toast.success(t("admin.siteSettings.seo.defaultsCreated"));
-      await refetchAll();
-    } catch (err: any) {
-      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.seo.defaultsCreateError");
-      toast.error(msg);
-    }
-  };
-
-  const effectiveEditLocale = (g: RowGroup): string => {
-    // Öncelik: locale override varsa locale, yoksa global
-    const chosen = g.localeRow ? locale : g.globalRow ? "*" : locale;
-
-    // site_meta_default asla '*' ile düzenlenmesin (form sayfasında da guard var)
-    if (g.key === "site_meta_default" && chosen === "*") return locale;
-    return chosen;
-  };
-
-  const globalEditLocaleForKey = (key: string): string => {
-    // site_meta_default global edit yok -> locale ile aç
-    if (key === "site_meta_default") return locale;
-    return "*";
-  };
-
-  // ---------------- OG DEFAULT IMAGE (GLOBAL '*') STATE ----------------
-
-  const ogRow: SiteSetting | null = useMemo(() => {
-    const arr = Array.isArray(qOg.data) ? qOg.data : [];
-    const row = arr.find((r) => r && stripPrefix(String(r.key || "")) === "site_og_default_image") || null;
-    return (row as SiteSetting | null) ?? null;
-  }, [qOg.data, stripPrefix]);
-
-  const ogUrl = useMemo(() => {
-    if (!ogRow) return "";
-    return normalizeAdminAssetUrl(extractUrlFromSettingValue(ogRow.value as SettingValue));
-  }, [ogRow]);
-
-  const handleOgChange = async (nextUrl: string) => {
-    const u = normalizeAdminStoredAssetPath(nextUrl);
-    if (!u) return;
-
-    try {
-      await updateSetting({
-        key: withPrefix("site_og_default_image"),
-        locale: "*",
-        value: toMediaValue(u),
-      }).unwrap();
-      toast.success(t("admin.siteSettings.seo.ogUpdated"));
-      await qOg.refetch();
-    } catch (err: any) {
-      const msg = err?.data?.error?.message || err?.message || t("admin.siteSettings.seo.ogUpdateError");
-      toast.error(msg);
-    }
-  };
+  const isDirty = Boolean(localPages) && JSON.stringify(localPages) !== JSON.stringify(serverPages);
 
   return (
     <Card>
-      <CardHeader className="gap-2">
-        <div className="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
+      <CardHeader className="gap-4">
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-base">{t("admin.siteSettings.seo.title")}</CardTitle>
-            <CardDescription>{t("admin.siteSettings.seo.description", { locale })}</CardDescription>
+            <CardTitle className="text-base">
+              {t("admin.siteSettings.seo.inline.title", undefined, "SEO Ayarları")}
+            </CardTitle>
+            <CardDescription>
+              {t(
+                "admin.siteSettings.seo.inline.description",
+                undefined,
+                "Her sayfa için title, description, OG görseli ve indexleme ayarı.",
+              )}
+            </CardDescription>
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">
               {t("admin.siteSettings.filters.language")}: {locale}
             </Badge>
-            <Button type="button" variant="outline" size="sm" onClick={refetchAll} disabled={busy}>
-              {t("admin.siteSettings.filters.refreshButton")}
-            </Button>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={upsertEmptyGlobalDefaults}
-              disabled={busy}
-              title={t("admin.siteSettings.seo.globalBootstrapTooltip")}
-            >
-              {t("admin.siteSettings.seo.globalBootstrap")}
+            {isDirty && (
+              <Badge variant="outline" className="animate-pulse border-amber-500/40 bg-amber-500/10 text-amber-600">
+                {t("admin.siteSettings.seo.inline.dirty", undefined, "Kaydedilmedi")}
+              </Badge>
+            )}
+            <Button type="button" onClick={handleSave} disabled={busy || !isDirty} size="sm">
+              <Save className="mr-2 size-4" />
+              {t("admin.siteSettings.seo.inline.save", undefined, "Kaydet")}
             </Button>
           </div>
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
-        {/* OG DEFAULT IMAGE (GLOBAL '*') BLOĞU */}
-        <div className="rounded-md border p-4">
-          <div className="mb-4 flex items-start justify-between">
-            <div className="space-y-1">
-              <div className="font-semibold text-sm">{t("admin.siteSettings.seo.ogDefaultImage")}</div>
-              <div className="text-muted-foreground text-xs">
-                {t("admin.siteSettings.seo.ogDefaultImageKey")}: <code>{withPrefix("site_og_default_image")}</code> /{" "}
-                <code>locale=&quot;*&quot;</code>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <AdminImageUploadField
-              label=""
-              helperText={
-                <span className="text-muted-foreground text-xs">
-                  {t("admin.siteSettings.seo.ogDefaultImageHelp", { key: withPrefix("site_og_default_image") })}
-                </span>
-              }
-              bucket="public"
-              folder="site-media"
-              metadata={{ key: withPrefix("site_og_default_image"), scope: "site_settings", locale: "*" }}
-              value={ogUrl}
-              onChange={(u) => void handleOgChange(u)}
-              disabled={busy}
-              openLibraryHref="/admin/storage"
-              previewAspect="16x9"
-              previewObjectFit="cover"
-            />
-
-            {ogUrl && (
-              <div className="space-y-2">
-                <div className="rounded-md border bg-muted/50 p-3">
-                  <div className="mb-2 flex items-center justify-between">
-                    <span className="font-medium text-muted-foreground text-xs">
-                      {t("admin.siteSettings.seo.savedUrlLabel")}
-                    </span>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => void copyToClipboard(ogUrl)}
-                      disabled={busy}
-                    >
-                      {t("admin.siteSettings.actions.copy")}
-                    </Button>
-                  </div>
-                  <code className="wrap-break-word block font-mono text-xs leading-relaxed">{ogUrl}</code>
-                </div>
-
-                {/* Manual preview for debugging */}
-                <div className="rounded-md border bg-muted/50 p-3">
-                  <div className="mb-2 font-medium text-muted-foreground text-xs">
-                    {t("admin.siteSettings.seo.previewLabel")}
-                  </div>
-                  <div className="relative aspect-video w-full max-w-sm overflow-hidden rounded border bg-background">
-                    <img
-                      src={ogUrl}
-                      alt={t("admin.siteSettings.seo.ogDefaultImageAlt")}
-                      className="h-full w-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.style.display = "none";
-                        const parent = target.parentElement;
-                        if (parent && !parent.querySelector(".error-message")) {
-                          const errorDiv = document.createElement("div");
-                          errorDiv.className =
-                            "error-message flex h-full items-center justify-center text-xs text-muted-foreground";
-                          errorDiv.textContent = t("admin.siteSettings.seo.imageLoadError");
-                          parent.appendChild(errorDiv);
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="seo-search">{t("admin.siteSettings.filters.search")}</Label>
-          <div className="relative">
-            <Search className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 size-4 text-muted-foreground" />
-            <Input
-              id="seo-search"
-              type="text"
-              placeholder={t("admin.siteSettings.seo.searchPlaceholder")}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              disabled={busy}
-              className="pl-9"
-            />
-          </div>
-        </div>
-
-        {busy && (
-          <div>
-            <Badge variant="secondary">{t("admin.siteSettings.messages.loading")}</Badge>
+      <CardContent className="space-y-6">
+        {busy && !localPages && (
+          <div className="flex justify-center py-6">
+            <Badge variant="secondary" className="animate-pulse">
+              {t("admin.siteSettings.seo.inline.loading", undefined, "Yükleniyor...")}
+            </Badge>
           </div>
         )}
 
-        <div className="overflow-x-auto rounded-md border">
-          <Table className="table-fixed">
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[20%]">{t("admin.siteSettings.seo.columns.key")}</TableHead>
-                <TableHead className="w-[15%]">{t("admin.siteSettings.seo.columns.source")}</TableHead>
-                <TableHead className="w-[35%]">{t("admin.siteSettings.seo.columns.effective")}</TableHead>
-                <TableHead className="w-[30%] text-right">{t("admin.siteSettings.seo.columns.actions")}</TableHead>
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {groups.length ? (
-                groups.map((g) => {
-                  const hasGlobal = Boolean(g.globalRow);
-                  const hasLocal = Boolean(g.localeRow);
-
-                  const editLoc = effectiveEditLocale(g);
-                  const editHref = getEditHref(g.key, editLoc);
-
-                  return (
-                    <React.Fragment key={`group_${g.key}`}>
-                      {/* Group summary row */}
-                      <TableRow className="bg-muted/50">
-                        <TableCell className="font-mono font-semibold text-sm">{g.key}</TableCell>
-                        <TableCell>
-                          {g.effectiveSource === "locale" ? (
-                            <Badge variant="default">{t("admin.siteSettings.seo.override")}</Badge>
-                          ) : g.effectiveSource === "global" ? (
-                            <Badge variant="secondary">{t("admin.siteSettings.seo.global")}</Badge>
-                          ) : (
-                            <Badge variant="outline">{t("admin.siteSettings.seo.none")}</Badge>
-                          )}
-                        </TableCell>
-
-                        <TableCell>
-                          <div className="wrap-break-word overflow-hidden text-muted-foreground text-sm">
-                            {preview(g.effectiveValue)}
-                          </div>
-                          {g.effectiveSource === "global" && !hasLocal && (
-                            <div className="wrap-break-word mt-1 text-muted-foreground text-xs">
-                              {t("admin.siteSettings.seo.hasOverride", { locale })}
-                            </div>
-                          )}
-                        </TableCell>
-
-                        <TableCell className="align-top">
-                          <div className="flex flex-col gap-2">
-                            <div className="flex flex-wrap justify-end gap-1">
-                              <Button asChild variant="outline" size="sm">
-                                <Link href={editHref}>{t("admin.siteSettings.actions.edit")}</Link>
-                              </Button>
-
-                              {!hasLocal && hasGlobal && g.key !== "site_meta_default" && (
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => createOverrideFromGlobal(g)}
-                                  disabled={busy}
-                                >
-                                  {t("admin.siteSettings.seo.createOverride")}
-                                </Button>
-                              )}
-
-                              {isPrimaryKey(g.key) && (hasGlobal || hasLocal) && (
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => restoreDefaults(g.key, hasLocal ? locale : "*")}
-                                  disabled={busy}
-                                  title={t("admin.siteSettings.seo.restoreTooltip")}
-                                >
-                                  {t("admin.siteSettings.actions.restore")}
-                                </Button>
-                              )}
-                            </div>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-
-                      {/* Global row */}
-                      <TableRow>
-                        <TableCell className="pl-8 text-muted-foreground text-sm">
-                          {t("admin.siteSettings.seo.globalRow")}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground text-sm">
-                          {hasGlobal ? t("admin.siteSettings.seo.existsYes") : t("admin.siteSettings.seo.existsNo")}
-                        </TableCell>
-                        <TableCell className="wrap-break-word overflow-hidden text-muted-foreground text-sm">
-                          {hasGlobal ? preview(g.globalRow?.value) : "-"}
-                        </TableCell>
-                        <TableCell className="align-top">
-                          <div className="flex flex-wrap justify-end gap-1">
-                            <Button asChild variant="outline" size="sm" disabled={!hasGlobal}>
-                              <Link
-                                href={getEditHref(withPrefix(g.key), globalEditLocaleForKey(g.key))}
-                                aria-disabled={!hasGlobal}
-                                tabIndex={!hasGlobal ? -1 : 0}
-                              >
-                                {t("admin.siteSettings.actions.edit")}
-                              </Link>
-                            </Button>
-
-                            <Button
-                              type="button"
-                              variant="destructive"
-                              size="sm"
-                              disabled={busy || !hasGlobal}
-                              onClick={() => deleteRow(g.key, "*")}
-                              title={
-                                g.key === "site_meta_default"
-                                  ? t("admin.siteSettings.seo.siteMetaDefaultGlobalDeleteHint")
-                                  : ""
-                              }
-                            >
-                              {t("admin.siteSettings.actions.delete")}
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-
-                      {/* Locale row */}
-                      <TableRow>
-                        <TableCell className="pl-8 text-muted-foreground text-sm">
-                          {t("admin.siteSettings.seo.localeRow", { locale })}
-                        </TableCell>
-                        <TableCell className="text-muted-foreground text-sm">
-                          {hasLocal ? t("admin.siteSettings.seo.existsYes") : t("admin.siteSettings.seo.existsNo")}
-                        </TableCell>
-                        <TableCell className="wrap-break-word overflow-hidden text-muted-foreground text-sm">
-                          {hasLocal ? preview(g.localeRow?.value) : "-"}
-                        </TableCell>
-                        <TableCell className="align-top">
-                          <div className="flex flex-wrap justify-end gap-1">
-                            <Button asChild variant="outline" size="sm" disabled={!hasLocal}>
-                              <Link
-                                href={getEditHref(withPrefix(g.key), locale)}
-                                aria-disabled={!hasLocal}
-                                tabIndex={!hasLocal ? -1 : 0}
-                              >
-                                {t("admin.siteSettings.actions.edit")}
-                              </Link>
-                            </Button>
-
-                            <Button
-                              type="button"
-                              variant="destructive"
-                              size="sm"
-                              disabled={busy || !hasLocal}
-                              onClick={() => deleteRow(g.key, locale)}
-                            >
-                              {t("admin.siteSettings.actions.delete")}
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    </React.Fragment>
-                  );
-                })
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={4} className="py-10 text-center">
-                    <div className="text-muted-foreground text-sm">
-                      {t("admin.siteSettings.seo.noRecords")}
-                      <div className="mt-2">{t("admin.siteSettings.seo.seedNote")}</div>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-
-          <div className="border-t p-3">
-            <span className="text-muted-foreground text-xs">{t("admin.siteSettings.seo.note")}</span>
-          </div>
+        <div className="flex flex-wrap gap-2">
+          <Button type="button" variant="outline" size="sm" onClick={expandAll}>
+            <ChevronDown className="mr-2 size-3.5" />
+            {t("admin.siteSettings.seo.inline.expandAll", undefined, "Tümünü Aç")}
+          </Button>
+          <Button type="button" variant="outline" size="sm" onClick={collapseAll}>
+            <ChevronUp className="mr-2 size-3.5" />
+            {t("admin.siteSettings.seo.inline.collapseAll", undefined, "Tümünü Kapat")}
+          </Button>
         </div>
+
+        <div className="space-y-3">
+          {PAGE_KEYS.map((cfg) => {
+            const page = pages[cfg.key] || { title: "", description: "", og_image: "", no_index: false };
+            const isExpanded = expandedKeys.has(cfg.key);
+            const pageLabel = t(`admin.siteSettings.seo.pageLabels.${cfg.key}`, undefined, cfg.key);
+
+            return (
+              <div
+                key={cfg.key}
+                className={cn(
+                  "overflow-hidden rounded-lg border transition-colors",
+                  isExpanded ? "border-primary/40 bg-card shadow-sm" : "border-border bg-card/50 hover:bg-card",
+                )}
+              >
+                <button
+                  type="button"
+                  className="flex w-full items-center justify-between gap-4 p-4 text-left focus:outline-none"
+                  onClick={() => toggleExpand(cfg.key)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={cn(
+                        "flex size-9 items-center justify-center rounded-full border transition-colors",
+                        isExpanded
+                          ? "border-primary/30 bg-primary/10 text-primary"
+                          : "border-border bg-muted text-muted-foreground",
+                      )}
+                    >
+                      <Globe className="size-4" />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className={cn("font-medium text-sm", isExpanded ? "text-primary" : "text-foreground")}>
+                          {pageLabel}
+                        </span>
+                        <code className="rounded border bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+                          {cfg.path}
+                        </code>
+                        {page.no_index && (
+                          <Badge variant="outline" className="border-destructive/40 bg-destructive/10 text-destructive">
+                            noindex
+                          </Badge>
+                        )}
+                      </div>
+                      {!isExpanded && page.title && (
+                        <p className="max-w-xl truncate text-muted-foreground text-xs">{page.title}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className={cn(
+                      "flex size-7 items-center justify-center rounded-full transition-colors",
+                      isExpanded ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground",
+                    )}
+                  >
+                    {isExpanded ? <ChevronUp className="size-4" /> : <ChevronDown className="size-4" />}
+                  </div>
+                </button>
+
+                {isExpanded && (
+                  <div className="border-t bg-background/50 p-5">
+                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_1fr]">
+                      {/* Sol: Form */}
+                      <div className="space-y-5">
+                        <div className="space-y-2">
+                          <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                            {t("admin.siteSettings.seo.inline.fieldTitle", undefined, "Başlık (title)")}
+                          </Label>
+                          <Input
+                            value={page.title}
+                            onChange={(e) => updatePage(cfg.key, { title: e.target.value })}
+                            disabled={busy}
+                            placeholder={t(
+                              "admin.siteSettings.seo.inline.placeholderTitle",
+                              undefined,
+                              "Karbonkompozit — ...",
+                            )}
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                              {t("admin.siteSettings.seo.inline.fieldDescription", undefined, "Açıklama (description)")}
+                            </Label>
+                            <span
+                              className={cn(
+                                "font-mono text-[10px]",
+                                page.description.length > 160 ? "text-amber-600" : "text-muted-foreground",
+                              )}
+                            >
+                              {page.description.length} / 160
+                            </span>
+                          </div>
+                          <Textarea
+                            value={page.description}
+                            onChange={(e) => updatePage(cfg.key, { description: e.target.value })}
+                            disabled={busy}
+                            rows={3}
+                            placeholder={t(
+                              "admin.siteSettings.seo.inline.placeholderDescription",
+                              undefined,
+                              "Sayfanın kısa özeti — ideal 140-160 karakter.",
+                            )}
+                          />
+                        </div>
+
+                        <div className="rounded-lg border bg-muted/30 p-4">
+                          <AdminImageUploadField
+                            label={t("admin.siteSettings.seo.inline.ogImage", undefined, "OG Görsel (1200×630)")}
+                            folder={`seo/${cfg.key}`}
+                            bucket="public"
+                            metadata={{ module_key: "seo", page: cfg.key, locale }}
+                            value={page.og_image}
+                            onChange={(url) => updatePage(cfg.key, { og_image: url })}
+                            disabled={busy}
+                          />
+                        </div>
+
+                        <div className="flex items-center gap-3 rounded-lg border bg-muted/30 p-3">
+                          <Switch
+                            checked={page.no_index}
+                            onCheckedChange={(v) => updatePage(cfg.key, { no_index: v })}
+                            disabled={busy}
+                          />
+                          <Label className="text-sm">
+                            {t(
+                              "admin.siteSettings.seo.inline.noindex",
+                              undefined,
+                              "Bu sayfayı arama motorlarından gizle (noindex)",
+                            )}
+                          </Label>
+                        </div>
+                      </div>
+
+                      {/* Sağ: Önizlemeler */}
+                      <div className="space-y-5">
+                        <div className="space-y-2">
+                          <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                            {t("admin.siteSettings.seo.inline.googlePreview", undefined, "Google Önizleme")}
+                          </Label>
+                          <div className="rounded-lg border bg-[#202124] p-4 shadow-inner">
+                            <div className="space-y-1">
+                              <p className="truncate font-sans text-[11px] text-[#dadce0]">
+                                {SITE_DOMAIN} › {locale}
+                                {cfg.path === "/" ? "" : cfg.path}
+                              </p>
+                              <p className="cursor-pointer truncate font-sans text-[18px] text-[#8ab4f8] hover:underline">
+                                {page.title ||
+                                  t("admin.siteSettings.seo.inline.siteName", undefined, SITE_NAME_FALLBACK)}
+                              </p>
+                              <p className="line-clamp-2 font-sans text-[13px] text-[#bdc1c6] leading-snug">
+                                {page.description ||
+                                  t(
+                                    "admin.siteSettings.seo.inline.noDescription",
+                                    undefined,
+                                    "Henüz açıklama girilmedi.",
+                                  )}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label className="text-xs uppercase tracking-wide text-muted-foreground">
+                            {t("admin.siteSettings.seo.inline.socialPreview", undefined, "Sosyal Medya Önizleme")}
+                          </Label>
+                          <div className="flex flex-col overflow-hidden rounded-lg border shadow-inner">
+                            <div className="relative flex aspect-[1.91/1] items-center justify-center border-b bg-muted">
+                              {page.og_image ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={page.og_image}
+                                  alt=""
+                                  className="absolute inset-0 size-full object-cover"
+                                  onError={(e) => {
+                                    (e.target as HTMLImageElement).style.display = "none";
+                                  }}
+                                />
+                              ) : (
+                                <div className="space-y-2 text-center opacity-60">
+                                  <Globe className="mx-auto size-8 text-muted-foreground" />
+                                  <span className="block text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                                    {t("admin.siteSettings.seo.inline.noOgImage", undefined, "OG görsel yok")}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                            <div className="space-y-1 bg-card p-4">
+                              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                                karbonkompozit.com.tr
+                              </p>
+                              <p className="truncate font-semibold text-foreground text-sm">
+                                {page.title ||
+                                  t("admin.siteSettings.seo.inline.siteName", undefined, SITE_NAME_FALLBACK)}
+                              </p>
+                              <p className="line-clamp-2 text-muted-foreground text-xs leading-relaxed">
+                                {page.description ||
+                                  t(
+                                    "admin.siteSettings.seo.inline.noDescription",
+                                    undefined,
+                                    "Henüz açıklama girilmedi.",
+                                  )}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {isDirty && (
+          <div className="flex justify-end border-t pt-4">
+            <Button type="button" onClick={handleSave} disabled={busy}>
+              <Save className="mr-2 size-4" />
+              {t("admin.siteSettings.seo.inline.saveAll", undefined, "Tümünü Kaydet")}
+            </Button>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

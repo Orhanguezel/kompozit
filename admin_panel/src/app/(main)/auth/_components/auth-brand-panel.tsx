@@ -30,6 +30,7 @@ export function AuthBrandPanel({ heading, subtext }: Props) {
           src="/uploads/kompozit/brand/kompozit_login_bg.png"
           alt="Industrial Background" 
           fill 
+          unoptimized
           className="object-cover opacity-20 mix-blend-luminosity" 
           priority
         />

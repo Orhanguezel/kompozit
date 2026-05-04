@@ -69,6 +69,17 @@ function coercePreviewValue(input: SettingValue): SettingValue {
   return input;
 }
 
+function humanizeSettingKey(key: string): string {
+  const raw = String(key || "").trim();
+  if (!raw) return "";
+  const noPrefix = raw.includes("__") ? raw.split("__").slice(1).join("__") : raw;
+  return noPrefix
+    .replace(/[_\-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
 /* ----------------------------- types ----------------------------- */
 
 export type SiteSettingsListProps = {
@@ -222,7 +233,12 @@ export const SiteSettingsList: React.FC<SiteSettingsListProps> = ({
                 {hasData ? (
                   filtered.map((s) => (
                     <TableRow key={`${s.key}_${s.locale || "none"}`}>
-                      <TableCell className="wrap-break-word align-top font-medium">{s.key}</TableCell>
+                      <TableCell className="wrap-break-word align-top font-medium">
+                        <div>{humanizeSettingKey(s.key)}</div>
+                        <div className="mt-1 text-muted-foreground text-xs">
+                          <code>{s.key}</code>
+                        </div>
+                      </TableCell>
 
                       <TableCell className="align-top">
                         {s.locale ? (
@@ -278,7 +294,10 @@ export const SiteSettingsList: React.FC<SiteSettingsListProps> = ({
                       <div className="flex items-start justify-between gap-3">
                         <div className="min-w-0 space-y-2">
                           <div className="flex flex-wrap items-center gap-2">
-                            <div className="wrap-break-word font-medium">{s.key}</div>
+                            <div className="wrap-break-word font-medium">{humanizeSettingKey(s.key)}</div>
+                            <div className="w-full text-muted-foreground text-[11px]">
+                              <code>{s.key}</code>
+                            </div>
                             {s.locale ? <Badge variant="outline">{s.locale}</Badge> : null}
                           </div>
 

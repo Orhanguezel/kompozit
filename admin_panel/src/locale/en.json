@@ -2498,6 +2498,45 @@
           "source": "Source",
           "effective": "Effective (Summary)",
           "actions": "Actions"
+        },
+        "inline": {
+          "title": "SEO Settings",
+          "description": "Per-page title, description, OG image and indexing controls.",
+          "save": "Save",
+          "saveAll": "Save All",
+          "saved": "SEO settings saved.",
+          "saveError": "Failed to save.",
+          "loading": "Loading...",
+          "dirty": "Unsaved",
+          "expandAll": "Expand All",
+          "collapseAll": "Collapse All",
+          "fieldTitle": "Title",
+          "fieldDescription": "Description",
+          "ogImage": "OG Image (1200×630)",
+          "noindex": "Hide this page from search engines (noindex)",
+          "googlePreview": "Google Preview",
+          "socialPreview": "Social Media Preview",
+          "siteName": "Karbonkompozit",
+          "noDescription": "No description yet.",
+          "noOgImage": "No OG image yet",
+          "placeholderTitle": "Karbonkompozit — Carbon and glass fiber composite solutions",
+          "placeholderDescription": "Short summary of the page — ideally 140-160 characters."
+        },
+        "pageLabels": {
+          "home": "Home",
+          "about": "About Us",
+          "contact": "Contact",
+          "products": "Products",
+          "product-detail": "Product Detail",
+          "solutions": "Solutions",
+          "solution-detail": "Solution Detail",
+          "gallery": "Gallery",
+          "gallery-detail": "Gallery Detail",
+          "references": "References",
+          "blog": "Blog",
+          "blog-post": "Blog Post",
+          "offer": "Request Offer",
+          "legal": "Legal Pages"
         }
       },
       "structured": {
@@ -3273,7 +3312,8 @@
           "limit": "Limit: {limit}",
           "previous": "Previous",
           "next": "Next"
-        }
+        },
+        "addUserButton": "New user"
       },
       "detail": {
         "title": "User Details",
@@ -3326,6 +3366,17 @@
           "button": "Delete User",
           "confirm": "This user will be deleted. Continue?",
           "deleted": "User deleted."
+        },
+        "create": {
+          "title": "New user",
+          "description": "Create an account with email and password; pick a role.",
+          "accountSection": "Account",
+          "accountSectionDesc": "Required: email and password (at least 8 characters).",
+          "passwordLabel": "Password",
+          "submitButton": "Create user",
+          "success": "User created.",
+          "emailRequired": "Email is required.",
+          "userExists": "This email address is already registered."
         },
         "errorFallback": "Operation failed. Please try again."
       },
@@ -4027,6 +4078,12 @@
         "empty": "No records found.",
         "unnamed": "(untitled)",
         "allCategories": "All Categories",
+        "status": {
+          "active": "Active",
+          "inactive": "Inactive",
+          "featured": "Featured",
+          "notFeatured": "Normal"
+        },
         "columns": {
           "title": "Title / Slug",
           "locale": "Locale",

@@ -87,3 +87,12 @@ export type AdminSetActiveBody = { id: string; is_active: boolean };
 export type AdminSetRolesBody = { id: string; roles: UserRoleName[] };
 export type AdminSetPasswordBody = { id: string; password: string };
 export type AdminRemoveUserBody = { id: string };
+
+/** POST /admin/users — roller UI dilinde; istekte API rol isimlerine map edilir */
+export type AdminCreateUserBody = {
+  email: string;
+  password: string;
+  full_name?: string | null;
+  phone?: string | null;
+  roles?: UserRoleName[];
+};

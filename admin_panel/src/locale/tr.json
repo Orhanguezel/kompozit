@@ -1772,7 +1772,8 @@
           "limit": "Limit: {limit}",
           "previous": "Önceki",
           "next": "Sonraki"
-        }
+        },
+        "addUserButton": "Yeni kullanıcı"
       },
       "detail": {
         "title": "Kullanıcı Detay",
@@ -1825,6 +1826,17 @@
           "button": "Kullanıcıyı Sil",
           "confirm": "Bu kullanıcı silinecek. Devam edilsin mi?",
           "deleted": "Kullanıcı silindi."
+        },
+        "create": {
+          "title": "Yeni kullanıcı",
+          "description": "E-posta ve şifre ile hesap oluşturun; rolü seçin.",
+          "accountSection": "Hesap",
+          "accountSectionDesc": "Zorunlu alanlar: e-posta ve şifre (en az 8 karakter).",
+          "passwordLabel": "Şifre",
+          "submitButton": "Kullanıcı oluştur",
+          "success": "Kullanıcı oluşturuldu.",
+          "emailRequired": "E-posta gerekli.",
+          "userExists": "Bu e-posta adresi zaten kayıtlı."
         },
         "errorFallback": "İşlem başarısız. Lütfen tekrar deneyin."
       },
@@ -2806,6 +2818,45 @@
           "source": "Kaynak",
           "effective": "Effective (Özet)",
           "actions": "İşlemler"
+        },
+        "inline": {
+          "title": "SEO Ayarları",
+          "description": "Her sayfa için title, description, OG görseli ve indexleme ayarı.",
+          "save": "Kaydet",
+          "saveAll": "Tümünü Kaydet",
+          "saved": "SEO ayarları kaydedildi.",
+          "saveError": "Kayıt sırasında hata oluştu.",
+          "loading": "Yükleniyor...",
+          "dirty": "Kaydedilmedi",
+          "expandAll": "Tümünü Aç",
+          "collapseAll": "Tümünü Kapat",
+          "fieldTitle": "Başlık (title)",
+          "fieldDescription": "Açıklama (description)",
+          "ogImage": "OG Görsel (1200×630)",
+          "noindex": "Bu sayfayı arama motorlarından gizle (noindex)",
+          "googlePreview": "Google Önizleme",
+          "socialPreview": "Sosyal Medya Önizleme",
+          "siteName": "Karbonkompozit",
+          "noDescription": "Henüz açıklama girilmedi.",
+          "noOgImage": "OG görsel henüz yüklenmedi",
+          "placeholderTitle": "Karbonkompozit — Karbon ve cam fiber kompozit çözümler",
+          "placeholderDescription": "Sayfanın kısa özeti — ideal 140-160 karakter."
+        },
+        "pageLabels": {
+          "home": "Ana Sayfa",
+          "about": "Hakkımızda",
+          "contact": "İletişim",
+          "products": "Ürünler",
+          "product-detail": "Ürün Detay",
+          "solutions": "Çözümler",
+          "solution-detail": "Çözüm Detay",
+          "gallery": "Galeri",
+          "gallery-detail": "Galeri Detay",
+          "references": "Referanslar",
+          "blog": "Blog",
+          "blog-post": "Blog Yazısı",
+          "offer": "Teklif Al",
+          "legal": "Hukuki Sayfalar"
         }
       },
       "structured": {
@@ -4007,6 +4058,12 @@
         "empty": "Kayıt bulunamadı.",
         "unnamed": "(adsız)",
         "allCategories": "Tüm Kategoriler",
+        "status": {
+          "active": "Aktif",
+          "inactive": "Pasif",
+          "featured": "Öne Çıkan",
+          "notFeatured": "Normal"
+        },
         "columns": {
           "title": "Başlık / Slug",
           "locale": "Dil",

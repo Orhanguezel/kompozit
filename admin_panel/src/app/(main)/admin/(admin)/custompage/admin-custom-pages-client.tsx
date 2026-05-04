@@ -198,17 +198,20 @@ export default function AdminCustomPagesClient({ initialModuleKey = "" }: { init
         localesLoading={localesLoading || localesFetching}
         allowAllOption={false}
         moduleOptions={moduleOptions}
-        newPageHref={
-          filters.moduleKey
-            ? `/admin/custompage/new?module=${encodeURIComponent(filters.moduleKey)}`
-            : "/admin/custompage/new"
-        }
+        newPageHref={(() => {
+          const loc = encodeURIComponent(localeShortClientOr(effectiveLocale, "tr"));
+          const mk = String(filters.moduleKey ?? "").trim();
+          return mk
+            ? `/admin/custompage/new?locale=${loc}&module=${encodeURIComponent(mk)}`
+            : `/admin/custompage/new?locale=${loc}`;
+        })()}
       />
 
       <CustomPageList
         items={rows}
         loading={busy}
         activeLocale={effectiveLocale}
+        listModuleKey={filters.moduleKey}
         // reorder controls (up/down)
         enableMoveControls
         onMoveUp={(index) => moveRow(index, index - 1)}

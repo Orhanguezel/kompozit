@@ -144,6 +144,14 @@ const displayUrl = (raw: string, max = 72) => {
   return `${head}…${tail}`;
 };
 
+const isSelectableImageAsset = (asset: { mime?: string | null; url?: string | null }) => {
+  const mime = norm(asset.mime).toLowerCase();
+  if (mime.startsWith("image/")) return true;
+
+  const url = norm(asset.url).toLowerCase().split("?")[0].split("#")[0];
+  return /\.(avif|bmp|gif|ico|jpe?g|png|svg|webp)$/.test(url);
+};
+
 const ratioOf = (aspect: "16x9" | "4x3" | "1x1") => {
   if (aspect === "4x3") return 4 / 3;
   if (aspect === "1x1") return 1;
@@ -212,13 +220,22 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"upload" | "library">("upload");
 
-  // Fetch library assets (show all folders, not filtered)
+  // Fetch library assets from every bucket/folder. The upload target still uses
+  // the field's bucket/folder, but the picker should mirror the storage library.
   const { data: assetsData, isLoading: isLoadingAssets } = useListAssetsAdminQuery(
-    { bucket, limit: 50, sort: "created_at", order: "desc" },
+    { limit: 100, sort: "created_at", order: "desc" },
     { skip: !isModalOpen || activeTab !== "library" },
   );
 
   const meta = useMemo(() => toMeta(metadata), [metadata]);
+  const libraryAssets = useMemo(
+    () =>
+      (assetsData?.items ?? []).filter((asset) => {
+        const url = normalizeAdminStoredAssetPath(asset.url || "");
+        return !!url && isSelectableImageAsset(asset);
+      }),
+    [assetsData?.items],
+  );
   const gallery = useMemo(
     () => (Array.isArray(values) ? [...new Set(values.map(normalizeAdminStoredAssetPath).filter(Boolean))] : []),
     [values],
@@ -626,7 +643,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
                   <div className="flex items-center justify-center py-12">
                     <div className="text-muted-foreground text-sm">{t("common.loading")}</div>
                   </div>
-                ) : !assetsData?.items?.length ? (
+                ) : !libraryAssets.length ? (
                   <div className="rounded-lg border bg-muted/20 p-6 text-center">
                     <div className="mx-auto flex max-w-md flex-col items-center gap-4">
                       <div className="rounded-full bg-muted p-3">
@@ -642,7 +659,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
                   </div>
                 ) : (
                   <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                    {assetsData.items.map((asset) => {
+                    {libraryAssets.map((asset) => {
                       const url = normalizeAdminStoredAssetPath(asset.url || "");
                       const previewUrl = normalizeAdminAssetUrl(url);
                       const normalizedValue = normalizeAdminStoredAssetPath(value);

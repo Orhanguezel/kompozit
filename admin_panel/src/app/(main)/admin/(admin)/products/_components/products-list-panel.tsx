@@ -36,7 +36,7 @@ import { normalizeAdminAssetUrl } from "@/lib/admin-asset-url";
 const isTruthy = (v: unknown) => v === 1 || v === true || v === "1" || v === "true";
 
 interface Props {
-  itemType?: ProductItemType;
+  itemType: ProductItemType;
 }
 
 export default function ProductsListPanel({ itemType }: Props) {
@@ -44,7 +44,7 @@ export default function ProductsListPanel({ itemType }: Props) {
   const router = useRouter();
 
   const isSparepart = itemType === "sparepart";
-  const newUrl = isSparepart ? "/admin/products/new?type=sparepart" : "/admin/products/new";
+  const newUrl = `/admin/products/new?type=${encodeURIComponent(itemType)}`;
 
   const { localeOptions, defaultLocaleFromDb } = useAdminLocales();
 
@@ -300,19 +300,43 @@ export default function ProductsListPanel({ itemType }: Props) {
                       <TableCell className="text-center text-sm">{item.stock_quantity ?? "—"}</TableCell>
 
                       <TableCell className="text-center">
-                        <Switch
-                          checked={isActive}
-                          disabled={isLoading}
-                          onCheckedChange={(v) => handleToggleActive(item, v)}
-                        />
+                        <div className="flex flex-col items-center gap-1">
+                          <Badge
+                            className={
+                              isActive
+                                ? "border-green-300 bg-green-100 text-green-900"
+                                : "border-red-300 bg-red-100 text-red-900"
+                            }
+                            variant="outline"
+                          >
+                            {isActive ? t("list.status.active") : t("list.status.inactive")}
+                          </Badge>
+                          <Switch
+                            checked={isActive}
+                            disabled={isLoading}
+                            onCheckedChange={(v) => handleToggleActive(item, v)}
+                          />
+                        </div>
                       </TableCell>
 
                       <TableCell className="text-center">
-                        <Switch
-                          checked={isFeatured}
-                          disabled={isLoading}
-                          onCheckedChange={(v) => handleToggleFeatured(item, v)}
-                        />
+                        <div className="flex flex-col items-center gap-1">
+                          <Badge
+                            className={
+                              isFeatured
+                                ? "border-amber-300 bg-amber-100 text-amber-900"
+                                : "border-slate-300 bg-slate-100 text-slate-800"
+                            }
+                            variant="outline"
+                          >
+                            {isFeatured ? t("list.status.featured") : t("list.status.notFeatured")}
+                          </Badge>
+                          <Switch
+                            checked={isFeatured}
+                            disabled={isLoading}
+                            onCheckedChange={(v) => handleToggleFeatured(item, v)}
+                          />
+                        </div>
                       </TableCell>
 
                       <TableCell className="text-right">
@@ -322,7 +346,9 @@ export default function ProductsListPanel({ itemType }: Props) {
                             size="icon"
                             disabled={isLoading}
                             onClick={() =>
-                              router.push(`/admin/products/${item.id}?type=${item.item_type || "product"}`)
+                              router.push(
+                                `/admin/products/${item.id}?type=${encodeURIComponent(item.item_type || itemType)}`,
+                              )
                             }
                           >
                             <Pencil className="h-4 w-4" />

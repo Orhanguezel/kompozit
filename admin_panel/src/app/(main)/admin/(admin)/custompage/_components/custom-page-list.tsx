@@ -35,6 +35,8 @@ export type CustomPageListProps = {
   onMoveDown?: (index: number) => void;
 
   activeLocale?: string;
+  /** Liste modül filtresi — düzenle linkine ?module= eklenir (App Router uyumlu tam URL) */
+  listModuleKey?: string;
 };
 
 const _VERY_LARGE_BP = 1700;
@@ -68,6 +70,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
   onMoveUp,
   onMoveDown,
   activeLocale,
+  listModuleKey,
 }) => {
   const t = useAdminT();
   const rows = items ?? [];
@@ -79,10 +82,14 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
 
   const effectiveLocale = useMemo(() => normLocale(activeLocale) || "", [activeLocale]);
 
-  const editHrefById = (id: string) => ({
-    pathname: `/admin/custompage/${encodeURIComponent(id)}`,
-    query: effectiveLocale ? { locale: effectiveLocale } : undefined,
-  });
+  const editHrefById = (pageId: string) => {
+    const qs = new URLSearchParams();
+    if (effectiveLocale) qs.set("locale", effectiveLocale);
+    const mk = String(listModuleKey ?? "").trim();
+    if (mk) qs.set("module", mk);
+    const tail = qs.toString();
+    return tail ? `/admin/custompage/${encodeURIComponent(pageId)}?${tail}` : `/admin/custompage/${encodeURIComponent(pageId)}`;
+  };
 
   const renderStatus = (p: CustomPageDto) =>
     p.is_published ? (

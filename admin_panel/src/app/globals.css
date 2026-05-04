@@ -7,25 +7,28 @@
 @import "../styles/presets/brutalist.css";
 @import "../styles/presets/soft-pop.css";
 @import "../styles/presets/tangerine.css";
+@import "../styles/presets/carbon.css";
 
-/* Ensotek Brand Colors */
+/* 
+  Ensotek Carbon Premium Design System
+  Inspired by goldmoodastro's token structure 
+  Optimized for high-end industrial/composite aesthetics
+*/
 :root {
-  /* Logo Primary Colors - Converted to OKLCH for premium feel */
-  --logo-coral-light: oklch(0.85 0.05 30);
-  --logo-coral: oklch(0.77 0.08 30);
-  --logo-coral-medium: oklch(0.7 0.09 30);
-  --logo-coral-dark: oklch(0.62 0.09 30);
-  --logo-coral-darkest: oklch(0.52 0.09 30);
-
-  /* Background Colors for Logo */
-  --logo-bg-light: oklch(0.99 0.002 30);
-  --logo-bg-white: oklch(1 0 0);
-  --logo-bg-dark: oklch(0.18 0.01 30);
-  --logo-bg-black: oklch(0.12 0.01 30);
-
-  /* Logo Accents */
-  --logo-gold: oklch(0.83 0.12 85);
-  --logo-shadow: oklch(0.77 0.08 30 / 15%);
+  /* Carbon Fiber & Industrial Palette (OKLCH) */
+  --carbon-onyx: oklch(0.12 0.01 285);
+  --carbon-graphite: oklch(0.18 0.015 285);
+  --carbon-titanium: oklch(0.35 0.01 285);
+  --carbon-silver: oklch(0.85 0.01 285);
+  
+  /* Primary Accent: Industrial Gold/Copper */
+  --industrial-gold: oklch(0.75 0.12 85);
+  --industrial-gold-dark: oklch(0.65 0.12 85);
+  --industrial-gold-soft: oklch(0.75 0.12 85 / 15%);
+  
+  /* Brand Specifics */
+  --logo-coral: oklch(0.7 0.18 30);
+  --logo-shadow: oklch(0.7 0.18 30 / 15%);
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -56,11 +59,6 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar-primary: var(--sidebar-primary);
@@ -70,23 +68,17 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  /* Brand Colors */
-  --color-logo-coral-light: var(--logo-coral-light);
-  --color-logo-coral: var(--logo-coral);
-  --color-logo-coral-medium: var(--logo-coral-medium);
-  --color-logo-coral-dark: var(--logo-coral-dark);
-  --color-logo-coral-darkest: var(--logo-coral-darkest);
-  --color-logo-bg-light: var(--logo-bg-light);
-  --color-logo-bg-white: var(--logo-bg-white);
-  --color-logo-bg-dark: var(--logo-bg-dark);
-  --color-logo-bg-black: var(--logo-bg-black);
-  --color-logo-gold: var(--logo-gold);
+  /* Industrial Custom Tokens */
+  --color-carbon-onyx: var(--carbon-onyx);
+  --color-carbon-graphite: var(--carbon-graphite);
+  --color-industrial-gold: var(--industrial-gold);
+  
+  --shadow-glow-primary: 0 0 25px oklch(0.75 0.12 85 / 20%);
 }
 
-/* Default theme styles (used when no data-theme-preset is set or when 'default' is selected).
-These serve as the fallback; there is no separate default.css file. */
+/* Default Light Theme (Technical White) */
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem; /* Sharp industrial corners */
   --background: oklch(0.99 0.002 285);
   --foreground: oklch(0.18 0.01 285);
   --card: oklch(1 0 0);
@@ -94,84 +86,72 @@ These serve as the fallback; there is no separate default.css file. */
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.18 0.01 285);
   
-  /* Primary: Ensotek Coral */
-  --primary: var(--logo-coral);
-  --primary-foreground: oklch(0.99 0.002 30);
+  --primary: var(--industrial-gold);
+  --primary-foreground: oklch(0.99 0.002 285);
   
-  --secondary: oklch(0.96 0.005 285);
+  --secondary: oklch(0.94 0.01 285);
   --secondary-foreground: oklch(0.25 0.01 285);
   
-  --muted: oklch(0.96 0.005 285);
-  --muted-foreground: oklch(0.55 0.015 285);
+  --muted: oklch(0.94 0.01 285);
+  --muted-foreground: oklch(0.5 0.015 285);
   
-  --accent: oklch(0.96 0.005 285);
+  --accent: oklch(0.94 0.01 285);
   --accent-foreground: oklch(0.25 0.01 285);
   
   --destructive: oklch(0.6 0.18 25);
-  --border: oklch(0.92 0.005 285);
-  --input: oklch(0.92 0.005 285);
-  --ring: var(--logo-coral);
+  --border: oklch(0.9 0.01 285);
+  --input: oklch(0.9 0.01 285);
+  --ring: var(--industrial-gold);
   
-  --chart-1: oklch(0.65 0.15 30);
-  --chart-2: oklch(0.75 0.12 85);
-  --chart-3: oklch(0.55 0.15 250);
-  --chart-4: oklch(0.45 0.18 280);
-  --chart-5: oklch(0.85 0.12 150);
-  
-  --sidebar: oklch(0.99 0.002 285);
+  /* Sidebar — Clean Technical Gray */
+  --sidebar: oklch(0.97 0.005 285);
   --sidebar-foreground: oklch(0.25 0.01 285);
-  --sidebar-primary: var(--logo-coral);
+  --sidebar-primary: var(--industrial-gold);
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.96 0.005 285);
+  --sidebar-accent: oklch(0.94 0.01 285);
   --sidebar-accent-foreground: oklch(0.25 0.01 285);
-  --sidebar-border: oklch(0.92 0.005 285);
-  --sidebar-ring: var(--logo-coral);
+  --sidebar-border: oklch(0.9 0.01 285);
+  --sidebar-ring: var(--industrial-gold);
 
-  /* fonts */
   --font-sans: var(--font-inter);
   --font-mono: var(--font-geist-mono);
 }
 
+/* Dark Theme (Carbon Fiber Mode) */
 .dark {
-  --background: oklch(0.14 0.01 285);
-  --foreground: oklch(0.98 0.005 285);
-  --card: oklch(0.18 0.015 285);
-  --card-foreground: oklch(0.98 0.005 285);
-  --popover: oklch(0.18 0.015 285);
-  --popover-foreground: oklch(0.98 0.005 285);
+  --background: var(--carbon-onyx);
+  --foreground: oklch(0.95 0.005 285);
+  --card: var(--carbon-graphite);
+  --card-foreground: oklch(0.95 0.005 285);
+  --popover: var(--carbon-graphite);
+  --popover-foreground: oklch(0.95 0.005 285);
   
-  /* Primary Dark: Coral Medium */
-  --primary: var(--logo-coral-medium);
-  --primary-foreground: oklch(0.14 0.01 30);
+  --primary: var(--industrial-gold);
+  --primary-foreground: var(--carbon-onyx);
   
   --secondary: oklch(0.22 0.01 285);
-  --secondary-foreground: oklch(0.98 0.005 285);
+  --secondary-foreground: oklch(0.95 0.005 285);
   
   --muted: oklch(0.22 0.01 285);
-  --muted-foreground: oklch(0.65 0.015 285);
+  --muted-foreground: oklch(0.6 0.01 285);
   
   --accent: oklch(0.22 0.01 285);
-  --accent-foreground: oklch(0.98 0.005 285);
+  --accent-foreground: oklch(0.95 0.005 285);
   
   --destructive: oklch(0.55 0.18 25);
-  --border: oklch(0.25 0.02 285);
-  --input: oklch(0.25 0.02 285);
-  --ring: var(--logo-coral-medium);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: var(--industrial-gold);
   
-  --chart-1: oklch(0.7 0.12 30);
-  --chart-2: oklch(0.8 0.1 85);
-  --chart-3: oklch(0.6 0.12 250);
-  --chart-4: oklch(0.5 0.15 280);
-  --chart-5: oklch(0.8 0.1 150);
-  
-  --sidebar: oklch(0.16 0.01 285);
-  --sidebar-foreground: oklch(0.98 0.005 285);
-  --sidebar-primary: var(--logo-coral-medium);
-  --sidebar-primary-foreground: oklch(0.14 0.01 30);
-  --sidebar-accent: oklch(0.22 0.01 285);
-  --sidebar-accent-foreground: oklch(0.98 0.005 285);
-  --sidebar-border: oklch(0.22 0.02 285);
-  --sidebar-ring: var(--logo-coral-medium);
+  /* Sidebar — Deep Carbon */
+  --sidebar: oklch(0.14 0.01 285);
+  --sidebar-foreground: oklch(0.9 0.005 285);
+  --sidebar-primary: var(--industrial-gold);
+  --sidebar-primary-foreground: var(--carbon-onyx);
+  --sidebar-accent: oklch(0.2 0.015 285);
+  --sidebar-accent-foreground: oklch(0.95 0.005 285);
+  --sidebar-border: oklch(1 0 0 / 5%);
+  --sidebar-ring: var(--industrial-gold);
 }
 
 @layer base {
@@ -190,10 +170,10 @@ These serve as the fallback; there is no separate default.css file. */
     @apply bg-primary/20 text-foreground;
   }
 
-  /* Minimalist Premium Scrollbar */
+  /* Industrial Scrollbar */
   ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 6px;
+    height: 6px;
   }
 
   ::-webkit-scrollbar-track {
@@ -201,84 +181,33 @@ These serve as the fallback; there is no separate default.css file. */
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-muted-foreground/20 border-2 border-solid border-background transition-colors hover:bg-muted-foreground/40;
-  }
-
-  /* Smooth Focus Rings */
-  :focus-visible {
-    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background transition-all duration-200;
+    @apply rounded-full bg-foreground/10 hover:bg-foreground/20;
   }
 }
 
 @layer utilities {
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow-2xs {
-    box-shadow: var(--shadow-2xs);
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
-
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow-xs {
-    box-shadow: var(--shadow-xs);
+  
+  .glass-dark {
+    @apply bg-black/20 backdrop-blur-xl border border-white/5;
   }
-
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow-sm {
-    box-shadow: var(--shadow-sm);
-  }
-
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow {
-    box-shadow: var(--shadow);
-  }
-
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow-md {
-    box-shadow: var(--shadow-md);
-  }
-
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow-lg {
-    box-shadow: var(--shadow-lg);
-  }
-
-  [data-theme-preset]:not([data-theme-preset="default"]) .shadow-xl {
-    box-shadow: var(--shadow-xl);
+  
+  .carbon-mesh {
+    background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
+    background-size: 24px 24px;
   }
 
   [data-theme-preset]:not([data-theme-preset="default"]) .shadow-2xl {
     box-shadow: var(--shadow-2xl);
   }
 
-  html[data-font="inter"] body {
-    --font-sans: var(--font-inter);
-  }
-  html[data-font="roboto"] body {
-    --font-sans: var(--font-roboto);
-  }
-  html[data-font="poppins"] body {
-    --font-sans: var(--font-poppins);
-  }
-  html[data-font="geist"] body {
-    --font-sans: var(--font-geist);
-  }
-  html[data-font="geistMono"] body {
-    --font-sans: var(--font-geist-mono);
-  }
-  html[data-font="jakarta"] body {
-    --font-sans: var(--font-jakarta);
-  }
-  html[data-font="nunito"] body {
-    --font-sans: var(--font-nunito);
-  }
-  html[data-font="gabriela"] body {
-    --font-sans: var(--font-gabriela);
-  }
-  html[data-font="outfit"] body {
-    --font-sans: var(--font-outfit);
-  }
-  html[data-font="manrope"] body {
-    --font-sans: var(--font-manrope);
-  }
-  html[data-font="dmSans"] body {
-    --font-sans: var(--font-dm-sans);
-  }
-  html[data-font="greatVibes"] body {
-    --font-sans: var(--font-great-vibes);
-  }
+  /* Custom Font Support */
+  html[data-font="inter"] body { --font-sans: var(--font-inter); }
+  html[data-font="manrope"] body { --font-sans: var(--font-manrope); }
+  html[data-font="outfit"] body { --font-sans: var(--font-outfit); }
+  html[data-font="geist"] body { --font-sans: var(--font-geist); }
 }
 
 html {
@@ -288,3 +217,4 @@ html {
 .disable-transitions * {
   transition: none !important;
 }
+

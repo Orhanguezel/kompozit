@@ -11,7 +11,7 @@ import * as React from "react";
 
 import { useRouter } from "next/navigation";
 
-import { ArrowLeft, KeyRound, Save, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowLeft, KeyRound, Plus, Save, ShieldCheck, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
@@ -23,6 +23,7 @@ import { Label } from "@ensotek/shared-ui/admin/ui/label";
 import { Separator } from "@ensotek/shared-ui/admin/ui/separator";
 import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
 import {
+  useCreateUserAdminMutation,
   useGetUserAdminQuery,
   useRemoveUserAdminMutation,
   useSetUserActiveAdminMutation,
@@ -41,6 +42,7 @@ function isAdminFromView(u: AdminUserView): boolean {
 export default function UserDetailClient({ id }: { id: string }) {
   const router = useRouter();
   const t = useAdminT();
+  const isNew = id === "new";
 
   function getErrMessage(err: unknown): string {
     const anyErr = err as any;
@@ -59,9 +61,10 @@ export default function UserDetailClient({ id }: { id: string }) {
     return t("admin.users.detail.roles.user");
   }
 
-  const userQ = useGetUserAdminQuery({ id });
+  const userQ = useGetUserAdminQuery({ id }, { skip: isNew });
 
   const [updateUser, updateState] = useUpdateUserAdminMutation();
+  const [createUser, createState] = useCreateUserAdminMutation();
   const [setActive, setActiveState] = useSetUserActiveAdminMutation();
   const [setRoles, setRolesState] = useSetUserRolesAdminMutation();
   const [setPassword, setPasswordState] = useSetUserPasswordAdminMutation();
@@ -76,9 +79,18 @@ export default function UserDetailClient({ id }: { id: string }) {
   const [password, setPasswordLocal] = React.useState("");
   const [active, setActiveLocal] = React.useState(true);
 
-  const [roles, setRolesLocal] = React.useState<UserRoleName[]>([]);
+  const [roles, setRolesLocal] = React.useState<UserRoleName[]>(["user"]);
 
   React.useEffect(() => {
+    if (isNew) {
+      setFullName("");
+      setPhone("");
+      setEmail("");
+      setPasswordLocal("");
+      setActiveLocal(true);
+      setRolesLocal(["user"]);
+      return;
+    }
     if (!u) return;
     setFullName(u.full_name ?? "");
     setPhone(u.phone ?? "");
@@ -86,11 +98,12 @@ export default function UserDetailClient({ id }: { id: string }) {
     setActiveLocal(!!u.is_active);
 
     setRolesLocal(u.roles.length > 0 ? u.roles : ["user"]);
-  }, [u]);
+  }, [u, isNew]);
 
   const busy =
-    userQ.isFetching ||
+    (!isNew && userQ.isFetching) ||
     updateState.isLoading ||
+    createState.isLoading ||
     setActiveState.isLoading ||
     setRolesState.isLoading ||
     setPasswordState.isLoading ||
@@ -167,6 +180,127 @@ export default function UserDetailClient({ id }: { id: string }) {
   // ✅ tekil rol seçimi (admin/moderator/user) – ama payload array
   function chooseRole(r: UserRoleName) {
     setRolesLocal([r]);
+  }
+
+  async function onCreateUser() {
+    const em = email.trim();
+    const pw = password.trim();
+    if (!em) {
+      toast.error(t("admin.users.detail.create.emailRequired"));
+      return;
+    }
+    if (pw.length < 8) {
+      toast.error(t("admin.users.detail.password.minLengthError"));
+      return;
+    }
+    try {
+      const created = await createUser({
+        email: em,
+        password: pw,
+        full_name: fullName.trim() || null,
+        phone: phone.trim() || null,
+        roles,
+      }).unwrap();
+      toast.success(t("admin.users.detail.create.success"));
+      router.replace(`/admin/users/${encodeURIComponent(created.id)}`);
+      router.refresh();
+    } catch (err) {
+      const msg = getErrMessage(err);
+      if (msg === "user_exists") toast.error(t("admin.users.detail.create.userExists"));
+      else toast.error(msg);
+    }
+  }
+
+  if (isNew) {
+    const currentRole = (roles[0] ?? "user") as UserRoleName;
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <Button variant="outline" onClick={() => router.push("/admin/users")} disabled={busy}>
+                <ArrowLeft className="mr-2 size-4" />
+                {t("admin.users.detail.backButton")}
+              </Button>
+              <h1 className="font-semibold text-lg">{t("admin.users.detail.create.title")}</h1>
+            </div>
+            <p className="text-muted-foreground text-sm">{t("admin.users.detail.create.description")}</p>
+          </div>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">{t("admin.users.detail.create.accountSection")}</CardTitle>
+            <CardDescription>{t("admin.users.detail.create.accountSectionDesc")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid gap-3 md:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="create-email">{t("admin.users.detail.profile.emailLabel")}</Label>
+                <Input
+                  id="create-email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="create-password">{t("admin.users.detail.create.passwordLabel")}</Label>
+                <Input
+                  id="create-password"
+                  type="password"
+                  autoComplete="new-password"
+                  placeholder={t("admin.users.detail.password.placeholder")}
+                  value={password}
+                  onChange={(e) => setPasswordLocal(e.target.value)}
+                  disabled={busy}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="create-full_name">{t("admin.users.detail.profile.fullNameLabel")}</Label>
+                <Input id="create-full_name" value={fullName} onChange={(e) => setFullName(e.target.value)} disabled={busy} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="create-phone">{t("admin.users.detail.profile.phoneLabel")}</Label>
+                <Input id="create-phone" value={phone} onChange={(e) => setPhone(e.target.value)} disabled={busy} />
+              </div>
+            </div>
+
+            <Separator />
+
+            <div className="space-y-2">
+              <div className="font-medium text-sm">{t("admin.users.detail.roles.title")}</div>
+              <div className="flex flex-wrap gap-2">
+                {ALL_ROLES.map((r) => {
+                  const checked = currentRole === r;
+                  return (
+                    <Button
+                      key={r}
+                      type="button"
+                      variant={checked ? "default" : "outline"}
+                      onClick={() => chooseRole(r)}
+                      disabled={busy}
+                    >
+                      <ShieldCheck className="mr-2 size-4" />
+                      {roleLabel(r)}
+                    </Button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="flex justify-end">
+              <Button onClick={() => void onCreateUser()} disabled={busy}>
+                <Plus className="mr-2 size-4" />
+                {t("admin.users.detail.create.submitButton")}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
   }
 
   if (userQ.isError) {
