@@ -12,12 +12,12 @@ export type ParsedContactInfo = {
 };
 
 const DEFAULTS: ParsedContactInfo = {
-  companyName: 'MOE Kompozit',
+  companyName: '',
   address: '',
   phone: '',
   whatsapp: '',
-  email: 'info@karbonkompozit.com.tr',
-  hours: 'Pazartesi - Cuma, 09:00 - 18:00',
+  email: '',
+  hours: '',
 };
 
 export function parseContactSettingValue(value: unknown): ParsedContactInfo {

@@ -91,8 +91,8 @@ export function Header({
   const logoSrc = logo?.dark || logo?.default || logo?.light;
   const mobileLogoSrc = logo?.light || logo?.default || logo?.dark;
   const logoAlt = logo?.alt || 'MOE Kompozit';
-  const phone = contactInfo?.phone?.trim() || '+90 530 961 94 17';
-  const email = contactInfo?.email?.trim() || 'info@karbonkompozit.com.tr';
+  const phone = contactInfo?.phone?.trim() || '';
+  const email = contactInfo?.email?.trim() || '';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);

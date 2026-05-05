@@ -17,12 +17,19 @@ import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 export const contactInfoSchema = z
   .object({
+    company_name: z.string().trim().optional(),
     phone: z.string().trim().optional(),
     email: z.string().trim().optional(),
     address: z.string().trim().optional(),
     whatsapp: z.string().trim().optional(),
+    city: z.string().trim().optional(),
+    country: z.string().trim().optional(),
+    working_hours: z.string().trim().optional(),
+    maps_embed_url: z.string().trim().optional(),
+    maps_lat: z.string().trim().optional(),
+    maps_lng: z.string().trim().optional(),
   })
-  .strict();
+  .passthrough();
 
 export type ContactInfoFormState = z.infer<typeof contactInfoSchema>;
 
@@ -37,17 +44,25 @@ export type ContactInfoStructuredFormProps = {
 const safeObj = (v: any) => (v && typeof v === "object" && !Array.isArray(v) ? v : null);
 
 export function contactObjToForm(v: any, seed: ContactInfoFormState): ContactInfoFormState {
-  const base = safeObj(v) || seed;
+  const source = safeObj(v) || {};
+  const base = { ...seed, ...source };
   const parsed = contactInfoSchema.safeParse(base);
   return parsed.success ? parsed.data : seed;
 }
 
 export function contactFormToObj(s: ContactInfoFormState) {
   return contactInfoSchema.parse({
+    company_name: s.company_name?.trim() || "",
     phone: s.phone?.trim() || "",
     email: s.email?.trim() || "",
     address: s.address?.trim() || "",
     whatsapp: s.whatsapp?.trim() || "",
+    city: s.city?.trim() || "",
+    country: s.country?.trim() || "",
+    working_hours: s.working_hours?.trim() || "",
+    maps_embed_url: s.maps_embed_url?.trim() || "",
+    maps_lat: s.maps_lat?.trim() || "",
+    maps_lng: s.maps_lng?.trim() || "",
   });
 }
 
@@ -73,6 +88,19 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
       </Alert>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="contact-company" className="text-sm">
+            Firma Adı
+          </Label>
+          <Input
+            id="contact-company"
+            className="h-8"
+            value={form.company_name || ""}
+            onChange={(e) => onChange({ ...form, company_name: e.target.value })}
+            disabled={disabled}
+          />
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="contact-phone" className="text-sm">
             {t("admin.siteSettings.structured.contact.labels.phone")}
@@ -115,6 +143,45 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
           {errors?.whatsapp && <p className="text-destructive text-xs">{errors.whatsapp}</p>}
         </div>
 
+        <div className="space-y-2">
+          <Label htmlFor="contact-hours" className="text-sm">
+            Çalışma Saatleri Özeti
+          </Label>
+          <Input
+            id="contact-hours"
+            className="h-8"
+            value={form.working_hours || ""}
+            onChange={(e) => onChange({ ...form, working_hours: e.target.value })}
+            disabled={disabled}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="contact-city" className="text-sm">
+            Şehir
+          </Label>
+          <Input
+            id="contact-city"
+            className="h-8"
+            value={form.city || ""}
+            onChange={(e) => onChange({ ...form, city: e.target.value })}
+            disabled={disabled}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="contact-country" className="text-sm">
+            Ülke
+          </Label>
+          <Input
+            id="contact-country"
+            className="h-8"
+            value={form.country || ""}
+            onChange={(e) => onChange({ ...form, country: e.target.value })}
+            disabled={disabled}
+          />
+        </div>
+
         <div className="space-y-2 md:col-span-2">
           <Label htmlFor="contact-address" className="text-sm">
             {t("admin.siteSettings.structured.contact.labels.address")}
@@ -128,6 +195,46 @@ export const ContactInfoStructuredForm: React.FC<ContactInfoStructuredFormProps>
             className="text-sm"
           />
           {errors?.address && <p className="text-destructive text-xs">{errors.address}</p>}
+        </div>
+
+        <div className="space-y-2 md:col-span-2">
+          <Label htmlFor="contact-maps-embed" className="text-sm">
+            Google Maps Embed URL
+          </Label>
+          <Textarea
+            id="contact-maps-embed"
+            rows={2}
+            value={form.maps_embed_url || ""}
+            onChange={(e) => onChange({ ...form, maps_embed_url: e.target.value })}
+            disabled={disabled}
+            className="text-sm"
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="contact-maps-lat" className="text-sm">
+            Harita Latitude
+          </Label>
+          <Input
+            id="contact-maps-lat"
+            className="h-8"
+            value={form.maps_lat || ""}
+            onChange={(e) => onChange({ ...form, maps_lat: e.target.value })}
+            disabled={disabled}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="contact-maps-lng" className="text-sm">
+            Harita Longitude
+          </Label>
+          <Input
+            id="contact-maps-lng"
+            className="h-8"
+            value={form.maps_lng || ""}
+            onChange={(e) => onChange({ ...form, maps_lng: e.target.value })}
+            disabled={disabled}
+          />
         </div>
       </div>
     </div>

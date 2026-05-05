@@ -224,7 +224,7 @@ export default async function LocaleLayout({
       logo: orgLogoUrl,
       description:
         'Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan Ensotek alt markasi.',
-      email: asStr(contactInfo.email) || 'offers@moekompozit.com',
+      email: asStr(contactInfo.email) || undefined,
       telephone: asStr(contactInfo.phone) || undefined,
       address: asStr(contactInfo.address) || undefined,
       sameAs,

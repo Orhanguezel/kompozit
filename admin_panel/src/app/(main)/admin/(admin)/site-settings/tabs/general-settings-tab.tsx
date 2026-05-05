@@ -42,7 +42,19 @@ import { UiHeaderStructuredForm, uiHeaderFormToObj, uiHeaderObjToForm } from "./
 const GLOBAL_KEYS = ["contact_info", "socials", "businessHours"] as const;
 const LOCAL_KEYS = ["company_profile", "ui_header"] as const;
 
-const DEFAULT_CONTACT: ContactInfoFormState = { phone: "", email: "", address: "", whatsapp: "" };
+const DEFAULT_CONTACT: ContactInfoFormState = {
+  company_name: "",
+  phone: "",
+  email: "",
+  address: "",
+  whatsapp: "",
+  city: "",
+  country: "",
+  working_hours: "",
+  maps_embed_url: "",
+  maps_lat: "",
+  maps_lng: "",
+};
 const DEFAULT_SOCIALS: SocialsFormState = { instagram: "", facebook: "", linkedin: "", youtube: "", x: "" };
 const DEFAULT_HOURS: BusinessHoursFormState = [
   { day: "mon", open: "09:00", close: "18:00", closed: false },
