@@ -226,7 +226,7 @@ export default function AdminSiteSettingsClient() {
   };
 
   const localeReady = Boolean(locale?.trim());
-  const isGlobalTab = tab === "smtp" || tab === "locales";
+  const isGlobalTab = tab === "smtp" || tab === "api" || tab === "locales";
 
   return (
     <div className="w-full max-w-full space-y-6 overflow-x-hidden px-2 pb-6 md:px-0 md:pb-0">
@@ -316,11 +316,9 @@ export default function AdminSiteSettingsClient() {
                   <TabsTrigger value="seo" className="whitespace-nowrap">
                     {t("admin.siteSettings.tabs.seo")}
                   </TabsTrigger>
-                  {!isScopedBrand ? (
-                    <TabsTrigger value="smtp" className="whitespace-nowrap">
-                      {t("admin.siteSettings.tabs.smtp")}
-                    </TabsTrigger>
-                  ) : null}
+                  <TabsTrigger value="smtp" className="whitespace-nowrap">
+                    {t("admin.siteSettings.tabs.smtp")}
+                  </TabsTrigger>
                   {!isScopedBrand ? (
                     <TabsTrigger value="cloudinary" className="whitespace-nowrap">
                       {t("admin.siteSettings.tabs.cloudinary")}
@@ -329,11 +327,9 @@ export default function AdminSiteSettingsClient() {
                   <TabsTrigger value="brand_media" className="whitespace-nowrap">
                     {t("admin.siteSettings.tabs.brandMedia")}
                   </TabsTrigger>
-                  {!isScopedBrand ? (
-                    <TabsTrigger value="api" className="whitespace-nowrap">
-                      {t("admin.siteSettings.tabs.api")}
-                    </TabsTrigger>
-                  ) : null}
+                  <TabsTrigger value="api" className="whitespace-nowrap">
+                    {t("admin.siteSettings.tabs.api")}
+                  </TabsTrigger>
                   <TabsTrigger value="locales" className="whitespace-nowrap">
                     {t("admin.siteSettings.tabs.locales")}
                   </TabsTrigger>
@@ -358,11 +354,9 @@ export default function AdminSiteSettingsClient() {
                 <SeoSettingsTab locale={locale} settingPrefix={brandPrefix} />
               </TabsContent>
 
-              {!isScopedBrand ? (
-                <TabsContent value="smtp" className="mt-4">
-                  <SmtpSettingsTab locale={locale} />
-                </TabsContent>
-              ) : null}
+              <TabsContent value="smtp" className="mt-4">
+                <SmtpSettingsTab locale={locale} />
+              </TabsContent>
 
               {!isScopedBrand ? (
                 <TabsContent value="cloudinary" className="mt-4">
@@ -374,11 +368,9 @@ export default function AdminSiteSettingsClient() {
                 <BrandMediaTab locale={locale} settingPrefix={brandPrefix} />
               </TabsContent>
 
-              {!isScopedBrand ? (
-                <TabsContent value="api" className="mt-4">
-                  <ApiSettingsTab locale={locale} />
-                </TabsContent>
-              ) : null}
+              <TabsContent value="api" className="mt-4">
+                <ApiSettingsTab locale={locale} />
+              </TabsContent>
 
               <TabsContent value="locales" className="mt-4">
                 <LocalesSettingsTab settingPrefix={brandPrefix} />

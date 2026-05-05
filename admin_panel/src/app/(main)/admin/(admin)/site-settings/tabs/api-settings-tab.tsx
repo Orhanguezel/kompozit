@@ -29,8 +29,20 @@ export type ApiSettingsTabProps = {
 };
 
 const API_KEYS = [
+  "ai_provider",
+  "ai_provider_order",
+  "openai_api_key",
+  "openai_model",
+  "groq_api_key",
+  "groq_model",
+  "anthropic_api_key",
+  "anthropic_model",
+  "google_analytics_id",
+  "google_tag_manager_id",
   "google_client_id",
   "google_client_secret",
+  "recaptcha_site_key",
+  "recaptcha_secret_key",
   "gtm_container_id",
   "ga4_measurement_id",
   "cookie_consent",
@@ -40,8 +52,20 @@ type ApiKey = (typeof API_KEYS)[number];
 type ApiForm = Record<ApiKey, string>;
 
 const EMPTY_FORM: ApiForm = {
+  ai_provider: "",
+  ai_provider_order: "",
+  openai_api_key: "",
+  openai_model: "",
+  groq_api_key: "",
+  groq_model: "",
+  anthropic_api_key: "",
+  anthropic_model: "",
+  google_analytics_id: "",
+  google_tag_manager_id: "",
   google_client_id: "",
   google_client_secret: "",
+  recaptcha_site_key: "",
+  recaptcha_secret_key: "",
   gtm_container_id: "",
   ga4_measurement_id: "",
   cookie_consent: "",
@@ -107,13 +131,10 @@ export const ApiSettingsTab: React.FC<ApiSettingsTabProps> = ({ locale }) => {
 
   const handleSave = async () => {
     try {
-      const updates: { key: ApiKey; value: SettingValue }[] = [
-        { key: "google_client_id", value: form.google_client_id.trim() },
-        { key: "google_client_secret", value: form.google_client_secret.trim() },
-        { key: "gtm_container_id", value: form.gtm_container_id.trim() },
-        { key: "ga4_measurement_id", value: form.ga4_measurement_id.trim() },
-        { key: "cookie_consent", value: tryParseJsonOrString(form.cookie_consent) },
-      ];
+      const updates: { key: ApiKey; value: SettingValue }[] = API_KEYS.map((key) => ({
+        key,
+        value: key === "cookie_consent" ? tryParseJsonOrString(form[key]) : form[key].trim(),
+      }));
 
       for (const u of updates) {
         await updateSetting({ key: u.key, value: u.value, locale: "*" }).unwrap();
@@ -156,6 +177,96 @@ export const ApiSettingsTab: React.FC<ApiSettingsTabProps> = ({ locale }) => {
 
       <CardContent className="space-y-6">
         <div className="text-muted-foreground text-sm">{t("admin.siteSettings.api.note")}</div>
+
+        <div className="space-y-3 rounded-md border p-4">
+          <div>
+            <h3 className="font-medium text-sm">AI Entegrasyonu</h3>
+            <p className="text-muted-foreground text-xs">OpenAI, Groq ve Anthropic servis ayarları.</p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="ai_provider">Varsayılan Provider</Label>
+              <Input
+                id="ai_provider"
+                value={form.ai_provider}
+                onChange={(e) => handleChange("ai_provider", e.target.value)}
+                placeholder="auto"
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ai_provider_order">Provider Sırası</Label>
+              <Input
+                id="ai_provider_order"
+                value={form.ai_provider_order}
+                onChange={(e) => handleChange("ai_provider_order", e.target.value)}
+                placeholder="openai,anthropic,grok"
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="openai_api_key">OpenAI API Key</Label>
+              <Input
+                id="openai_api_key"
+                type="password"
+                value={form.openai_api_key}
+                onChange={(e) => handleChange("openai_api_key", e.target.value)}
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="openai_model">OpenAI Model</Label>
+              <Input
+                id="openai_model"
+                value={form.openai_model}
+                onChange={(e) => handleChange("openai_model", e.target.value)}
+                placeholder="gpt-4o-mini"
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="groq_api_key">Groq API Key</Label>
+              <Input
+                id="groq_api_key"
+                type="password"
+                value={form.groq_api_key}
+                onChange={(e) => handleChange("groq_api_key", e.target.value)}
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="groq_model">Groq Model</Label>
+              <Input
+                id="groq_model"
+                value={form.groq_model}
+                onChange={(e) => handleChange("groq_model", e.target.value)}
+                placeholder="llama-3.3-70b-versatile"
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="anthropic_api_key">Anthropic API Key</Label>
+              <Input
+                id="anthropic_api_key"
+                type="password"
+                value={form.anthropic_api_key}
+                onChange={(e) => handleChange("anthropic_api_key", e.target.value)}
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="anthropic_model">Anthropic Model</Label>
+              <Input
+                id="anthropic_model"
+                value={form.anthropic_model}
+                onChange={(e) => handleChange("anthropic_model", e.target.value)}
+                placeholder="claude-3-5-haiku-latest"
+                disabled={busy}
+              />
+            </div>
+          </div>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2">
           {/* Google Client ID */}
@@ -207,6 +318,20 @@ export const ApiSettingsTab: React.FC<ApiSettingsTabProps> = ({ locale }) => {
             <p className="text-muted-foreground text-xs">{t("admin.siteSettings.api.gtmContainerIdHelp")}</p>
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="google_tag_manager_id">
+              Google Tag Manager
+              <code className="ml-2 text-muted-foreground text-xs">(google_tag_manager_id)</code>
+            </Label>
+            <Input
+              id="google_tag_manager_id"
+              value={form.google_tag_manager_id}
+              onChange={(e) => handleChange("google_tag_manager_id", e.target.value)}
+              placeholder="GTM-XXXXXXX"
+              disabled={busy}
+            />
+          </div>
+
           {/* GA4 Measurement ID */}
           <div className="space-y-2">
             <Label htmlFor="ga4_measurement_id">
@@ -221,6 +346,48 @@ export const ApiSettingsTab: React.FC<ApiSettingsTabProps> = ({ locale }) => {
               disabled={busy}
             />
             <p className="text-muted-foreground text-xs">{t("admin.siteSettings.api.ga4MeasurementIdHelp")}</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="google_analytics_id">
+              Google Analytics
+              <code className="ml-2 text-muted-foreground text-xs">(google_analytics_id)</code>
+            </Label>
+            <Input
+              id="google_analytics_id"
+              value={form.google_analytics_id}
+              onChange={(e) => handleChange("google_analytics_id", e.target.value)}
+              placeholder="G-XXXXXXXXXX"
+              disabled={busy}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="recaptcha_site_key">
+              reCAPTCHA Site Key
+              <code className="ml-2 text-muted-foreground text-xs">(recaptcha_site_key)</code>
+            </Label>
+            <Input
+              id="recaptcha_site_key"
+              type="password"
+              value={form.recaptcha_site_key}
+              onChange={(e) => handleChange("recaptcha_site_key", e.target.value)}
+              disabled={busy}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="recaptcha_secret_key">
+              reCAPTCHA Secret Key
+              <code className="ml-2 text-muted-foreground text-xs">(recaptcha_secret_key)</code>
+            </Label>
+            <Input
+              id="recaptcha_secret_key"
+              type="password"
+              value={form.recaptcha_secret_key}
+              onChange={(e) => handleChange("recaptcha_secret_key", e.target.value)}
+              disabled={busy}
+            />
           </div>
         </div>
 
