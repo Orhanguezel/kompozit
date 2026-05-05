@@ -15,7 +15,7 @@ import { Reveal } from '@/components/motion/Reveal';
 async function fetchBlogPosts(locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/custom_pages?module_key=kompozit_blog&is_active=1&locale=${locale}&limit=50`,
+      `${API_BASE_URL}/custom-pages?module_key=kompozit_blog&is_active=1&locale=${locale}&limit=50`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];

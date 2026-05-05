@@ -357,6 +357,30 @@ export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled =
     }
   }
 
+  async function handleBulkAddImages(urls: string[]) {
+    if (!urls?.length) return;
+    let success = 0;
+    for (const url of urls) {
+      try {
+        await createImage({
+          galleryId,
+          payload: {
+            image_url: url,
+            locale,
+            display_order: sortedImages.length + success,
+            is_active: 1,
+          } as GalleryImageUpsertPayload,
+        }).unwrap();
+        success++;
+      } catch (err) {
+        console.error("Bulk add failed for:", url, err);
+      }
+    }
+    if (success > 0) {
+      toast.success(t("admin.gallery.images.bulkAdded", { count: success }));
+    }
+  }
+
   async function handleDelete(imageId: string) {
     if (!confirm(t("admin.gallery.images.deleteConfirm"))) return;
     try {
@@ -401,6 +425,8 @@ export function GalleryImagesTab({ galleryId, locale, disabled: parentDisabled =
             metadata={imageMetadata}
             value=""
             onChange={handleAddImage}
+            multiple={true}
+            onChangeMultiple={handleBulkAddImages}
             disabled={disabled}
           />
         </CardContent>

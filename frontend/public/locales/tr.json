@@ -260,6 +260,18 @@
           "title": "Enerji",
           "description": "Kimyasal dirençli tank ve panel sistemleri"
         },
+        "transport": {
+          "title": "Ulaşım",
+          "description": "Hafif, dayanıklı ve korozyona dirençli kompozit bileşenler"
+        },
+        "construction": {
+          "title": "İnşaat",
+          "description": "Cephe, panel, profil ve saha koşullarına uygun kompozit çözümler"
+        },
+        "marine": {
+          "title": "Denizcilik",
+          "description": "Nem, tuz ve dış ortam yüklerine dayanıklı CTP / cam elyaf uygulamaları"
+        },
         "landscaping": {
           "title": "Peyzaj",
           "description": "Hafif ve dayanıklı dış mekân çözümleri"
@@ -509,24 +521,53 @@
       "a3": "Evet. Teknik çizim olmasa da boyut, kullanım koşulları ve adet bilgisi ile başlayabiliriz; gerekirse teknik çizim sürecinde de destek sağlıyoruz."
     },
     "form": {
+      "contactInfo": "İletişim Bilgileri",
       "productInterest": "İlgilenilen Ürün/Hizmet",
-      "productCategory": "Ürün kategorisi",
+      "productCategory": "Ürün Kategorisi",
       "productCategories": {
-        "carbon_fiber": "Karbon fiber",
+        "carbon_fiber": "Karbon Fiber",
         "frp_ctp": "CTP / FRP",
-        "fiberglass": "Cam elyaf",
-        "panel": "Panel / levha",
-        "profile": "Profil / boru",
-        "tank": "Tank / depo",
-        "custom_part": "Özel parça"
+        "fiberglass": "Cam Elyaf",
+        "panel": "Panel / Levha",
+        "profile": "Profil / Boru",
+        "tank": "Tank / Depo",
+        "planter_landscape": "Kompozit Saksı / Peyzaj",
+        "custom_part": "Özel Parça"
       },
-      "sector": "Sektör / kullanım alanı",
+      "tabs": {
+        "service": "Servis / Mühendislik",
+        "product": "Ürün Talebi",
+        "sparepart": "Yedek Parça"
+      },
+      "sector": "Sektör / Kullanım Alanı",
       "quantity": "Miktar",
-      "deadline": "Termin",
+      "deadline": "Termin Beklentisi",
       "details": "Proje Detayları",
       "detailsPlaceholder": "Projeniz hakkında bize bilgi verin (malzeme, boyut, adet vb.)",
-      "attachFile": "Dosya Ekle (teknik çizim, şartname vb.)",
+      "material": "Malzeme / Reçine",
+      "dimensions": "Ölçü / Form",
+      "usageEnvironment": "Kullanım Ortamı",
+      "surfaceFinish": "Yüzey / Renk Beklentisi",
+      "notes": "Ek Notlar / Gereksinimler",
+      "attachFile": "Dosya Ekle (Teknik Çizim, Şartname vb.)",
       "attachHint": "PDF, STEP, IGES, DXF/DWG veya görsel dosyalar yüklenebilir.",
+      "privacyNote": "Gönderdiğiniz bilgiler yalnızca teklif ve teknik değerlendirme süreci için kullanılır.",
+      "placeholders": {
+        "name": "Ad Soyad",
+        "email": "ornek@firma.com",
+        "phone": "+90 5XX XXX XX XX",
+        "company": "Firma adı",
+        "productInterest": "Örn. Kompozit saksı ve peyzaj ürünleri",
+        "serviceInterest": "Örn. Numune geliştirme, kalıp / üretim danışmanlığı",
+        "sparepartInterest": "Parça adı, kodu veya mevcut ürün referansı",
+        "sector": "Örn. Peyzaj, belediye, mimari proje, endüstriyel",
+        "quantity": "Örn. 25 adet / 1 set / yıllık 500 adet",
+        "deadline": "Örn. 3 hafta, Mayıs sonu, acil numune",
+        "material": "Örn. CTP, cam elyaf, karbon fiber, UV dayanımlı reçine",
+        "dimensions": "Örn. 120x45x60 cm, özel form, teknik çizime göre",
+        "usageEnvironment": "Örn. dış mekân, UV, nem, kimyasal temas, iç mekân",
+        "surfaceFinish": "Örn. RAL renk, mat/parlak, dokulu yüzey, gelcoat"
+      },
       "submit": "Teklif İste",
       "success": "Teklif talebiniz alındı. Ekibimiz en kısa sürede sizinle iletişime geçecek.",
       "error": "Talep gönderilemedi. Lütfen tekrar deneyin."

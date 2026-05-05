@@ -420,6 +420,7 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
                   <TableHead className="hidden xl:table-cell">{t("columns.source")}</TableHead>
                   <TableHead className="hidden lg:table-cell">{t("columns.email")}</TableHead>
                   <TableHead className="hidden xl:table-cell">{t("columns.subject")}</TableHead>
+                  <TableHead className="hidden md:table-cell">Tip</TableHead>
                   <TableHead className="whitespace-nowrap text-right">{t("columns.grossTotal")}</TableHead>
                   <TableHead className="hidden whitespace-nowrap md:table-cell">{t("columns.createdAt")}</TableHead>
                   <TableHead className="text-right">{t("columns.actions")}</TableHead>
@@ -465,8 +466,15 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden lg:table-cell">{item.email || "-"}</TableCell>
-                    <TableCell className="hidden max-w-[200px] truncate xl:table-cell" title={item.subject ?? ""}>
-                      {item.subject || "-"}
+                    <TableCell className="hidden xl:table-cell">
+                      <div className="max-w-[200px] truncate text-muted-foreground text-xs" title={item.subject || ""}>
+                        {item.subject || "-"}
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <Badge variant="outline" className="capitalize">
+                        {String((item.form_data as any)?.related_type || "-")}
+                      </Badge>
                     </TableCell>
                     <TableCell className="whitespace-nowrap text-right font-medium">
                       {fmtMoney(item.gross_total, item.currency)}

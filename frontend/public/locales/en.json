@@ -260,6 +260,18 @@
           "title": "Energy",
           "description": "Chemical-resistant tanks and panel systems"
         },
+        "transport": {
+          "title": "Transport",
+          "description": "Lightweight, durable and corrosion-resistant composite components"
+        },
+        "construction": {
+          "title": "Construction",
+          "description": "Composite panels, profiles and field-ready components for built environments"
+        },
+        "marine": {
+          "title": "Marine",
+          "description": "FRP / fiberglass applications for moisture, salt and outdoor exposure"
+        },
         "landscaping": {
           "title": "Landscaping",
           "description": "Lightweight and durable outdoor solutions"
@@ -509,24 +521,53 @@
       "a3": "Yes. We can start with dimensions, operating conditions and quantity information. We can also support you during the technical drawing process if needed."
     },
     "form": {
+      "contactInfo": "Contact Information",
       "productInterest": "Product/Service of Interest",
-      "productCategory": "Product category",
+      "productCategory": "Product Category",
       "productCategories": {
-        "carbon_fiber": "Carbon fiber",
+        "carbon_fiber": "Carbon Fiber",
         "frp_ctp": "FRP / GRP",
         "fiberglass": "Fiberglass",
-        "panel": "Panel / sheet",
-        "profile": "Profile / tube",
-        "tank": "Tank / storage",
-        "custom_part": "Custom part"
+        "panel": "Panel / Sheet",
+        "profile": "Profile / Tube",
+        "tank": "Tank / Storage",
+        "planter_landscape": "Composite Planter / Landscape",
+        "custom_part": "Custom Part"
       },
-      "sector": "Sector / use case",
+      "tabs": {
+        "service": "Service / Engineering",
+        "product": "Product Request",
+        "sparepart": "Spare Part"
+      },
+      "sector": "Sector / Use Case",
       "quantity": "Quantity",
-      "deadline": "Deadline",
+      "deadline": "Deadline Expectation",
       "details": "Project Details",
       "detailsPlaceholder": "Tell us about your project (material, dimensions, quantity, etc.)",
-      "attachFile": "Attach File (technical drawing, specification, etc.)",
+      "material": "Material / Resin",
+      "dimensions": "Dimensions / Form",
+      "usageEnvironment": "Usage Environment",
+      "surfaceFinish": "Surface / Color Expectation",
+      "notes": "Extra Notes / Requirements",
+      "attachFile": "Attach File (Technical Drawing, Specification, etc.)",
       "attachHint": "PDF, STEP, IGES, DXF/DWG or image files can be uploaded.",
+      "privacyNote": "Submitted information is used only for quotation and technical review.",
+      "placeholders": {
+        "name": "Full name",
+        "email": "name@company.com",
+        "phone": "+90 5XX XXX XX XX",
+        "company": "Company name",
+        "productInterest": "E.g. composite planters and landscape products",
+        "serviceInterest": "E.g. sampling, tooling or production engineering",
+        "sparepartInterest": "Part name, code or existing product reference",
+        "sector": "E.g. landscaping, municipality, architecture, industrial",
+        "quantity": "E.g. 25 pcs / 1 set / 500 pcs yearly",
+        "deadline": "E.g. 3 weeks, end of May, urgent sample",
+        "material": "E.g. FRP, fiberglass, carbon fiber, UV-resistant resin",
+        "dimensions": "E.g. 120x45x60 cm, custom shape, per technical drawing",
+        "usageEnvironment": "E.g. outdoor, UV, moisture, chemical contact, indoor",
+        "surfaceFinish": "E.g. RAL color, matte/gloss, textured finish, gelcoat"
+      },
       "submit": "Request Quote",
       "success": "Your quote request has been received. Our team will contact you shortly.",
       "error": "Failed to submit request. Please try again."

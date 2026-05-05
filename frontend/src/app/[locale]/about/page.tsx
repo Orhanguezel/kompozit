@@ -22,7 +22,7 @@ import { Reveal } from '@/components/motion/Reveal';
 async function fetchAboutCustomPage(locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/custom_pages/by-slug/${encodeURIComponent('about')}?locale=${locale}`,
+      `${API_BASE_URL}/custom-pages/by-slug/${encodeURIComponent('about')}?locale=${locale}`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return null;

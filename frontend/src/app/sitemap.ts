@@ -74,7 +74,7 @@ async function fetchSolutionsItems(locale: string): Promise<SitemapItem[]> {
       is_published: '1',
       limit: '200',
     });
-    const res = await fetch(`${API_BASE_URL}/custom_pages?${qs.toString()}`, {
+    const res = await fetch(`${API_BASE_URL}/custom-pages?${qs.toString()}`, {
       next: { revalidate: 3600 },
     });
     if (!res.ok) return [];
@@ -102,7 +102,7 @@ async function fetchLegalItemsForLocale(locale: string): Promise<SitemapItem[]> 
     legalSlugs.map(async (slug) => {
       try {
         const res = await fetch(
-          `${API_BASE_URL}/custom_pages/by-slug/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`,
+          `${API_BASE_URL}/custom-pages/by-slug/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`,
           { next: { revalidate: 3600 } },
         );
         if (!res.ok) return null;
@@ -160,7 +160,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const [products, galleries, blogPosts, solutionPages, legalPages] = await Promise.all([
       fetchItems(`/products?item_type=kompozit&locale=${encodeURIComponent(locale)}`),
       fetchItems(`/galleries?module_key=kompozit&locale=${encodeURIComponent(locale)}`),
-      fetchItems(`/custom_pages?module_key=kompozit_blog&locale=${encodeURIComponent(locale)}`),
+      fetchItems(`/custom-pages?module_key=kompozit_blog&locale=${encodeURIComponent(locale)}`),
       fetchSolutionsItems(locale),
       fetchLegalItemsForLocale(locale),
     ]);

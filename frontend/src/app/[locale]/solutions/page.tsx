@@ -13,6 +13,22 @@ import { fetchSolutions } from '@/features/solutions';
 import { resolvePublicAssetUrl } from '@/lib/utils';
 import { getFallbackSolutions } from '@/lib/content-fallbacks';
 
+function getSolutionSlug(item: Record<string, unknown>): string {
+  const candidates = [
+    item.slug,
+    item.slug_tr,
+    item.slug_en,
+    (item.i18n as Record<string, unknown> | undefined)?.slug,
+    (item.translation as Record<string, unknown> | undefined)?.slug,
+  ];
+
+  for (const value of candidates) {
+    if (typeof value === 'string' && value.trim()) return value.trim();
+  }
+
+  return '';
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -59,7 +75,9 @@ export default async function SolutionsPage({
             mainEntity: jsonld.itemList(
               items.slice(0, 24).map((item: { title?: string; slug?: string }) => ({
                 name: String(item.title ?? ''),
-                url: item.slug ? localizedUrl(locale, `/solutions/${item.slug}`) : localizedUrl(locale, '/offer'),
+                url: getSolutionSlug(item as Record<string, unknown>)
+                  ? localizedUrl(locale, `/solutions/${getSolutionSlug(item as Record<string, unknown>)}`)
+                  : localizedUrl(locale, '/solutions'),
               })),
             ),
           }),
@@ -80,28 +98,32 @@ export default async function SolutionsPage({
             <p className="text-[var(--silver)] opacity-60">{tSol('empty')}</p>
           ) : (
             <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3">
-              {items.map((item: any, index: number) => (
-                <Reveal key={item.id ?? item.slug} delay={index * 50} className="grid-item-cc">
-                  <ListingCard
-                    listIndex={index + 1}
-                    visualVariant={index}
-                    href={item.slug ? localizedPath(locale, `/solutions/${item.slug}`) : localizedPath(locale, '/offer')}
-                    title={item.title}
-                    lineLabel={tCommon('listingEngineeringLine')}
-                    description={item.description ?? item.summary}
-                    imageSrc={
-                      resolvePublicAssetUrl(item.image_url ?? item.featured_image) ??
-                      item.image_url ??
-                      item.featured_image
-                    }
-                    specs={item.specs}
-                    category={item.category}
-                    imageAlt={item.title}
-                    imageSizes="(max-width: 768px) 100vw, 33vw"
-                    imageAspectClassName="h-[450px]"
-                  />
-                </Reveal>
-              ))}
+              {items.map((item: any, index: number) => {
+                const solutionSlug = getSolutionSlug(item);
+
+                return (
+                  <Reveal key={item.id ?? solutionSlug ?? item.title} delay={index * 50} className="grid-item-cc">
+                    <ListingCard
+                      listIndex={index + 1}
+                      visualVariant={index}
+                      href={solutionSlug ? localizedPath(locale, `/solutions/${solutionSlug}`) : localizedPath(locale, '/solutions')}
+                      title={item.title}
+                      lineLabel={tCommon('listingEngineeringLine')}
+                      description={item.description ?? item.summary}
+                      imageSrc={
+                        resolvePublicAssetUrl(item.image_url ?? item.featured_image) ??
+                        item.image_url ??
+                        item.featured_image
+                      }
+                      specs={item.specs}
+                      category={item.category}
+                      imageAlt={item.title}
+                      imageSizes="(max-width: 768px) 100vw, 33vw"
+                      imageAspectClassName="h-[450px]"
+                    />
+                  </Reveal>
+                );
+              })}
             </div>
           )}
 

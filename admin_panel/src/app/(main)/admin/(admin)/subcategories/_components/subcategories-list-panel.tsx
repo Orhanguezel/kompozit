@@ -271,20 +271,30 @@ export default function SubcategoriesListPanel() {
 
                     <TableCell className="text-center text-sm">{item.display_order ?? 0}</TableCell>
 
-                    <TableCell className="text-center">
-                      <Switch
-                        checked={item.is_active}
-                        disabled={isLoading}
-                        onCheckedChange={(v) => handleToggleActive(item, v)}
-                      />
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Switch
+                          checked={item.is_active}
+                          disabled={isLoading}
+                          onCheckedChange={(v) => handleToggleActive(item, v)}
+                        />
+                        <Badge variant={item.is_active ? "secondary" : "destructive"}>
+                          {item.is_active ? t("table.active") : t("table.inactive")}
+                        </Badge>
+                      </div>
                     </TableCell>
 
-                    <TableCell className="text-center">
-                      <Switch
-                        checked={item.is_featured}
-                        disabled={isLoading}
-                        onCheckedChange={(v) => handleToggleFeatured(item, v)}
-                      />
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <Switch
+                          checked={item.is_featured}
+                          disabled={isLoading}
+                          onCheckedChange={(v) => handleToggleFeatured(item, v)}
+                        />
+                        <Badge variant="secondary">
+                          {item.is_featured ? t("table.featured") : t("table.notFeatured")}
+                        </Badge>
+                      </div>
                     </TableCell>
 
                     <TableCell className="text-right">

@@ -92,9 +92,9 @@ export default async function GalleryDetailPage({
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
-      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.25]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-carbon)_0%,color-mix(in_srgb,var(--color-graphite)_40%,var(--color-carbon))_45%,var(--color-carbon)_100%)] opacity-90" aria-hidden />
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.12] dark:opacity-[0.2]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-bg)_0%,color-mix(in_srgb,var(--color-bg-secondary)_72%,var(--color-bg))_48%,var(--color-bg)_100%)]" aria-hidden />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -154,7 +154,7 @@ export default async function GalleryDetailPage({
           <Breadcrumbs
             items={breadcrumbs}
             className="mb-10"
-            olClassName="text-[var(--color-light)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-off-white)]"
+            olClassName="text-[var(--color-text-secondary)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-text-primary)]"
           />
 
           <header className="mb-16 space-y-6">
@@ -164,11 +164,11 @@ export default async function GalleryDetailPage({
                  Project Insight
                </span>
             </div>
-            <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-off-white)] lg:text-7xl uppercase">
+            <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal uppercase tracking-tight text-[var(--color-text-primary)] lg:text-7xl">
               {gallery.title}
             </h1>
             {gallery.description && (
-              <p className="max-w-2xl text-lg font-light leading-relaxed text-[var(--color-silver)] lg:text-xl">
+              <p className="max-w-2xl text-lg font-light leading-relaxed text-[var(--color-text-secondary)] lg:text-xl">
                 {gallery.description}
               </p>
             )}
@@ -194,7 +194,7 @@ export default async function GalleryDetailPage({
                 return (
                   <div
                     key={img.id}
-                    className="mb-4 break-inside-avoid overflow-hidden rounded-xl"
+                    className="mb-4 break-inside-avoid overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_18px_60px_rgba(0,0,0,0.08)] dark:bg-[var(--color-surface-muted)] dark:shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
                   >
                     <OptimizedImage
                       src={String(img.image_url_resolved || img.image_url || '')}
@@ -208,11 +208,11 @@ export default async function GalleryDetailPage({
                       })}
                       width={dimensions.width}
                       height={dimensions.height}
-                      className="w-full rounded-xl"
+                      className="w-full"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     />
                     {caption && (
-                      <p className="mt-2 text-sm text-[var(--color-text-secondary)]">
+                      <p className="border-t border-[var(--color-border)] px-4 py-3 text-sm leading-relaxed text-[var(--color-text-secondary)]">
                         {caption}
                       </p>
                     )}
@@ -221,7 +221,7 @@ export default async function GalleryDetailPage({
               })}
           </div>
         ) : (
-          <div className="mt-8 overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-secondary)]">
+          <div className="mt-8 overflow-hidden border border-[var(--color-border)] bg-[var(--color-surface)] shadow-[0_18px_60px_rgba(0,0,0,0.08)] dark:bg-[var(--color-surface-muted)] dark:shadow-[0_18px_60px_rgba(0,0,0,0.24)]">
             <OptimizedImage
               src={
                 resolvePublicAssetUrl(

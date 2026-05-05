@@ -32,6 +32,7 @@ const SMTP_KEYS = [
   "smtp_from_email",
   "smtp_from_name",
   "smtp_ssl",
+  "offers_admin_email",
 ] as const;
 
 type SmtpKey = (typeof SMTP_KEYS)[number];
@@ -44,6 +45,7 @@ type SmtpForm = {
   smtp_from_email: string;
   smtp_from_name: string;
   smtp_ssl: boolean;
+  offers_admin_email: string;
 };
 
 const EMPTY_FORM: SmtpForm = {
@@ -54,6 +56,7 @@ const EMPTY_FORM: SmtpForm = {
   smtp_from_email: "",
   smtp_from_name: "",
   smtp_ssl: false,
+  offers_admin_email: "",
 };
 
 function valueToString(v: unknown): string {
@@ -111,6 +114,7 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
     next.smtp_from_email = valueToString(map.get("smtp_from_email")?.value);
     next.smtp_from_name = valueToString(map.get("smtp_from_name")?.value);
     next.smtp_ssl = toBool(map.get("smtp_ssl")?.value);
+    next.offers_admin_email = valueToString(map.get("offers_admin_email")?.value);
 
     setForm(next);
   }, [settings]);
@@ -136,6 +140,7 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
         { key: "smtp_from_email", value: form.smtp_from_email.trim() },
         { key: "smtp_from_name", value: form.smtp_from_name.trim() },
         { key: "smtp_ssl", value: form.smtp_ssl },
+        { key: "offers_admin_email", value: form.offers_admin_email.trim() },
       ];
 
       for (const u of updates) {
@@ -263,6 +268,23 @@ export const SmtpSettingsTab: React.FC<SmtpSettingsTabProps> = ({ locale }) => {
               placeholder={t("admin.siteSettings.smtp.fromNamePlaceholder")}
               disabled={busy}
             />
+          </div>
+
+          <div className="space-y-2 md:col-span-12">
+            <Separator className="my-4" />
+            <Label htmlFor="offers-admin-email" className="text-sm font-bold text-[var(--industrial-gold)]">
+              Admin Bildirim E-postası
+            </Label>
+            <Input
+              id="offers-admin-email"
+              value={form.offers_admin_email}
+              onChange={(e) => handleChange("offers_admin_email", (e.target as any).value)}
+              placeholder="admin@example.com, info@moekompozit.com"
+              disabled={busy}
+            />
+            <p className="text-muted-foreground text-xs">
+              Yeni bir mesaj veya teklif talebi geldiğinde bildirim gönderilecek e-posta adresleri. Virgül ile ayırarak birden fazla yazabilirsiniz.
+            </p>
           </div>
         </div>
 

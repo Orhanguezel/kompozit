@@ -377,17 +377,17 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
         <CardHeader className="border-b py-4">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
-              <div className="font-semibold text-sm">
+              <div className="font-bold text-base">
                 {mode === "create" ? t("admin.customPage.form.createTitle") : t("admin.customPage.form.editTitle")}
               </div>
-              <div className="text-muted-foreground text-xs">{t("admin.customPage.form.formDescription")}</div>
+              <div className="text-muted-foreground text-sm">{t("admin.customPage.form.formDescription")}</div>
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
               {onCancel ? (
                 <button
                   type="button"
-                  className="rounded-md border px-3 py-1 text-xs"
+                  className="rounded-md border px-4 py-1.5 text-sm font-medium hover:bg-muted transition-colors"
                   onClick={onCancel}
                   disabled={disabled}
                 >
@@ -397,7 +397,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
 
               <button
                 type="submit"
-                className="gold-gradient rounded-full px-6 py-2 font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-60"
+                className="gold-gradient rounded-full px-8 py-2.5 font-bold text-sm text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-60"
                 disabled={disabled}
               >
                 {saving
@@ -410,7 +410,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
               </button>
 
               {loading || isLocaleSwitchLoading ? (
-                <span className="rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
+                <span className="rounded-full border px-3 py-1 text-xs text-muted-foreground">
                   {isLocaleSwitchLoading ? t("admin.customPage.form.switchingLocale") : t("admin.common.loading")}
                 </span>
               ) : null}
@@ -422,25 +422,25 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
             <TabsList className="mb-6 premium-card p-1 bg-card/40 border-white/5 h-auto grid grid-cols-2 sm:grid-cols-4 gap-1">
               <TabsTrigger 
                 value="content" 
-                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                className="rounded-md py-2.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
               >
                 {t("admin.customPage.form.tabContent")}
               </TabsTrigger>
               <TabsTrigger 
                 value="media" 
-                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                className="rounded-md py-2.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
               >
                 {t("admin.customPage.form.tabMedia")}
               </TabsTrigger>
               <TabsTrigger 
                 value="seo" 
-                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                className="rounded-md py-2.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
               >
                 {t("admin.customPage.form.tabSeo")}
               </TabsTrigger>
               <TabsTrigger 
                 value="json" 
-                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+                className="rounded-md py-2.5 text-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
               >
                 {t("admin.customPage.form.tabJson")}
               </TabsTrigger>
@@ -456,7 +456,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                   disabled={disabled || (!!localesLoading && !localeSelectOptions.length) || isLocaleSwitchLoading}
                   label={t("admin.customPage.form.localeLabel")}
                 />
-                <div className="mt-1 text-muted-foreground text-xs">{t("admin.customPage.form.localeHint")}</div>
+                <div className="mt-1 text-muted-foreground text-sm">{t("admin.customPage.form.localeHint")}</div>
               </div>
               <CustomPageMainColumn
                 values={values}

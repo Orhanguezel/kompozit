@@ -36,17 +36,17 @@ export function ContactFormClient({ locale }: { locale: string }) {
   }
 
   const InputLabel = ({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) => (
-    <label htmlFor={htmlFor} className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-silver)]">
+    <label htmlFor={htmlFor} className="mb-2 block text-[10px] font-bold uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
       {children}
     </label>
   );
 
-  const inputClasses = "w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-bg-dark)] px-5 py-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] transition-all focus:border-[var(--color-gold)] focus:outline-none focus:ring-1 focus:ring-[var(--color-gold)]";
+  const inputClasses = "w-full rounded-none border-0 border-b-2 border-[color-mix(in_srgb,var(--color-gold)_34%,var(--color-text-muted))] bg-transparent px-0 py-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-muted)] transition-all hover:border-[color-mix(in_srgb,var(--color-gold)_55%,var(--color-text-muted))] focus:border-[var(--color-gold)] focus:outline-none";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <h2 className="font-[var(--font-display)] text-3xl font-normal uppercase tracking-wide text-[var(--color-cream)]">
+        <h2 className="font-[var(--font-display)] text-3xl font-normal uppercase tracking-wide text-[var(--color-text-primary)]">
           {t('title')}
         </h2>
         <p className="mt-2 text-sm text-[var(--color-text-secondary)] opacity-80">{t('subtitle')}</p>
@@ -112,7 +112,7 @@ export function ContactFormClient({ locale }: { locale: string }) {
         <button
           type="submit"
           disabled={sending}
-          className="group inline-flex w-full items-center justify-center gap-3 rounded-xl bg-[var(--color-gold)] px-6 py-4 text-sm font-bold uppercase tracking-widest text-[var(--color-carbon)] transition-all hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg-dark)] disabled:opacity-50"
+          className="group inline-flex w-full items-center justify-center gap-3 rounded-none bg-[var(--color-gold)] px-6 py-4 text-sm font-bold uppercase tracking-widest text-[#14110d] transition-all hover:bg-[var(--color-gold-bright)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:opacity-50"
         >
           <span>{sending ? tc('loading') : t('submit')}</span>
           {!sending && <Send className="size-4 opacity-80 transition-transform group-hover:translate-x-1" />}

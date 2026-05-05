@@ -337,43 +337,29 @@ export default function ProductsListPanel({ itemType }: Props) {
 
                       <TableCell className="text-center text-sm">{item.stock_quantity ?? "—"}</TableCell>
 
-                      <TableCell className="text-center">
-                        <div className="flex flex-col items-center gap-1">
-                          <Badge
-                            className={
-                              isActive
-                                ? "border-green-300 bg-green-100 text-green-900"
-                                : "border-red-300 bg-red-100 text-red-900"
-                            }
-                            variant="outline"
-                          >
-                            {isActive ? t("list.status.active") : t("list.status.inactive")}
-                          </Badge>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
                           <Switch
                             checked={isActive}
                             disabled={isLoading}
                             onCheckedChange={(v) => handleToggleActive(item, v)}
                           />
+                          <Badge variant={isActive ? "secondary" : "destructive"}>
+                            {isActive ? t("list.status.active") : t("list.status.inactive")}
+                          </Badge>
                         </div>
                       </TableCell>
 
-                      <TableCell className="text-center">
-                        <div className="flex flex-col items-center gap-1">
-                          <Badge
-                            className={
-                              isFeatured
-                                ? "border-amber-300 bg-amber-100 text-amber-900"
-                                : "border-slate-300 bg-slate-100 text-slate-800"
-                            }
-                            variant="outline"
-                          >
-                            {isFeatured ? t("list.status.featured") : t("list.status.notFeatured")}
-                          </Badge>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
                           <Switch
                             checked={isFeatured}
                             disabled={isLoading}
                             onCheckedChange={(v) => handleToggleFeatured(item, v)}
                           />
+                          <Badge variant="secondary">
+                            {isFeatured ? t("list.status.featured") : t("list.status.notFeatured")}
+                          </Badge>
                         </div>
                       </TableCell>
 

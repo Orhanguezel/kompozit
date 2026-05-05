@@ -95,7 +95,7 @@ export const AdminJsonEditor: React.FC<AdminJsonEditorProps> = ({
         onBlur={handleBlur}
         disabled={disabled}
         spellCheck={false}
-        className={cn("font-mono text-xs leading-5", error && "border-destructive focus-visible:ring-destructive")}
+        className={cn("font-mono text-sm leading-6", error && "border-destructive focus-visible:ring-destructive")}
         style={{
           minHeight: height,
           whiteSpace: "pre",
@@ -103,10 +103,10 @@ export const AdminJsonEditor: React.FC<AdminJsonEditorProps> = ({
         }}
       />
 
-      {helperText && !error ? <div className="text-muted-foreground text-xs">{helperText}</div> : null}
+      {helperText && !error ? <div className="text-muted-foreground text-sm">{helperText}</div> : null}
 
       {error ? (
-        <div className="text-destructive text-xs">
+        <div className="text-destructive text-sm">
           JSON hatası: <span className="font-medium">{error}</span>
         </div>
       ) : null}

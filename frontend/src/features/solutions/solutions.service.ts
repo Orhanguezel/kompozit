@@ -14,7 +14,7 @@ export async function fetchSolutions(locale: string) {
       sort: 'display_order',
       orderDir: 'asc',
     });
-    const res = await fetch(`${API_BASE_URL}/custom_pages?${qs.toString()}`, {
+    const res = await fetch(`${API_BASE_URL}/custom-pages?${qs.toString()}`, {
       next: { revalidate: 300 },
     });
     if (!res.ok) return [];
@@ -28,7 +28,7 @@ export async function fetchSolutions(locale: string) {
 export async function fetchSolutionBySlug(slug: string, locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/custom_pages/by-slug/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`,
+      `${API_BASE_URL}/custom-pages/by-slug/${encodeURIComponent(slug)}?locale=${encodeURIComponent(locale)}`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return null;

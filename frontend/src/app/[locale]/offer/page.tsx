@@ -12,10 +12,10 @@ export async function generateMetadata({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ product?: string }>;
+  searchParams: Promise<{ product?: string; context?: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const { product } = await searchParams;
+  const { product, context } = await searchParams;
   const [t, seoT] = await Promise.all([
     getTranslations({ locale, namespace: 'offer' }),
     getTranslations({ locale, namespace: 'seo' }),
@@ -30,7 +30,7 @@ export async function generateMetadata({
         : `${t('title')} - Kompozit Teklif, Uygunluk ve Termin`,
       description: seoT('offerDescription'),
     },
-    noIndex: Boolean(product),
+    noIndex: Boolean(product || context),
   });
 }
 
@@ -39,10 +39,10 @@ export default async function OfferPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ product?: string }>;
+  searchParams: Promise<{ product?: string; context?: string }>;
 }) {
   const { locale } = await params;
-  const { product } = await searchParams;
+  const { product, context } = await searchParams;
   const t = await getTranslations({ locale });
   const benefitItems = Object.values(t.raw('offer.benefits.items') as Record<string, string>);
   const summaryItems = Object.values(
@@ -85,7 +85,7 @@ export default async function OfferPage({
           {summaryItems.map((item) => (
             <article
               key={item.title}
-              className="surface-card rounded-[2rem] p-6"
+              className="border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.06)] dark:bg-[var(--color-surface-muted)] dark:shadow-[0_18px_60px_rgba(0,0,0,0.22)]"
             >
               <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[var(--color-brand)]">
                 {t('offer.summary.title')}
@@ -98,7 +98,7 @@ export default async function OfferPage({
           ))}
         </section>
         <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_0.8fr]">
-          <OfferFormClient locale={locale} preselectedProduct={product} />
+          <OfferFormClient locale={locale} preselectedProduct={product || context} />
           <aside>
             <InfoListPanel
               title={t('offer.benefits.title')}
@@ -107,7 +107,7 @@ export default async function OfferPage({
             />
           </aside>
         </div>
-        <section className="surface-card mt-12 rounded-[2rem] p-8">
+        <section className="mt-12 border border-[var(--color-border)] bg-[var(--color-surface)] p-8 shadow-[0_18px_60px_rgba(0,0,0,0.06)] dark:bg-[var(--color-surface-muted)] dark:shadow-[0_18px_60px_rgba(0,0,0,0.22)]">
           <h2 className="text-2xl font-bold tracking-tight">{t('offer.faq.title')}</h2>
           <div className="mt-6 space-y-5">
             {faqEntries.map((item) => (

@@ -122,7 +122,7 @@ export const AdminLocaleSelect: React.FC<AdminLocaleSelectProps> = ({
       </Select>
 
       {!hasOptions && !loading ? (
-        <div className="text-muted-foreground text-xs">{t("localeOptionsMissing")}</div>
+        <div className="text-muted-foreground text-sm">{t("localeOptionsMissing")}</div>
       ) : null}
     </div>
   );

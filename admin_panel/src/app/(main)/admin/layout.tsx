@@ -15,6 +15,7 @@ import { AdminSettingsProvider } from "./_components/admin-settings-provider";
 import { KompozitAdminRouteGate } from "./_components/kompozit-admin-route-gate";
 import { AccountSwitcher } from "./_components/sidebar/account-switcher";
 import { AdminFooter } from "./_components/sidebar/admin-footer";
+import { AdminNotificationsBell } from "./_components/sidebar/admin-notifications-bell";
 import { LayoutControls } from "./_components/sidebar/layout-controls";
 import { ThemeSwitcher } from "./_components/sidebar/theme-switcher";
 
@@ -60,6 +61,7 @@ export default function Layout({ children }: Readonly<{ children: ReactNode }>) 
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <AdminNotificationsBell />
                   <LayoutControls />
                   <ThemeSwitcher />
                   {/* AccountSwitcher me bilgisini AdminAuthGate hydrate edecek; burada placeholder */}

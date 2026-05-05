@@ -1,60 +1,58 @@
 import 'server-only';
 
-import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
-import { Shield, Zap, Leaf, Warehouse, Wrench } from 'lucide-react';
-
-import { localizedPath } from '@/seo';
 import { Reveal } from '@/components/motion/Reveal';
+import type { HomeIndustriesContent } from '@/features/site-settings/home';
 
-const INDUSTRY_KEYS = ['defense', 'energy', 'landscaping', 'storage', 'custom'] as const;
-
-const icons = {
-  defense: Shield,
-  energy: Zap,
-  landscaping: Leaf,
-  storage: Warehouse,
-  custom: Wrench,
-} as const;
-
-export async function IndustryStrip({ locale }: { locale: string }) {
+export async function IndustryStrip({ locale, fromApi }: { locale: string; fromApi?: HomeIndustriesContent | null }) {
   const t = await getTranslations({ locale, namespace: 'home.industries' });
-  const solutionsHref = localizedPath(locale, '/solutions');
+
+  const sectionLabel = fromApi?.sectionLabel || t('sectionLabel');
+  const title = fromApi?.title || t('title');
+  const subtitle = fromApi?.subtitle || t('subtitle');
+
+  const industries = fromApi?.items?.length
+    ? fromApi.items
+    : [
+        { id: 'defense', title: t('items.defense.title'), description: t('items.defense.description') },
+        { id: 'energy', title: t('items.energy.title'), description: t('items.energy.description') },
+        { id: 'transport', title: t('items.transport.title'), description: t('items.transport.description') },
+        { id: 'construction', title: t('items.construction.title'), description: t('items.construction.description') },
+        { id: 'marine', title: t('items.marine.title'), description: t('items.marine.description') },
+      ];
 
   return (
-    <section className="section-py bg-[var(--graphite)]">
-      <div className="mx-auto max-w-[1300px] px-6 lg:px-12 text-center">
+    <section className="section-py relative overflow-hidden bg-[var(--carbon)]">
+      <div className="absolute inset-0 opacity-10">
+        <div className="h-full w-full bg-[radial-gradient(circle_at_center,var(--gold)_0%,transparent_70%)]" />
+      </div>
+
+      <div className="relative mx-auto max-w-[1300px] px-6 lg:px-12">
         <Reveal>
-          <span className="section-label-cc">{t('sectionLabel')}</span>
-          <h2 className="section-title-cc">{t('title')}</h2>
-          <p className="mx-auto mt-4 max-w-xl text-lg font-light leading-relaxed text-[var(--silver)]">
-            {t('subtitle')}
-          </p>
+          <div className="flex flex-col items-center justify-between gap-8 lg:flex-row lg:items-end">
+            <div className="max-w-2xl">
+              <span className="section-label-cc">{sectionLabel}</span>
+              <h2 className="section-title-cc text-left">{title}</h2>
+              <p className="mt-4 text-lg font-light text-[var(--silver)]">
+                {subtitle}
+              </p>
+            </div>
+          </div>
         </Reveal>
 
-        <ul className="industrial-grid-cc mt-20 sm:grid-cols-2 lg:grid-cols-5">
-          {INDUSTRY_KEYS.map((key, index) => {
-            const Icon = icons[key];
-            return (
-              <li key={key} className="grid-item-cc">
-                <Reveal delay={index * 100} className="h-full">
-                  <Link
-                    href={solutionsHref}
-                    className="group relative flex h-full flex-col p-10 text-center transition-all duration-500 hover:bg-[var(--carbon)]"
-                  >
-                    <Icon className="mx-auto mb-8 size-10 text-[var(--gold)] opacity-80 transition-transform duration-500 group-hover:scale-110" />
-                    <h3 className="font-display text-[1.2rem] font-normal uppercase tracking-[3px] text-[var(--white)]">
-                      {t(`items.${key}.title`)}
-                    </h3>
-                    <p className="mt-4 text-xs font-light leading-relaxed text-[var(--silver)] opacity-80">
-                      {t(`items.${key}.description`)}
-                    </p>
-                  </Link>
-                </Reveal>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="mt-20 grid grid-cols-1 gap-0.5 bg-[var(--gold)]/10 sm:grid-cols-2 lg:grid-cols-5">
+          {industries.map((ind) => (
+            <Reveal key={ind.id} className="bg-[var(--graphite)] p-8 transition-colors hover:bg-[var(--carbon)]">
+              <div className="mb-6 h-px w-12 bg-[var(--gold)]" />
+              <h3 className="font-display text-xl font-normal uppercase tracking-[2px] text-[var(--white)]">
+                {ind.title}
+              </h3>
+              <p className="mt-4 text-sm font-light leading-relaxed text-[var(--silver)] opacity-70">
+                {ind.description}
+              </p>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );

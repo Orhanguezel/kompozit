@@ -9,7 +9,7 @@ import { Input } from '@ensotek/shared-ui/admin/ui/input';
 import { Label } from '@ensotek/shared-ui/admin/ui/label';
 import { Textarea } from '@ensotek/shared-ui/admin/ui/textarea';
 import { Switch } from '@ensotek/shared-ui/admin/ui/switch';
-import { Card, CardContent, CardHeader, CardTitle } from '@ensotek/shared-ui/admin/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@ensotek/shared-ui/admin/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@ensotek/shared-ui/admin/ui/tabs';
 import {
   Select,
@@ -36,6 +36,8 @@ import {
   useCreateFooterSectionAdminMutation,
   useUpdateFooterSectionAdminMutation,
   useDeleteFooterSectionAdminMutation,
+  useListSiteSettingsAdminQuery,
+  useUpdateSiteSettingAdminMutation,
 } from '@/integrations/hooks';
 
 import type {
@@ -635,6 +637,181 @@ function HeaderMenuTab({ locale }: { locale: string }) {
   );
 }
 
+function FooterContentEditor({ locale }: { locale: string }) {
+  const brandPrefix = 'kompozit__';
+  const key = `${brandPrefix}footer_content`;
+  const { data: settings, isFetching } = useListSiteSettingsAdminQuery({
+    locale,
+    keys: [key],
+  });
+  const [update, { isLoading: updating }] = useUpdateSiteSettingAdminMutation();
+
+  const [form, setForm] = React.useState({
+    description: '',
+    rights: '',
+    ensotek_relation: '',
+    designed_by: '',
+    privacy_label: '',
+    terms_label: '',
+    phone: '',
+    email: '',
+    address: '',
+  });
+
+  const row = (settings ?? []).find((s) => s.key === key);
+  const value = row?.value as any;
+
+  React.useEffect(() => {
+    if (value) {
+      setForm({
+        description: value.description || '',
+        rights: value.rights || '',
+        ensotek_relation: value.ensotek_relation || '',
+        designed_by: value.designed_by || '',
+        privacy_label: value.privacy_label || '',
+        terms_label: value.terms_label || '',
+        phone: value.phone || '',
+        email: value.email || '',
+        address: value.address || '',
+      });
+    } else {
+      setForm({
+        description: '',
+        rights: '',
+        ensotek_relation: '',
+        designed_by: '',
+        privacy_label: '',
+        terms_label: '',
+        phone: '',
+        email: '',
+        address: '',
+      });
+    }
+  }, [value]);
+
+  const handleSave = async () => {
+    try {
+      await update({
+        key,
+        locale,
+        value: form,
+      }).unwrap();
+      toast.success('Footer içeriği güncellendi');
+    } catch (err: any) {
+      toast.error(err?.data?.error?.message || 'Kayıt başarısız');
+    }
+  };
+
+  return (
+    <Card className="border-border bg-muted/20">
+      <CardHeader>
+        <CardTitle className="text-xl">Footer Genel İçerik Ayarları</CardTitle>
+        <CardDescription>
+          Footer bölümündeki tüm metinleri, sosyal medya linklerini ve alt bar yazılarını buradan yönetebilirsiniz.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Footer Açıklama Metni (Logo Altı)</Label>
+              <Textarea
+                value={form.description}
+                onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))}
+                placeholder="Karbon fiber, CTP ve cam elyaf kompozit üretiminde..."
+                rows={4}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Ensotek İlişki Metni</Label>
+              <Input
+                value={form.ensotek_relation}
+                onChange={(e) => setForm((p) => ({ ...p, ensotek_relation: e.target.value }))}
+                placeholder="Bir Ensotek iştirakidir."
+              />
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label>Telif Hakkı Yazısı (Alt Bar)</Label>
+              <Input
+                value={form.rights}
+                onChange={(e) => setForm((p) => ({ ...p, rights: e.target.value }))}
+                placeholder="Tüm hakları saklıdır."
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Gizlilik Politikası Link Metni</Label>
+              <Input
+                value={form.privacy_label}
+                onChange={(e) => setForm((p) => ({ ...p, privacy_label: e.target.value }))}
+                placeholder="Gizlilik Politikası"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Kullanım Şartları Link Metni</Label>
+              <Input
+                value={form.terms_label}
+                onChange={(e) => setForm((p) => ({ ...p, terms_label: e.target.value }))}
+                placeholder="Kullanım Şartları"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Tasarım/Credit Metni (GWD)</Label>
+              <Input
+                value={form.designed_by}
+                onChange={(e) => setForm((p) => ({ ...p, designed_by: e.target.value }))}
+                placeholder="GWD tarafından tasarlanmıştır."
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="border-t border-border/50 pt-6">
+          <h3 className="text-sm font-medium mb-4">Footer İletişim Bilgileri (Opsiyonel Override)</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="space-y-2">
+              <Label>Telefon</Label>
+              <Input
+                value={form.phone}
+                onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
+                placeholder="+90 ..."
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>E-posta</Label>
+              <Input
+                value={form.email}
+                onChange={(e) => setForm((p) => ({ ...p, email: e.target.value }))}
+                placeholder="info@..."
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Adres</Label>
+              <Input
+                value={form.address}
+                onChange={(e) => setForm((p) => ({ ...p, address: e.target.value }))}
+                placeholder="Oruçreis Mah..."
+              />
+            </div>
+          </div>
+          <p className="text-[10px] text-muted-foreground mt-2 italic">
+            * Burayı boş bırakırsanız genel site iletişim bilgileri kullanılır.
+          </p>
+        </div>
+
+        <div className="flex justify-end pt-2">
+          <Button onClick={handleSave} disabled={updating || isFetching} className="px-8">
+            <Save className="mr-2 size-4" />
+            Tüm Footer Metinlerini Kaydet
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
 function FooterTab({ locale }: { locale: string }) {
   const [editingSection, setEditingSection] = React.useState<FooterSectionDto | null>(null);
   const [sectionOpen, setSectionOpen] = React.useState(false);
@@ -692,6 +869,8 @@ function FooterTab({ locale }: { locale: string }) {
 
   return (
     <div className="space-y-6">
+      <FooterContentEditor locale={locale} />
+
       <div className="flex items-center gap-3">
         <Button
           onClick={() => {

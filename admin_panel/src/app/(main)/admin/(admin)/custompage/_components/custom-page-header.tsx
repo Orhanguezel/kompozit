@@ -108,17 +108,17 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
         {/* Title row + summary */}
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <div className="min-w-0">
-            <div className="font-semibold text-sm">{t("admin.customPage.title")}</div>
-            <div className="text-[11px] text-muted-foreground">{t("admin.customPage.subtitle")}</div>
+            <div className="font-bold text-base">{t("admin.customPage.title")}</div>
+            <div className="text-xs text-muted-foreground">{t("admin.customPage.subtitle")}</div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-[11px] text-muted-foreground">{t("admin.common.total")}:</span>
-            <span className="font-bold text-sm">{total}</span>
+            <span className="text-xs text-muted-foreground">{t("admin.common.total")}:</span>
+            <span className="font-bold text-base">{total}</span>
             {onRefresh ? (
               <button 
                 type="button" 
-                className="rounded-full border border-white/10 px-3 py-1 text-[11px] hover:bg-primary/10 hover:text-primary transition-all" 
+                className="rounded-full border border-white/10 px-3 py-1 text-xs hover:bg-primary/10 hover:text-primary transition-all" 
                 onClick={onRefresh}
               >
                 {t("admin.common.refresh")}
@@ -126,7 +126,7 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
             ) : null}
             <Link
               href={newPageHref}
-              className="gold-gradient rounded-full px-4 py-1.5 font-bold text-[11px] text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              className="gold-gradient rounded-full px-5 py-2 font-bold text-xs text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               {t("admin.customPage.newPage")}
             </Link>
@@ -136,13 +136,13 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
         {/* Filters row — flex wrap, compact */}
         <div className="flex flex-wrap items-end gap-2">
           <div className="min-w-[140px] max-w-[220px] flex-1">
-            <label htmlFor="custom-page-search" className="mb-0.5 block text-[11px] text-muted-foreground">
+            <label htmlFor="custom-page-search" className="mb-1 block text-xs font-medium text-muted-foreground">
               {t("admin.customPage.searchPlaceholder")}
             </label>
             <input
               id="custom-page-search"
               type="search"
-              className="w-full rounded border bg-background px-2 py-1.5 text-xs"
+              className="w-full rounded-lg border bg-background px-3 py-2 text-sm"
               placeholder={t("admin.customPage.searchPlaceholder")}
               value={filters.search}
               onChange={handleSearchChange}
@@ -159,21 +159,21 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
               label={t("admin.common.locale")}
             />
             {localesLoading ? (
-              <div className="mt-0.5 text-[10px] text-muted-foreground">{t("admin.common.loading")}</div>
+              <div className="mt-1 text-xs text-muted-foreground">{t("admin.common.loading")}</div>
             ) : null}
             {!localesLoading && localeOptions.length === 0 ? (
-              <div className="mt-0.5 text-[10px] text-destructive">{t("admin.common.localeOptionsMissing")}</div>
+              <div className="mt-1 text-xs text-destructive">{t("admin.common.localeOptionsMissing")}</div>
             ) : null}
           </div>
 
           <div className="min-w-[100px] max-w-[160px]">
-            <label htmlFor="custom-page-module" className="mb-0.5 block text-[11px] text-muted-foreground">
+            <label htmlFor="custom-page-module" className="mb-1 block text-xs font-medium text-muted-foreground">
               {t("admin.customPage.allModules")}
             </label>
             {moduleLocked ? (
               <div
                 id="custom-page-module"
-                className="rounded border bg-muted/40 px-1.5 py-1.5 text-xs leading-snug"
+                className="rounded-lg border bg-muted/40 px-3 py-2 text-sm leading-snug"
                 title={lockedModuleLabel || filters.moduleKey}
               >
                 {lockedModuleLabel || filters.moduleKey || "—"}
@@ -181,7 +181,7 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
             ) : (
               <select
                 id="custom-page-module"
-                className="w-full rounded border bg-background px-1.5 py-1.5 text-xs"
+                className="w-full rounded-lg border bg-background px-3 py-2 text-sm"
                 value={filters.moduleKey}
                 onChange={handleModuleChange}
                 disabled={disabledModuleSelect}
@@ -197,12 +197,12 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
           </div>
 
           <div className="min-w-[80px] max-w-[130px]">
-            <label htmlFor="custom-page-status" className="mb-0.5 block text-[11px] text-muted-foreground">
+            <label htmlFor="custom-page-status" className="mb-1 block text-xs font-medium text-muted-foreground">
               {t("admin.customPage.status.all")}
             </label>
             <select
               id="custom-page-status"
-              className="w-full rounded border bg-background px-1.5 py-1.5 text-xs"
+              className="w-full rounded-lg border bg-background px-3 py-2 text-sm"
               value={filters.publishedFilter}
               onChange={handlePublishedChange}
             >

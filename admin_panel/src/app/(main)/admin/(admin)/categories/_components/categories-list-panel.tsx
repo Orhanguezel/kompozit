@@ -327,20 +327,30 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
                         </Badge>
                       </TableCell>
 
-                      <TableCell className="text-center">
-                        <Switch
-                          checked={item.is_active}
-                          onCheckedChange={(value) => handleToggleActive(item, value)}
-                          disabled={busy}
-                        />
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Switch
+                            checked={item.is_active}
+                            onCheckedChange={(value) => handleToggleActive(item, value)}
+                            disabled={busy}
+                          />
+                          <Badge variant={item.is_active ? "secondary" : "destructive"}>
+                            {item.is_active ? t("table.active") : t("table.inactive")}
+                          </Badge>
+                        </div>
                       </TableCell>
 
-                      <TableCell className="text-center">
-                        <Switch
-                          checked={item.is_featured}
-                          onCheckedChange={(value) => handleToggleFeatured(item, value)}
-                          disabled={busy}
-                        />
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          <Switch
+                            checked={item.is_featured}
+                            onCheckedChange={(value) => handleToggleFeatured(item, value)}
+                            disabled={busy}
+                          />
+                          <Badge variant="secondary">
+                            {item.is_featured ? t("table.featured") : t("table.notFeatured")}
+                          </Badge>
+                        </div>
                       </TableCell>
 
                       <TableCell className="text-right">

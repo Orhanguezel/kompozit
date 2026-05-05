@@ -17,7 +17,9 @@ import { ArrowDown, ArrowUp, Pencil, Save, Star, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
 import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
 import { useDeleteCustomPageAdminMutation, useUpdateCustomPageAdminMutation } from "@/integrations/hooks";
 import type { CustomPageDto } from "@/integrations/shared";
 
@@ -98,49 +100,58 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
       : `${editBase}/${encodeURIComponent(pageId)}`;
   };
 
-  const renderStatus = (p: CustomPageDto) =>
-    p.is_published ? (
-      <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px]">
-        {t("admin.customPage.list.published")}
-      </span>
-    ) : (
-      <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
-        {t("admin.customPage.list.draft")}
-      </span>
-    );
+  const handleTogglePublished = async (page: CustomPageDto) => {
+    try {
+      await updatePage({ id: page.id, patch: { is_published: page.is_published ? 0 : 1 } }).unwrap();
+      toast.success(t("admin.gallery.list.statusUpdated"));
+    } catch (err: unknown) {
+      const msg =
+        (err as { data?: { error?: { message?: string } } })?.data?.error?.message ??
+        t("admin.common.operationFailed");
+      toast.error(msg);
+    }
+  };
+
+  const renderStatus = (p: CustomPageDto) => (
+    <div className="flex items-center gap-2">
+      <Switch
+        checked={p.is_published}
+        onCheckedChange={() => handleTogglePublished(p)}
+        disabled={busy}
+      />
+      {p.is_published ? (
+        <Badge variant="secondary">{t("admin.customPage.list.published")}</Badge>
+      ) : (
+        <Badge variant="destructive">{t("admin.customPage.list.draft")}</Badge>
+      )}
+    </div>
+  );
 
   const handleToggleFeatured = async (page: CustomPageDto) => {
     try {
-      await updatePage({ id: page.id, patch: { featured: !page.featured } }).unwrap();
+      await updatePage({ id: page.id, patch: { featured: page.featured ? 0 : 1 } }).unwrap();
       toast.success(
         page.featured ? t("admin.customPage.list.unfeaturedSuccess") : t("admin.customPage.list.featuredSuccess"),
       );
     } catch (err: unknown) {
       const msg =
         (err as { data?: { error?: { message?: string } } })?.data?.error?.message ??
-        t("admin.customPage.list.deleteError");
+        t("admin.common.operationFailed");
       toast.error(msg);
     }
   };
 
   const renderFeatured = (p: CustomPageDto) => (
-    <button
-      type="button"
-      className={[
-        "inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] transition-colors disabled:opacity-60",
-        p.featured
-          ? "border-amber-300 bg-amber-50 text-amber-700 hover:bg-amber-100"
-          : "border-gray-200 bg-gray-50 text-muted-foreground hover:bg-gray-100",
-      ].join(" ")}
-      disabled={busy}
-      onClick={() => handleToggleFeatured(p)}
-      title={p.featured ? t("admin.customPage.list.unfeatured") : t("admin.customPage.list.featured")}
-    >
-      <Star
-        className={["size-3", p.featured ? "fill-amber-400 stroke-amber-500" : "stroke-muted-foreground"].join(" ")}
+    <div className="flex items-center gap-2">
+      <Switch
+        checked={p.featured}
+        onCheckedChange={() => handleToggleFeatured(p)}
+        disabled={busy}
       />
-      {p.featured ? t("admin.customPage.list.featured") : t("admin.customPage.list.unfeatured")}
-    </button>
+      <Badge variant="secondary">
+        {p.featured ? t("admin.customPage.list.featured") : t("admin.customPage.list.unfeatured")}
+      </Badge>
+    </div>
   );
 
   const handleDelete = async (page: CustomPageDto) => {
@@ -209,33 +220,33 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
+                      <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs text-muted-foreground">
                         #{idx + 1}
                       </span>
                       {renderStatus(p)}
                       {renderFeatured(p)}
                       {localeResolved ? (
-                        <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] text-muted-foreground">
+                        <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-xs text-muted-foreground">
                           {t("admin.customPage.list.locale")}: <code className="ml-1">{localeResolved}</code>
                         </span>
                       ) : null}
                     </div>
 
-                    <div className="mt-2 truncate font-semibold text-sm">
+                    <div className="mt-2 truncate font-bold text-base">
                       {p.title ?? <span className="text-muted-foreground">{t("admin.customPage.list.noTitle")}</span>}
                     </div>
 
                     {p.meta_title ? (
-                      <div className="mt-1 truncate text-muted-foreground text-xs" title={p.meta_title}>
+                      <div className="mt-1 truncate text-muted-foreground text-sm" title={p.meta_title}>
                         {t("admin.customPage.list.seo")}: {p.meta_title}
                       </div>
                     ) : null}
 
-                    <div className="mt-1 truncate text-muted-foreground text-xs">
+                    <div className="mt-1 truncate text-muted-foreground text-sm">
                       {t("admin.customPage.list.slug")}: <code className="break-all">{p.slug ?? "-"}</code>
                     </div>
 
-                    <div className="mt-2 text-muted-foreground text-xs">
+                    <div className="mt-2 text-muted-foreground text-sm">
                       <div>
                         {t("admin.customPage.list.created")}: {formatDate(p.created_at)}
                       </div>
@@ -247,12 +258,12 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
 
                   <div className="flex shrink-0 flex-col items-end gap-2">
                     <MoveControls idx={idx} />
-                    <Link href={editHrefById(p.id)} className="rounded-md border px-3 py-1 text-center text-xs">
+                    <Link href={editHrefById(p.id)} className="rounded-md border px-4 py-1.5 text-center text-sm font-medium hover:bg-muted transition-colors">
                       {t("admin.common.edit")}
                     </Link>
                     <button
                       type="button"
-                      className="rounded-md border px-3 py-1 text-center text-destructive text-xs disabled:opacity-60"
+                      className="rounded-md border px-4 py-1.5 text-center text-destructive text-sm font-medium hover:bg-destructive/10 transition-colors disabled:opacity-60"
                       disabled={busy}
                       onClick={() => handleDelete(p)}
                     >
@@ -278,12 +289,12 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
         <table className="w-full table-fixed border-collapse text-xs">
           <thead>
             <tr className="border-b bg-muted/30 text-left">
-              <th className="w-8 px-2 py-1.5 text-[11px] text-muted-foreground">#</th>
-              <th className="w-[25%] px-2 py-1.5 text-[11px]">{t("admin.customPage.form.title")}</th>
-              <th className="w-[25%] px-2 py-1.5 text-[11px]">Slug</th>
-              <th className="w-[8%] px-2 py-1.5 text-center text-[11px]">{t("admin.customPage.list.published")}</th>
-              <th className="w-[10%] px-2 py-1.5 text-[11px]">{t("admin.customPage.list.created")}</th>
-              <th className="w-[100px] px-2 py-1.5 text-right text-[11px]">{t("admin.common.actions")}</th>
+              <th className="w-10 px-3 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">#</th>
+              <th className="w-[30%] px-3 py-2 text-xs font-bold uppercase tracking-wider">{t("admin.customPage.form.title")}</th>
+              <th className="w-[25%] px-3 py-2 text-xs font-bold uppercase tracking-wider">Slug</th>
+              <th className="w-[12%] px-3 py-2 text-center text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.published")}</th>
+              <th className="w-[15%] px-3 py-2 text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.created")}</th>
+              <th className="w-[120px] px-3 py-2 text-right text-xs font-bold uppercase tracking-wider">{t("admin.common.actions")}</th>
             </tr>
           </thead>
 
@@ -297,19 +308,19 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
 
                   <td className="min-w-0 overflow-hidden px-2 py-1.5">
                     <div className="min-w-0">
-                      <div className="truncate font-medium" title={safeText(p.title)}>
+                      <div className="truncate font-semibold text-sm" title={safeText(p.title)}>
                         {p.title ?? t("admin.customPage.list.noTitle")}
                       </div>
                       {localeResolved ? (
-                        <span className="text-[10px] text-muted-foreground">
+                        <span className="text-xs text-muted-foreground font-medium">
                           <code>{localeResolved}</code>
                         </span>
                       ) : null}
                     </div>
                   </td>
 
-                  <td className="overflow-hidden px-2 py-1.5">
-                    <code className="block truncate text-[11px]">{p.slug ?? "-"}</code>
+                  <td className="overflow-hidden px-3 py-2">
+                    <code className="block truncate text-xs">{p.slug ?? "-"}</code>
                   </td>
 
                   <td className="px-2 py-1.5 text-center">
@@ -319,7 +330,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
                     </div>
                   </td>
 
-                  <td className="px-2 py-1.5 text-[11px] text-muted-foreground" title={`${formatDate(p.created_at)}`}>
+                  <td className="px-3 py-2 text-xs text-muted-foreground" title={`${formatDate(p.created_at)}`}>
                     {formatDate(p.created_at)}
                   </td>
 
@@ -350,7 +361,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
           </tbody>
         </table>
 
-        <div className="px-2 py-2 text-[11px] text-muted-foreground">{t("admin.customPage.list.reorderHelp")}</div>
+        <div className="px-3 py-3 text-xs text-muted-foreground font-medium">{t("admin.customPage.list.reorderHelp")}</div>
       </div>
     );
   };
@@ -360,8 +371,8 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
       <div className="border-b p-3">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
-            <div className="font-semibold text-sm">{t("admin.customPage.list.listTitle")}</div>
-            <div className="text-muted-foreground text-xs">
+            <div className="font-bold text-base">{t("admin.customPage.list.listTitle")}</div>
+            <div className="text-muted-foreground text-sm mt-0.5">
               {busy
                 ? t("admin.common.loading")
                 : t("admin.customPage.list.recordCount", { count: String(rows.length) })}

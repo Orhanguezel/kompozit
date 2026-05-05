@@ -15,7 +15,7 @@ type LegalFallback = {
 async function fetchLegalPage(slug: string, locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/custom_pages/by-slug/${encodeURIComponent(slug)}?locale=${locale}`,
+      `${API_BASE_URL}/custom-pages/by-slug/${encodeURIComponent(slug)}?locale=${locale}`,
       { next: { revalidate: 3600 } },
     );
     if (!res.ok) return null;

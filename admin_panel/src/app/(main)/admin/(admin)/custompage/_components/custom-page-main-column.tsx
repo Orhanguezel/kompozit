@@ -98,7 +98,7 @@ export const CustomPageMainColumn: React.FC<Props> = ({
             }}
             disabled={disabled}
           />
-          <Label htmlFor="is_published" className="cursor-pointer font-bold uppercase tracking-widest text-[10px] text-primary/80">
+          <Label htmlFor="is_published" className="cursor-pointer font-bold uppercase tracking-widest text-xs text-primary/80">
             {t("admin.customPage.form.isPublished")}
           </Label>
         </div>
@@ -112,7 +112,7 @@ export const CustomPageMainColumn: React.FC<Props> = ({
             }}
             disabled={disabled}
           />
-          <Label htmlFor="featured" className="cursor-pointer font-bold uppercase tracking-widest text-[10px] text-primary/80">
+          <Label htmlFor="featured" className="cursor-pointer font-bold uppercase tracking-widest text-xs text-primary/80">
             {t("admin.customPage.form.featured")}
           </Label>
         </div>
@@ -143,7 +143,7 @@ export const CustomPageMainColumn: React.FC<Props> = ({
               setValues((prev) => ({ ...prev, slug: e.target.value }));
             }}
             disabled={disabled}
-            className="bg-background/50 font-mono text-xs"
+            className="bg-background/50 font-mono text-sm"
             required
           />
         </div>

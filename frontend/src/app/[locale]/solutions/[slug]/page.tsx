@@ -110,10 +110,10 @@ export default async function SolutionDetailPage({
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
-      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.35]" aria-hidden />
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.18] dark:opacity-[0.35]" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-carbon)_0%,color-mix(in_srgb,var(--color-graphite)_35%,var(--color-carbon))_50%,var(--color-carbon)_100%)] opacity-95"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-bg)_0%,color-mix(in_srgb,var(--color-bg-secondary)_55%,var(--color-bg))_50%,var(--color-bg)_100%)] opacity-95"
         aria-hidden
       />
 
@@ -123,12 +123,12 @@ export default async function SolutionDetailPage({
           <Breadcrumbs
             items={breadcrumbs}
             className="mb-0"
-            olClassName="text-[var(--color-light)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-off-white)]"
+            olClassName="text-[var(--color-text-secondary)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-text-primary)]"
           />
         </div>
         <div className="mx-auto grid max-w-7xl gap-12 px-4 pb-16 pt-2 lg:grid-cols-2 lg:px-8 lg:pb-24 lg:pt-4">
           {heroImage ? (
-            <div className="relative aspect-[16/10] min-h-[200px] overflow-hidden border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-graphite)] lg:min-h-[340px]">
+            <div className="relative aspect-[16/10] min-h-[200px] overflow-hidden border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-bg-secondary)] lg:min-h-[340px]">
               <OptimizedImage
                 src={heroImage}
                 alt={buildMediaAlt({
@@ -149,11 +149,11 @@ export default async function SolutionDetailPage({
             <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--color-gold)]">
               {tSol('detailHeroEyebrow')}
             </p>
-            <h1 className="mt-4 text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-off-white)] lg:text-6xl">
+            <h1 className="mt-4 text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-text-primary)] lg:text-6xl">
               {pageTitle}
             </h1>
             {pageDescription ? (
-              <p className="mt-6 max-w-2xl text-lg font-light leading-relaxed text-[var(--color-silver)]">
+              <p className="mt-6 max-w-2xl text-lg font-light leading-relaxed text-[var(--color-text-secondary)]">
                 {pageDescription}
               </p>
             ) : null}
@@ -164,7 +164,7 @@ export default async function SolutionDetailPage({
       <div className="relative z-10 mx-auto max-w-3xl px-4 py-16 lg:px-8">
         {content ? (
           <div
-            className="prose prose-invert prose-lg max-w-none leading-relaxed prose-p:mb-5 prose-p:leading-relaxed prose-headings:scroll-mt-24 prose-headings:mt-10 prose-headings:mb-4 prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:text-[var(--color-off-white)] prose-li:my-1.5 prose-a:text-[var(--color-gold)] md:prose-xl"
+            className="prose prose-lg max-w-none leading-relaxed text-[var(--color-text-secondary)] prose-p:mb-5 prose-p:leading-relaxed prose-p:text-[var(--color-text-secondary)] prose-headings:scroll-mt-24 prose-headings:mt-10 prose-headings:mb-4 prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:text-[var(--color-text-primary)] prose-strong:text-[var(--color-text-primary)] prose-li:my-1.5 prose-li:text-[var(--color-text-secondary)] prose-a:text-[var(--color-gold)] md:prose-xl"
             dangerouslySetInnerHTML={{ __html: content }}
           />
         ) : null}
@@ -184,7 +184,7 @@ export default async function SolutionDetailPage({
                 </Link>
                 <Link
                   href={localizedPath(locale, '/contact')}
-                  className="inline-flex items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_25%,transparent)] px-5 py-3 text-sm font-semibold text-[var(--color-cream)] transition-colors hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
+                  className="inline-flex items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_25%,transparent)] px-5 py-3 text-sm font-semibold text-[var(--color-text-primary)] transition-colors hover:border-[var(--color-gold)] hover:text-[var(--color-gold)]"
                 >
                   {t('nav.contact')}
                 </Link>

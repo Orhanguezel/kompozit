@@ -74,7 +74,7 @@ function rankRelated<T extends Entity>(base: Entity, items: T[], currentSlug: st
 export async function fetchRelatedContent(base: Entity, currentSlug: string, locale: string) {
   const [products, blogPosts, galleries] = await Promise.all([
     fetchList('/products?item_type=kompozit&is_active=1', locale),
-    fetchList('/custom_pages?module_key=kompozit_blog&is_active=1', locale),
+    fetchList('/custom-pages?module_key=kompozit_blog&is_active=1', locale),
     fetchList('/galleries?module_key=kompozit&is_active=1', locale),
   ]);
 

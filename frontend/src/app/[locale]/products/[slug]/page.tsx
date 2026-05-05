@@ -121,9 +121,9 @@ export default async function ProductDetailPage({
   ];
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
-      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.35]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-carbon)_0%,color-mix(in_srgb,var(--color-graphite)_40%,var(--color-carbon))_45%,var(--color-carbon)_100%)] opacity-90" aria-hidden />
+    <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.18] dark:opacity-[0.35]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-bg)_0%,color-mix(in_srgb,var(--color-bg-secondary)_55%,var(--color-bg))_45%,var(--color-bg)_100%)] opacity-90" aria-hidden />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
@@ -133,14 +133,14 @@ export default async function ProductDetailPage({
           <Breadcrumbs
             items={breadcrumbs}
             className="mb-8"
-            olClassName="text-[var(--color-light)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-off-white)]"
+            olClassName="text-[var(--color-text-secondary)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-text-primary)]"
           />
 
           <div className="grid gap-12 lg:grid-cols-[1fr_minmax(0,34rem)] xl:gap-20">
             {/* Product Image Stage */}
             <div className="relative">
               <div className="sticky top-28">
-                <div className="group aspect-square cursor-zoom-in overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-graphite)] shadow-2xl shadow-black/40">
+                <div className="group aspect-square cursor-zoom-in overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-bg-secondary)] shadow-2xl shadow-black/10 dark:shadow-black/40">
                   {heroImage && (
                     <OptimizedImage
                       src={heroImage}
@@ -173,7 +173,7 @@ export default async function ProductDetailPage({
                      {tProd('detailEyebrow')}
                    </span>
                 </div>
-                <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-off-white)] lg:text-6xl">
+                <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-text-primary)] lg:text-6xl">
                   {product.title}
                 </h1>
 
@@ -197,7 +197,7 @@ export default async function ProductDetailPage({
                 </h3>
                 {product.description && (
                   <div
-                    className="prose prose-invert prose-lg max-w-none text-[var(--color-silver)] prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-[var(--color-off-white)] prose-a:text-[var(--color-gold)] hover:prose-a:underline"
+                    className="prose prose-lg max-w-none text-[var(--color-text-secondary)] prose-p:text-[var(--color-text-secondary)] prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-[var(--color-text-primary)] prose-strong:text-[var(--color-text-primary)] prose-li:text-[var(--color-text-secondary)] prose-a:text-[var(--color-gold)] hover:prose-a:underline"
                     dangerouslySetInnerHTML={{ __html: product.description }}
                   />
                 )}
@@ -219,21 +219,21 @@ export default async function ProductDetailPage({
                 />
               </div>
 
-              <div className="rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-graphite)_85%,transparent)] p-6 lg:flex lg:items-center lg:justify-between lg:gap-8">
+              <div className="rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-secondary)_85%,transparent)] p-6 lg:flex lg:items-center lg:justify-between lg:gap-8">
                 <div className="max-w-xl space-y-2">
                   <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-gold)]">
                     {b2bContent.detailEyebrow}
                   </p>
-                  <p className="text-base font-bold tracking-tight text-[var(--color-off-white)]">
+                  <p className="text-base font-bold tracking-tight text-[var(--color-text-primary)]">
                     {b2bContent.detailTitle}
                   </p>
-                  <p className="text-sm leading-relaxed text-[var(--color-silver)]">
+                  <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
                     {b2bContent.detailBody}
                   </p>
                 </div>
                 <Link
                   href={`${localizedPath(locale, '/contact')}?product=${encodeURIComponent(product.title)}`}
-                  className="mt-5 inline-flex flex-shrink-0 items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_25%,transparent)] bg-[color-mix(in_srgb,var(--color-gold)_8%,transparent)] px-5 py-3 text-sm font-bold text-[var(--color-cream)] transition-all hover:border-[var(--color-gold)] hover:bg-[color-mix(in_srgb,var(--color-gold)_14%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-carbon)] lg:mt-0"
+                  className="mt-5 inline-flex flex-shrink-0 items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_25%,transparent)] bg-[color-mix(in_srgb,var(--color-gold)_8%,transparent)] px-5 py-3 text-sm font-bold text-[var(--color-text-primary)] transition-all hover:border-[var(--color-gold)] hover:bg-[color-mix(in_srgb,var(--color-gold)_14%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] lg:mt-0"
                 >
                   <MessagesSquare className="size-4 text-[var(--color-gold)]" />
                   {b2bContent.talkToEngineering}
@@ -248,7 +248,7 @@ export default async function ProductDetailPage({
                   action={(
                     <Link
                       href={`${localizedPath(locale, '/offer')}?product=${encodeURIComponent(product.title)}`}
-                      className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-3 rounded-sm px-10 py-5 text-sm font-bold shadow-xl shadow-black/30 transition-all active:scale-95"
+                      className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-3 rounded-sm px-10 py-5 text-sm font-bold shadow-xl shadow-black/10 transition-all active:scale-95 dark:shadow-black/30"
                     >
                       {t('nav.offer')}
                       <ArrowRight className="size-5" />
@@ -268,14 +268,14 @@ export default async function ProductDetailPage({
                { icon: <Truck className="size-6 text-[var(--color-gold)]" />, key: 'logistics', content: b2bContent.logistics }
              ].map((feature, index) => (
                <Reveal key={feature.key} delay={index * 100}>
-                 <div className="flex h-full flex-col items-center border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8 text-center transition-all group hover:border-[color-mix(in_srgb,var(--color-gold)_22%,transparent)]">
+                 <div className="flex h-full flex-col items-center border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8 text-center transition-all group hover:border-[color-mix(in_srgb,var(--color-gold)_22%,transparent)]">
                     <div className="mb-6 flex size-14 items-center justify-center rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[color-mix(in_srgb,var(--color-gold)_6%,transparent)] transition-all duration-500 group-hover:bg-[color-mix(in_srgb,var(--color-gold)_14%,transparent)]">
                        {feature.icon}
                     </div>
-                    <h4 className="mb-3 text-sm font-bold uppercase tracking-widest text-[var(--color-off-white)]">
+                    <h4 className="mb-3 text-sm font-bold uppercase tracking-widest text-[var(--color-text-primary)]">
                        {feature.content.title}
                     </h4>
-                    <p className="text-xs leading-relaxed text-[var(--color-silver)] opacity-80">
+                    <p className="text-xs leading-relaxed text-[var(--color-text-secondary)] opacity-80">
                        {feature.content.desc}
                     </p>
                  </div>
@@ -285,7 +285,7 @@ export default async function ProductDetailPage({
 
           <div className="mt-24 grid gap-8 lg:grid-cols-3">
              <Reveal delay={100}>
-               <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+               <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8">
                   <RelatedLinks
                     title={t('common.relatedProducts')}
                     hrefBase={localizedPath(locale, '/products')}
@@ -294,7 +294,7 @@ export default async function ProductDetailPage({
                </div>
              </Reveal>
              <Reveal delay={200}>
-               <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+               <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8">
                   <RelatedLinks
                     title={t('common.relatedGallery')}
                     hrefBase={localizedPath(locale, '/gallery')}
@@ -303,7 +303,7 @@ export default async function ProductDetailPage({
                </div>
              </Reveal>
              <Reveal delay={300}>
-               <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+               <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8">
                   <RelatedLinks
                     title={t('common.relatedArticles')}
                     hrefBase={localizedPath(locale, '/blog')}

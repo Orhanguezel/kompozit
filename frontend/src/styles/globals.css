@@ -488,7 +488,7 @@ body {
 .product-card-cc {
   display: flex;
   flex-direction: column;
-  background: var(--carbon);
+  background: var(--color-surface);
   position: relative;
   overflow: hidden;
   transition: all 0.6s var(--motion-ease-out);
@@ -513,15 +513,15 @@ body {
 }
 
 .product-card-cc:hover {
-  background: var(--graphite);
+  background: var(--color-bg-secondary);
 }
 
 .product-visual-cc {
   height: 400px;
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--carbon) 0%, var(--steel) 100%);
-  border-bottom: 1px solid rgba(201, 169, 110, 0.05);
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, var(--color-surface-muted) 100%);
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* --- FOOTER (CC) --- */

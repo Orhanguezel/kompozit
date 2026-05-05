@@ -33,7 +33,7 @@ import {
   useListContactsAdminQuery,
   useUpdateContactAdminMutation,
 } from "@/integrations/hooks";
-import type { ContactStatus, ContactView } from "@/integrations/shared";
+import type { ContactListQueryParams, ContactStatus, ContactView } from "@/integrations/shared";
 
 type Filters = {
   search: string;
@@ -77,15 +77,14 @@ export default function AdminContactsClient() {
     order: "desc",
   });
 
-  const listParams = React.useMemo(
+  const listParams = React.useMemo<ContactListQueryParams>(
     () => ({
       search: filters.search.trim() || undefined,
       status: filters.status || undefined,
-      resolved: filters.onlyUnresolved ? false : undefined,
-      orderBy: filters.orderBy,
-      order: filters.order,
-      limit: 200,
-      offset: 0,
+      sort: filters.orderBy,
+      orderDir: filters.order,
+      source: "kompozit",
+      limit: 100,
     }),
     [filters],
   );
@@ -94,9 +93,81 @@ export default function AdminContactsClient() {
 
   const [rows, setRows] = React.useState<ContactView[]>([]);
   React.useEffect(() => {
+    if (listQ.error) {
+      // Mock data in case the backend API is missing or returning 500
+      setRows([
+        {
+          id: "mock-1",
+          name: "Ahmet Yılmaz",
+          email: "ahmet@example.com",
+          phone: "0555 123 4567",
+          subject: "Kompozit Ürün Fiyat Talebi",
+          message: "Merhaba, endüstriyel CTP profil ürünleriniz için fiyat listesi alabilir miyim?",
+          status: "new",
+          is_resolved: false,
+          admin_note: "",
+          source: "kompozit",
+          country_code: "TR",
+          company_name: "Yılmaz İnşaat",
+          product_id: null,
+          service_id: null,
+          service_title: null,
+          form_data: null,
+          consent_marketing: true,
+          consent_terms: true,
+          currency: "TRY",
+          net_total: null,
+          vat_rate: null,
+          vat_total: null,
+          shipping_total: null,
+          gross_total: null,
+          valid_until: null,
+          pdf_url: null,
+          pdf_asset_id: null,
+          email_sent_at: null,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          offer_no: null,
+        } as unknown as ContactView,
+        {
+          id: "mock-2",
+          name: "Jane Doe",
+          email: "jane.doe@example.com",
+          phone: "+44 7700 900077",
+          subject: "Partnership Inquiry",
+          message: "We are interested in becoming a distributor for your carbon fiber products in the UK.",
+          status: "in_progress",
+          is_resolved: false,
+          admin_note: "Requested more info via email.",
+          source: "kompozit",
+          country_code: "UK",
+          company_name: "Global Composites Ltd",
+          product_id: null,
+          service_id: null,
+          service_title: null,
+          form_data: null,
+          consent_marketing: false,
+          consent_terms: true,
+          currency: "GBP",
+          net_total: null,
+          vat_rate: null,
+          vat_total: null,
+          shipping_total: null,
+          gross_total: null,
+          valid_until: null,
+          pdf_url: null,
+          pdf_asset_id: null,
+          email_sent_at: null,
+          created_at: new Date(Date.now() - 86400000).toISOString(),
+          updated_at: new Date().toISOString(),
+          offer_no: null,
+        } as unknown as ContactView,
+      ]);
+      return;
+    }
     const d = listQ.data;
     setRows(Array.isArray(d) ? d : []);
-  }, [listQ.data]);
+  }, [listQ.data, listQ.error]);
 
   const [updateContact, updateState] = useUpdateContactAdminMutation();
   const [removeContact, removeState] = useDeleteContactAdminMutation();
@@ -198,7 +269,9 @@ export default function AdminContactsClient() {
       </div>
 
       {listQ.error ? (
-        <div className="rounded-lg border bg-card p-3 text-destructive text-sm">{t("messages.loadError")}</div>
+        <div className="rounded-lg border border-warning/50 bg-warning/10 p-3 text-warning-foreground text-sm">
+          Backend API yanıt vermiyor (500 Error). UI test edilebilmesi için şu an <strong>örnek veriler (mock data)</strong> gösterilmektedir.
+        </div>
       ) : null}
 
       <Card>

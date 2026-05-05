@@ -609,5 +609,100 @@ VALUES (
 )
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
 
+-- =============================================================
+-- HOME SECTIONS — TR
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__homepage_sections',
+  'tr',
+  JSON_ARRAY(
+    JSON_OBJECT('id', 'hero', 'name', 'Hero (Giriş)', 'isActive', true),
+    JSON_OBJECT('id', 'stats_bar', 'name', 'İstatistik Çubuğu', 'isActive', true),
+    JSON_OBJECT('id', 'about', 'name', 'Hakkımızda', 'isActive', true),
+    JSON_OBJECT('id', 'material_cards', 'name', 'Malzeme Kartları', 'isActive', true),
+    JSON_OBJECT('id', 'industry_strip', 'name', 'Endüstriyel Çözümler', 'isActive', true),
+    JSON_OBJECT('id', 'products', 'name', 'Öne Çıkan Ürünler', 'isActive', true),
+    JSON_OBJECT('id', 'process', 'name', 'Üretim Süreci', 'isActive', true),
+    JSON_OBJECT('id', 'advantages', 'name', 'Avantajlar (Neden Biz?)', 'isActive', true),
+    JSON_OBJECT('id', 'gallery', 'name', 'Proje Galerisi', 'isActive', true),
+    JSON_OBJECT('id', 'cta', 'name', 'Hızlı Teklif Paneli', 'isActive', true),
+    JSON_OBJECT('id', 'contact', 'name', 'İletişim Formu', 'isActive', true)
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME SECTIONS — EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__homepage_sections',
+  'en',
+  JSON_ARRAY(
+    JSON_OBJECT('id', 'hero', 'name', 'Hero Section', 'isActive', true),
+    JSON_OBJECT('id', 'stats_bar', 'name', 'Stats Bar', 'isActive', true),
+    JSON_OBJECT('id', 'about', 'name', 'About Us', 'isActive', true),
+    JSON_OBJECT('id', 'material_cards', 'name', 'Material Cards', 'isActive', true),
+    JSON_OBJECT('id', 'industry_strip', 'name', 'Industrial Solutions', 'isActive', true),
+    JSON_OBJECT('id', 'products', 'name', 'Featured Products', 'isActive', true),
+    JSON_OBJECT('id', 'process', 'name', 'Production Process', 'isActive', true),
+    JSON_OBJECT('id', 'advantages', 'name', 'Advantages (Why Us?)', 'isActive', true),
+    JSON_OBJECT('id', 'gallery', 'name', 'Project Gallery', 'isActive', true),
+    JSON_OBJECT('id', 'cta', 'name', 'Quick Offer Panel', 'isActive', true),
+    JSON_OBJECT('id', 'contact', 'name', 'Contact Form', 'isActive', true)
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME MATERIALS — TR
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.materials',
+  'tr',
+  JSON_OBJECT(
+    'sectionLabel', 'Malzeme Mühendisliği',
+    'title', 'İleri Seviye Kompozit Yapılar',
+    'subtitle', 'Projenizin mukavemet ve ağırlık ihtiyacına göre optimize edilmiş karbon fiber ve CTP çözümleri',
+    'items', JSON_ARRAY(
+      JSON_OBJECT('id', 'carbon', 'name', 'Karbon Fiber', 'description', 'Yüksek mukavemet, düşük ağırlık ve üstün rijitlik gerektiren havacılık ve otomotiv uygulamaları için ideal çözüm.', 'specs', JSON_OBJECT('tensile', JSON_OBJECT('label', 'Çekme Mukavemeti', 'value', '3500+ MPa'), 'density', JSON_OBJECT('label', 'Yoğunluk', 'value', '1.6 g/cm³'), 'modulus', JSON_OBJECT('label', 'Elastisite Modülü', 'value', '230 GPa'), 'thermal', JSON_OBJECT('label', 'Termal Genleşme', 'value', 'Düşük'))),
+      JSON_OBJECT('id', 'frp', 'name', 'CTP / Cam Elyaf', 'description', 'Korozyon direnci, elektrik yalıtkanlığı ve maliyet etkinliği sunan endüstriyel muhafaza ve panel çözümleri.', 'specs', JSON_OBJECT('tensile', JSON_OBJECT('label', 'Çekme Mukavemeti', 'value', '1500+ MPa'), 'density', JSON_OBJECT('label', 'Yoğunluk', 'value', '1.9 g/cm³'), 'modulus', JSON_OBJECT('label', 'Elastisite Modülü', 'value', '45 GPa'), 'thermal', JSON_OBJECT('label', 'Termal Genleşme', 'value', 'Orta')))
+    )
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME INDUSTRIES — TR
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.industries',
+  'tr',
+  JSON_OBJECT(
+    'sectionLabel', 'Endüstriyel Uygulamalar',
+    'title', 'Farklı Sektörler İçin Çözümler',
+    'subtitle', 'Kompozit teknolojisinin avantajlarını sektörel ihtiyaçlarınıza entegre ediyoruz',
+    'items', JSON_ARRAY(
+      JSON_OBJECT('id', 'defense', 'title', 'Savunma Sanayii', 'description', 'Yüksek mukavemetli koruyucu paneller ve hafif yapısal bileşenler.'),
+      JSON_OBJECT('id', 'energy', 'title', 'Enerji', 'description', 'Rüzgar ve güneş enerjisi sistemleri için korozyon dayanımlı parçalar.'),
+      JSON_OBJECT('id', 'landscaping', 'title', 'Kent ve Peyzaj', 'description', 'Modern şehir mobilyaları ve dayanıklı peyzaj elemanları.'),
+      JSON_OBJECT('id', 'storage', 'title', 'Depolama', 'description', 'Kimyasal dayanımlı tank ve muhafaza sistemleri.'),
+      JSON_OBJECT('id', 'custom', 'title', 'Özel Projeler', 'description', 'Müşteriye özel tasarım ve butik üretim desteği.')
+    )
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
 COMMIT;
 SET FOREIGN_KEY_CHECKS = 1;

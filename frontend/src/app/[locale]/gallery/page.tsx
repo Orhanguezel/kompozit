@@ -62,8 +62,8 @@ export default async function GalleryPage({
   const visibleGalleries = galleries.length > 0 ? galleries : getFallbackGalleries(locale);
 
   return (
-    <main className="relative bg-[var(--carbon)]">
-      <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
+    <main className="relative bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+      <div className="gold-grid-bg absolute inset-0 z-0 opacity-10 dark:opacity-20" />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
@@ -88,23 +88,27 @@ export default async function GalleryPage({
           <Reveal>
             <div className="mb-16">
               <span className="section-label-cc">Portfolio</span>
-              <h1 className="section-title-cc">{t('gallery.title')}</h1>
-              <p className="section-subtitle-cc">{t('gallery.description')}</p>
+              <h1 className="font-[var(--font-display)] text-[clamp(3rem,8vw,5rem)] uppercase leading-none text-[var(--color-text-primary)]">
+                {t('gallery.title')}
+              </h1>
+              <p className="mt-10 max-w-[700px] text-[1.1rem] font-light leading-[1.8] text-[var(--color-text-secondary)]">
+                {t('gallery.description')}
+              </p>
             </div>
           </Reveal>
 
           <div className="mt-12">
             {galleries.length === 0 && !visibleGalleries.length && (
-              <div className="border border-[var(--gold)]/10 p-16 text-center bg-[var(--graphite)] mb-12">
+              <div className="mb-12 border border-[var(--color-border)] bg-[var(--color-surface)] p-16 text-center dark:bg-[var(--color-surface-muted)]">
                 <SeoIssueBeacon
                   type="soft-404"
                   pathname={localizedPath(locale, '/gallery')}
                   reason="gallery-list-empty"
                 />
-                <p className="font-display text-[1.8rem] uppercase tracking-[4px] text-[var(--white)]">
+                <p className="font-display text-[1.8rem] uppercase tracking-[4px] text-[var(--color-text-primary)]">
                    {t('gallery.noGalleries')}
                 </p>
-                <p className="mt-6 text-sm font-light text-[var(--silver)] max-w-md mx-auto">
+                <p className="mx-auto mt-6 max-w-md text-sm font-light text-[var(--color-text-secondary)]">
                   {locale === 'en'
                     ? 'Sample project visuals are being processed. Check back for high-definition production stages.'
                     : 'Proje gorselleri uretim hattindan aktariliyor. Yuksek cozunurluklu uretim asamalarimiz yakinda burada olacak.'}

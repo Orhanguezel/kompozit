@@ -82,8 +82,11 @@ export interface ContactListQueryParams {
   resolved?: boolean;
   limit?: number;
   offset?: number;
-  orderBy?: "created_at" | "updated_at" | "status" | "name";
+  orderBy?: "created_at" | "updated_at" | "status" | "name"; // deprecated but kept for compat
+  sort?: "created_at" | "updated_at" | "status" | "name";
   order?: "asc" | "desc";
+  orderDir?: "asc" | "desc";
+  source?: string;
 }
 
 /**

@@ -21,10 +21,14 @@ import { SocialShare } from '@/components/blog/SocialShare';
 
 const BLOG_PLACEHOLDER_SRC = '/media/blog-placeholder.svg';
 
+function getPostImage(post: { image_url?: string | null; featured_image?: string | null }) {
+  return post.image_url || post.featured_image || null;
+}
+
 async function fetchPost(slug: string, locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/custom_pages/by-slug/${encodeURIComponent(slug)}?locale=${locale}`,
+      `${API_BASE_URL}/custom-pages/by-slug/${encodeURIComponent(slug)}?locale=${locale}`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return null;
@@ -55,7 +59,7 @@ export async function generateMetadata({
       (locale.startsWith('en')
         ? `${post.title}. Read technical guidance on material selection, production methods and industrial composite applications.`
         : `${post.title}. Malzeme secimi, uretim yontemleri ve endustriyel kompozit uygulamalari icin teknik icerigi inceleyin.`),
-    ogImage: post.image_url,
+    ogImage: getPostImage(post),
     openGraphType: 'article',
     includeLocaleAlternates: false,
   });
@@ -76,7 +80,8 @@ export default async function BlogPostPage({
     fetchParsedContactInfo(locale),
   ]);
   const org = organizationJsonLd(locale);
-  const imageSrc = absoluteAssetUrl(post.image_url) || BLOG_PLACEHOLDER_SRC;
+  const postImage = getPostImage(post);
+  const imageSrc = absoluteAssetUrl(postImage) || BLOG_PLACEHOLDER_SRC;
   const breadcrumbs = [
     { label: t('nav.home'), href: localizedPath(locale, '/') },
     { label: t('nav.blog'), href: localizedPath(locale, '/blog') },
@@ -85,9 +90,9 @@ export default async function BlogPostPage({
   const postUrl = localizedUrl(locale, `/blog/${slug}`);
 
   return (
-    <article className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
-      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.2]" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-carbon)_0%,color-mix(in_srgb,var(--color-graphite)_40%,var(--color-carbon))_45%,var(--color-carbon)_100%)] opacity-90" aria-hidden />
+    <article className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+      <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.12] dark:opacity-[0.2]" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,var(--color-bg)_0%,color-mix(in_srgb,var(--color-bg-secondary)_55%,var(--color-bg))_45%,var(--color-bg)_100%)] opacity-90" aria-hidden />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-4xl px-4 lg:px-8">
@@ -101,7 +106,7 @@ export default async function BlogPostPage({
               jsonld.article({
                 headline: post.title,
                 description: post.description,
-                image: post.image_url,
+                image: postImage ?? undefined,
                 datePublished: post.created_at,
                 dateModified: post.updated_at,
                 publisher: {
@@ -120,7 +125,7 @@ export default async function BlogPostPage({
           <Breadcrumbs
             items={breadcrumbs}
             className="mb-10"
-            olClassName="text-[var(--color-light)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-off-white)]"
+            olClassName="text-[var(--color-text-secondary)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-text-primary)]"
           />
 
           <header className="mb-12 space-y-6">
@@ -130,12 +135,12 @@ export default async function BlogPostPage({
                  Technical Insight
                </span>
             </div>
-            <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-off-white)] lg:text-7xl uppercase">
+            <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-text-primary)] lg:text-7xl uppercase">
               {post.title}
             </h1>
             <div className="flex items-center gap-4 border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-6">
                {post.created_at && (
-                <p className="text-sm font-light text-[var(--color-silver)]">
+                <p className="text-sm font-light text-[var(--color-text-secondary)]">
                   {new Date(post.created_at).toLocaleDateString(locale, {
                     year: 'numeric',
                     month: 'long',
@@ -144,11 +149,11 @@ export default async function BlogPostPage({
                 </p>
                )}
                <div className="size-1 rounded-full bg-[var(--color-gold)]/40" />
-               <p className="text-sm font-light text-[var(--color-silver)]/60">Expert Content</p>
+               <p className="text-sm font-light text-[var(--color-text-secondary)] opacity-70">Expert Content</p>
             </div>
           </header>
 
-          <div className="relative mb-16 aspect-[21/9] overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-graphite)] shadow-2xl">
+          <div className="relative mb-16 aspect-[21/9] overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-bg-secondary)] shadow-2xl shadow-black/10 dark:shadow-black/30">
             <OptimizedImage
               src={imageSrc}
               alt={buildMediaAlt({
@@ -164,12 +169,12 @@ export default async function BlogPostPage({
               sizes="(max-width: 1024px) 100vw, 1000px"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-carbon)]/60 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/40 to-transparent dark:from-[var(--color-bg)]/60" />
           </div>
 
           {content && (
             <div
-              className="prose prose-invert prose-lg max-w-none text-[var(--color-silver)] prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-[var(--color-off-white)] prose-a:text-[var(--color-gold)] hover:prose-a:underline md:prose-xl"
+              className="prose prose-lg max-w-none text-[var(--color-text-secondary)] prose-p:text-[var(--color-text-secondary)] prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-[var(--color-text-primary)] prose-strong:text-[var(--color-text-primary)] prose-li:text-[var(--color-text-secondary)] prose-a:text-[var(--color-gold)] hover:prose-a:underline md:prose-xl"
               dangerouslySetInnerHTML={{ __html: content }}
             />
           )}
@@ -233,21 +238,21 @@ export default async function BlogPostPage({
           </div>
 
           <div className="mt-24 grid gap-8 lg:grid-cols-3">
-             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8">
               <RelatedLinks
                 title={t('common.relatedArticles')}
                 hrefBase={localizedPath(locale, '/blog')}
                 items={related.blogPosts}
               />
              </div>
-             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8">
               <RelatedLinks
                 title={t('common.relatedProducts')}
                 hrefBase={localizedPath(locale, '/products')}
                 items={related.products}
               />
              </div>
-             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-graphite)] p-8">
+             <div className="h-full border border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] bg-[var(--color-bg-secondary)] p-8">
               <RelatedLinks
                 title={t('common.relatedGallery')}
                 hrefBase={localizedPath(locale, '/gallery')}

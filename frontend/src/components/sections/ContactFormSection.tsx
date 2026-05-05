@@ -13,7 +13,7 @@ export function ContactFormSection({
 }) {
   return (
     <Reveal delay={revealDelay}>
-      <div className="p-10 lg:p-14 border border-[var(--gold)]/15 bg-[var(--graphite)]">
+      <div className="border border-[var(--color-border)] bg-[var(--color-surface)] p-10 shadow-[0_24px_80px_rgba(0,0,0,0.08)] lg:p-14 dark:bg-[var(--color-surface-muted)] dark:shadow-[0_24px_80px_rgba(0,0,0,0.28)]">
         <ContactFormClient locale={locale} />
       </div>
     </Reveal>

@@ -204,6 +204,15 @@ const FIELD_DEFS: FieldDef[] = [
   { key: "related_product_name", labelKey: "formData.productName" },
   { key: "related_service_id", labelKey: "formData.serviceId" },
   { key: "related_service_name", labelKey: "formData.serviceName" },
+  { key: "product_category", labelKey: "formData.productCategory" },
+  { key: "product_name", labelKey: "formData.productNameLegacy" },
+  { key: "sector", labelKey: "formData.sector" },
+  { key: "quantity", labelKey: "formData.quantity" },
+  { key: "deadline", labelKey: "formData.deadline" },
+  { key: "material", labelKey: "formData.material" },
+  { key: "dimensions", labelKey: "formData.dimensions" },
+  { key: "usage_environment", labelKey: "formData.usageEnvironment" },
+  { key: "surface_finish", labelKey: "formData.surfaceFinish" },
   { key: "tower_process", labelKey: "formData.process" },
   { key: "tower_city", labelKey: "formData.city" },
   { key: "tower_district", labelKey: "formData.district" },
@@ -218,7 +227,6 @@ const FIELD_DEFS: FieldDef[] = [
   { key: "existing_tower_info", labelKey: "formData.existingTower" },
   { key: "referral_source", labelKey: "formData.referralSource" },
   { key: "notes", labelKey: "formData.notes" },
-  { key: "product_name", labelKey: "formData.productNameLegacy" },
 ];
 
 function formatValue(v: unknown): string {

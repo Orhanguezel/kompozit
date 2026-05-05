@@ -164,7 +164,7 @@ async function ensureAppLocales(): Promise<string[]> {
   if (cachedAppLocales && cachedAppLocales.length) return cachedAppLocales;
 
   try {
-    const list = await getAppLocales(); // expected: string[] (already normalized ideally)
+    const list = await getAppLocales();
     if (Array.isArray(list) && list.length) {
       const uniq: string[] = [];
       for (const x of list) {
@@ -180,7 +180,6 @@ async function ensureAppLocales(): Promise<string[]> {
     console.error('offer_pdf:getAppLocales_failed', err);
   }
 
-  // fallback
   cachedAppLocales = ['de', 'en', 'tr'];
   return cachedAppLocales;
 }
@@ -189,7 +188,7 @@ async function ensureDefaultLocale(): Promise<string | null> {
   if (cachedDefaultLocale) return cachedDefaultLocale;
 
   try {
-    const v = await getDefaultLocale(); // expected: string like "de"
+    const v = await getDefaultLocale();
     const n = normalizeLocaleShort(v);
     if (n) {
       cachedDefaultLocale = n;
@@ -202,13 +201,6 @@ async function ensureDefaultLocale(): Promise<string | null> {
   return null;
 }
 
-/**
- * Runtime locale:
- *   - Önce offer.locale (örn: "de", "en", "tr-TR" vs.)
- *   - app_locales içinde exact/prefix match
- *   - Bulunamazsa DB default_locale
- *   - O da yoksa app_locales[0]
- */
 async function resolveRuntimeLocale(rawLocale?: string | null): Promise<string> {
   const appLocales = await ensureAppLocales();
   const dbDefault = await ensureDefaultLocale();
@@ -221,20 +213,14 @@ async function resolveRuntimeLocale(rawLocale?: string | null): Promise<string> 
 
   if (!lcShort) return fallback;
 
-  // exact match (short)
   if (appLocales.includes(lcShort)) return lcShort;
 
-  // prefix match: "tr-tr" startsWith "tr"
   const prefix = appLocales.find((l) => lcFull.startsWith(`${l.toLowerCase()}`));
   if (prefix) return prefix;
 
   return fallback;
 }
 
-/**
- * Label set için desteklediğimiz diller: "tr" | "en" | "de"
- * Runtime locale başka ise label tarafında en yakınını seç.
- */
 function toLabelLocale(runtimeLocale: string): LabelLocale {
   const lc = String(runtimeLocale || '').toLowerCase();
   if (lc.startsWith('tr')) return 'tr';
@@ -346,6 +332,15 @@ const LABELS: Record<
     subject: string;
     noMessage: string;
 
+    technicalDetails: string;
+    towerProcess: string;
+    towerCity: string;
+    waterFlow: string;
+    inletTemp: string;
+    outletTemp: string;
+    wetBulbTemp: string;
+    capacity: string;
+
     pricing: string;
     net: string;
     vat: string;
@@ -379,6 +374,14 @@ const LABELS: Record<
     summary: 'Teklif Özeti',
     subject: 'Konu',
     noMessage: 'Müşteri mesajı bulunmamaktadır.',
+    technicalDetails: 'Teknik Detaylar',
+    towerProcess: 'Proses',
+    towerCity: 'Şehir/Konum',
+    waterFlow: 'Su Debisi',
+    inletTemp: 'Giriş Sıcaklığı',
+    outletTemp: 'Çıkış Sıcaklığı',
+    wetBulbTemp: 'Yaş Termometre',
+    capacity: 'Kapasite',
     pricing: 'Fiyatlandırma',
     net: 'Net Tutar',
     vat: 'KDV',
@@ -413,6 +416,14 @@ const LABELS: Record<
     summary: 'Offer Summary',
     subject: 'Subject',
     noMessage: 'No customer message has been provided.',
+    technicalDetails: 'Technical Details',
+    towerProcess: 'Process',
+    towerCity: 'City/Location',
+    waterFlow: 'Water Flow',
+    inletTemp: 'Inlet Temp.',
+    outletTemp: 'Outlet Temp.',
+    wetBulbTemp: 'Wet Bulb',
+    capacity: 'Capacity',
     pricing: 'Pricing',
     net: 'Net Amount',
     vat: 'VAT',
@@ -448,6 +459,14 @@ const LABELS: Record<
     summary: 'Angebotsübersicht',
     subject: 'Betreff',
     noMessage: 'Es wurde keine Kundenmitteilung angegeben.',
+    technicalDetails: 'Technische Details',
+    towerProcess: 'Prozess',
+    towerCity: 'Stadt/Standort',
+    waterFlow: 'Wassermenge',
+    inletTemp: 'Eintr. Temp.',
+    outletTemp: 'Austr. Temp.',
+    wetBulbTemp: 'Feuchtkugel',
+    capacity: 'Kapazität',
     pricing: 'Preisübersicht',
     net: 'Nettobetrag',
     vat: 'MwSt.',
@@ -551,7 +570,16 @@ export async function renderOfferPdfHtml(ctx: PdfTemplateContext): Promise<strin
     : '';
   const formLangDisplay = runtimeLocale || '';
 
-  // Aşağısı: senin HTML template’in (dokunmadım; sadece runtimeLocale/labelLocale değişkenleri fix)
+  const hasTechnicalData = formData && (
+    (formData as any).tower_process || 
+    (formData as any).tower_city || 
+    (formData as any).water_flow_m3h ||
+    (formData as any).inlet_temperature_c ||
+    (formData as any).outlet_temperature_c ||
+    (formData as any).wet_bulb_temperature_c ||
+    (formData as any).capacity_kcal_kw
+  );
+
   return `<!DOCTYPE html>
 <html lang="${safeText(runtimeLocale)}">
 <head>
@@ -619,8 +647,8 @@ export async function renderOfferPdfHtml(ctx: PdfTemplateContext): Promise<strin
     <div class="details-grid">
       <div>
         <div><span class="label">${safeText(t.name)}:</span> ${safeText(
-    (ctx as any).customer_name,
-  )}</div>
+          (ctx as any).customer_name,
+        )}</div>
         ${
           (ctx as any).company_name
             ? `<div><span class="label">${safeText(t.company)}:</span> ${safeText(
@@ -643,13 +671,6 @@ export async function renderOfferPdfHtml(ctx: PdfTemplateContext): Promise<strin
               )}</div>`
             : ''
         }
-        ${
-          formLangDisplay
-            ? `<div><span class="label">${safeText(t.formLanguage)}:</span> ${safeText(
-                formLangDisplay,
-              )}</div>`
-            : ''
-        }
       </div>
 
       <div>
@@ -667,8 +688,28 @@ export async function renderOfferPdfHtml(ctx: PdfTemplateContext): Promise<strin
               )}</div>`
             : ''
         }
+        ${
+          formLangDisplay
+            ? `<div><span class="label">${safeText(t.formLanguage)}:</span> ${safeText(
+                formLangDisplay,
+              )}</div>`
+            : ''
+        }
       </div>
     </div>
+
+    ${hasTechnicalData ? `
+    <div class="section-title">${safeText(t.technicalDetails)}</div>
+    <div class="details-grid">
+      ${(formData as any).tower_process ? `<div><span class="label">${safeText(t.towerProcess)}:</span> ${safeText((formData as any).tower_process)}</div>` : ''}
+      ${(formData as any).tower_city ? `<div><span class="label">${safeText(t.towerCity)}:</span> ${safeText((formData as any).tower_city)}</div>` : ''}
+      ${(formData as any).water_flow_m3h ? `<div><span class="label">${safeText(t.waterFlow)}:</span> ${safeText((formData as any).water_flow_m3h)} m³/h</div>` : ''}
+      ${(formData as any).inlet_temperature_c ? `<div><span class="label">${safeText(t.inletTemp)}:</span> ${safeText((formData as any).inlet_temperature_c)} °C</div>` : ''}
+      ${(formData as any).outlet_temperature_c ? `<div><span class="label">${safeText(t.outletTemp)}:</span> ${safeText((formData as any).outlet_temperature_c)} °C</div>` : ''}
+      ${(formData as any).wet_bulb_temperature_c ? `<div><span class="label">${safeText(t.wetBulbTemp)}:</span> ${safeText((formData as any).wet_bulb_temperature_c)} °C</div>` : ''}
+      ${(formData as any).capacity_kcal_kw ? `<div><span class="label">${safeText(t.capacity)}:</span> ${safeText((formData as any).capacity_kcal_kw)}</div>` : ''}
+    </div>
+    ` : ''}
 
     <div class="section-title">${safeText(t.summary)}</div>
     <div class="box">

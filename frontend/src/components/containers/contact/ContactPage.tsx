@@ -26,8 +26,8 @@ type ContactPageProps = {
 
 export function ContactPage({ locale, info, labels }: ContactPageProps) {
   return (
-    <main className="relative bg-[var(--carbon)]">
-      <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
+    <main className="relative bg-[var(--color-bg)] text-[var(--color-text-primary)]">
+      <div className="gold-grid-bg absolute inset-0 z-0 opacity-10 dark:opacity-20" />
 
       <div className="section-py relative z-10">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
@@ -42,18 +42,18 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
           <div className="grid gap-16 lg:grid-cols-[450px_1fr] lg:items-start">
             <div className="space-y-12">
               <Reveal delay={200}>
-                <section className="border border-[var(--gold)]/15 bg-[var(--graphite)] p-10">
+                <section className="border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-10 backdrop-blur-sm">
                   <h2 className="mb-10 font-display text-[0.7rem] uppercase tracking-[4px] text-[var(--gold)]">
                     {labels.infoTitle}
                   </h2>
 
-                  <div className="space-y-10">
+                  <div className="space-y-9">
                     {(info.companyName || info.address) && (
                       <div>
-                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)] opacity-60">
+                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                           {labels.addressLabel}
                         </p>
-                        <p className="font-display text-xl uppercase leading-snug tracking-[3px] text-[var(--white)]">
+                        <p className="font-display text-lg uppercase leading-relaxed tracking-[1.5px] text-[var(--color-text-primary)]">
                           {info.companyName && (
                             <>
                               {info.companyName}
@@ -65,15 +65,15 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
                       </div>
                     )}
 
-                    <div className="grid gap-8 sm:grid-cols-2">
+                    <div className="grid gap-7">
                       {info.phone && (
                         <div>
-                          <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)] opacity-60">
+                          <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                             {labels.phoneLabel}
                           </p>
                           <a
                             href={`tel:${info.phone.replace(/\s/g, '')}`}
-                            className="font-display text-xl uppercase tracking-[3px] text-[var(--gold)] transition-colors hover:text-[var(--white)]"
+                            className="font-display text-xl tracking-[1.5px] text-[var(--gold)] transition-colors hover:text-[var(--color-text-primary)]"
                           >
                             {info.phone}
                           </a>
@@ -82,12 +82,12 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
 
                       {info.email && (
                         <div>
-                          <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)] opacity-60">
+                          <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                             {labels.emailLabel}
                           </p>
                           <a
                             href={`mailto:${info.email}`}
-                            className="break-all font-display text-lg uppercase tracking-[2px] text-[var(--white)] transition-colors hover:text-[var(--gold)]"
+                            className="block max-w-full break-words font-display text-base tracking-[0.6px] text-[var(--color-text-primary)] transition-colors hover:text-[var(--gold)]"
                           >
                             {info.email}
                           </a>
@@ -97,10 +97,10 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
 
                     {info.hours && (
                       <div>
-                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)] opacity-60">
+                        <p className="mb-4 text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                           {labels.hoursLabel}
                         </p>
-                        <p className="text-sm font-light leading-relaxed text-[var(--silver)]">{info.hours}</p>
+                        <p className="text-sm font-light leading-relaxed text-[var(--color-text-secondary)]">{info.hours}</p>
                       </div>
                     )}
                   </div>
@@ -109,13 +109,13 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
 
               {labels.responseItems.length > 0 && (
                 <Reveal delay={300}>
-                  <section className="border border-[var(--gold)]/10 bg-[var(--graphite)] p-10 backdrop-blur-sm">
-                    <h3 className="mb-8 border-b border-[var(--gold)]/10 pb-4 font-display text-[1rem] uppercase tracking-[3px] text-[var(--white)]">
+                  <section className="border border-[var(--color-border)] bg-[var(--color-surface-muted)] p-10 backdrop-blur-sm">
+                    <h3 className="mb-8 border-b border-[var(--color-border)] pb-4 font-display text-[1rem] uppercase tracking-[3px] text-[var(--color-text-primary)]">
                       {labels.responseTitle}
                     </h3>
                     <ul className="space-y-6">
                       {labels.responseItems.map((item) => (
-                        <li key={item} className="flex gap-4 text-sm font-light leading-relaxed text-[var(--silver)]">
+                        <li key={item} className="flex gap-4 text-sm font-light leading-relaxed text-[var(--color-text-secondary)]">
                           <span className="font-bold text-[var(--gold)]">◇</span>
                           {item}
                         </li>
@@ -146,11 +146,11 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
               <div className="space-y-2">
                 {labels.faqItems.map((item, index) => (
                   <Reveal key={item.question} delay={(index + 1) * 50}>
-                    <dl className="border-b border-[var(--gold)]/10 px-8 py-10 transition-all hover:bg-[var(--gold)]/[0.02]">
-                      <dt className="font-display text-[1.4rem] uppercase tracking-[3px] text-[var(--white)] transition-colors">
+                    <dl className="border-b border-[var(--color-border)] px-8 py-10 transition-all hover:bg-[color-mix(in_srgb,var(--color-gold)_4%,transparent)]">
+                      <dt className="font-display text-[1.4rem] uppercase tracking-[3px] text-[var(--color-text-primary)] transition-colors">
                         {item.question}
                       </dt>
-                      <dd className="mt-6 text-base font-light leading-relaxed text-[var(--silver)] transition-colors">
+                      <dd className="mt-6 text-base font-light leading-relaxed text-[var(--color-text-secondary)] transition-colors">
                         {item.answer}
                       </dd>
                     </dl>

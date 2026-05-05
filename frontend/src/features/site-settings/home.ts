@@ -48,6 +48,27 @@ export type HomeTestimonialContent = {
   attribution: string;
 };
 
+export type HomeMaterialsContent = {
+  sectionLabel: string;
+  title: string;
+  subtitle: string;
+  items: Array<{
+    id: string;
+    name: string;
+    description: string;
+    specs: Record<string, { label: string; value: string }>;
+  }>;
+};
+
+export type HomeIndustriesContent = {
+  sectionLabel: string;
+  title: string;
+  subtitle: string;
+  items: Array<{ id: string; title: string; description: string }>;
+};
+
+export type HomeSectionConfig = { id: string; name: string; isActive: boolean };
+
 function isNonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
 }
@@ -186,6 +207,48 @@ function normalizeStatsBar(value: unknown): HomeStatsBarContent | null {
   return items.length === 4 ? { items } : null;
 }
 
+function normalizeSections(value: unknown): HomeSectionConfig[] | null {
+  if (!Array.isArray(value)) return null;
+  return value.map((x: any) => ({
+    id: String(x.id || ''),
+    name: String(x.name || ''),
+    isActive: x.isActive !== false,
+  }));
+}
+
+function normalizeMaterials(value: unknown): HomeMaterialsContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+  const items = asStringArray(source.items).map((item) => ({
+    id: String(item.id || ''),
+    name: String(item.name || ''),
+    description: String(item.description || ''),
+    specs: (item.specs as Record<string, any>) || {},
+  }));
+  return {
+    sectionLabel: String(source.sectionLabel || ''),
+    title: String(source.title || ''),
+    subtitle: String(source.subtitle || ''),
+    items,
+  };
+}
+
+function normalizeIndustries(value: unknown): HomeIndustriesContent | null {
+  const source = asObject(value);
+  if (!source) return null;
+  const items = asStringArray(source.items).map((item) => ({
+    id: String(item.id || ''),
+    title: String(item.title || ''),
+    description: String(item.description || ''),
+  }));
+  return {
+    sectionLabel: String(source.sectionLabel || ''),
+    title: String(source.title || ''),
+    subtitle: String(source.subtitle || ''),
+    items,
+  };
+}
+
 export async function fetchHomePageContent(locale: string): Promise<{
   hero: HomeHeroContent | null;
   metrics: HomeMetricsContent | null;
@@ -193,14 +256,20 @@ export async function fetchHomePageContent(locale: string): Promise<{
   statsBar: HomeStatsBarContent | null;
   testimonial: HomeTestimonialContent | null;
   about: HomeAboutContent | null;
+  materials: HomeMaterialsContent | null;
+  industries: HomeIndustriesContent | null;
+  sections: HomeSectionConfig[] | null;
 }> {
-  const [heroRow, metricsRow, valuePropsRow, statsBarRow, testimonialRow, aboutRow] = await Promise.all([
+  const [heroRow, metricsRow, valuePropsRow, statsBarRow, testimonialRow, aboutRow, sectionsRow, materialsRow, industriesRow] = await Promise.all([
     fetchSetting('home.hero', locale, { revalidate: 300 }),
     fetchSetting('home.metrics', locale, { revalidate: 300 }),
     fetchSetting('home.value_props', locale, { revalidate: 300 }),
     fetchSetting('home.stats', locale, { revalidate: 300 }),
     fetchSetting('home.testimonial', locale, { revalidate: 300 }),
     fetchSetting('home.about', locale, { revalidate: 300 }),
+    fetchSetting('homepage_sections', locale, { revalidate: 300 }),
+    fetchSetting('home.materials', locale, { revalidate: 300 }),
+    fetchSetting('home.industries', locale, { revalidate: 300 }),
   ]);
 
   return {
@@ -210,5 +279,8 @@ export async function fetchHomePageContent(locale: string): Promise<{
     statsBar: normalizeStatsBar(statsBarRow?.value),
     testimonial: normalizeTestimonial(testimonialRow?.value),
     about: normalizeAbout(aboutRow?.value),
+    materials: normalizeMaterials(materialsRow?.value),
+    industries: normalizeIndustries(industriesRow?.value),
+    sections: normalizeSections(sectionsRow?.value),
   };
 }

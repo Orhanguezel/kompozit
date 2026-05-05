@@ -19,6 +19,7 @@ import { ArrowLeft, FileJson, HelpCircle, ListChecks, RefreshCcw, Save, Star } f
 import { toast } from "sonner";
 
 import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
+import { ImagesGalleryTab } from "@/app/(main)/admin/_components/common/ImagesGalleryTab";
 import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
 import { type AdminLocaleOption, AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import RichContentEditor from "@/app/(main)/admin/_components/common/RichContentEditor";
@@ -60,6 +61,7 @@ type ProductFormData = {
   sub_category_id: string;
   image_url: string;
   image_asset_id: string;
+  images: string[];
   is_active: boolean;
   is_featured: boolean;
   meta_title: string;
@@ -129,6 +131,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     sub_category_id: "",
     image_url: "",
     image_asset_id: "",
+    images: [],
     is_active: true,
     is_featured: false,
     meta_title: "",
@@ -158,6 +161,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
         sub_category_id: item.sub_category_id ? String(item.sub_category_id) : "",
         image_url: item.image_url || "",
         image_asset_id: item.storage_asset_id || "",
+        images: Array.isArray((item as any).images) ? (item as any).images : [],
         is_active: item.is_active === 1 || item.is_active === true,
         is_featured: item.is_featured === 1 || item.is_featured === true,
         meta_title: item.meta_title || "",
@@ -214,6 +218,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
       category_id: formData.category_id || "",
       sub_category_id: formData.sub_category_id || null,
       image_url: formData.image_url || null,
+      images: formData.images || [],
       storage_asset_id: formData.image_asset_id || null,
       is_active: formData.is_active,
       is_featured: formData.is_featured,
@@ -521,11 +526,18 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                     )}
 
                     {/* Görsel */}
-                    <AdminImageUploadField
-                      label={t("detail.fields.coverImage")}
-                      value={formData.image_url}
-                      onChange={handleImageChange}
+                    <ImagesGalleryTab
+                      coverUrl={formData.image_url}
+                      coverAlt={formData.image_alt}
+                      images={formData.images}
+                      onCoverChange={(url) => handleChange("image_url", url)}
+                      onCoverAltChange={(alt) => handleChange("image_alt", alt)}
+                      onImagesChange={(urls) => {
+                        handleChange("images", urls);
+                        if (!formData.image_url && urls.length > 0) handleChange("image_url", urls[0]);
+                      }}
                       disabled={isLoading}
+                      folder="uploads/products"
                     />
                   </div>
                 </div>
@@ -613,14 +625,21 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                 </div>
 
                 {/* Sağ: görsel önizleme/yükleme */}
-                <div className="space-y-4">
-                  <AdminImageUploadField
-                    label={t("detail.fields.coverImage")}
-                    value={formData.image_url}
-                    onChange={handleImageChange}
-                    disabled={isLoading}
-                  />
-                </div>
+                  <div className="space-y-4">
+                    <ImagesGalleryTab
+                      coverUrl={formData.image_url}
+                      coverAlt={formData.image_alt}
+                      images={formData.images}
+                      onCoverChange={(url) => handleChange("image_url", url)}
+                      onCoverAltChange={(alt) => handleChange("image_alt", alt)}
+                      onImagesChange={(urls) => {
+                        handleChange("images", urls);
+                        if (!formData.image_url && urls.length > 0) handleChange("image_url", urls[0]);
+                      }}
+                      disabled={isLoading}
+                      folder="uploads/products"
+                    />
+                  </div>
               </div>
 
               <div className="flex justify-end gap-3 border-t pt-4">

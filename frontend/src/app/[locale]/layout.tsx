@@ -167,6 +167,7 @@ export default async function LocaleLayout({
     companyProfileSetting,
     contactInfo,
     productCategories,
+    footerContentSetting,
   ] =
     await Promise.all([
       fetchMenuItems(locale),
@@ -180,6 +181,7 @@ export default async function LocaleLayout({
       fetchSetting('company_profile', locale),
       fetchParsedContactInfo(locale),
       fetchProductCategories(locale),
+      fetchSetting('footer_content', locale),
     ]);
 
   const logoValue = { ...readSettingValue(legacyLogoSetting), ...readSettingValue(siteLogoSetting) };
@@ -211,6 +213,7 @@ export default async function LocaleLayout({
     ...contactInfo,
     companyName: asStr(companyProfile.company_name) || contactInfo.companyName,
   };
+  const footerContent = readSettingValue(footerContentSetting);
   const siteUrl = siteUrlBase();
   const orgLogoRaw = pickFirstString(logoConfigs.default, logoConfigs.dark, logoConfigs.light);
   const orgLogoUrl = orgLogoRaw
@@ -283,6 +286,7 @@ export default async function LocaleLayout({
             logo={logoConfigs}
             socialNav={footerSocialNav}
             contactInfo={footerContactInfo}
+            footerContent={footerContent}
           />
           <ClientShell whatsappPhone={contactInfo.whatsapp || contactInfo.phone} />
           <DeferredToaster />

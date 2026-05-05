@@ -19,6 +19,8 @@ import { eq, and, inArray, desc } from 'drizzle-orm';
 import { db } from '@/db/client';
 import { siteSettings } from '@ensotek/shared-backend/modules/siteSettings/schema';
 import { notifications, type NotificationType } from '@ensotek/shared-backend/modules/notifications/schema';
+import { users } from "@ensotek/shared-backend/modules/auth/schema";
+import { userRoles } from '@ensotek/shared-backend/modules/userRoles/schema';
 
 import { offersTable, type OfferRow } from './schema';
 import { updateOffer } from './repository';
@@ -141,7 +143,16 @@ async function getOffersAdminEmails(locale?: string | null): Promise<string[]> {
 
 async function getOffersAdminUserIds(locale?: string | null): Promise<string[]> {
   const raw = await getSiteSettingValue('offers_admin_user_ids', locale);
-  return parseToStringArray(raw);
+  const ids = parseToStringArray(raw);
+  if (ids.length > 0) return ids;
+
+  // Fallback: tüm admin rolündeki kullanıcılar
+  const admins = await db
+    .select({ id: users.id })
+    .from(users)
+    .innerJoin(userRoles, eq(userRoles.user_id, users.id))
+    .where(eq(userRoles.role, 'admin'));
+  return admins.map((u) => u.id);
 }
 
 // -------------------------------------------------------------

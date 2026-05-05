@@ -240,9 +240,10 @@ const fallbackReferences: Record<LocaleKey, FallbackReferenceItem[]> = {
   ],
 };
 
-const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: string[]; category: string })[]> = {
+const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { slug: string; specs: string[]; category: string })[]> = {
   tr: [
     {
+       slug: 'solution-planters',
        title: 'Peyzaj ve Kent Ekipmanlari (Saksı)',
        description: 'Dis ortam kosullarina dayanikli, hafif ve yuksek yuzey kalitesine sahip buyuk olcekli kompozit saksi ve oturma gruplari.',
        imageSrc: S.planter,
@@ -251,6 +252,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
        content: '<h2>Peyzajda Kompozit Yaklasimi</h2><p>Kent mobilyalari ve buyuk olcekli saksilarda agirlik, korozyon ve yuzey deformasyonu en buyuk maliyet kalemleridir. MOE Kompozit olarak; UV dayanimi yuksek, CTP tabanli ve moduler uretime uygun peyzaj bilesenleri gelistiriyoruz.</p><h3>Muhendislik Avantajlari</h3><ul><li>Beton saksilara gore %80 daha hafif</li><li>Kimyasal gubrelere ve dis ortam nemine tam direnc</li><li>İstenilen RAL kodunda, puruzsuz yuzey bitis</li></ul>',
     },
     {
+       slug: 'solution-storage-tanks',
        title: 'Moduler Depo ve Tank Cozumleri',
        description: 'Kimyasal depolama, su yalitimi ve endustriyel hatlar icin CTP tabanli yuksek mukavemetli depo ve muhafaza urunleri.',
        imageSrc: S.tank,
@@ -259,6 +261,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
        content: '<h2>Endustriyel Depolama ve Sizdirmazlik</h2><p>Asidik ortamlar ve kimyasal stoklama ihtiyaclarinda geleneksel metal tanklar korozyon nedeniyle hizli deforme olur. CTP (Cam Elyaf Takviyeli Plastik) tanklarimiz, kimyasal direnci ve yuksek mukavemetiyle uzun omurlu kullanim sunar.</p><h3>Uygulama Alanlari</h3><ul><li>Sarf malzemesi ve kimyasal depolama</li><li>Aritma tesisleri ve asit tanklari</li><li>Ozel olculu yangin ve kullanim suyu depolari</li></ul>',
     },
     {
+       slug: 'solution-coffins',
        title: 'Defin Grubu Urunleri (Tabut)',
        description: 'Belediyeler ve kamu kurumlari icin seri uretilen, dayanikli ve hijyenik kompozit defin ve nakil ekipmanlari.',
        imageSrc: S.softFloral,
@@ -267,6 +270,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
        content: '<h2>Kamu ve Belediye Cozumleri</h2><p>Defin ve nakil sureclerinde hijyen, hafiflik ve kolay dezenfekte edilebilirlik onceliktir. Kompozit tabut ve kabinler; gozeneksiz yapilari sayesinde mikrobiyolojik birikimi onler ve uzun yillar servis verir.</p><h3>Teknik Kapsam</h3><ul><li>Yuksek tasima kapasitesi ve hafif yapi</li><li>Kolay temizlenebilir Jel-Kot yuzey</li><li>Ust uste istiflenebilir ergonomik tasarim</li></ul>',
     },
     {
+       slug: 'solution-custom-b2b',
        title: 'Ozel B2B Kompozit Imalat',
        description: 'Savunma, enerji ve makina sektorleri icin teknik sartnameye gore ozel olarak tasarlanan ve uretilen alt bilesenler.',
        imageSrc: S.carbon,
@@ -277,6 +281,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
   ],
   en: [
     {
+       slug: 'solution-planters',
        title: 'Landscaping and Urban Equipment (Planters)',
        description: 'Large-scale composite planters and seating groups with high surface quality, lightweight design and outdoor durability.',
        imageSrc: S.planter,
@@ -285,6 +290,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
        content: '<h2>Composite Approach in Landscaping</h2><p>In urban furniture and large-scale planters, weight, corrosion, and surface deformation are the biggest cost items. At MOE Composite, we develop GRP-based landscaping components suitable for UV resistance and modular production.</p><h3>Engineering Advantages</h3><ul><li>80% lighter than concrete planters</li><li>Full resistance to chemical fertilizers and outdoor humidity</li><li>Smooth surface finish in any requested RAL code</li></ul>',
     },
     {
+       slug: 'solution-storage-tanks',
        title: 'Modular Tank and Storage Solutions',
        description: 'High-strength FRP-based storage and enclosure products for chemical storage, waterproofing and industrial lines.',
        imageSrc: S.tank,
@@ -293,6 +299,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
        content: '<h2>Industrial Storage and Sealing</h2><p>In acidic environments and chemical storage needs, traditional metal tanks deform quickly due to corrosion. Our GRP (Glass Reinforced Plastic) tanks offer long-lasting use with their chemical resistance and high strength.</p><h3>Application Areas</h3><ul><li>Consumables and chemical storage</li><li>Treatment plants and acid tanks</li><li>Custom-sized fire and utility water tanks</li></ul>',
     },
     {
+       slug: 'solution-coffins',
        title: 'Burial and Transport Equipment (Coffins)',
        description: 'Durable, hygienic composite burial and transport equipment mass-produced for municipalities and institutions.',
        imageSrc: S.softFloral,
@@ -301,6 +308,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { specs: strin
        content: '<h2>Public and Municipal Solutions</h2><p>Hygiene, lightweight design, and ease of disinfection are priorities in burial and transport processes. Composite coffins and cabins prevent microbiological buildup thanks to their non-porous structure and provide service for many years.</p><h3>Technical Scope</h3><ul><li>High load capacity and lightweight structure</li><li>Easy-to-clean Gel-Coat surface</li><li>Stackable ergonomic design</li></ul>',
     },
     {
+       slug: 'solution-custom-b2b',
        title: 'Custom B2B Composite Manufacturing',
        description: 'Sub-components specifically designed and manufactured according to technical specifications for defense, energy and machinery sectors.',
        imageSrc: S.carbon,
