@@ -7,6 +7,7 @@
 
 import {
   Bell,
+  Database,
   DollarSign,
   FileSearch,
   FileText,
@@ -136,6 +137,7 @@ export const adminNavConfig: AdminNavConfigGroup[] = [
       { key: "users", url: "/admin/users", icon: Users },
       { key: "notifications", url: "/admin/notifications", icon: Bell },
       { key: "storage", url: "/admin/storage", icon: HardDrive },
+      { key: "db", url: "/admin/db", icon: Database },
       { key: "cache", url: "/admin/cache", icon: RefreshCcw },
       { key: "audit", url: "/admin/audit", icon: FileSearch },
     ],

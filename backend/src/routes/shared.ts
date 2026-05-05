@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify';
+import { createDbAdminRoutes, type ModuleMap } from '@ensotek/shared-backend/modules/db_admin';
 
 // Kimlik doğrulama & kullanıcı yönetimi
 import { registerAuth, registerUserAdmin } from '@ensotek/shared-backend/modules/auth';
@@ -58,6 +59,64 @@ import { registerReferencesAdmin } from '@ensotek/shared-backend/modules/referen
 import { registerLibrary } from '@ensotek/shared-backend/modules/library/router';
 import { registerLibraryAdmin } from '@ensotek/shared-backend/modules/library/admin.routes';
 
+const dbAdminModules = {
+  site_settings: {
+    tablesInOrder: ['site_settings'],
+  },
+  users: {
+    tablesInOrder: ['users', 'profiles', 'user_roles'],
+    truncateInOrder: ['profiles', 'user_roles', 'users'],
+  },
+  categories: {
+    tablesInOrder: ['categories', 'category_i18n'],
+    truncateInOrder: ['category_i18n', 'categories'],
+  },
+  subcategories: {
+    tablesInOrder: ['sub_categories', 'sub_category_i18n'],
+    truncateInOrder: ['sub_category_i18n', 'sub_categories'],
+  },
+  products: {
+    tablesInOrder: ['products', 'product_i18n'],
+    truncateInOrder: ['product_i18n', 'products'],
+  },
+  custom_pages: {
+    tablesInOrder: ['custom_pages', 'custom_pages_i18n'],
+    truncateInOrder: ['custom_pages_i18n', 'custom_pages'],
+  },
+  menu_items: {
+    tablesInOrder: ['menu_items', 'menu_items_i18n'],
+    truncateInOrder: ['menu_items_i18n', 'menu_items'],
+  },
+  footer_sections: {
+    tablesInOrder: ['footer_sections', 'footer_sections_i18n'],
+    truncateInOrder: ['footer_sections_i18n', 'footer_sections'],
+  },
+  gallery: {
+    tablesInOrder: ['galleries', 'gallery_i18n', 'gallery_images', 'gallery_image_i18n'],
+    truncateInOrder: ['gallery_image_i18n', 'gallery_images', 'gallery_i18n', 'galleries'],
+  },
+  offers: {
+    tablesInOrder: ['offer_number_counters', 'offers'],
+    truncateInOrder: ['offers', 'offer_number_counters'],
+  },
+  reviews: {
+    tablesInOrder: ['reviews', 'review_i18n'],
+    truncateInOrder: ['review_i18n', 'reviews'],
+  },
+  storage: {
+    tablesInOrder: ['storage_assets'],
+  },
+  notifications: {
+    tablesInOrder: ['notifications'],
+  },
+  audit: {
+    tablesInOrder: ['audit_request_logs', 'audit_auth_events', 'audit_events'],
+  },
+  content_reactions: {
+    tablesInOrder: ['content_reaction_totals'],
+  },
+} satisfies ModuleMap;
+
 export async function registerSharedPublic(api: FastifyInstance) {
   await registerAuth(api);
   api.get('/health', async () => {
@@ -108,6 +167,7 @@ export async function registerSharedAdmin(adminApi: FastifyInstance) {
     registerGalleryAdmin,
     registerReferencesAdmin,
     registerLibraryAdmin,
+    createDbAdminRoutes(dbAdminModules),
   ]) {
     await adminApi.register(reg);
   }
