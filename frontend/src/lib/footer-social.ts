@@ -2,7 +2,7 @@ const ORDER = ['linkedin', 'instagram', 'youtube'] as const;
 
 export type FooterSocialNavItem = {
   id: (typeof ORDER)[number];
-  href: string | null;
+  href: string;
 };
 
 function normalizeHref(raw: string): string | null {
@@ -21,5 +21,5 @@ export function buildFooterSocialNavFromSetting(value: unknown): FooterSocialNav
   return ORDER.map((id) => ({
     id,
     href: normalizeHref(String(o[id] ?? '')),
-  }));
+  })).filter((item): item is FooterSocialNavItem => Boolean(item.href));
 }

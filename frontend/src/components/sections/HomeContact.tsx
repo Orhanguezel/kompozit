@@ -34,9 +34,9 @@ type HomeContactProps = {
 
 const CONTACT_FALLBACK: Required<HomeContactInfo> = {
   email: 'info@karbonkompozit.com.tr',
-  phone: '+90 216 123 45 67',
-  address: 'Dilovası İMES OSB, Kocaeli',
-  hours: 'Pzt - Cum: 08:00 - 18:00',
+  phone: '+90 530 961 94 17',
+  address: 'Oruçreis Mah. Tekstilkent Sit. A17 Blok No:41 34235 Esenler / İstanbul, Türkiye',
+  hours: 'Pazartesi - Cuma: 08:00 - 17:00',
 };
 
 export function HomeContact({ labels, contactInfo }: HomeContactProps) {

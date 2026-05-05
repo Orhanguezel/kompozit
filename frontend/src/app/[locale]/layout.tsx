@@ -267,7 +267,13 @@ export default async function LocaleLayout({
         suppressHydrationWarning
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Header menuItems={stableMenuItems} logo={logoConfigs} locale={locale} activeLocales={activeLocales} />
+          <Header
+            menuItems={stableMenuItems}
+            logo={logoConfigs}
+            locale={locale}
+            activeLocales={activeLocales}
+            contactInfo={contactInfo}
+          />
           <main className="flex-1 pt-[5.5rem] lg:pt-24">{children}</main>
           <Footer
             sections={stableFooterSections}

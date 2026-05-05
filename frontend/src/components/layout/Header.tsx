@@ -35,6 +35,11 @@ interface MenuItem {
   [key: string]: unknown;
 }
 
+type HeaderContactInfo = {
+  email?: string;
+  phone?: string;
+};
+
 function normalizeItems(raw: Record<string, unknown>[], locale: string): MenuItem[] {
   return raw
     .map((r) => {
@@ -70,12 +75,14 @@ export function Header({
   logo,
   locale,
   activeLocales,
+  contactInfo,
 }: {
   menuItems: Record<string, unknown>[];
   logo?: { default: string; dark: string; light: string; alt?: string };
   locale: string;
   /** `getLocaleSettings().activeLocales` — dil seçicide yalnızca bunlar listelenir */
   activeLocales?: string[];
+  contactInfo?: HeaderContactInfo;
 }) {
   const t = useTranslations('nav');
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -84,6 +91,8 @@ export function Header({
   const logoSrc = logo?.dark || logo?.default || logo?.light;
   const mobileLogoSrc = logo?.light || logo?.default || logo?.dark;
   const logoAlt = logo?.alt || 'MOE Kompozit';
+  const phone = contactInfo?.phone?.trim() || '+90 530 961 94 17';
+  const email = contactInfo?.email?.trim() || 'info@karbonkompozit.com.tr';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -297,7 +306,7 @@ export function Header({
               </div>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">Direct Line</p>
-                <p className="font-display text-[1.4rem] uppercase tracking-[2px] text-[var(--white)]">+90 262 555 00 00</p>
+                <p className="font-display text-[1.4rem] uppercase tracking-[2px] text-[var(--white)]">{phone}</p>
               </div>
             </div>
             <div className="flex items-center gap-6 group">
@@ -306,7 +315,7 @@ export function Header({
               </div>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">Inquiries</p>
-                <p className="font-display text-[1.4rem] uppercase tracking-[2px] text-[var(--white)]">HELLO@MOEKOMPOZIT.COM</p>
+                <p className="font-display text-[1.4rem] uppercase tracking-[2px] text-[var(--white)]">{email}</p>
               </div>
             </div>
           </div>
