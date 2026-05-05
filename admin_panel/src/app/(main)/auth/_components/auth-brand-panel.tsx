@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { useGetSiteSettingAdminByKeyQuery } from "@/integrations/hooks";
+import { useGetSiteSettingByKeyQuery } from "@/integrations/hooks";
 
 const LOGO_FALLBACK = "/uploads/kompozit/brand/logo-light.png";
 
@@ -12,8 +12,8 @@ type Props = {
 };
 
 export function AuthBrandPanel({ heading, subtext }: Props) {
-  const { data: logoSetting } = useGetSiteSettingAdminByKeyQuery("kompozit__site_logo");
-  const { data: configSetting } = useGetSiteSettingAdminByKeyQuery("kompozit__ui_admin_config");
+  const { data: logoSetting } = useGetSiteSettingByKeyQuery("kompozit__site_logo");
+  const { data: configSetting } = useGetSiteSettingByKeyQuery("kompozit__ui_admin_config");
 
   const logoVal = logoSetting?.value as any;
   const configVal = configSetting?.value as any;
