@@ -417,36 +417,53 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
       {/* HEADER */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="space-y-1">
-          <h1 className="font-semibold text-lg">{isCreate ? t("detail.createTitle") : t("detail.editTitle")}</h1>
-          <p className="text-muted-foreground text-sm">{t("detail.subtitle")}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={() => router.push("/admin/offer")}>
-            <ArrowLeft className="mr-2 size-4" />
-            {t("actions.backToList")}
-          </Button>
-          <Button size="sm" onClick={onSave} disabled={busy}>
-            <Save className="mr-2 size-4" />
-            {saving ? t("actions.saving") : t("actions.save")}
-          </Button>
-        </div>
-      </div>
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="space-y-1">
+              <CardTitle className="text-xl font-bold tracking-tight">
+                {isCreate ? t("detail.createTitle") : t("detail.editTitle")}
+              </CardTitle>
+              <CardDescription className="text-muted-foreground/80">{t("detail.subtitle")}</CardDescription>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => router.push("/admin/offer")}
+                className="rounded-full px-4 border-white/10"
+              >
+                <ArrowLeft className="mr-2 size-4" />
+                {t("actions.backToList")}
+              </Button>
+              <Button 
+                size="sm" 
+                onClick={onSave} 
+                disabled={busy}
+                className="gold-gradient rounded-full px-8 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <Save className="mr-2 size-4" />
+                {saving ? t("actions.saving") : t("actions.save")}
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
 
       {/* FORM DATA (edit only) */}
       {!isCreate && (pairs.length > 0 || extras.length > 0) && (
-        <Card>
+        <Card className="premium-card bg-card/20 border-white/5">
           <CardHeader className="gap-2">
-            <CardTitle className="text-base">
+            <CardTitle className="text-base font-bold uppercase tracking-widest text-primary/80">
               {t("detail.formDataTitle")}{" "}
               <Badge variant="outline" className="ml-2">
                 {Object.keys(form.form_data ?? {}).length} {t("detail.formDataFields")}
               </Badge>
             </CardTitle>
-            <CardDescription>{t("detail.formDataDesc")}</CardDescription>
+            <CardDescription className="text-muted-foreground/70">{t("detail.formDataDesc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid gap-3 md:grid-cols-2">
@@ -477,10 +494,10 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
 
       {/* PDF SECTION (edit only) */}
       {!isCreate && form.id && (
-        <Card>
+        <Card className="premium-card">
           <CardHeader className="gap-2">
-            <CardTitle className="text-base">{t("detail.pdfTitle")}</CardTitle>
-            <CardDescription>{t("detail.pdfDesc")}</CardDescription>
+            <CardTitle className="text-base font-bold">{t("detail.pdfTitle")}</CardTitle>
+            <CardDescription className="text-muted-foreground/80">{t("detail.pdfDesc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <OfferPdfPreview
@@ -490,7 +507,13 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
             />
 
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" size="sm" onClick={onGeneratePdf} disabled={pdfState.isLoading || saving}>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={onGeneratePdf} 
+                disabled={pdfState.isLoading || saving}
+                className="rounded-full px-4 border-white/10"
+              >
                 <FileText className="mr-2 size-4" />
                 {pdfState.isLoading
                   ? t("actions.generatingPdf")
@@ -504,6 +527,7 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
                 onClick={onSendEmail}
                 disabled={emailState.isLoading || saving || !form.pdf_url}
                 title={!form.pdf_url ? t("messages.pdfRequired") : undefined}
+                className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
               >
                 <Mail className="mr-2 size-4" />
                 {emailState.isLoading ? t("actions.sendingEmail") : t("actions.sendEmail")}
@@ -529,13 +553,13 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
       )}
 
       {/* FORM / JSON TABS */}
-      <Tabs value={editTab} onValueChange={setEditTab}>
-        <TabsList>
-          <TabsTrigger value="form">
+      <Tabs value={editTab} onValueChange={setEditTab} className="w-full">
+        <TabsList className="premium-card p-1 bg-card/40 border-white/5">
+          <TabsTrigger value="form" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">
             <FormInput className="mr-2 size-4" />
             {t("detail.tabForm")}
           </TabsTrigger>
-          <TabsTrigger value="json">
+          <TabsTrigger value="json" className="rounded-md data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all">
             <Code className="mr-2 size-4" />
             {t("detail.tabJson")}
           </TabsTrigger>
@@ -544,10 +568,10 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
         <TabsContent value="form" className="mt-4">
           <div className="grid gap-6 xl:grid-cols-3">
             {/* LEFT — Main fields */}
-            <Card className="xl:col-span-2">
+            <Card className="xl:col-span-2 premium-card">
               <CardHeader className="gap-2">
-                <CardTitle className="text-base">{t("detail.formTitle")}</CardTitle>
-                <CardDescription>{t("detail.formDesc")}</CardDescription>
+                <CardTitle className="text-base font-bold">{t("detail.formTitle")}</CardTitle>
+                <CardDescription className="text-muted-foreground/80">{t("detail.formDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-4 md:grid-cols-2">
                 <div className="space-y-2 md:col-span-2">
@@ -636,10 +660,10 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
             </Card>
 
             {/* RIGHT — Pricing & Meta */}
-            <Card>
+            <Card className="premium-card">
               <CardHeader className="gap-2">
-                <CardTitle className="text-base">{t("detail.pricingTitle")}</CardTitle>
-                <CardDescription>{t("detail.pricingDesc")}</CardDescription>
+                <CardTitle className="text-base font-bold">{t("detail.pricingTitle")}</CardTitle>
+                <CardDescription className="text-muted-foreground/80">{t("detail.pricingDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="grid gap-4">
                 <div className="space-y-2">

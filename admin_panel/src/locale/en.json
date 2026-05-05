@@ -724,7 +724,13 @@
         "statusAll": "All",
         "orderLabel": "Sort",
         "orderDesc": "Newest first",
-        "orderAsc": "Oldest first"
+        "orderAsc": "Oldest first",
+        "sourceLabel": "Source",
+        "sourcePlaceholder": "e.g. ensotek, kompozit",
+        "sectorLabel": "Sector / Category",
+        "sectorPlaceholder": "e.g. tower, service",
+        "createdFromLabel": "Start Date",
+        "createdToLabel": "End Date"
       },
       "list": {
         "title": "Offers",
@@ -740,6 +746,7 @@
         "subject": "Subject",
         "grossTotal": "Gross Total",
         "createdAt": "Created",
+        "source": "Source",
         "actions": "Actions"
       },
       "status": {
@@ -839,7 +846,8 @@
         "generatingPdf": "Generating PDF...",
         "sendEmail": "Send Email",
         "sendingEmail": "Sending email...",
-        "openPdf": "Open PDF in New Tab"
+        "openPdf": "Open PDF in New Tab",
+        "exportCsv": "Download as CSV"
       },
       "messages": {
         "saved": "Offer updated.",

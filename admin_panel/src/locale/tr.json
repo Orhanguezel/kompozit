@@ -1239,7 +1239,13 @@
         "statusAll": "Tümü",
         "orderLabel": "Sıralama",
         "orderDesc": "En yeni önce",
-        "orderAsc": "En eski önce"
+        "orderAsc": "En eski önce",
+        "sourceLabel": "Kaynak",
+        "sourcePlaceholder": "Örn: ensotek, kompozit",
+        "sectorLabel": "Sektör / Kategori",
+        "sectorPlaceholder": "Örn: kule, servis",
+        "createdFromLabel": "Başlangıç",
+        "createdToLabel": "Bitiş"
       },
       "list": {
         "title": "Teklifler",
@@ -1255,6 +1261,7 @@
         "subject": "Konu",
         "grossTotal": "Brüt Toplam",
         "createdAt": "Oluşturulma",
+        "source": "Kaynak",
         "actions": "İşlemler"
       },
       "status": {
@@ -1354,7 +1361,8 @@
         "generatingPdf": "PDF hazırlanıyor...",
         "sendEmail": "E-posta Gönder",
         "sendingEmail": "E-posta gönderiliyor...",
-        "openPdf": "PDF'i Yeni Sekmede Aç"
+        "openPdf": "PDF'i Yeni Sekmede Aç",
+        "exportCsv": "CSV Olarak İndir"
       },
       "messages": {
         "saved": "Teklif güncellendi.",

@@ -278,18 +278,20 @@ export default function AdminCustomPageDetailClient({
   }
 
   return (
-    <CustomPageForm
-      mode={mode}
-      initialData={page}
-      initialModuleKey={initialModuleKey}
-      loading={busy}
-      saving={saving}
-      locales={localesForForm}
-      localesLoading={localesLoading || localesFetching}
-      defaultLocale={queryLocale || apiLocaleFromDb || "tr"}
-      onLocaleChange={(l) => setActiveLocale(localeShortClientOr(l, "tr"))}
-      onSubmit={handleSubmit}
-      onCancel={onCancel}
-    />
+    <div className="carbon-mesh min-h-screen pb-12">
+      <CustomPageForm
+        mode={mode}
+        initialData={page}
+        initialModuleKey={initialModuleKey}
+        loading={busy}
+        saving={saving}
+        locales={localesForForm}
+        localesLoading={localesLoading || localesFetching}
+        defaultLocale={queryLocale || apiLocaleFromDb || "tr"}
+        onLocaleChange={(l) => setActiveLocale(localeShortClientOr(l, "tr"))}
+        onSubmit={handleSubmit}
+        onCancel={onCancel}
+      />
+    </div>
   );
 }

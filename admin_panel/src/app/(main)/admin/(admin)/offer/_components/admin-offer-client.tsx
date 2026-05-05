@@ -205,31 +205,51 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
   }
 
   return (
-    <div className="w-full min-w-0 max-w-full space-y-6">
+    <div className="w-full min-w-0 max-w-full space-y-6 carbon-mesh min-h-screen pb-12">
       {/* HEADER */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="min-w-0 space-y-1">
-          <h1 className="font-semibold text-lg">{t("header.title")}</h1>
-          <p className="text-muted-foreground text-sm">{t("header.subtitle")}</p>
-        </div>
-
-        <div className="flex flex-shrink-0 gap-2">
-          <Button variant="outline" size="sm" onClick={() => listQ.refetch()} disabled={busy}>
-            <RefreshCcw className="mr-2 size-4" />
-            <span className="hidden sm:inline">{t("actions.refresh")}</span>
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => downloadCsv(rows)} disabled={busy || rows.length === 0}>
-            <Download className="mr-2 size-4" />
-            <span className="hidden sm:inline">{label(t, "actions.exportCsv", "CSV")}</span>
-          </Button>
-          <Button size="sm" asChild>
-            <Link href="/admin/offer/new">
-              <Plus className="mr-2 size-4" />
-              {t("actions.create")}
-            </Link>
-          </Button>
-        </div>
-      </div>
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div className="min-w-0 space-y-1">
+              <CardTitle className="text-xl font-bold tracking-tight">{t("header.title")}</CardTitle>
+              <CardDescription className="text-muted-foreground/80">{t("header.subtitle")}</CardDescription>
+            </div>
+    
+            <div className="flex flex-shrink-0 gap-3">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                onClick={() => listQ.refetch()} 
+                disabled={busy}
+                className="rounded-full hover:bg-primary/10 transition-colors"
+              >
+                <RefreshCcw className={`h-4 w-4 ${busy ? "animate-spin" : ""}`} />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => downloadCsv(rows)} 
+                disabled={busy || rows.length === 0}
+                className="rounded-full px-4 border-white/10"
+              >
+                <Download className="mr-2 size-4" />
+                <span>{label(t, "actions.exportCsv", "CSV")}</span>
+              </Button>
+              <Button 
+                size="sm" 
+                asChild
+                className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
+                <Link href="/admin/offer/new">
+                  <Plus className="mr-2 size-4" />
+                  {t("actions.create")}
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
 
       {/* ERROR */}
       {listQ.error ? (
@@ -237,10 +257,10 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
       ) : null}
 
       {/* FILTERS */}
-      <Card>
+      <Card className="premium-card bg-card/20 border-white/5">
         <CardHeader className="gap-2">
-          <CardTitle className="text-base">{t("filters.title")}</CardTitle>
-          <CardDescription>{t("filters.description")}</CardDescription>
+          <CardTitle className="text-base font-bold uppercase tracking-widest text-primary/80">{t("filters.title")}</CardTitle>
+          <CardDescription className="text-muted-foreground/70">{t("filters.description")}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4 sm:grid-cols-2 xl:grid-cols-6">
           <div className="space-y-2">
@@ -333,12 +353,12 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
       </Card>
 
       {/* LIST */}
-      <Card>
+      <Card className="premium-card overflow-hidden">
         <CardHeader className="gap-2">
-          <CardTitle className="text-base">
+          <CardTitle className="text-base font-bold">
             {t("list.title")} <span className="font-normal text-muted-foreground">({rows.length})</span>
           </CardTitle>
-          <CardDescription>{t("list.description")}</CardDescription>
+          <CardDescription className="text-muted-foreground/80">{t("list.description")}</CardDescription>
         </CardHeader>
         <CardContent className="p-0 sm:p-6">
           {/* ── Mobile card view ── */}
@@ -396,6 +416,8 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
                   <TableHead className="whitespace-nowrap">{t("columns.offerNo")}</TableHead>
                   <TableHead>{t("columns.status")}</TableHead>
                   <TableHead>{t("columns.customer")}</TableHead>
+                  <TableHead className="hidden md:table-cell">{t("filters.sectorLabel")}</TableHead>
+                  <TableHead className="hidden xl:table-cell">{t("columns.source")}</TableHead>
                   <TableHead className="hidden lg:table-cell">{t("columns.email")}</TableHead>
                   <TableHead className="hidden xl:table-cell">{t("columns.subject")}</TableHead>
                   <TableHead className="whitespace-nowrap text-right">{t("columns.grossTotal")}</TableHead>
@@ -433,6 +455,14 @@ export default function AdminOfferClient({ initialSource }: { initialSource?: st
                       ) : null}
                       {/* email visible here on smaller screens where column is hidden */}
                       <div className="text-muted-foreground text-xs lg:hidden">{item.email}</div>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <div className="text-xs">{sectorOf(item) || "-"}</div>
+                    </TableCell>
+                    <TableCell className="hidden xl:table-cell">
+                      <Badge variant="outline" className="text-[10px] font-mono opacity-70">
+                        {item.source || "web"}
+                      </Badge>
                     </TableCell>
                     <TableCell className="hidden lg:table-cell">{item.email || "-"}</TableCell>
                     <TableCell className="hidden max-w-[200px] truncate xl:table-cell" title={item.subject ?? ""}>

@@ -18,6 +18,7 @@ import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJson
 import type { AdminLocaleOption } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Card, CardContent, CardHeader } from "@ensotek/shared-ui/admin/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import { useLazyListCustomPagesAdminQuery } from "@/integrations/hooks";
 import type { CustomPageDto, CustomPageListAdminQueryParams } from "@/integrations/shared";
@@ -370,9 +371,10 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="rounded-lg border bg-card">
-        <div className="border-b p-3">
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="border-b py-4">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
             <div className="min-w-0">
               <div className="font-semibold text-sm">
@@ -395,7 +397,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
 
               <button
                 type="submit"
-                className="rounded-md bg-primary px-3 py-1 text-primary-foreground text-xs disabled:opacity-60"
+                className="gold-gradient rounded-full px-6 py-2 font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-60"
                 disabled={disabled}
               >
                 {saving
@@ -414,9 +416,8 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
               ) : null}
             </div>
           </div>
-        </div>
-
-        <div className="p-3">
+        </CardHeader>
+        <CardContent className="p-6">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
             <TabsList className="mb-4 grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
               <TabsTrigger value="content" className="text-xs">
@@ -520,8 +521,8 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
               />
             </TabsContent>
           </Tabs>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </form>
   );
 };
