@@ -176,7 +176,7 @@ function normalizeStatsBar(value: unknown): HomeStatsBarContent | null {
 
   const items = asStringArray(source.items)
     .map((item) => ({
-      value: String(item.value ?? item.number ?? '').trim(),
+      value: String(item.value ?? `${item.number ?? ''}${item.suffix ?? ''}`).trim(),
       label: String(item.label ?? '').trim(),
     }))
     .filter((item) => isNonEmptyString(item.value) && isNonEmptyString(item.label));

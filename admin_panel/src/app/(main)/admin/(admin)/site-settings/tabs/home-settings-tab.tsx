@@ -70,20 +70,38 @@ type StatsForm = { items: StatItem[] };
 
 const DEFAULT_STAT: StatItem = { number: "", label: "", suffix: "", description: "" };
 
+function splitStatValue(value: unknown): { number: string; suffix: string } {
+  const text = String(value ?? "").trim();
+  if (!text) return { number: "", suffix: "" };
+  const match = text.match(/^(\d+(?:[.,]\d+)?)(.*)$/);
+  if (!match) return { number: text, suffix: "" };
+  return { number: match[1] || "", suffix: (match[2] || "").trim() };
+}
+
 function toStatsForm(v: unknown): StatsForm {
   if (!v || typeof v !== "object") return { items: [DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT, DEFAULT_STAT] };
   const o = v as Record<string, unknown>;
   const raw = Array.isArray(o.items) ? o.items : [];
   const items: StatItem[] = Array.from({ length: 4 }, (_, i) => {
     const item = raw[i] as Record<string, unknown> | undefined;
+    const fromValue = splitStatValue(item?.value);
     return {
-      number: String(item?.number ?? ""),
+      number: String(item?.number ?? fromValue.number),
       label: String(item?.label ?? ""),
-      suffix: String(item?.suffix ?? ""),
+      suffix: String(item?.suffix ?? fromValue.suffix),
       description: String(item?.description ?? ""),
     };
   });
   return { items };
+}
+
+function statsFormToSetting(form: StatsForm): StatsForm & { items: Array<StatItem & { value: string }> } {
+  return {
+    items: form.items.map((item) => ({
+      ...item,
+      value: `${item.number || ""}${item.suffix || ""}`.trim(),
+    })),
+  };
 }
 
 // ---- Hero ----
@@ -227,7 +245,7 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
 
   const handleSaveStats = async () => {
     try {
-      await updateSetting({ key: `${prefix}home.stats`, value: stats, locale }).unwrap();
+      await updateSetting({ key: `${prefix}home.stats`, value: statsFormToSetting(stats), locale }).unwrap();
       toast.success(t("messages.statsSaved"));
     } catch {
       toast.error(t("messages.saveError"));
