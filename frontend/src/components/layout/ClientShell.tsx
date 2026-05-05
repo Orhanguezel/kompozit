@@ -32,14 +32,14 @@ const WhatsAppButton = dynamic(
   { ssr: false },
 );
 
-export function ClientShell() {
+export function ClientShell({ whatsappPhone }: { whatsappPhone?: string }) {
   return (
     <>
       <ScrollToTop />
       <WebVitals />
       <GoogleAnalytics />
       <GoogleTagManager />
-      <WhatsAppButton />
+      <WhatsAppButton phone={whatsappPhone} />
     </>
   );
 }

@@ -5,7 +5,7 @@ import { MessageCircle } from 'lucide-react';
 
 const FALLBACK_WHATSAPP_NUMBER = '+90 531 880 31 51';
 
-export function WhatsAppButton() {
+export function WhatsAppButton({ phone }: { phone?: string }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export function WhatsAppButton() {
     return () => clearTimeout(timer);
   }, []);
 
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || FALLBACK_WHATSAPP_NUMBER;
+  const whatsappNumber = phone || process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || FALLBACK_WHATSAPP_NUMBER;
   const cleanNumber = whatsappNumber.replace(/\D/g, '');
   if (!cleanNumber || !visible) return null;
 

@@ -177,22 +177,21 @@ VALUES (
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
 
 -- =============================================================
--- CONTACT INFO — TR
+-- CONTACT INFO — global (locale='*')
 -- =============================================================
 INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
 VALUES (
   UUID(),
   'kompozit__contact_info',
-  'tr',
+  '*',
   JSON_OBJECT(
     'company_name',     'MOE Kompozit',
     'address',          'Oruçreis Mah. Tekstilkent Sit. A17 Blok No:41 34235 Esenler / İstanbul, Türkiye',
     'city',             'İstanbul',
     'country',          'Türkiye',
     'phone',            '+90 530 961 94 17',
-    'phone_2',          '',
+    'whatsapp',         '+90 530 961 94 17',
     'email',            'info@karbonkompozit.com.tr',
-    'email_2',          '',
     'working_hours',    'Pazartesi - Cuma: 08:00 - 17:00',
     'maps_embed_url',   '',
     'maps_lat',         '41.0225',
@@ -203,26 +202,106 @@ VALUES (
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
 
 -- =============================================================
--- CONTACT INFO — EN
+-- SOCIALS — global (locale='*')
 -- =============================================================
 INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
 VALUES (
   UUID(),
-  'kompozit__contact_info',
+  'kompozit__socials',
+  '*',
+  JSON_OBJECT(
+    'instagram', '',
+    'facebook',  '',
+    'linkedin',  'https://www.linkedin.com/company/ensotek',
+    'youtube',   '',
+    'x',         ''
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- BUSINESS HOURS — global (locale='*')
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__businessHours',
+  '*',
+  JSON_ARRAY(
+    JSON_OBJECT('day', 'mon', 'open', '08:00', 'close', '17:00', 'closed', false),
+    JSON_OBJECT('day', 'tue', 'open', '08:00', 'close', '17:00', 'closed', false),
+    JSON_OBJECT('day', 'wed', 'open', '08:00', 'close', '17:00', 'closed', false),
+    JSON_OBJECT('day', 'thu', 'open', '08:00', 'close', '17:00', 'closed', false),
+    JSON_OBJECT('day', 'fri', 'open', '08:00', 'close', '17:00', 'closed', false),
+    JSON_OBJECT('day', 'sat', 'open', '00:00', 'close', '00:00', 'closed', true),
+    JSON_OBJECT('day', 'sun', 'open', '00:00', 'close', '00:00', 'closed', true)
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- COMPANY PROFILE — TR / EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__company_profile',
+  'tr',
+  JSON_OBJECT(
+    'company_name', 'MOE Kompozit',
+    'slogan',       'Karbon fiber, CTP ve cam elyaf kompozit üretimi',
+    'about',        'MOE Kompozit; karbon fiber, CTP/FRP ve cam elyaf tabanlı parçalarda proje odaklı numune, mühendislik ve üretim desteği sunar.'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__company_profile',
   'en',
   JSON_OBJECT(
-    'company_name',     'MOE Kompozit',
-    'address',          'Oruçreis District, Tekstilkent Site, A17 Block No:41, 34235 Esenler / Istanbul, Turkey',
-    'city',             'Istanbul',
-    'country',          'Turkey',
-    'phone',            '+90 530 961 94 17',
-    'phone_2',          '',
-    'email',            'info@karbonkompozit.com.tr',
-    'email_2',          '',
-    'working_hours',    'Monday - Friday: 08:00 - 17:00',
-    'maps_embed_url',   '',
-    'maps_lat',         '41.0225',
-    'maps_lng',         '28.8825'
+    'company_name', 'MOE Kompozit',
+    'slogan',       'Carbon fiber, FRP and fiberglass composite manufacturing',
+    'about',        'MOE Kompozit supports project-led sampling, engineering and production for carbon fiber, FRP and fiberglass-based composite parts.'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- UI HEADER — TR / EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__ui_header',
+  'tr',
+  JSON_OBJECT(
+    'nav_home',     'Ana Sayfa',
+    'nav_products', 'Ürünler',
+    'nav_services', 'Çözümler',
+    'nav_contact',  'İletişim',
+    'cta_label',    'Teklif Al'
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__ui_header',
+  'en',
+  JSON_OBJECT(
+    'nav_home',     'Home',
+    'nav_products', 'Products',
+    'nav_services', 'Solutions',
+    'nav_contact',  'Contact',
+    'cta_label',    'Request an Offer'
   ),
   NOW(3), NOW(3)
 )

@@ -12,6 +12,7 @@ import { siteUrlBase, asStr, asObj, localeAlternates, localizedUrl } from '@/seo
 import { resolvePublicAssetUrl } from '@/lib/utils';
 import { ensureFooterSections, ensureMenuItems } from '@/lib/navigation-fallback';
 import { buildFooterSocialNavFromSetting } from '@/lib/footer-social';
+import { fetchParsedContactInfo } from '@/lib/contact-info';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -163,7 +164,8 @@ export default async function LocaleLayout({
     legacyLogoSetting,
     brandingSetting,
     socialsSetting,
-    contactInfoSetting,
+    companyProfileSetting,
+    contactInfo,
   ] =
     await Promise.all([
       fetchMenuItems(locale),
@@ -173,8 +175,9 @@ export default async function LocaleLayout({
       fetchSetting('site_logo_light', locale, { revalidate: 60 }),
       fetchSetting('logo', locale, { revalidate: 60 }),
       fetchSetting('branding', '*'),
-      fetchSetting('socials', locale),
-      fetchSetting('contact_info', locale),
+      fetchSetting('socials', '*'),
+      fetchSetting('company_profile', locale),
+      fetchParsedContactInfo(locale),
     ]);
 
   const logoValue = { ...readSettingValue(legacyLogoSetting), ...readSettingValue(siteLogoSetting) };
@@ -201,7 +204,11 @@ export default async function LocaleLayout({
   const stableMenuItems = ensureMenuItems(menuItems, locale, navT);
   const stableFooterSections = ensureFooterSections(footerSections, locale, navT, footerT);
   const footerSocialNav = buildFooterSocialNavFromSetting(readSettingValue(socialsSetting));
-  const contactInfo = readSettingValue(contactInfoSetting);
+  const companyProfile = readSettingValue(companyProfileSetting);
+  const footerContactInfo = {
+    ...contactInfo,
+    companyName: asStr(companyProfile.company_name) || contactInfo.companyName,
+  };
   const siteUrl = siteUrlBase();
   const orgLogoRaw = pickFirstString(logoConfigs.default, logoConfigs.dark, logoConfigs.light);
   const orgLogoUrl = orgLogoRaw
@@ -267,9 +274,9 @@ export default async function LocaleLayout({
             locale={locale}
             logo={logoConfigs}
             socialNav={footerSocialNav}
-            contactInfo={contactInfo}
+            contactInfo={footerContactInfo}
           />
-          <ClientShell />
+          <ClientShell whatsappPhone={contactInfo.whatsapp || contactInfo.phone} />
           <DeferredToaster />
         </NextIntlClientProvider>
       </body>

@@ -12,12 +12,16 @@ interface FooterSection {
 }
 
 interface ContactInfo {
+  companyName?: string;
+  company_name?: string;
   phone?: string;
   phone_2?: string;
+  whatsapp?: string;
   email?: string;
   address?: string;
   city?: string;
   working_hours?: string;
+  hours?: string;
   [key: string]: unknown;
 }
 
@@ -58,13 +62,15 @@ export function Footer({
 
   const contact = contactInfo as ContactInfo;
   const phone = contact.phone?.trim();
+  const whatsapp = contact.whatsapp?.trim();
   const email = contact.email?.trim();
   const address = contact.address?.trim();
-  const hours = contact.working_hours?.trim();
+  const hours = contact.working_hours?.trim() || contact.hours?.trim();
+  const companyName = contact.companyName?.trim() || contact.company_name?.trim();
   const logoSrc = logo?.light || logo?.default || logo?.dark;
   const logoAlt = logo?.alt || 'MOE Kompozit';
 
-  const hasContact = !!(phone || email || address);
+  const hasContact = !!(phone || whatsapp || email || address || hours);
 
   return (
     <footer className="footer-cc" id="footer">
@@ -122,6 +128,21 @@ export function Footer({
                   </a>
                 )}
 
+                {whatsapp && whatsapp !== phone && (
+                  <a
+                    href={`https://wa.me/${whatsapp.replace(/\D/g, '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-2 text-xs font-light text-(--silver) transition-colors hover:text-(--gold)"
+                  >
+                    <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 opacity-60" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm3.75 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm3.75 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337L3 21l1.087-4.445A7.74 7.74 0 0 1 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                    </svg>
+                    <span>{whatsapp}</span>
+                  </a>
+                )}
+
                 {email && (
                   <a
                     href={`mailto:${email}`}
@@ -140,7 +161,10 @@ export function Footer({
                       <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                       <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
                     </svg>
-                    <span className="leading-relaxed">{address}</span>
+                    <span className="leading-relaxed">
+                      {companyName ? `${companyName} - ` : null}
+                      {address}
+                    </span>
                   </div>
                 )}
 
