@@ -90,9 +90,13 @@ export const SiteSettingsHeader: React.FC<SiteSettingsHeaderProps> = ({
 
       {/* Tabs (no bootstrap) */}
       <Tabs value={activeTab} onValueChange={(v) => onTabChange(v as SettingsTab)}>
-        <TabsList className="flex flex-wrap justify-start">
+        <TabsList className="flex flex-wrap justify-start bg-card/40 backdrop-blur-md border border-white/5 p-1 rounded-xl">
           {TAB_ITEMS.map((tab) => (
-            <TabsTrigger key={tab.id} value={tab.id}>
+            <TabsTrigger 
+              key={tab.id} 
+              value={tab.id}
+              className="rounded-lg data-[state=active]:gold-gradient data-[state=active]:text-primary-foreground data-[state=active]:shadow-md transition-all"
+            >
               {tab.id === "list" ? t("admin.siteSettings.tabs.list") : null}
               {tab.id === "global_list" ? t("admin.siteSettings.tabs.globalList") : null}
               {tab.id === "general" ? t("admin.siteSettings.tabs.general") : null}
@@ -107,7 +111,8 @@ export const SiteSettingsHeader: React.FC<SiteSettingsHeaderProps> = ({
       </Tabs>
 
       {/* Filters Card (UsersListClient style) */}
-      <Card>
+      <Card className="premium-card">
+        <div className="gold-gradient h-1 w-full" />
         <CardHeader className="gap-2">
           <div className="flex items-start justify-between gap-3">
             <div className="space-y-1">

@@ -872,8 +872,8 @@ export default function NavigationAdminPage() {
   const [locale, setLocale] = React.useState<string>('tr');
 
   return (
-    <div className="mx-auto max-w-5xl space-y-6 pb-12">
-      <div className="flex items-start justify-between gap-4">
+    <div className="w-full max-w-full space-y-6 pb-12">
+      <div className="flex flex-col items-start justify-between gap-4 sm:flex-row">
         <div>
           <h1 className="text-2xl font-semibold text-foreground">
             Navigasyon Yönetimi
@@ -882,7 +882,7 @@ export default function NavigationAdminPage() {
             Üst menü (header) ve footer linklerini buradan yönet. Dropdown desteği var.
           </p>
         </div>
-        <div className="w-44">
+        <div className="w-full sm:w-44">
           <Select value={locale} onValueChange={setLocale}>
             <SelectTrigger>
               <SelectValue />

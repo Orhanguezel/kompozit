@@ -23,7 +23,7 @@ VALUES (
   UUID(),
   'kompozit__ui_admin_pages',
   'tr',
-  '{"dashboard":{"title":"Özet Paneli","description":"Sistem özeti","metrics":["products","categories","offers","contacts","custom_pages","reviews","users","site_settings","menu_items","storage","gallery"]},"products":{"title":"Ürünler","description":"Ürün kataloğu"},"categories":{"title":"Kategoriler","description":"Kategori yönetimi"},"offers":{"title":"Teklifler","description":"Teklif talepleri"},"site_settings":{"title":"Site Ayarları","description":"Genel ayarlar"},"users":{"title":"Kullanıcılar","description":"Kullanıcı yönetimi"},"reviews":{"title":"Yorumlar","description":"Yorum moderasyonu"},"gallery":{"title":"Galeri","description":"Galeri yönetimi"}}',
+  '{"dashboard":{"title":"Özet Paneli","description":"Sistem özeti","metrics":["products","categories","offers","contacts","custom_pages","reviews","users","site_settings","navigation","menu_items","storage","gallery"]},"products":{"title":"Ürünler","description":"Ürün kataloğu"},"categories":{"title":"Kategoriler","description":"Kategori yönetimi"},"offers":{"title":"Teklifler","description":"Teklif talepleri"},"site_settings":{"title":"Site Ayarları","description":"Genel ayarlar"},"navigation":{"title":"Menü & Footer","description":"Üst menü ve footer yönetimi"},"users":{"title":"Kullanıcılar","description":"Kullanıcı yönetimi"},"reviews":{"title":"Yorumlar","description":"Yorum moderasyonu"},"gallery":{"title":"Galeri","description":"Galeri yönetimi"}}',
   NOW(3),
   NOW(3)
 )
@@ -34,7 +34,7 @@ VALUES (
   UUID(),
   'kompozit__ui_admin_pages',
   'en',
-  '{"dashboard":{"title":"Dashboard","description":"System overview","metrics":["products","categories","offers","contacts","custom_pages","reviews","users","site_settings","menu_items","storage","gallery"]},"products":{"title":"Products","description":"Product catalog"},"categories":{"title":"Categories","description":"Category management"},"offers":{"title":"Offers","description":"Offer requests"},"site_settings":{"title":"Site Settings","description":"General settings"},"users":{"title":"Users","description":"User management"},"reviews":{"title":"Reviews","description":"Review moderation"},"gallery":{"title":"Gallery","description":"Gallery management"}}',
+  '{"dashboard":{"title":"Dashboard","description":"System overview","metrics":["products","categories","offers","contacts","custom_pages","reviews","users","site_settings","navigation","menu_items","storage","gallery"]},"products":{"title":"Products","description":"Product catalog"},"categories":{"title":"Categories","description":"Category management"},"offers":{"title":"Offers","description":"Offer requests"},"site_settings":{"title":"Site Settings","description":"General settings"},"navigation":{"title":"Menu & Footer","description":"Header menu and footer management"},"users":{"title":"Users","description":"User management"},"reviews":{"title":"Reviews","description":"Review moderation"},"gallery":{"title":"Gallery","description":"Gallery management"}}',
   NOW(3),
   NOW(3)
 )
@@ -45,7 +45,7 @@ VALUES (
   UUID(),
   'kompozit__ui_admin_pages',
   'de',
-  '{"dashboard":{"title":"Übersicht","description":"Systemübersicht","metrics":["products","categories","offers","contacts","custom_pages","reviews","users","site_settings","menu_items","storage","gallery"]},"products":{"title":"Produkte","description":"Produktkatalog"},"categories":{"title":"Kategorien","description":"Kategorieverwaltung"},"offers":{"title":"Angebote","description":"Angebotsanfragen"},"site_settings":{"title":"Einstellungen","description":"Allgemeine Einstellungen"},"users":{"title":"Benutzer","description":"Benutzerverwaltung"},"reviews":{"title":"Bewertungen","description":"Moderation"},"gallery":{"title":"Galerie","description":"Galerieverwaltung"}}',
+  '{"dashboard":{"title":"Übersicht","description":"Systemübersicht","metrics":["products","categories","offers","contacts","custom_pages","reviews","users","site_settings","navigation","menu_items","storage","gallery"]},"products":{"title":"Produkte","description":"Produktkatalog"},"categories":{"title":"Kategorien","description":"Kategorieverwaltung"},"offers":{"title":"Angebote","description":"Angebotsanfragen"},"site_settings":{"title":"Einstellungen","description":"Allgemeine Einstellungen"},"navigation":{"title":"Menü & Footer","description":"Header-Menü und Footer verwalten"},"users":{"title":"Benutzer","description":"Benutzerverwaltung"},"reviews":{"title":"Bewertungen","description":"Moderation"},"gallery":{"title":"Galerie","description":"Galerieverwaltung"}}',
   NOW(3),
   NOW(3)
 )

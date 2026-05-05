@@ -121,20 +121,30 @@ export function ProductSpecsTab({ productId, locale, disabled }: ProductSpecsTab
   };
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="premium-card">
+      <CardHeader className="py-4">
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-base">{t("admin.products.specsTab.title")}</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-xl font-bold tracking-tight">{t("admin.products.specsTab.title")}</CardTitle>
+            <CardDescription className="text-muted-foreground/80">
               {t("admin.products.specsTab.activeLocale")} <code className="text-xs">{locale}</code>
             </CardDescription>
           </div>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" size="icon" onClick={() => refetch()} disabled={busy}>
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="icon" 
+              onClick={() => refetch()} 
+              disabled={busy}
+              className="rounded-full hover:bg-primary/10 transition-colors"
+            >
               <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
             </Button>
-            <Button onClick={handleSave} disabled={busy} size="sm">
+            <Button 
+              onClick={handleSave} 
+              disabled={busy}
+              className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
               <Save className="mr-2 h-4 w-4" />
               {isSaving ? t("admin.common.saving") : t("admin.common.save")}
             </Button>

@@ -205,7 +205,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
             const localeResolved = safeText(p.locale_resolved);
 
             return (
-              <div key={p.id} className="min-w-0 overflow-hidden rounded-lg border bg-card p-4">
+              <div key={p.id} className="min-w-0 overflow-hidden premium-card p-5 hover:scale-[1.01] transition-transform duration-300">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
@@ -356,7 +356,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
   };
 
   return (
-    <div className="w-full min-w-0 max-w-full overflow-hidden rounded-lg border bg-card">
+    <div className="w-full min-w-0 max-w-full overflow-hidden premium-card border-none">
       <div className="border-b p-3">
         <div className="flex flex-wrap items-start justify-between gap-2">
           <div>
@@ -369,7 +369,11 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
           </div>
 
           {onSaveOrder ? (
-            <Button variant="outline" onClick={onSaveOrder} disabled={busy || !hasData}>
+            <Button 
+              onClick={onSaveOrder} 
+              disabled={busy || !hasData}
+              className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
               <Save className="mr-2 size-4" />
               {savingOrder ? t("admin.customPage.list.savingOrder") : t("admin.customPage.list.saveOrder")}
             </Button>

@@ -102,7 +102,8 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
   const ALL = "__all__" as const;
 
   return (
-    <div className="w-full min-w-0 max-w-full overflow-hidden rounded-lg border bg-card">
+    <div className="w-full min-w-0 max-w-full overflow-hidden premium-card border-none">
+      <div className="gold-gradient h-1.5 w-full" />
       <div className="p-2.5">
         {/* Title row + summary */}
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
@@ -115,13 +116,17 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
             <span className="text-[11px] text-muted-foreground">{t("admin.common.total")}:</span>
             <span className="font-bold text-sm">{total}</span>
             {onRefresh ? (
-              <button type="button" className="rounded border px-2 py-1 text-[11px] hover:bg-muted" onClick={onRefresh}>
+              <button 
+                type="button" 
+                className="rounded-full border border-white/10 px-3 py-1 text-[11px] hover:bg-primary/10 hover:text-primary transition-all" 
+                onClick={onRefresh}
+              >
                 {t("admin.common.refresh")}
               </button>
             ) : null}
             <Link
               href={newPageHref}
-              className="rounded-md bg-primary px-2.5 py-1 font-medium text-[11px] text-primary-foreground"
+              className="gold-gradient rounded-full px-4 py-1.5 font-bold text-[11px] text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
             >
               {t("admin.customPage.newPage")}
             </Link>

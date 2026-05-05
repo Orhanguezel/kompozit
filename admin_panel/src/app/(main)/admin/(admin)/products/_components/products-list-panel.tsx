@@ -79,9 +79,20 @@ export default function ProductsListPanel({ itemType }: Props) {
     limit: 100,
   });
 
-  const { data: categories = [] } = useListProductCategoriesAdminQuery({ locale });
+  const { data: categories = [] } = useListProductCategoriesAdminQuery({
+    locale,
+    module_key: itemType === "kompozit" ? "kompozit" : undefined,
+  });
 
   const items: AdminProductDto[] = productData?.items ?? [];
+
+  const categoryById = React.useMemo(() => {
+    const map = new Map<string, (typeof categories)[number]>();
+    for (const category of categories) {
+      if (category?.id) map.set(String(category.id), category);
+    }
+    return map;
+  }, [categories]);
 
   const [updateProduct] = useUpdateProductAdminMutation();
   const [deleteProduct, { isLoading: isDeleting }] = useDeleteProductAdminMutation();
@@ -123,24 +134,34 @@ export default function ProductsListPanel({ itemType }: Props) {
   const isLoading = isFetching || isDeleting;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
       {/* Header */}
-      <Card>
-        <CardHeader>
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="font-semibold text-base">
+              <h2 className="text-xl font-bold tracking-tight">
                 {isSparepart ? t("header.title_sparepart") : t("header.title")}
               </h2>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground/80 text-sm">
                 {isSparepart ? t("header.description_sparepart") : t("header.description")}
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="outline" size="icon" onClick={() => refetch()} disabled={isLoading}>
+            <div className="flex items-center gap-3">
+              <Button 
+                variant="outline" 
+                size="icon" 
+                onClick={() => refetch()} 
+                disabled={isLoading}
+                className="rounded-full hover:bg-primary/10 transition-colors"
+              >
                 <RefreshCw className={`h-4 w-4 ${isFetching ? "animate-spin" : ""}`} />
               </Button>
-              <Button onClick={() => router.push(newUrl)}>
+              <Button 
+                onClick={() => router.push(newUrl)}
+                className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
                 <Plus className="mr-2 h-4 w-4" />
                 {t("actions.create")}
               </Button>
@@ -150,9 +171,9 @@ export default function ProductsListPanel({ itemType }: Props) {
       </Card>
 
       {/* Filters */}
-      <Card>
+      <Card className="premium-card bg-card/20 border-white/5">
         <CardContent className="pt-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-end">
+          <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end">
             {/* Search */}
             <div className="min-w-[180px] flex-1">
               <Input
@@ -219,7 +240,7 @@ export default function ProductsListPanel({ itemType }: Props) {
       </Card>
 
       {/* Table */}
-      <Card>
+      <Card className="premium-card overflow-hidden">
         <CardContent className="p-0">
           <Table>
             <TableHeader>
@@ -289,8 +310,25 @@ export default function ProductsListPanel({ itemType }: Props) {
                         </Badge>
                       </TableCell>
 
-                      <TableCell className="max-w-[140px] truncate text-muted-foreground text-sm">
-                        {item.category_id || "—"}
+                      <TableCell className="max-w-[140px] text-sm">
+                        {(() => {
+                          const category = item.category_id ? categoryById.get(String(item.category_id)) : undefined;
+                          if (!item.category_id) return <span className="text-muted-foreground">—</span>;
+
+                          return (
+                            <div className="min-w-0 space-y-0.5">
+                              <div className="truncate font-medium text-foreground" title={category?.name || item.category_id}>
+                                {category?.name || item.category_id}
+                              </div>
+                              <div
+                                className="truncate font-mono text-muted-foreground text-[11px]"
+                                title={category?.slug || item.category_id}
+                              >
+                                {category?.slug || item.category_id}
+                              </div>
+                            </div>
+                          );
+                        })()}
                       </TableCell>
 
                       <TableCell className="text-right text-sm">

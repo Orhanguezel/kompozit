@@ -220,7 +220,8 @@ export const SiteSettingsForm: React.FC<SiteSettingsFormProps> = ({
   };
 
   return (
-    <Card>
+    <Card className="premium-card overflow-hidden">
+      <div className="gold-gradient h-1 w-full" />
       <CardHeader className="gap-3">
         <div className="flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-1">
@@ -244,12 +245,23 @@ export const SiteSettingsForm: React.FC<SiteSettingsFormProps> = ({
 
           <div className="flex flex-wrap items-center gap-2">
             {onDelete ? (
-              <Button type="button" variant="outline" onClick={handleDelete} disabled={disabled}>
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={handleDelete} 
+                disabled={disabled}
+                className="rounded-full"
+              >
                 {t("admin.siteSettings.actions.delete")}
               </Button>
             ) : null}
 
-            <Button type="button" onClick={handleSave} disabled={disabled}>
+            <Button 
+              type="button" 
+              onClick={handleSave} 
+              disabled={disabled}
+              className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            >
               {t("admin.siteSettings.actions.save")}
             </Button>
           </div>

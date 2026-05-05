@@ -155,10 +155,11 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
   };
 
   return (
-    <div className="space-y-4">
+    <div className="min-w-0 max-w-full space-y-6 overflow-hidden carbon-mesh min-h-screen pb-12">
       {/* Header + Filters */}
-      <Card>
-        <CardHeader className="pb-4">
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
           <div className="flex flex-col gap-4">
             {/* Top Row: Search + Filters */}
             <div className="flex flex-col gap-3 lg:flex-row">
@@ -200,6 +201,7 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
                   <SelectItem value="news">{t("modules.news")}</SelectItem>
                   <SelectItem value="library">{t("modules.library")}</SelectItem>
                   <SelectItem value="about">{t("modules.about")}</SelectItem>
+                  <SelectItem value="kompozit">Kompozit</SelectItem>
                   <SelectItem value="sparepart">{t("modules.sparepart")}</SelectItem>
                   <SelectItem value="references">{t("modules.references")}</SelectItem>
                 </SelectContent>
@@ -236,12 +238,22 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" onClick={handleRefresh} disabled={busy}>
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline" 
+                  size="icon" 
+                  onClick={handleRefresh} 
+                  disabled={busy}
+                  className="rounded-full hover:bg-primary/10 transition-colors"
+                >
                   <RefreshCw className={`h-4 w-4 ${busy ? "animate-spin" : ""}`} />
                 </Button>
-                <Button size="sm" onClick={handleCreate} disabled={busy}>
-                  <Plus className="h-4 w-4" />
+                <Button 
+                  onClick={handleCreate} 
+                  disabled={busy}
+                  className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                >
+                  <Plus className="h-4 w-4 mr-2" />
                   {t("actions.create")}
                 </Button>
               </div>
@@ -251,7 +263,7 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
       </Card>
 
       {/* List */}
-      <Card>
+      <Card className="premium-card overflow-hidden">
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <span className="font-medium text-sm">{t("list.title")}</span>
@@ -261,42 +273,46 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
           </div>
         </CardHeader>
 
-        <CardContent className="p-0">
+        <CardContent className="min-w-0 p-0">
           {busy && categories.length === 0 ? (
             <div className="py-8 text-center text-muted-foreground text-sm">{t("list.loading")}</div>
           ) : categories.length === 0 ? (
             <div className="py-8 text-center text-muted-foreground text-sm">{t("list.noData")}</div>
           ) : (
-            <div className="overflow-x-auto">
-              <Table>
+            <div className="max-w-full overflow-x-auto">
+              <Table className="w-full min-w-[760px] table-fixed">
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-12.5">#</TableHead>
-                    <TableHead>{t("table.name")}</TableHead>
-                    <TableHead>{t("table.slug")}</TableHead>
-                    <TableHead className="w-25">{t("table.locale")}</TableHead>
-                    <TableHead className="w-30">{t("table.module")}</TableHead>
+                    <TableHead className="w-12">#</TableHead>
+                    <TableHead className="w-[34%]">{t("table.name")}</TableHead>
+                    <TableHead className="w-[22%]">{t("table.slug")}</TableHead>
+                    <TableHead className="w-20">{t("table.locale")}</TableHead>
+                    <TableHead className="w-28">{t("table.module")}</TableHead>
                     <TableHead className="w-20 text-center">{t("table.active")}</TableHead>
-                    <TableHead className="w-25 text-center">{t("table.featured")}</TableHead>
-                    <TableHead className="w-40 text-right">{t("table.actions")}</TableHead>
+                    <TableHead className="w-24 text-center">{t("table.featured")}</TableHead>
+                    <TableHead className="w-24 text-right">{t("table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {categories.map((item, index) => (
-                    <TableRow key={item.id}>
+                    <TableRow key={item.id} className="align-top">
                       <TableCell className="text-muted-foreground text-sm">{index + 1}</TableCell>
 
-                      <TableCell>
-                        <div className="space-y-1">
-                          <div className="font-medium text-sm">{item.name}</div>
+                      <TableCell className="whitespace-normal">
+                        <div className="min-w-0 space-y-1">
+                          <div className="break-words font-medium text-sm leading-snug">{item.name}</div>
                           {item.description && (
-                            <div className="line-clamp-1 text-muted-foreground text-xs">{item.description}</div>
+                            <div className="break-words text-muted-foreground text-xs leading-relaxed">
+                              {item.description}
+                            </div>
                           )}
                         </div>
                       </TableCell>
 
-                      <TableCell>
-                        <code className="text-xs">{item.slug}</code>
+                      <TableCell className="whitespace-normal">
+                        <code className="block break-all rounded bg-muted/40 px-1.5 py-1 text-xs leading-relaxed">
+                          {item.slug}
+                        </code>
                       </TableCell>
 
                       <TableCell>
@@ -305,8 +321,8 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
                         </Badge>
                       </TableCell>
 
-                      <TableCell>
-                        <Badge variant="secondary" className="text-xs">
+                      <TableCell className="whitespace-normal">
+                        <Badge variant="secondary" className="max-w-full whitespace-normal break-words text-xs leading-snug">
                           {item.module_key}
                         </Badge>
                       </TableCell>
@@ -328,7 +344,7 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
                       </TableCell>
 
                       <TableCell className="text-right">
-                        <div className="flex justify-end gap-1">
+                        <div className="flex flex-wrap justify-end gap-1">
                           <Button variant="ghost" size="icon-sm" onClick={() => handleEdit(item)} disabled={busy}>
                             <Pencil className="h-4 w-4" />
                           </Button>

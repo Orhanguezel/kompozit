@@ -15,7 +15,7 @@ import * as React from "react";
 
 import { useRouter } from "next/navigation";
 
-import { ArrowLeft, FileJson, HelpCircle, ListChecks, Save, Star } from "lucide-react";
+import { ArrowLeft, FileJson, HelpCircle, ListChecks, RefreshCcw, Save, Star } from "lucide-react";
 import { toast } from "sonner";
 
 import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
@@ -254,28 +254,38 @@ export default function ProductDetailClient({ id, itemType }: Props) {
   // ─── Render ──────────────────────────────────────────────────
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
       {/* Header */}
-      <Card>
-        <CardHeader>
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={handleBack}>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={handleBack}
+                className="hover:bg-primary/10 hover:text-primary transition-colors"
+              >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
               <div>
-                <CardTitle className="text-base">{isNew ? t("actions.create") : t("actions.edit")}</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-xl font-bold tracking-tight">
+                  {isNew ? t("actions.create") : t("actions.edit")}
+                </CardTitle>
+                <CardDescription className="text-muted-foreground/80">
                   {isNew ? t("detail.createDescription") : t("detail.editDescription", { title: item?.title || "" })}
                 </CardDescription>
               </div>
             </div>
-            <AdminLocaleSelect
-              options={localesForSelect}
-              value={activeLocale}
-              onChange={handleLocaleChange}
-              disabled={isLoading}
-            />
+            <div className="flex items-center gap-3">
+              <AdminLocaleSelect
+                options={localesForSelect}
+                value={activeLocale}
+                onChange={handleLocaleChange}
+                disabled={isLoading}
+              />
+            </div>
           </div>
         </CardHeader>
       </Card>
@@ -303,11 +313,11 @@ export default function ProductDetailClient({ id, itemType }: Props) {
         </TabsList>
 
         {/* ── Form Tab ─────────────────────────────────────────── */}
-        <TabsContent value="form">
+        <TabsContent value="form" className="mt-6 animate-in fade-in-50 duration-500">
           <form onSubmit={handleSubmit}>
-            <Card>
-              <CardContent className="space-y-6 pt-6">
-                <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <Card className="premium-card">
+              <CardContent className="space-y-8 pt-8">
+                <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
                   {/* Sol: form alanları */}
                   <div className="space-y-6 lg:col-span-2">
                     {/* Başlık */}
@@ -405,26 +415,30 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                     </div>
 
                     {/* SEO */}
-                    <div className="space-y-4 rounded-md border p-4">
-                      <p className="font-medium text-muted-foreground text-sm">{t("detail.fields.seo")}</p>
-                      <div className="space-y-2">
-                        <Label htmlFor="meta_title">{t("detail.fields.metaTitle")}</Label>
-                        <Input
-                          id="meta_title"
-                          value={formData.meta_title}
-                          onChange={(e) => handleChange("meta_title", e.target.value)}
-                          disabled={isLoading}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="meta_description">{t("detail.fields.metaDescription")}</Label>
-                        <Textarea
-                          id="meta_description"
-                          value={formData.meta_description}
-                          onChange={(e) => handleChange("meta_description", e.target.value)}
-                          disabled={isLoading}
-                          rows={2}
-                        />
+                    <div className="space-y-4 rounded-xl border border-white/5 bg-white/5 p-6 backdrop-blur-sm">
+                      <p className="text-sm font-bold uppercase tracking-widest text-primary/80">{t("detail.fields.seo")}</p>
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="space-y-2">
+                          <Label htmlFor="meta_title">{t("detail.fields.metaTitle")}</Label>
+                          <Input
+                            id="meta_title"
+                            value={formData.meta_title}
+                            onChange={(e) => handleChange("meta_title", e.target.value)}
+                            disabled={isLoading}
+                            className="bg-background/50"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="meta_description">{t("detail.fields.metaDescription")}</Label>
+                          <Textarea
+                            id="meta_description"
+                            value={formData.meta_description}
+                            onChange={(e) => handleChange("meta_description", e.target.value)}
+                            disabled={isLoading}
+                            rows={3}
+                            className="bg-background/50 resize-none"
+                          />
+                        </div>
                       </div>
                     </div>
 
@@ -517,12 +531,26 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                 </div>
 
                 {/* Kaydet */}
-                <div className="flex justify-end gap-3 border-t pt-4">
-                  <Button type="button" variant="outline" onClick={handleBack} disabled={isLoading}>
+                <div className="flex justify-end gap-4 border-t border-white/5 pt-6">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={handleBack} 
+                    disabled={isLoading}
+                    className="rounded-full px-6"
+                  >
                     {t("actions.cancel")}
                   </Button>
-                  <Button type="submit" disabled={isLoading}>
-                    <Save className="mr-2 h-4 w-4" />
+                  <Button 
+                    type="submit" 
+                    disabled={isLoading}
+                    className="gold-gradient rounded-full px-8 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
+                    {isLoading ? (
+                      <RefreshCcw className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                      <Save className="mr-2 h-4 w-4" />
+                    )}
                     {t("actions.save")}
                   </Button>
                 </div>

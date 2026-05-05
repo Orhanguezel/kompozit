@@ -189,18 +189,26 @@ export default function CategoryDetailClient({ id }: Props) {
   }, [localeOptions]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
       {/* Header */}
-      <Card>
-        <CardHeader>
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" onClick={handleBack}>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={handleBack}
+                className="hover:bg-primary/10 transition-colors"
+              >
                 <ArrowLeft className="h-4 w-4" />
               </Button>
               <div>
-                <CardTitle className="text-base">{isNew ? t("actions.create") : t("actions.edit")}</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-xl font-bold tracking-tight">
+                  {isNew ? t("actions.create") : t("actions.edit")}
+                </CardTitle>
+                <CardDescription className="text-muted-foreground/80">
                   {isNew ? t("detail.createDescription") : t("detail.editDescription", { title: category?.name || "" })}
                 </CardDescription>
               </div>
@@ -228,10 +236,10 @@ export default function CategoryDetailClient({ id }: Props) {
         </TabsList>
 
         {/* Form Tab */}
-        <TabsContent value="form">
+        <TabsContent value="form" className="mt-6 animate-in fade-in-50 duration-500">
           <form onSubmit={handleSubmit}>
-            <Card>
-              <CardContent className="space-y-6 pt-6">
+            <Card className="premium-card">
+              <CardContent className="space-y-8 pt-8">
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
                   {/* Main Column */}
                   <div className="space-y-6 lg:col-span-2">
@@ -370,11 +378,21 @@ export default function CategoryDetailClient({ id }: Props) {
                 </div>
 
                 {/* Actions */}
-                <div className="flex justify-end gap-3 border-t pt-4">
-                  <Button type="button" variant="outline" onClick={handleBack} disabled={isLoading}>
+                <div className="flex justify-end gap-4 border-t border-white/5 pt-6">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={handleBack} 
+                    disabled={isLoading}
+                    className="rounded-full px-6"
+                  >
                     {t("actions.cancel")}
                   </Button>
-                  <Button type="submit" disabled={isLoading}>
+                  <Button 
+                    type="submit" 
+                    disabled={isLoading}
+                    className="gold-gradient rounded-full px-8 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  >
                     <Save className="mr-2 h-4 w-4" />
                     {t("actions.save")}
                   </Button>

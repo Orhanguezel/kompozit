@@ -137,24 +137,29 @@ export default function UsersListClient() {
   const canNext = (usersQ.data?.length ?? 0) >= limit;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="space-y-1">
-          <h1 className="font-semibold text-lg">{t("list.title")}</h1>
-          <p className="text-muted-foreground text-sm">{t("list.description")}</p>
-        </div>
-        <Button asChild className="shrink-0">
-          <Link prefetch={false} href="/admin/users/new">
-            <Plus className="mr-2 size-4" />
-            {t("list.addUserButton")}
-          </Link>
-        </Button>
-      </div>
+    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="space-y-1">
+              <CardTitle className="text-xl font-bold tracking-tight">{t("list.title")}</CardTitle>
+              <CardDescription className="text-muted-foreground/80">{t("list.description")}</CardDescription>
+            </div>
+            <Button asChild className="gold-gradient rounded-full px-6 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+              <Link prefetch={false} href="/admin/users/new">
+                <Plus className="mr-2 size-4" />
+                {t("list.addUserButton")}
+              </Link>
+            </Button>
+          </div>
+        </CardHeader>
+      </Card>
 
-      <Card>
+      <Card className="premium-card bg-card/20 border-white/5">
         <CardHeader className="gap-2">
-          <CardTitle className="text-base">{t("list.filters.title")}</CardTitle>
-          <CardDescription>{t("list.filters.description")}</CardDescription>
+          <CardTitle className="text-base font-bold uppercase tracking-widest text-primary/80">{t("list.filters.title")}</CardTitle>
+          <CardDescription className="text-muted-foreground/70">{t("list.filters.description")}</CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -239,7 +244,7 @@ export default function UsersListClient() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="premium-card overflow-hidden">
         <CardHeader>
           <CardTitle className="text-base">{t("list.table.title")}</CardTitle>
           <CardDescription>

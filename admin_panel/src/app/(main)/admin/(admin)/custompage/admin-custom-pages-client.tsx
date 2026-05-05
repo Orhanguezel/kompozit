@@ -207,7 +207,7 @@ export default function AdminCustomPagesClient({
   }
 
   return (
-    <div className="w-full min-w-0 max-w-full space-y-4 overflow-hidden">
+    <div className="w-full min-w-0 max-w-full space-y-6 overflow-hidden carbon-mesh min-h-screen pb-12">
       <CustomPageHeader
         filters={headerFilters}
         total={total}

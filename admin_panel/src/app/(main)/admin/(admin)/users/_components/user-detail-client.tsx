@@ -214,21 +214,31 @@ export default function UserDetailClient({ id }: { id: string }) {
   if (isNew) {
     const currentRole = (roles[0] ?? "user") as UserRoleName;
     return (
-      <div className="space-y-6">
-        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <Button variant="outline" onClick={() => router.push("/admin/users")} disabled={busy}>
-                <ArrowLeft className="mr-2 size-4" />
-                {t("admin.users.detail.backButton")}
-              </Button>
-              <h1 className="font-semibold text-lg">{t("admin.users.detail.create.title")}</h1>
+      <div className="space-y-6 carbon-mesh min-h-screen pb-12">
+        <Card className="premium-card overflow-hidden border-none">
+          <div className="gold-gradient h-1.5 w-full" />
+          <CardHeader className="py-4">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-4">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={() => router.push("/admin/users")} 
+                  disabled={busy}
+                  className="hover:bg-primary/10 transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+                <div>
+                  <CardTitle className="text-xl font-bold tracking-tight">{t("admin.users.detail.create.title")}</CardTitle>
+                  <CardDescription className="text-muted-foreground/80">{t("admin.users.detail.create.description")}</CardDescription>
+                </div>
+              </div>
             </div>
-            <p className="text-muted-foreground text-sm">{t("admin.users.detail.create.description")}</p>
-          </div>
-        </div>
+          </CardHeader>
+        </Card>
 
-        <Card>
+        <Card className="premium-card">
           <CardHeader>
             <CardTitle className="text-base">{t("admin.users.detail.create.accountSection")}</CardTitle>
             <CardDescription>{t("admin.users.detail.create.accountSectionDesc")}</CardDescription>
@@ -292,7 +302,11 @@ export default function UserDetailClient({ id }: { id: string }) {
             </div>
 
             <div className="flex justify-end">
-              <Button onClick={() => void onCreateUser()} disabled={busy}>
+              <Button 
+                onClick={() => void onCreateUser()} 
+                disabled={busy}
+                className="gold-gradient rounded-full px-8 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+              >
                 <Plus className="mr-2 size-4" />
                 {t("admin.users.detail.create.submitButton")}
               </Button>
@@ -335,36 +349,46 @@ export default function UserDetailClient({ id }: { id: string }) {
   const currentRole = (roles[0] ?? "user") as UserRoleName;
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={() => router.back()} disabled={busy}>
-              <ArrowLeft className="mr-2 size-4" />
-              {t("admin.users.detail.backButton")}
-            </Button>
-            <h1 className="font-semibold text-lg">{t("admin.users.detail.title")}</h1>
+    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
+      <Card className="premium-card overflow-hidden border-none">
+        <div className="gold-gradient h-1.5 w-full" />
+        <CardHeader className="py-4">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex items-center gap-4">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => router.back()} 
+                disabled={busy}
+                className="hover:bg-primary/10 transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </Button>
+              <div>
+                <CardTitle className="text-xl font-bold tracking-tight">{t("admin.users.detail.title")}</CardTitle>
+                <CardDescription className="text-muted-foreground/80">
+                  {u.full_name ? u.full_name : t("admin.users.detail.unknownUser")}
+                </CardDescription>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {isAdminFromView(u) ? (
+                <Badge className="gold-gradient border-none">{t("admin.users.detail.roles.admin")}</Badge>
+              ) : (
+                <Badge variant="secondary">{t("admin.users.detail.roles.user")}</Badge>
+              )}
+              {u.is_active ? (
+                <Badge variant="secondary" className="bg-green-500/10 text-green-500 border-green-500/20">{t("admin.users.detail.statusActive")}</Badge>
+              ) : (
+                <Badge variant="destructive">{t("admin.users.detail.statusInactive")}</Badge>
+              )}
+            </div>
           </div>
-          <p className="text-muted-foreground text-sm">
-            {u.full_name ? u.full_name : t("admin.users.detail.unknownUser")}
-          </p>
-        </div>
+        </CardHeader>
+      </Card>
 
-        <div className="flex items-center gap-2">
-          {isAdminFromView(u) ? (
-            <Badge>{t("admin.users.detail.roles.admin")}</Badge>
-          ) : (
-            <Badge variant="secondary">{t("admin.users.detail.roles.user")}</Badge>
-          )}
-          {u.is_active ? (
-            <Badge variant="secondary">{t("admin.users.detail.statusActive")}</Badge>
-          ) : (
-            <Badge variant="destructive">{t("admin.users.detail.statusInactive")}</Badge>
-          )}
-        </div>
-      </div>
-
-      <Card>
+      <Card className="premium-card">
         <CardHeader>
           <CardTitle className="text-base">{t("admin.users.detail.profile.title")}</CardTitle>
           <CardDescription>{t("admin.users.detail.profile.description")}</CardDescription>
@@ -410,7 +434,7 @@ export default function UserDetailClient({ id }: { id: string }) {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="premium-card">
         <CardHeader>
           <CardTitle className="text-base">{t("admin.users.detail.roles.title")}</CardTitle>
           <CardDescription>{t("admin.users.detail.roles.description")}</CardDescription>
