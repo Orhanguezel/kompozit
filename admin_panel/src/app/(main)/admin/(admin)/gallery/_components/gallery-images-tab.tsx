@@ -100,7 +100,14 @@ function SortableImageCard({ image, disabled, onEdit, onDelete, t }: SortableIma
 
       <div className="size-20 shrink-0 overflow-hidden rounded-md border bg-muted">
         {imgUrl ? (
-          <Image src={imgUrl} alt={image.alt || ""} width={80} height={80} className="size-full object-cover" />
+          <Image
+            src={imgUrl}
+            alt={image.alt || ""}
+            width={80}
+            height={80}
+            className="size-full object-cover"
+            unoptimized
+          />
         ) : (
           <div className="flex size-full items-center justify-center">
             <ImageIcon className="size-6 text-muted-foreground" />
