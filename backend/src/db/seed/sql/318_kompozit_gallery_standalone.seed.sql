@@ -12,14 +12,14 @@ START TRANSACTION;
 
 -- ----------------------------------------------------------------
 -- 1. Mevcut ürün galerilerine Almanca (de) i18n ekle
---    (gallery_client "de" locale varsayılanıyla çalışsın)
+--    (gallery_client "tr" locale varsayılanıyla çalışsın)
 -- ----------------------------------------------------------------
 
 INSERT INTO `gallery_i18n`
   (`gallery_id`, `locale`, `title`, `slug`, `description`, `meta_title`, `meta_description`)
 VALUES
   (
-    'kg010001-8001-4001-9001-eeeeeeee0001',
+    '97010001-8001-4001-9001-eeeeeeee0001',
     'de',
     'Karbonfaserplatten-Galerie',
     'karbonfaserplatten-galerie',
@@ -28,7 +28,7 @@ VALUES
     'Karbonfaserplatten-Galerie mit Prototyp-, Schneid- und Vormontagekontrollschritten.'
   ),
   (
-    'kg010002-8002-4002-9002-eeeeeeee0002',
+    '97010002-8002-4002-9002-eeeeeeee0002',
     'de',
     'GFK-Gehäuseplatte Produktionsgalerie',
     'gfk-gehaeuseplatte-produktionsgalerie',
@@ -51,7 +51,7 @@ INSERT INTO `galleries`
   (`id`, `module_key`, `source_id`, `source_type`, `is_active`, `is_featured`, `display_order`)
 VALUES
   (
-    'kg010100-8100-4100-9100-eeeeeeee0100',
+    '97010100-8100-4100-9100-eeeeeeee0100',
     'kompozit',
     NULL,
     'standalone',
@@ -68,7 +68,7 @@ INSERT INTO `gallery_i18n`
   (`gallery_id`, `locale`, `title`, `slug`, `description`, `meta_title`, `meta_description`)
 VALUES
   (
-    'kg010100-8100-4100-9100-eeeeeeee0100',
+    '97010100-8100-4100-9100-eeeeeeee0100',
     'tr',
     'MOE Kompozit Ürün Galerisi',
     'moe-kompozit-urun-galerisi',
@@ -77,7 +77,7 @@ VALUES
     'MOE Kompozit ürün ve üretim süreç fotoğrafları.'
   ),
   (
-    'kg010100-8100-4100-9100-eeeeeeee0100',
+    '97010100-8100-4100-9100-eeeeeeee0100',
     'en',
     'MOE Kompozit Product Gallery',
     'moe-kompozit-product-gallery',
@@ -86,7 +86,7 @@ VALUES
     'MOE Kompozit product and manufacturing process photos.'
   ),
   (
-    'kg010100-8100-4100-9100-eeeeeeee0100',
+    '97010100-8100-4100-9100-eeeeeeee0100',
     'de',
     'MOE Kompozit Produktgalerie',
     'moe-kompozit-produktgalerie',
@@ -108,14 +108,14 @@ ON DUPLICATE KEY UPDATE
 INSERT INTO `gallery_images`
   (`id`, `gallery_id`, `storage_asset_id`, `image_url`, `display_order`, `is_cover`)
 VALUES
-  ('kg030001-9001-4001-9001-ffffffffff01', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-panel-01.jpg',       10, 1),
-  ('kg030002-9002-4002-9002-ffffffffff02', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-doku-01.jpg',        20, 0),
-  ('kg030003-9003-4003-9003-ffffffffff03', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-detay-01.jpg',       30, 0),
-  ('kg030004-9004-4004-9004-ffffffffff04', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-hammadde-01.jpg',    40, 0),
-  ('kg030005-9005-4005-9005-ffffffffff05', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/ctp-cam-elyaf-01.jpg',            50, 0),
-  ('kg030006-9006-4006-9006-ffffffffff06', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/ctp-dokuma-hibrit-01.jpg',        60, 0),
-  ('kg030007-9007-4007-9007-ffffffffff07', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/kompozit-fabrika-otoklav-01.jpg', 70, 0),
-  ('kg030008-9008-4008-9008-ffffffffff08', 'kg010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/kompozit-uretim-proses-01.jpg',   80, 0)
+  ('97030001-9001-4001-9001-ffffffffff01', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-panel-01.jpg',       10, 1),
+  ('97030002-9002-4002-9002-ffffffffff02', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-doku-01.jpg',        20, 0),
+  ('97030003-9003-4003-9003-ffffffffff03', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-detay-01.jpg',       30, 0),
+  ('97030004-9004-4004-9004-ffffffffff04', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/karbon-fiber-hammadde-01.jpg',    40, 0),
+  ('97030005-9005-4005-9005-ffffffffff05', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/ctp-cam-elyaf-01.jpg',            50, 0),
+  ('97030006-9006-4006-9006-ffffffffff06', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/ctp-dokuma-hibrit-01.jpg',        60, 0),
+  ('97030007-9007-4007-9007-ffffffffff07', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/kompozit-fabrika-otoklav-01.jpg', 70, 0),
+  ('97030008-9008-4008-9008-ffffffffff08', '97010100-8100-4100-9100-eeeeeeee0100', NULL, '/media/kompozit/kompozit-uretim-proses-01.jpg',   80, 0)
 ON DUPLICATE KEY UPDATE
   `image_url`     = VALUES(`image_url`),
   `display_order` = VALUES(`display_order`),
@@ -129,37 +129,37 @@ INSERT INTO `gallery_image_i18n`
   (`image_id`, `locale`, `alt`, `caption`, `description`)
 VALUES
   -- karbon-fiber-panel-01 TR
-  ('kg030001-9001-4001-9001-ffffffffff01', 'tr', 'Karbon fiber panel', 'Karbon fiber panel yüzeyi', 'Karbon fiber panelin yüzey ve kenar görünümü.'),
-  ('kg030001-9001-4001-9001-ffffffffff01', 'en', 'Carbon fiber panel', 'Carbon fiber panel surface', 'Surface and edge view of carbon fiber panel.'),
-  ('kg030001-9001-4001-9001-ffffffffff01', 'de', 'Karbonfaserplatte', 'Karbonfaserplatten-Oberfläche', 'Oberflächen- und Kantenansicht der Karbonfaserplatte.'),
+  ('97030001-9001-4001-9001-ffffffffff01', 'tr', 'Karbon fiber panel', 'Karbon fiber panel yüzeyi', 'Karbon fiber panelin yüzey ve kenar görünümü.'),
+  ('97030001-9001-4001-9001-ffffffffff01', 'en', 'Carbon fiber panel', 'Carbon fiber panel surface', 'Surface and edge view of carbon fiber panel.'),
+  ('97030001-9001-4001-9001-ffffffffff01', 'de', 'Karbonfaserplatte', 'Karbonfaserplatten-Oberfläche', 'Oberflächen- und Kantenansicht der Karbonfaserplatte.'),
   -- karbon-fiber-doku-01
-  ('kg030002-9002-4002-9002-ffffffffff02', 'tr', 'Karbon fiber doku', 'Dokuma desen detayı', 'Karbon fiber kumaşın dokuma desen yakın çekimi.'),
-  ('kg030002-9002-4002-9002-ffffffffff02', 'en', 'Carbon fiber texture', 'Weave pattern detail', 'Close-up of the weave pattern on carbon fiber fabric.'),
-  ('kg030002-9002-4002-9002-ffffffffff02', 'de', 'Karbonfaser-Textur', 'Webmusterdetail', 'Nahaufnahme des Webmusters auf Karbonfasergewebe.'),
+  ('97030002-9002-4002-9002-ffffffffff02', 'tr', 'Karbon fiber doku', 'Dokuma desen detayı', 'Karbon fiber kumaşın dokuma desen yakın çekimi.'),
+  ('97030002-9002-4002-9002-ffffffffff02', 'en', 'Carbon fiber texture', 'Weave pattern detail', 'Close-up of the weave pattern on carbon fiber fabric.'),
+  ('97030002-9002-4002-9002-ffffffffff02', 'de', 'Karbonfaser-Textur', 'Webmusterdetail', 'Nahaufnahme des Webmusters auf Karbonfasergewebe.'),
   -- karbon-fiber-detay-01
-  ('kg030003-9003-4003-9003-ffffffffff03', 'tr', 'Karbon fiber detay', 'Yüzey detay çekimi', 'Karbon fiber kompozit yüzey detay görüntüsü.'),
-  ('kg030003-9003-4003-9003-ffffffffff03', 'en', 'Carbon fiber detail', 'Surface detail shot', 'Detail image of carbon fiber composite surface.'),
-  ('kg030003-9003-4003-9003-ffffffffff03', 'de', 'Karbonfaserdetail', 'Oberflächendetailaufnahme', 'Detailbild der Karbonfaser-Verbundwerkstoffoberfläche.'),
+  ('97030003-9003-4003-9003-ffffffffff03', 'tr', 'Karbon fiber detay', 'Yüzey detay çekimi', 'Karbon fiber kompozit yüzey detay görüntüsü.'),
+  ('97030003-9003-4003-9003-ffffffffff03', 'en', 'Carbon fiber detail', 'Surface detail shot', 'Detail image of carbon fiber composite surface.'),
+  ('97030003-9003-4003-9003-ffffffffff03', 'de', 'Karbonfaserdetail', 'Oberflächendetailaufnahme', 'Detailbild der Karbonfaser-Verbundwerkstoffoberfläche.'),
   -- karbon-fiber-hammadde-01
-  ('kg030004-9004-4004-9004-ffffffffff04', 'tr', 'Karbon fiber hammadde', 'Ham kumaş rulosu', 'İşlenmemiş karbon fiber kumaş rulosu.'),
-  ('kg030004-9004-4004-9004-ffffffffff04', 'en', 'Carbon fiber raw material', 'Raw fabric roll', 'Unprocessed carbon fiber fabric roll.'),
-  ('kg030004-9004-4004-9004-ffffffffff04', 'de', 'Karbonfaser-Rohmaterial', 'Rohgeweberolle', 'Unverarbeitete Karbonfasergeweberolle.'),
+  ('97030004-9004-4004-9004-ffffffffff04', 'tr', 'Karbon fiber hammadde', 'Ham kumaş rulosu', 'İşlenmemiş karbon fiber kumaş rulosu.'),
+  ('97030004-9004-4004-9004-ffffffffff04', 'en', 'Carbon fiber raw material', 'Raw fabric roll', 'Unprocessed carbon fiber fabric roll.'),
+  ('97030004-9004-4004-9004-ffffffffff04', 'de', 'Karbonfaser-Rohmaterial', 'Rohgeweberolle', 'Unverarbeitete Karbonfasergeweberolle.'),
   -- ctp-cam-elyaf-01
-  ('kg030005-9005-4005-9005-ffffffffff05', 'tr', 'CTP cam elyaf', 'Cam elyaf tabakası', 'Cam takviyeli plastik (CTP) için cam elyaf tabakası.'),
-  ('kg030005-9005-4005-9005-ffffffffff05', 'en', 'FRP glass fiber', 'Glass fiber layer', 'Glass fiber layer for fiber-reinforced plastic (FRP).'),
-  ('kg030005-9005-4005-9005-ffffffffff05', 'de', 'GFK-Glasfaser', 'Glasfaserschicht', 'Glasfaserschicht für glasfaserverstärkten Kunststoff (GFK).'),
+  ('97030005-9005-4005-9005-ffffffffff05', 'tr', 'CTP cam elyaf', 'Cam elyaf tabakası', 'Cam takviyeli plastik (CTP) için cam elyaf tabakası.'),
+  ('97030005-9005-4005-9005-ffffffffff05', 'en', 'FRP glass fiber', 'Glass fiber layer', 'Glass fiber layer for fiber-reinforced plastic (FRP).'),
+  ('97030005-9005-4005-9005-ffffffffff05', 'de', 'GFK-Glasfaser', 'Glasfaserschicht', 'Glasfaserschicht für glasfaserverstärkten Kunststoff (GFK).'),
   -- ctp-dokuma-hibrit-01
-  ('kg030006-9006-4006-9006-ffffffffff06', 'tr', 'CTP dokuma hibrit', 'Hibrit dokuma kumaş', 'Cam elyaf ve karbon fiber hibrit dokuma kumaş.'),
-  ('kg030006-9006-4006-9006-ffffffffff06', 'en', 'FRP hybrid weave', 'Hybrid weave fabric', 'Glass fiber and carbon fiber hybrid weave fabric.'),
-  ('kg030006-9006-4006-9006-ffffffffff06', 'de', 'GFK-Hybridgewebe', 'Hybridgewebestoff', 'Glasfaser- und Karbonfaser-Hybridgewebe.'),
+  ('97030006-9006-4006-9006-ffffffffff06', 'tr', 'CTP dokuma hibrit', 'Hibrit dokuma kumaş', 'Cam elyaf ve karbon fiber hibrit dokuma kumaş.'),
+  ('97030006-9006-4006-9006-ffffffffff06', 'en', 'FRP hybrid weave', 'Hybrid weave fabric', 'Glass fiber and carbon fiber hybrid weave fabric.'),
+  ('97030006-9006-4006-9006-ffffffffff06', 'de', 'GFK-Hybridgewebe', 'Hybridgewebestoff', 'Glasfaser- und Karbonfaser-Hybridgewebe.'),
   -- kompozit-fabrika-otoklav-01
-  ('kg030007-9007-4007-9007-ffffffffff07', 'tr', 'Kompozit fabrika otoklav', 'Otoklav kür fırını', 'Kompozit parçaların kür edildiği otoklav fırını.'),
-  ('kg030007-9007-4007-9007-ffffffffff07', 'en', 'Composite factory autoclave', 'Autoclave curing oven', 'Autoclave oven used for curing composite parts.'),
-  ('kg030007-9007-4007-9007-ffffffffff07', 'de', 'Verbundwerkstoff-Autoklav', 'Autoklav-Härteofen', 'Autoklav-Ofen zur Härtung von Verbundwerkstoffteilen.'),
+  ('97030007-9007-4007-9007-ffffffffff07', 'tr', 'Kompozit fabrika otoklav', 'Otoklav kür fırını', 'Kompozit parçaların kür edildiği otoklav fırını.'),
+  ('97030007-9007-4007-9007-ffffffffff07', 'en', 'Composite factory autoclave', 'Autoclave curing oven', 'Autoclave oven used for curing composite parts.'),
+  ('97030007-9007-4007-9007-ffffffffff07', 'de', 'Verbundwerkstoff-Autoklav', 'Autoklav-Härteofen', 'Autoklav-Ofen zur Härtung von Verbundwerkstoffteilen.'),
   -- kompozit-uretim-proses-01
-  ('kg030008-9008-4008-9008-ffffffffff08', 'tr', 'Kompozit üretim proses', 'Üretim hattı', 'Kompozit malzeme üretim prosesi genel görünümü.'),
-  ('kg030008-9008-4008-9008-ffffffffff08', 'en', 'Composite production process', 'Production line', 'General view of composite material production process.'),
-  ('kg030008-9008-4008-9008-ffffffffff08', 'de', 'Verbundwerkstoff-Produktionsprozess', 'Produktionslinie', 'Gesamtansicht des Verbundwerkstoff-Produktionsprozesses.')
+  ('97030008-9008-4008-9008-ffffffffff08', 'tr', 'Kompozit üretim proses', 'Üretim hattı', 'Kompozit malzeme üretim prosesi genel görünümü.'),
+  ('97030008-9008-4008-9008-ffffffffff08', 'en', 'Composite production process', 'Production line', 'General view of composite material production process.'),
+  ('97030008-9008-4008-9008-ffffffffff08', 'de', 'Verbundwerkstoff-Produktionsprozess', 'Produktionslinie', 'Gesamtansicht des Verbundwerkstoff-Produktionsprozesses.')
 ON DUPLICATE KEY UPDATE
   `alt`         = VALUES(`alt`),
   `caption`     = VALUES(`caption`),

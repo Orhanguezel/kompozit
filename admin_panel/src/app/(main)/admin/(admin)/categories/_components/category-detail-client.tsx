@@ -95,7 +95,7 @@ export default function CategoryDetailClient({ id }: Props) {
     name: "",
     slug: "",
     locale: activeLocale,
-    module_key: "product",
+    module_key: "kompozit",
     description: "",
     alt: "",
     image_url: "",
@@ -114,7 +114,7 @@ export default function CategoryDetailClient({ id }: Props) {
         name: category.name || "",
         slug: category.slug || "",
         locale: category.locale || activeLocale,
-        module_key: category.module_key || "product",
+        module_key: category.module_key || "kompozit",
         description: category.description || "",
         alt: category.alt || "",
         image_url: category.image_url || "",
@@ -284,6 +284,7 @@ export default function CategoryDetailClient({ id }: Props) {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
+                          <SelectItem value="kompozit">Kompozit</SelectItem>
                           <SelectItem value="product">{t("modules.product")}</SelectItem>
                           <SelectItem value="services">{t("modules.services")}</SelectItem>
                           <SelectItem value="news">{t("modules.news")}</SelectItem>

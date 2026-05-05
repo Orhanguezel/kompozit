@@ -38,25 +38,25 @@ UPDATE `gallery_images`
 SET
   `image_url` = '/uploads/kompozit/karbon-fiber-panel-01.jpg',
   `storage_asset_id` = 'c3000006-0006-4006-8006-000000000006'
-WHERE `id` = 'kg020001-8101-4001-9001-eeeeeeee0101';
+WHERE `id` = '97020001-8101-4001-9001-eeeeeeee0101';
 
 UPDATE `gallery_images`
 SET
   `image_url` = '/uploads/kompozit/karbon-fiber-detay-01.jpg',
   `storage_asset_id` = 'c3000008-0008-4008-8008-000000000008'
-WHERE `id` = 'kg020002-8102-4002-9002-eeeeeeee0102';
+WHERE `id` = '97020002-8102-4002-9002-eeeeeeee0102';
 
 UPDATE `gallery_images`
 SET
   `image_url` = '/uploads/kompozit/ctp-cam-elyaf-01.jpg',
   `storage_asset_id` = 'c3000003-0003-4003-8003-000000000003'
-WHERE `id` = 'kg020003-8103-4003-9003-eeeeeeee0103';
+WHERE `id` = '97020003-8103-4003-9003-eeeeeeee0103';
 
 UPDATE `gallery_images`
 SET
   `image_url` = '/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg',
   `storage_asset_id` = 'c3000007-0007-4007-8007-000000000007'
-WHERE `id` = 'kg020004-8104-4004-9004-eeeeeeee0104';
+WHERE `id` = '97020004-8104-4004-9004-eeeeeeee0104';
 
 -- Çözümler (kompozit_solutions)
 UPDATE `custom_pages`

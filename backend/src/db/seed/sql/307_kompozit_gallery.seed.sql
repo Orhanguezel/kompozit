@@ -10,6 +10,19 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 START TRANSACTION;
 
+DELETE FROM `gallery_image_i18n`
+WHERE `image_id` LIKE 'kg02000%' OR `image_id` LIKE 'kg03000%';
+
+DELETE FROM `gallery_images`
+WHERE `id` LIKE 'kg02000%' OR `id` LIKE 'kg03000%';
+
+DELETE FROM `gallery_i18n`
+WHERE `gallery_id` LIKE 'kg01000%' OR `gallery_id` LIKE 'kg010100%';
+
+DELETE FROM `galleries`
+WHERE `module_key` = 'kompozit'
+  AND (`id` LIKE 'kg01000%' OR `id` LIKE 'kg010100%');
+
 INSERT INTO `galleries`
 (
   `id`,
@@ -22,7 +35,7 @@ INSERT INTO `galleries`
 )
 VALUES
   (
-    'kg010001-8001-4001-9001-eeeeeeee0001',
+    '97010001-8001-4001-9001-eeeeeeee0001',
     'kompozit',
     'kd010001-7001-4001-9001-dddddddd0001',
     'product',
@@ -31,7 +44,7 @@ VALUES
     10
   ),
   (
-    'kg010002-8002-4002-9002-eeeeeeee0002',
+    '97010002-8002-4002-9002-eeeeeeee0002',
     'kompozit',
     'kd010002-7002-4002-9002-dddddddd0002',
     'product',
@@ -59,7 +72,7 @@ INSERT INTO `gallery_i18n`
 )
 VALUES
   (
-    'kg010001-8001-4001-9001-eeeeeeee0001',
+    '97010001-8001-4001-9001-eeeeeeee0001',
     'tr',
     'Karbon Fiber Panel Uygulama Galerisi',
     'karbon-fiber-panel-uygulama-galerisi',
@@ -68,7 +81,7 @@ VALUES
     'Karbon fiber panel uygulama galerisi. Prototip, kenar isleme ve montaj oncesi kontrol adimlarini gosterir.'
   ),
   (
-    'kg010001-8001-4001-9001-eeeeeeee0001',
+    '97010001-8001-4001-9001-eeeeeeee0001',
     'en',
     'Carbon Fiber Panel Application Gallery',
     'carbon-fiber-panel-application-gallery',
@@ -77,7 +90,7 @@ VALUES
     'Carbon fiber panel application gallery covering prototype, trimming, and pre-assembly inspection steps.'
   ),
   (
-    'kg010002-8002-4002-9002-eeeeeeee0002',
+    '97010002-8002-4002-9002-eeeeeeee0002',
     'tr',
     'CTP Govde Paneli Uretim Galerisi',
     'ctp-govde-paneli-uretim-galerisi',
@@ -86,7 +99,7 @@ VALUES
     'CTP govde paneli uretim galerisi. Kalip hazirlama, laminasyon ve trim asamalarini one cikarir.'
   ),
   (
-    'kg010002-8002-4002-9002-eeeeeeee0002',
+    '97010002-8002-4002-9002-eeeeeeee0002',
     'en',
     'FRP Enclosure Panel Production Gallery',
     'frp-enclosure-panel-production-gallery',
@@ -112,32 +125,32 @@ INSERT INTO `gallery_images`
 )
 VALUES
   (
-    'kg020001-8101-4001-9001-eeeeeeee0101',
-    'kg010001-8001-4001-9001-eeeeeeee0001',
+    '97020001-8101-4001-9001-eeeeeeee0101',
+    '97010001-8001-4001-9001-eeeeeeee0001',
     NULL,
     '/media/gallery-placeholder.svg',
     10,
     1
   ),
   (
-    'kg020002-8102-4002-9002-eeeeeeee0102',
-    'kg010001-8001-4001-9001-eeeeeeee0001',
+    '97020002-8102-4002-9002-eeeeeeee0102',
+    '97010001-8001-4001-9001-eeeeeeee0001',
     NULL,
     '/media/gallery-placeholder.svg',
     20,
     0
   ),
   (
-    'kg020003-8103-4003-9003-eeeeeeee0103',
-    'kg010002-8002-4002-9002-eeeeeeee0002',
+    '97020003-8103-4003-9003-eeeeeeee0103',
+    '97010002-8002-4002-9002-eeeeeeee0002',
     NULL,
     '/media/gallery-placeholder.svg',
     10,
     1
   ),
   (
-    'kg020004-8104-4004-9004-eeeeeeee0104',
-    'kg010002-8002-4002-9002-eeeeeeee0002',
+    '97020004-8104-4004-9004-eeeeeeee0104',
+    '97010002-8002-4002-9002-eeeeeeee0002',
     NULL,
     '/media/gallery-placeholder.svg',
     20,
@@ -159,56 +172,56 @@ INSERT INTO `gallery_image_i18n`
 )
 VALUES
   (
-    'kg020001-8101-4001-9001-eeeeeeee0101',
+    '97020001-8101-4001-9001-eeeeeeee0101',
     'tr',
     'Karbon fiber panel prototip yuzeyi',
     'Prototip yuzey kontrolu',
     'Karbon fiber panelin ilk yuzey ve kenar dogrulama asamasi.'
   ),
   (
-    'kg020001-8101-4001-9001-eeeeeeee0101',
+    '97020001-8101-4001-9001-eeeeeeee0101',
     'en',
     'Carbon fiber panel prototype surface',
     'Prototype surface inspection',
     'Initial surface and edge validation stage of the carbon fiber panel.'
   ),
   (
-    'kg020002-8102-4002-9002-eeeeeeee0102',
+    '97020002-8102-4002-9002-eeeeeeee0102',
     'tr',
     'Karbon fiber panel son trim hazirligi',
     'Trim ve montaj oncesi kontrol',
     'Karbon fiber panelde trim ve montaj oncesi olculendirme kontrolu.'
   ),
   (
-    'kg020002-8102-4002-9002-eeeeeeee0102',
+    '97020002-8102-4002-9002-eeeeeeee0102',
     'en',
     'Carbon fiber panel pre-trim setup',
     'Pre-trim and assembly check',
     'Dimensional check before trimming and assembly of the carbon fiber panel.'
   ),
   (
-    'kg020003-8103-4003-9003-eeeeeeee0103',
+    '97020003-8103-4003-9003-eeeeeeee0103',
     'tr',
     'CTP govde paneli laminasyon asamasi',
     'Laminasyon adimi',
     'CTP govde panelinde katmanlama ve recine dagilim kontrolu.'
   ),
   (
-    'kg020003-8103-4003-9003-eeeeeeee0103',
+    '97020003-8103-4003-9003-eeeeeeee0103',
     'en',
     'FRP enclosure panel lamination stage',
     'Lamination step',
     'Lamination and resin distribution control in the FRP enclosure panel process.'
   ),
   (
-    'kg020004-8104-4004-9004-eeeeeeee0104',
+    '97020004-8104-4004-9004-eeeeeeee0104',
     'tr',
     'CTP govde paneli son trim',
     'Son trim ve teslim hazirligi',
     'CTP govde panelinin son trim ve teslimat oncesi gorsel kontrol kaydi.'
   ),
   (
-    'kg020004-8104-4004-9004-eeeeeeee0104',
+    '97020004-8104-4004-9004-eeeeeeee0104',
     'en',
     'FRP enclosure final trimming',
     'Final trim and dispatch prep',

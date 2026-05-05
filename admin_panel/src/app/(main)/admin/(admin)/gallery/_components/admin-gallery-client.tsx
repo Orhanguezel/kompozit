@@ -51,7 +51,7 @@ export default function AdminGalleryClient() {
   const { localeOptions, defaultLocaleFromDb, loading: localesLoading, fetching: localesFetching } = useAdminLocales();
 
   const apiLocale = React.useMemo(() => {
-    return resolveAdminApiLocale(localeOptions, defaultLocaleFromDb, "de");
+    return resolveAdminApiLocale(localeOptions, defaultLocaleFromDb, "tr");
   }, [localeOptions, defaultLocaleFromDb]);
 
   const urlLocale = React.useMemo(() => {
@@ -72,7 +72,7 @@ export default function AdminGalleryClient() {
     setFilters((prev) => {
       const prevLoc = localeShortClient(prev.locale);
       const urlLoc = localeShortClient(urlLocale);
-      const defLoc = localeShortClientOr(apiLocale, "de");
+      const defLoc = localeShortClientOr(apiLocale, "tr");
 
       const canUse = (l: string) => !!l && (localeOptions ?? []).some((x) => localeShortClient(x.value) === l);
 
@@ -80,7 +80,7 @@ export default function AdminGalleryClient() {
       if (urlLoc && canUse(urlLoc)) return { ...prev, locale: urlLoc };
       if (defLoc && canUse(defLoc)) return { ...prev, locale: defLoc };
 
-      return { ...prev, locale: localeShortClient(localeOptions?.[0]?.value) || "de" };
+      return { ...prev, locale: localeShortClient(localeOptions?.[0]?.value) || "tr" };
     });
   }, [localeOptions, urlLocale, apiLocale]);
 
@@ -140,12 +140,12 @@ export default function AdminGalleryClient() {
     deleteState.isLoading;
 
   function onCreate() {
-    const l = localeShortClientOr(effectiveLocale, "de");
+    const l = localeShortClientOr(effectiveLocale, "tr");
     router.push(`/admin/gallery/new?locale=${encodeURIComponent(l)}`);
   }
 
   function onEdit(id: string) {
-    const l = localeShortClientOr(effectiveLocale, "de");
+    const l = localeShortClientOr(effectiveLocale, "tr");
     router.push(`/admin/gallery/${encodeURIComponent(id)}?locale=${encodeURIComponent(l)}`);
   }
 

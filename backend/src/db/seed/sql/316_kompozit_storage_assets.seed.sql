@@ -46,19 +46,19 @@ WHERE `id` = 'kd010003-7003-4003-9003-dddddddd0003';
 
 UPDATE `gallery_images` SET
   `image_url` = '/media/kompozit/karbon-fiber-panel-01.jpg'
-WHERE `id` = 'kg020001-8101-4001-9001-eeeeeeee0101';
+WHERE `id` = '97020001-8101-4001-9001-eeeeeeee0101';
 
 UPDATE `gallery_images` SET
   `image_url` = '/media/kompozit/ctp-cam-elyaf-01.jpg'
-WHERE `id` = 'kg020002-8102-4002-9002-eeeeeeee0102';
+WHERE `id` = '97020002-8102-4002-9002-eeeeeeee0102';
 
 UPDATE `gallery_images` SET
   `image_url` = '/media/kompozit/kompozit-fabrika-otoklav-01.jpg'
-WHERE `id` = 'kg020003-8103-4003-9003-eeeeeeee0103';
+WHERE `id` = '97020003-8103-4003-9003-eeeeeeee0103';
 
 UPDATE `gallery_images` SET
   `image_url` = '/media/kompozit/ctp-dokuma-hibrit-01.jpg'
-WHERE `id` = 'kg020004-8104-4004-9004-eeeeeeee0104';
+WHERE `id` = '97020004-8104-4004-9004-eeeeeeee0104';
 -- Auto-generated storage_assets entries for urunler images
 INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000015-0015-4015-8015-000000000015', NULL, 'urunler-10.jpeg', 'kompozit', 'uploads/kompozit/urunler-10.jpeg', 'uploads/kompozit', 'image/jpeg', 355748, NULL, NULL, '/uploads/kompozit/urunler-10.jpeg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `updated_at` = VALUES(`updated_at`);
 INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000016-0016-4016-8016-000000000016', NULL, 'urunler-11.jpeg', 'kompozit', 'uploads/kompozit/urunler-11.jpeg', 'uploads/kompozit', 'image/jpeg', 556034, NULL, NULL, '/uploads/kompozit/urunler-11.jpeg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `updated_at` = VALUES(`updated_at`);
