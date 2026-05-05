@@ -42,6 +42,9 @@ export type CustomPageHeaderProps = {
   allowAllOption?: boolean;
   moduleOptions?: ModuleOption[];
   newPageHref?: string;
+  /** true ise modül açılır listesi yerine sabit etiket gösterilir */
+  moduleLocked?: boolean;
+  lockedModuleLabel?: string;
 };
 
 export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
@@ -54,6 +57,8 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
   allowAllOption = true,
   moduleOptions,
   newPageHref = "/admin/custompage/new",
+  moduleLocked = false,
+  lockedModuleLabel,
 }) => {
   const t = useAdminT();
 
@@ -160,20 +165,30 @@ export const CustomPageHeader: React.FC<CustomPageHeaderProps> = ({
             <label htmlFor="custom-page-module" className="mb-0.5 block text-[11px] text-muted-foreground">
               {t("admin.customPage.allModules")}
             </label>
-            <select
-              id="custom-page-module"
-              className="w-full rounded border bg-background px-1.5 py-1.5 text-xs"
-              value={filters.moduleKey}
-              onChange={handleModuleChange}
-              disabled={disabledModuleSelect}
-            >
-              <option value={ALL}>{t("admin.customPage.allModules")}</option>
-              {moduleOpts.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+            {moduleLocked ? (
+              <div
+                id="custom-page-module"
+                className="rounded border bg-muted/40 px-1.5 py-1.5 text-xs leading-snug"
+                title={lockedModuleLabel || filters.moduleKey}
+              >
+                {lockedModuleLabel || filters.moduleKey || "—"}
+              </div>
+            ) : (
+              <select
+                id="custom-page-module"
+                className="w-full rounded border bg-background px-1.5 py-1.5 text-xs"
+                value={filters.moduleKey}
+                onChange={handleModuleChange}
+                disabled={disabledModuleSelect}
+              >
+                <option value={ALL}>{t("admin.customPage.allModules")}</option>
+                {moduleOpts.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           <div className="min-w-[80px] max-w-[130px]">

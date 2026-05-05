@@ -35,6 +35,11 @@ function pickFirstString(...values: unknown[]): string {
   return '';
 }
 
+function pickSettingUrl(input: unknown): string {
+  const value = readSettingValue(input);
+  return pickFirstString(value.url, value.image_url, value.logo_url, value.logo_light_url, value.logo_dark_url);
+}
+
 const bebasNeue = { variable: 'font-display' };
 const cormorant = { variable: 'font-serif' };
 const dmSans = { variable: 'font-sans' };
@@ -149,12 +154,24 @@ export default async function LocaleLayout({
   const navT = await getTranslations({ locale, namespace: 'nav' });
   const footerT = await getTranslations({ locale, namespace: 'footer' });
 
-  const [menuItems, footerSections, siteLogoSetting, legacyLogoSetting, brandingSetting, socialsSetting, contactInfoSetting] =
+  const [
+    menuItems,
+    footerSections,
+    siteLogoSetting,
+    siteLogoDarkSetting,
+    siteLogoLightSetting,
+    legacyLogoSetting,
+    brandingSetting,
+    socialsSetting,
+    contactInfoSetting,
+  ] =
     await Promise.all([
       fetchMenuItems(locale),
       fetchFooterSections(locale),
-      fetchSetting('site_logo', locale),
-      fetchSetting('logo', locale),
+      fetchSetting('site_logo', locale, { revalidate: 60 }),
+      fetchSetting('site_logo_dark', locale, { revalidate: 60 }),
+      fetchSetting('site_logo_light', locale, { revalidate: 60 }),
+      fetchSetting('logo', locale, { revalidate: 60 }),
       fetchSetting('branding', '*'),
       fetchSetting('socials', locale),
       fetchSetting('contact_info', locale),
@@ -171,18 +188,25 @@ export default async function LocaleLayout({
     ...(branding.silver_color ? { '--color-silver': branding.silver_color as string } : {}),
     ...(branding.cream_color ? { '--color-cream': branding.cream_color as string } : {}),
   } as CSSProperties;
-  const lightLogoRaw = pickFirstString(logoValue.logo_light_url, logoValue.logo_url, logoValue.url);
-  const darkLogoRaw = pickFirstString(logoValue.logo_dark_url, logoValue.logo_url, logoValue.url);
+  const defaultLogoRaw = pickFirstString(pickSettingUrl(siteLogoSetting), logoValue.logo_url, logoValue.url);
+  const darkLogoRaw = pickFirstString(pickSettingUrl(siteLogoDarkSetting), logoValue.logo_dark_url, defaultLogoRaw);
+  const lightLogoRaw = pickFirstString(pickSettingUrl(siteLogoLightSetting), logoValue.logo_light_url, defaultLogoRaw);
+  const logoAlt = pickFirstString(logoValue.alt, logoValue.logo_alt, branding.brand_name, 'MOE Kompozit');
   const logoConfigs = {
-    default: (resolvePublicAssetUrl(darkLogoRaw) ?? darkLogoRaw) || '/media/logo-dark.png',
-    dark: (resolvePublicAssetUrl(lightLogoRaw) ?? lightLogoRaw) || '/media/logo-light.png',
-    light: (resolvePublicAssetUrl(lightLogoRaw) ?? lightLogoRaw) || '/media/logo-light.png',
+    default: (resolvePublicAssetUrl(defaultLogoRaw) ?? defaultLogoRaw),
+    dark: (resolvePublicAssetUrl(darkLogoRaw) ?? darkLogoRaw),
+    light: (resolvePublicAssetUrl(lightLogoRaw) ?? lightLogoRaw),
+    alt: logoAlt,
   };
   const stableMenuItems = ensureMenuItems(menuItems, locale, navT);
   const stableFooterSections = ensureFooterSections(footerSections, locale, navT, footerT);
   const footerSocialNav = buildFooterSocialNavFromSetting(readSettingValue(socialsSetting));
   const contactInfo = readSettingValue(contactInfoSetting);
   const siteUrl = siteUrlBase();
+  const orgLogoRaw = pickFirstString(logoConfigs.default, logoConfigs.dark, logoConfigs.light);
+  const orgLogoUrl = orgLogoRaw
+    ? (/^https?:\/\//i.test(orgLogoRaw) ? orgLogoRaw : `${siteUrl}${orgLogoRaw.startsWith('/') ? orgLogoRaw : `/${orgLogoRaw}`}`)
+    : `${siteUrl}/icon`;
   const sameAs = Object.values(readSettingValue(socialsSetting))
     .filter((value): value is string => typeof value === 'string' && /^https?:\/\//i.test(value));
   const orgGraph = jsonld.graph([
@@ -190,7 +214,7 @@ export default async function LocaleLayout({
       '@id': `${siteUrl}#/schema/organization`,
       name: 'MOE Kompozit',
       url: siteUrl,
-      logo: `${siteUrl}/icon`,
+      logo: orgLogoUrl,
       description:
         'Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan Ensotek alt markasi.',
       email: asStr(contactInfo.email) || 'offers@moekompozit.com',
@@ -238,7 +262,13 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale} messages={messages}>
           <Header menuItems={stableMenuItems} logo={logoConfigs} locale={locale} activeLocales={activeLocales} />
           <main className="flex-1 pt-[5.5rem] lg:pt-24">{children}</main>
-          <Footer sections={stableFooterSections} locale={locale} socialNav={footerSocialNav} contactInfo={contactInfo} />
+          <Footer
+            sections={stableFooterSections}
+            locale={locale}
+            logo={logoConfigs}
+            socialNav={footerSocialNav}
+            contactInfo={contactInfo}
+          />
           <ClientShell />
           <DeferredToaster />
         </NextIntlClientProvider>

@@ -9,7 +9,14 @@ import { API_BASE_URL } from '@/lib/utils';
 import { normalizeRichContent } from '@/lib/rich-content';
 import { ContentPageHeader } from '@/components/patterns/ContentPageHeader';
 import { InfoListPanel } from '@/components/patterns/InfoListPanel';
-import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl, organizationJsonLd } from '@/seo';
+import {
+  JsonLd,
+  buildPageMetadataFromSettings,
+  jsonld,
+  localizedPath,
+  localizedUrl,
+  organizationJsonLd,
+} from '@/seo';
 import { Reveal } from '@/components/motion/Reveal';
 
 async function fetchAboutCustomPage(locale: string) {
@@ -36,14 +43,14 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'about' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  const title = page?.meta_title || page?.title || t('title');
-  const description =
+  const fallbackTitle = page?.meta_title || page?.title || t('title');
+  const fallbackDescription =
     page?.meta_description || page?.description || page?.summary || seoT('aboutDescription');
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/about',
-    title,
-    description,
+    pageKey: 'about',
+    fallback: { title: fallbackTitle, description: fallbackDescription },
   });
 }
 

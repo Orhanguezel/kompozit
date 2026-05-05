@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { localizedPath } from '@/seo';
+import { localizedPath } from '@/seo/helpers';
 
 import type { FooterSocialNavItem } from '@/lib/footer-social';
 
@@ -42,11 +42,13 @@ function normalizeSections(raw: Record<string, unknown>[], locale: string): Foot
 export function Footer({
   sections,
   locale,
+  logo,
   socialNav = [],
   contactInfo = {},
 }: {
   sections: Record<string, unknown>[];
   locale: string;
+  logo?: { default: string; dark: string; light: string; alt?: string };
   socialNav?: FooterSocialNavItem[];
   contactInfo?: Record<string, unknown>;
 }) {
@@ -59,6 +61,8 @@ export function Footer({
   const email = contact.email?.trim();
   const address = contact.address?.trim();
   const hours = contact.working_hours?.trim();
+  const logoSrc = logo?.light || logo?.default || logo?.dark;
+  const logoAlt = logo?.alt || 'MOE Kompozit';
 
   const hasContact = !!(phone || email || address);
 
@@ -70,15 +74,17 @@ export function Footer({
           {/* Brand + Contact Column */}
           <div className="space-y-8">
             {/* Logo */}
-            <Link href={localizedPath(locale, '/')} className="inline-block">
-              <Image
-                src="/media/logo-light.png"
-                alt="MOE Kompozit"
-                width={220}
-                height={66}
-                className="h-14 w-auto object-contain"
-              />
-            </Link>
+            {logoSrc ? (
+              <Link href={localizedPath(locale, '/')} className="inline-block">
+                <Image
+                  src={logoSrc}
+                  alt={logoAlt}
+                  width={220}
+                  height={66}
+                  className="h-14 w-auto object-contain"
+                />
+              </Link>
+            ) : null}
 
             {/* Tagline */}
             <p className="max-w-xs text-sm font-light leading-relaxed text-(--silver)">

@@ -335,4 +335,21 @@ CREATE TABLE IF NOT EXISTS `audit_auth_events` (
   KEY `audit_auth_events_ip_idx` (`ip`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS `audit_events` (
+  `id`            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ts`            DATETIME(3)     NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+  `level`         VARCHAR(16)     NOT NULL,
+  `topic`         VARCHAR(128)    NOT NULL,
+  `message`       LONGTEXT        DEFAULT NULL,
+  `actor_user_id` VARCHAR(64)     DEFAULT NULL,
+  `ip`            VARCHAR(64)     DEFAULT NULL,
+  `entity_type`   VARCHAR(64)     DEFAULT NULL,
+  `entity_id`     VARCHAR(64)     DEFAULT NULL,
+  `meta_json`     LONGTEXT        DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `audit_events_ts_idx` (`ts`),
+  KEY `audit_events_topic_ts_idx` (`topic`, `ts`),
+  KEY `audit_events_level_ts_idx` (`level`, `ts`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 SET FOREIGN_KEY_CHECKS = 1;

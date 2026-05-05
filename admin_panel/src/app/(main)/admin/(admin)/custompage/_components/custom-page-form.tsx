@@ -18,6 +18,7 @@ import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJson
 import type { AdminLocaleOption } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import { useLazyListCustomPagesAdminQuery } from "@/integrations/hooks";
 import type { CustomPageDto, CustomPageListAdminQueryParams } from "@/integrations/shared";
 
@@ -195,7 +196,7 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
   );
 
   const [slugTouched, setSlugTouched] = useState(false);
-  const [activeMode, setActiveMode] = useState<"form" | "json">("form");
+  const [activeTab, setActiveTab] = useState<"content" | "media" | "seo" | "json">("content");
 
   const [contentImagePreview, setContentImagePreview] = useState<string>("");
   const [contentImageSize, setContentImageSize] = useState<ContentImageSize>("lg");
@@ -381,31 +382,6 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <div className="inline-flex overflow-hidden rounded-md border">
-                <button
-                  type="button"
-                  className={[
-                    "px-3 py-1 text-xs",
-                    activeMode === "form" ? "bg-muted font-semibold" : "bg-background",
-                  ].join(" ")}
-                  onClick={() => setActiveMode("form")}
-                  disabled={disabled}
-                >
-                  Form
-                </button>
-                <button
-                  type="button"
-                  className={[
-                    "px-3 py-1 text-xs",
-                    activeMode === "json" ? "bg-muted font-semibold" : "bg-background",
-                  ].join(" ")}
-                  onClick={() => setActiveMode("json")}
-                  disabled={disabled}
-                >
-                  JSON
-                </button>
-              </div>
-
               {onCancel ? (
                 <button
                   type="button"
@@ -441,17 +417,24 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
         </div>
 
         <div className="p-3">
-          {activeMode === "json" ? (
-            <AdminJsonEditor
-              value={values}
-              disabled={disabled}
-              onChange={(next) => setValues(next as CustomPageFormValues)}
-              label="Custom Page JSON"
-              helperText={t("admin.customPage.form.jsonHelperText")}
-            />
-          ) : (
-            <>
-              <div className="mb-4">
+          <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
+            <TabsList className="mb-4 grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
+              <TabsTrigger value="content" className="text-xs">
+                {t("admin.customPage.form.tabContent")}
+              </TabsTrigger>
+              <TabsTrigger value="media" className="text-xs">
+                {t("admin.customPage.form.tabMedia")}
+              </TabsTrigger>
+              <TabsTrigger value="seo" className="text-xs">
+                {t("admin.customPage.form.tabSeo")}
+              </TabsTrigger>
+              <TabsTrigger value="json" className="text-xs">
+                {t("admin.customPage.form.tabJson")}
+              </TabsTrigger>
+            </TabsList>
+
+            <TabsContent value="content" className="mt-0 space-y-4">
+              <div>
                 <AdminLocaleSelect
                   value={values.locale}
                   onChange={handleLocaleChange}
@@ -462,21 +445,20 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                 />
                 <div className="mt-1 text-muted-foreground text-xs">{t("admin.customPage.form.localeHint")}</div>
               </div>
+              <CustomPageMainColumn
+                values={values}
+                disabled={disabled}
+                slugTouched={slugTouched}
+                setSlugTouched={setSlugTouched}
+                setValues={setValues}
+                handleChange={handleChange}
+                handleCheckboxChange={handleCheckboxChange}
+              />
+            </TabsContent>
 
+            <TabsContent value="media" className="mt-0">
               <div className="grid gap-4 lg:grid-cols-12">
-                <div className="lg:col-span-8">
-                  <CustomPageMainColumn
-                    values={values}
-                    disabled={disabled}
-                    slugTouched={slugTouched}
-                    setSlugTouched={setSlugTouched}
-                    setValues={setValues}
-                    handleChange={handleChange}
-                    handleCheckboxChange={handleCheckboxChange}
-                  />
-                </div>
-
-                <div className="space-y-4 lg:col-span-4">
+                <div className="space-y-4 lg:col-span-5">
                   <CustomPageFormImageColumn
                     metadata={imageMetadata}
                     disabled={disabled}
@@ -486,10 +468,13 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                     onGalleryUrlsChange={(urls) => setValues((prev) => ({ ...prev, images: urls }))}
                     onSelectAsCover={(url) => setValues((prev) => ({ ...prev, featured_image: url }))}
                   />
-
+                </div>
+                <div className="lg:col-span-7">
                   <CustomPageSidebarColumn
                     values={values}
                     disabled={disabled}
+                    showTags={false}
+                    showSeo={false}
                     imageMetadata={imageMetadata}
                     contentImageSize={contentImageSize}
                     setContentImageSize={setContentImageSize}
@@ -504,8 +489,37 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                   />
                 </div>
               </div>
-            </>
-          )}
+            </TabsContent>
+
+            <TabsContent value="seo" className="mt-0 max-w-2xl">
+              <CustomPageSidebarColumn
+                values={values}
+                disabled={disabled}
+                showContentImages={false}
+                imageMetadata={imageMetadata}
+                contentImageSize={contentImageSize}
+                setContentImageSize={setContentImageSize}
+                contentImagePreview={contentImagePreview}
+                handleAddContentImage={handleAddContentImage}
+                manualImageUrl={manualImageUrl}
+                manualImageAlt={manualImageAlt}
+                setManualImageUrl={setManualImageUrl}
+                setManualImageAlt={setManualImageAlt}
+                handleAddManualImage={handleAddManualImage}
+                setValues={setValues}
+              />
+            </TabsContent>
+
+            <TabsContent value="json" className="mt-0">
+              <AdminJsonEditor
+                value={values}
+                disabled={disabled}
+                onChange={(next) => setValues(next as CustomPageFormValues)}
+                label="Custom Page JSON"
+                helperText={t("admin.customPage.form.jsonHelperText")}
+              />
+            </TabsContent>
+          </Tabs>
         </div>
       </div>
     </form>

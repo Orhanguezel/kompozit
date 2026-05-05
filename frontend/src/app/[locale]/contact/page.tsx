@@ -9,7 +9,7 @@ import { GoogleMap } from '@/components/widgets/GoogleMap';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import {
   JsonLd,
-  buildPageMetadata,
+  buildPageMetadataFromSettings,
   buildOrganizationSchemaItems,
   jsonld,
   localizedUrl,
@@ -27,13 +27,16 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'contact' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/contact',
-    title: locale.startsWith('en')
-      ? `${t('title')} - Technical Contact for Sampling and Quotes`
-      : `${t('title')} - Numune ve Teklif Icin Teknik Iletisim`,
-    description: seoT('contactDescription'),
+    pageKey: 'contact',
+    fallback: {
+      title: locale.startsWith('en')
+        ? `${t('title')} - Technical Contact for Sampling and Quotes`
+        : `${t('title')} - Numune ve Teklif Icin Teknik Iletisim`,
+      description: seoT('contactDescription'),
+    },
   });
 }
 

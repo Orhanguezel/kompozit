@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { BrandCtaPanel } from '@/components/patterns/BrandCtaPanel';
-import { localizedPath } from '@/seo';
+import { localizedPath } from '@/seo/helpers';
 
 export default function NotFound() {
   const t = useTranslations('error');

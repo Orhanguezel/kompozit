@@ -37,6 +37,8 @@ export type CustomPageListProps = {
   activeLocale?: string;
   /** Liste modül filtresi — düzenle linkine ?module= eklenir (App Router uyumlu tam URL) */
   listModuleKey?: string;
+  /** Varsayılan: `/admin/custompage` — Çözümler listesi için `/admin/solutions` */
+  editBasePath?: string;
 };
 
 const _VERY_LARGE_BP = 1700;
@@ -71,6 +73,7 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
   onMoveDown,
   activeLocale,
   listModuleKey,
+  editBasePath = "/admin/custompage",
 }) => {
   const t = useAdminT();
   const rows = items ?? [];
@@ -82,13 +85,17 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
 
   const effectiveLocale = useMemo(() => normLocale(activeLocale) || "", [activeLocale]);
 
+  const editBase = String(editBasePath || "/admin/custompage").replace(/\/$/, "") || "/admin/custompage";
+
   const editHrefById = (pageId: string) => {
     const qs = new URLSearchParams();
     if (effectiveLocale) qs.set("locale", effectiveLocale);
     const mk = String(listModuleKey ?? "").trim();
     if (mk) qs.set("module", mk);
     const tail = qs.toString();
-    return tail ? `/admin/custompage/${encodeURIComponent(pageId)}?${tail}` : `/admin/custompage/${encodeURIComponent(pageId)}`;
+    return tail
+      ? `${editBase}/${encodeURIComponent(pageId)}?${tail}`
+      : `${editBase}/${encodeURIComponent(pageId)}`;
   };
 
   const renderStatus = (p: CustomPageDto) =>

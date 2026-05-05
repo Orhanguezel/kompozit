@@ -18,6 +18,7 @@ import {
   type LucideIcon,
   MessageSquare,
   Newspaper,
+  Puzzle,
   RefreshCcw,
   Settings,
   Users,
@@ -84,6 +85,7 @@ export type AdminNavItemKey =
   | "kompozit_products"
   | "kompozit_categories"
   | "kompozit_gallery"
+  | "kompozit_solutions"
   | "kompozit_offers"
   | "kompozit_blog"
   | "kompozit_blog_comments"
@@ -118,6 +120,7 @@ export const adminNavConfig: AdminNavConfigGroup[] = [
       { key: "kompozit_products", url: "/admin/products?type=kompozit", icon: Layers },
       { key: "kompozit_categories", url: "/admin/categories?module=kompozit", icon: Folders },
       { key: "kompozit_gallery", url: "/admin/gallery", icon: Images },
+      { key: "kompozit_solutions", url: "/admin/solutions", icon: Puzzle },
       { key: "kompozit_offers", url: "/admin/offer?source=kompozit", icon: DollarSign },
       { key: "kompozit_blog", url: "/admin/custompage?module=kompozit_blog", icon: Newspaper },
       { key: "kompozit_blog_comments", url: "/admin/reviews?target_type=custom_page", icon: MessageSquare },
@@ -179,6 +182,7 @@ const FALLBACK_TITLES: Record<AdminNavItemKey, string> = {
   kompozit_products: "Kompozit Products",
   kompozit_categories: "Kompozit Categories",
   kompozit_gallery: "Gallery",
+  kompozit_solutions: "Solutions",
   kompozit_offers: "Kompozit Offers",
   kompozit_blog: "Kompozit Blog",
   kompozit_blog_comments: "Kompozit Blog Comments",

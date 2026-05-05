@@ -4,7 +4,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
-import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
+import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { getFallbackProducts } from '@/lib/content-fallbacks';
@@ -62,13 +62,16 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'products' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/products',
-    title: locale.startsWith('en')
-      ? `${t('title')} - Carbon Fiber, FRP and Fiberglass Parts`
-      : `${t('title')} - Karbon Fiber, CTP ve Cam Elyaf Parcalar`,
-    description: seoT('productsDescription'),
+    pageKey: 'products',
+    fallback: {
+      title: locale.startsWith('en')
+        ? `${t('title')} - Carbon Fiber, FRP and Fiberglass Parts`
+        : `${t('title')} - Karbon Fiber, CTP ve Cam Elyaf Parcalar`,
+      description: seoT('productsDescription'),
+    },
     noIndex: Boolean(category || tag),
   });
 }

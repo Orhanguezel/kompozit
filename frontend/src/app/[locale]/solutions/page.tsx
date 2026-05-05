@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
-import { buildPageMetadata, JsonLd, jsonld, localizedPath, localizedUrl } from '@/seo';
+import { buildPageMetadataFromSettings, JsonLd, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { Reveal } from '@/components/motion/Reveal';
@@ -23,11 +23,14 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'solutions' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/solutions',
-    title: t('metaTitle'),
-    description: seoT('solutionsDescription'),
+    pageKey: 'solutions',
+    fallback: {
+      title: t('metaTitle'),
+      description: seoT('solutionsDescription'),
+    },
   });
 }
 

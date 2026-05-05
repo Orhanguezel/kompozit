@@ -45,6 +45,7 @@ function labelOfModuleKey(k: string, t: TranslateFn) {
     services: t("admin.customPage.moduleLabels.services"),
     products: t("admin.customPage.moduleLabels.products"),
     solutions: t("admin.customPage.moduleLabels.solutions"),
+    kompozit_solutions: t("admin.customPage.moduleLabels.kompozit_solutions"),
     library: t("admin.customPage.moduleLabels.library"),
     faq: t("admin.customPage.moduleLabels.faq"),
     contact: t("admin.customPage.moduleLabels.contact"),
@@ -52,7 +53,17 @@ function labelOfModuleKey(k: string, t: TranslateFn) {
   return map[k] || k;
 }
 
-export default function AdminCustomPagesClient({ initialModuleKey = "" }: { initialModuleKey?: string }) {
+export default function AdminCustomPagesClient({
+  initialModuleKey = "",
+  lockedModuleKey = "",
+  routeBasePath = "/admin/custompage",
+}: {
+  initialModuleKey?: string;
+  /** Modül sabitlenir; başlıkta modül seçici gizlenir. */
+  lockedModuleKey?: string;
+  /** Liste / yeni / düzenle URL tabanı (örn. `/admin/solutions`). */
+  routeBasePath?: string;
+}) {
   const t = useAdminT();
   const { localeOptions, defaultLocaleFromDb, loading: localesLoading, fetching: localesFetching } = useAdminLocales();
 
@@ -60,12 +71,20 @@ export default function AdminCustomPagesClient({ initialModuleKey = "" }: { init
     return resolveAdminApiLocale(localeOptions, defaultLocaleFromDb, "tr");
   }, [localeOptions, defaultLocaleFromDb]);
 
+  const lock = lockedModuleKey.trim();
+  const basePath = String(routeBasePath || "/admin/custompage").replace(/\/$/, "") || "/admin/custompage";
+
   const [filters, setFilters] = React.useState<Filters>({
     search: "",
-    moduleKey: initialModuleKey.trim(),
+    moduleKey: lock || initialModuleKey.trim(),
     publishedFilter: "all",
     locale: "",
   });
+
+  React.useEffect(() => {
+    if (!lock) return;
+    setFilters((p) => (p.moduleKey === lock ? p : { ...p, moduleKey: lock }));
+  }, [lock]);
 
   // initial locale in state (no URL sync)
   React.useEffect(() => {
@@ -155,7 +174,7 @@ export default function AdminCustomPagesClient({ initialModuleKey = "" }: { init
     setFilters((p) => ({
       ...p,
       search: next.search,
-      moduleKey: next.moduleKey === "__all__" ? "" : next.moduleKey,
+      moduleKey: lock ? lock : next.moduleKey === "__all__" ? "" : next.moduleKey,
       publishedFilter: next.publishedFilter,
       locale: next.locale,
     }));
@@ -198,12 +217,14 @@ export default function AdminCustomPagesClient({ initialModuleKey = "" }: { init
         localesLoading={localesLoading || localesFetching}
         allowAllOption={false}
         moduleOptions={moduleOptions}
+        moduleLocked={!!lock}
+        lockedModuleLabel={lock ? labelOfModuleKey(lock, t) : undefined}
         newPageHref={(() => {
           const loc = encodeURIComponent(localeShortClientOr(effectiveLocale, "tr"));
           const mk = String(filters.moduleKey ?? "").trim();
           return mk
-            ? `/admin/custompage/new?locale=${loc}&module=${encodeURIComponent(mk)}`
-            : `/admin/custompage/new?locale=${loc}`;
+            ? `${basePath}/new?locale=${loc}&module=${encodeURIComponent(mk)}`
+            : `${basePath}/new?locale=${loc}`;
         })()}
       />
 
@@ -212,6 +233,7 @@ export default function AdminCustomPagesClient({ initialModuleKey = "" }: { init
         loading={busy}
         activeLocale={effectiveLocale}
         listModuleKey={filters.moduleKey}
+        editBasePath={basePath}
         // reorder controls (up/down)
         enableMoveControls
         onMoveUp={(index) => moveRow(index, index - 1)}

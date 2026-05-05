@@ -15,9 +15,6 @@ import { registerSiteSettings, registerSiteSettingsAdmin } from '@ensotek/shared
 // Rol yönetimi
 import { registerUserRoles } from '@ensotek/shared-backend/modules/userRoles';
 
-// Health check
-import { registerHealth } from '@ensotek/shared-backend/modules/health';
-
 // Bildirimler
 import { registerNotifications } from '@ensotek/shared-backend/modules/notifications';
 
@@ -63,7 +60,18 @@ import { registerLibraryAdmin } from '@ensotek/shared-backend/modules/library/ad
 
 export async function registerSharedPublic(api: FastifyInstance) {
   await registerAuth(api);
-  await registerHealth(api);
+  api.get('/health', async () => {
+    const db = (api as any).db;
+    const [rows] = await db.query('SELECT 1 AS ok');
+    const dbOk = Array.isArray(rows) && rows[0]?.ok === 1;
+
+    return {
+      status: dbOk ? 'ok' : 'error',
+      db: dbOk ? 'ok' : 'error',
+      redis: 'disabled',
+      uptime: process.uptime(),
+    };
+  });
   await registerStorage(api);
   await registerProfiles(api);
   await registerSiteSettings(api);

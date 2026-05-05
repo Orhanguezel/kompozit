@@ -9,7 +9,7 @@ import { ArrowRight, Shield, Zap, Settings, Truck, Cpu, Award, MoveRight } from 
 
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { fetchSetting } from '@/i18n/server';
-import { JsonLd, buildPageMetadata, localizedPath, siteUrlBase } from '@/seo';
+import { JsonLd, buildPageMetadataFromSettings, localizedPath, siteUrlBase } from '@/seo';
 import { buildHomePageSchemaGraph } from '@/seo/home-jsonld';
 import { ReferencesTrustStrip } from '@/components/sections/ReferencesTrustStrip';
 import { StatsBar } from '@/components/sections/StatsBar';
@@ -102,13 +102,16 @@ export async function generateMetadata({
   };
   const ogImage = resolvePublicAssetUrl(firstString(ogValue.url, ogValue.image_url)) ?? undefined;
 
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/',
-    title: locale.startsWith('en')
-      ? 'Carbon Fiber, FRP and Fiberglass Composite Manufacturing'
-      : 'Karbon Fiber, CTP ve Cam Elyaf Kompozit Uretimi',
-    description: t('homeDescription'),
+    pageKey: 'home',
+    fallback: {
+      title: locale.startsWith('en')
+        ? 'Carbon Fiber, FRP and Fiberglass Composite Manufacturing'
+        : 'Karbon Fiber, CTP ve Cam Elyaf Kompozit Uretimi',
+      description: t('homeDescription'),
+    },
     ogImage,
   });
 }

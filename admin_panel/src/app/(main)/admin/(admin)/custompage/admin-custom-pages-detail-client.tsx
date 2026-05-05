@@ -55,13 +55,17 @@ export default function AdminCustomPageDetailClient({
   id,
   initialModuleKey = "",
   initialLocaleHint = "",
+  routeBasePath = "/admin/custompage",
 }: {
   id: string;
   initialModuleKey?: string;
   /** URL ?locale=tr — liste ile aynı dilde düzenleme */
   initialLocaleHint?: string;
+  /** Liste ve oluşturma sonrası yönlendirme tabanı (örn. `/admin/solutions`) */
+  routeBasePath?: string;
 }) {
   const router = useRouter();
+  const listBase = String(routeBasePath || "/admin/custompage").replace(/\/$/, "") || "/admin/custompage";
   const t = useAdminT();
   const isCreateMode = String(id) === "new";
 
@@ -148,7 +152,7 @@ export default function AdminCustomPageDetailClient({
 
   const mode = isCreateMode ? "create" : "edit";
 
-  const onCancel = () => router.push("/admin/custompage");
+  const onCancel = () => router.push(listBase);
 
   const handleSubmit = async (values: CustomPageFormValues) => {
     try {
@@ -202,7 +206,7 @@ export default function AdminCustomPageDetailClient({
         const locQs = encodeURIComponent(loc);
         const mod = String(values.module_key ?? "").trim();
         const modQs = mod ? `&module=${encodeURIComponent(mod)}` : "";
-        router.replace(`/admin/custompage/${encodeURIComponent(nextId)}?locale=${locQs}${modQs}`);
+        router.replace(`${listBase}/${encodeURIComponent(nextId)}?locale=${locQs}${modQs}`);
         router.refresh();
         return;
       }

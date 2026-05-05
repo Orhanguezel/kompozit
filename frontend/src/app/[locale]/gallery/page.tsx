@@ -3,7 +3,7 @@ import 'server-only';
 import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
-import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
+import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { MediaOverlayCard } from '@/components/patterns/MediaOverlayCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { buildMediaAlt, buildMediaSchemaText } from '@/lib/media-seo';
@@ -38,13 +38,16 @@ export async function generateMetadata({
     getTranslations({ locale, namespace: 'gallery' }),
     getTranslations({ locale, namespace: 'seo' }),
   ]);
-  return buildPageMetadata({
+  return buildPageMetadataFromSettings({
     locale,
     pathname: '/gallery',
-    title: locale.startsWith('en')
-      ? `${t('title')} - Composite Production and Project Visuals`
-      : `${t('title')} - Kompozit Uretim ve Proje Gorselleri`,
-    description: seoT('galleryDescription'),
+    pageKey: 'gallery',
+    fallback: {
+      title: locale.startsWith('en')
+        ? `${t('title')} - Composite Production and Project Visuals`
+        : `${t('title')} - Kompozit Uretim ve Proje Gorselleri`,
+      description: seoT('galleryDescription'),
+    },
   });
 }
 

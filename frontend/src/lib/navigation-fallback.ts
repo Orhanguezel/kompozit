@@ -1,4 +1,4 @@
-import { localizedPath } from '@/seo';
+import { localizedPath } from '@/seo/helpers';
 
 type TranslateFn = (key: string) => string;
 
