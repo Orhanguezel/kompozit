@@ -11,6 +11,11 @@ import type React from "react";
 
 import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/AdminImageUploadField";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Button } from "@ensotek/shared-ui/admin/ui/button";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@ensotek/shared-ui/admin/ui/select";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 
 import type { ContentImageSize, CustomPageFormValues } from "./custom-page-form";
 
@@ -65,42 +70,40 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
   const metaDescriptionInputId = "custom-page-meta-description";
 
   return (
-    <div className="space-y-4 rounded-lg border bg-card p-3">
+    <div className="space-y-6 premium-card bg-card/20 border-white/5 p-6">
       {showTags ? (
-        <div>
-          <label htmlFor={tagsInputId} className="mb-1 block text-muted-foreground text-xs">
-            {t("admin.customPage.form.tags")}
-          </label>
-          <input
+        <div className="space-y-1.5">
+          <Label htmlFor={tagsInputId}>{t("admin.customPage.form.tags")}</Label>
+          <Input
             id={tagsInputId}
-            type="text"
-            className="w-full rounded-md border bg-background px-3 py-2 text-sm"
             placeholder={t("admin.customPage.form.tagsPlaceholder")}
             value={values.tags}
             onChange={(e) => setValues((prev) => ({ ...prev, tags: e.target.value }))}
             disabled={disabled}
+            className="bg-background/50"
           />
         </div>
       ) : null}
 
       {showContentImages ? (
         <>
-          <div>
-            <label htmlFor={imageSizeInputId} className="mb-1 block text-muted-foreground text-xs">
-              {t("admin.customPage.form.imageSize")}
-            </label>
-            <select
-              id={imageSizeInputId}
-              className="w-full rounded-md border bg-background px-2 py-2 text-sm"
-              value={contentImageSize}
-              onChange={(e) => setContentImageSize(e.target.value as ContentImageSize)}
+          <div className="space-y-1.5">
+            <Label htmlFor={imageSizeInputId}>{t("admin.customPage.form.imageSize")}</Label>
+            <Select 
+              value={contentImageSize} 
+              onValueChange={(v) => setContentImageSize(v as ContentImageSize)}
               disabled={disabled}
             >
-              <option value="sm">{t("admin.customPage.form.imageSizeSm")}</option>
-              <option value="md">{t("admin.customPage.form.imageSizeMd")}</option>
-              <option value="lg">{t("admin.customPage.form.imageSizeLg")}</option>
-              <option value="full">{t("admin.customPage.form.imageSizeFull")}</option>
-            </select>
+              <SelectTrigger id={imageSizeInputId} className="bg-background/50">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="sm">{t("admin.customPage.form.imageSizeSm")}</SelectItem>
+                <SelectItem value="md">{t("admin.customPage.form.imageSizeMd")}</SelectItem>
+                <SelectItem value="lg">{t("admin.customPage.form.imageSizeLg")}</SelectItem>
+                <SelectItem value="full">{t("admin.customPage.form.imageSizeFull")}</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <AdminImageUploadField
@@ -116,66 +119,63 @@ export const CustomPageSidebarColumn: React.FC<Props> = ({
             openLibraryHref="/admin/storage"
           />
 
-          <div className="space-y-2">
-            <label htmlFor={manualUrlInputId} className="block text-muted-foreground text-xs">
-              {t("admin.customPage.form.manualUrl")}
-            </label>
-            <input
-              id={manualUrlInputId}
-              type="url"
-              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-              placeholder="https://..."
-              value={manualImageUrl}
-              onChange={(e) => setManualImageUrl(e.target.value)}
-              disabled={disabled}
-            />
-            <input
+          <div className="space-y-3 rounded-lg border border-dashed border-white/10 p-4 bg-white/5">
+            <div className="space-y-1.5">
+              <Label htmlFor={manualUrlInputId}>{t("admin.customPage.form.manualUrl")}</Label>
+              <Input
+                id={manualUrlInputId}
+                type="url"
+                placeholder="https://..."
+                value={manualImageUrl}
+                onChange={(e) => setManualImageUrl(e.target.value)}
+                disabled={disabled}
+                className="bg-background/50"
+              />
+            </div>
+            <Input
               type="text"
-              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
               placeholder={t("admin.customPage.form.altTextPlaceholder")}
               value={manualImageAlt}
               onChange={(e) => setManualImageAlt(e.target.value)}
               disabled={disabled}
+              className="bg-background/50"
             />
-            <button
+            <Button
               type="button"
-              className="rounded-md border px-3 py-2 text-xs disabled:opacity-60"
+              variant="secondary"
+              size="sm"
+              className="w-full"
               onClick={handleAddManualImage}
               disabled={disabled}
             >
               {t("admin.customPage.form.addManualUrl")}
-            </button>
+            </Button>
           </div>
         </>
       ) : null}
 
       {showSeo ? (
         <>
-          <div>
-            <label htmlFor={metaTitleInputId} className="mb-1 block text-muted-foreground text-xs">
-              {t("admin.customPage.form.metaTitle")}
-            </label>
-            <input
+          <div className="space-y-1.5">
+            <Label htmlFor={metaTitleInputId}>{t("admin.customPage.form.metaTitle")}</Label>
+            <Input
               id={metaTitleInputId}
-              type="text"
-              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
               value={values.meta_title}
               onChange={(e) => setValues((prev) => ({ ...prev, meta_title: e.target.value }))}
               disabled={disabled}
+              className="bg-background/50"
             />
           </div>
 
-          <div>
-            <label htmlFor={metaDescriptionInputId} className="mb-1 block text-muted-foreground text-xs">
-              {t("admin.customPage.form.metaDescription")}
-            </label>
-            <textarea
+          <div className="space-y-1.5">
+            <Label htmlFor={metaDescriptionInputId}>{t("admin.customPage.form.metaDescription")}</Label>
+            <Textarea
               id={metaDescriptionInputId}
-              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-              rows={3}
+              rows={4}
               value={values.meta_description}
               onChange={(e) => setValues((prev) => ({ ...prev, meta_description: e.target.value }))}
               disabled={disabled}
+              className="bg-background/50"
             />
           </div>
         </>

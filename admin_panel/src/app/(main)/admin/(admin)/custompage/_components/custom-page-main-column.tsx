@@ -11,6 +11,10 @@ import type React from "react";
 
 import RichContentEditor from "@/app/(main)/admin/_components/common/RichContentEditor";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
+import { Input } from "@ensotek/shared-ui/admin/ui/input";
+import { Label } from "@ensotek/shared-ui/admin/ui/label";
+import { Switch } from "@ensotek/shared-ui/admin/ui/switch";
+import { Textarea } from "@ensotek/shared-ui/admin/ui/textarea";
 
 import type { CustomPageFormValues } from "./custom-page-form";
 
@@ -82,56 +86,73 @@ export const CustomPageMainColumn: React.FC<Props> = ({
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-6">
-        <label className="flex items-center gap-2 text-sm">
-          <input
+      <div className="flex flex-wrap items-center gap-8 mb-6">
+        <div className="flex items-center gap-3">
+          <Switch
             id="is_published"
-            type="checkbox"
-            className="h-4 w-4"
             checked={values.is_published}
-            onChange={handleCheckboxChange("is_published")}
+            onCheckedChange={(checked) => {
+              // CustomPageForm uses handleCheckboxChange which expects an event
+              // but we can just update values directly or use a helper
+              setValues(p => ({ ...p, is_published: checked }));
+            }}
             disabled={disabled}
           />
-          <span>{t("admin.customPage.form.isPublished")}</span>
-        </label>
+          <Label htmlFor="is_published" className="cursor-pointer font-bold uppercase tracking-widest text-[10px] text-primary/80">
+            {t("admin.customPage.form.isPublished")}
+          </Label>
+        </div>
 
-        <label className="flex items-center gap-2 text-sm">
-          <input
+        <div className="flex items-center gap-3">
+          <Switch
             id="featured"
-            type="checkbox"
-            className="h-4 w-4"
             checked={values.featured}
-            onChange={handleCheckboxChange("featured")}
+            onCheckedChange={(checked) => {
+              setValues(p => ({ ...p, featured: checked }));
+            }}
             disabled={disabled}
           />
-          <span>{t("admin.customPage.form.featured")}</span>
-        </label>
+          <Label htmlFor="featured" className="cursor-pointer font-bold uppercase tracking-widest text-[10px] text-primary/80">
+            {t("admin.customPage.form.featured")}
+          </Label>
+        </div>
       </div>
 
-      <div>
-        <label htmlFor={moduleKeyInputId} className="mb-1 block text-muted-foreground text-xs">
-          {t("admin.customPage.form.moduleKey")}
-        </label>
-        <input
-          id={moduleKeyInputId}
-          type="text"
-          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-          value={values.module_key}
-          onChange={handleChange("module_key")}
-          placeholder={t("admin.customPage.form.moduleKeyPlaceholder")}
-          disabled={disabled}
-          required
-        />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="space-y-1.5">
+          <Label htmlFor={moduleKeyInputId}>{t("admin.customPage.form.moduleKey")}</Label>
+          <Input
+            id={moduleKeyInputId}
+            value={values.module_key}
+            onChange={handleChange("module_key")}
+            placeholder={t("admin.customPage.form.moduleKeyPlaceholder")}
+            disabled={disabled}
+            className="bg-background/50"
+            required
+          />
+        </div>
+
+        <div className="space-y-1.5">
+          <Label htmlFor={slugInputId}>Slug</Label>
+          <Input
+            id={slugInputId}
+            value={values.slug}
+            onFocus={() => setSlugTouched(true)}
+            onChange={(e) => {
+              setSlugTouched(true);
+              setValues((prev) => ({ ...prev, slug: e.target.value }));
+            }}
+            disabled={disabled}
+            className="bg-background/50 font-mono text-xs"
+            required
+          />
+        </div>
       </div>
 
-      <div>
-        <label htmlFor={titleInputId} className="mb-1 block text-muted-foreground text-xs">
-          {t("admin.customPage.form.title")}
-        </label>
-        <input
+      <div className="space-y-1.5">
+        <Label htmlFor={titleInputId}>{t("admin.customPage.form.title")}</Label>
+        <Input
           id={titleInputId}
-          type="text"
-          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           value={values.title}
           onChange={(e) => {
             const titleValue = e.target.value;
@@ -142,45 +163,25 @@ export const CustomPageMainColumn: React.FC<Props> = ({
             });
           }}
           disabled={disabled}
+          className="bg-background/50 font-bold"
           required
         />
       </div>
 
-      <div>
-        <label htmlFor={slugInputId} className="mb-1 block text-muted-foreground text-xs">
-          Slug
-        </label>
-        <input
-          id={slugInputId}
-          type="text"
-          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-          value={values.slug}
-          onFocus={() => setSlugTouched(true)}
-          onChange={(e) => {
-            setSlugTouched(true);
-            setValues((prev) => ({ ...prev, slug: e.target.value }));
-          }}
-          disabled={disabled}
-          required
-        />
-      </div>
-
-      <div>
-        <label htmlFor={summaryInputId} className="mb-1 block text-muted-foreground text-xs">
-          {t("admin.customPage.form.summary")}
-        </label>
-        <textarea
+      <div className="space-y-1.5">
+        <Label htmlFor={summaryInputId}>{t("admin.customPage.form.summary")}</Label>
+        <Textarea
           id={summaryInputId}
-          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           rows={3}
           value={values.summary}
           onChange={handleChange("summary")}
           disabled={disabled}
+          className="bg-background/50"
         />
       </div>
 
-      <div>
-        <div className="mb-1 text-muted-foreground text-xs">{t("admin.customPage.form.content")}</div>
+      <div className="space-y-1.5">
+        <Label>{t("admin.customPage.form.content")}</Label>
         <RichContentEditor
           value={values.content}
           disabled={disabled}

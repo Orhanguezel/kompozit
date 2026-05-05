@@ -419,17 +419,29 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
         </CardHeader>
         <CardContent className="p-6">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
-            <TabsList className="mb-4 grid h-auto w-full grid-cols-2 gap-1 sm:grid-cols-4">
-              <TabsTrigger value="content" className="text-xs">
+            <TabsList className="mb-6 premium-card p-1 bg-card/40 border-white/5 h-auto grid grid-cols-2 sm:grid-cols-4 gap-1">
+              <TabsTrigger 
+                value="content" 
+                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+              >
                 {t("admin.customPage.form.tabContent")}
               </TabsTrigger>
-              <TabsTrigger value="media" className="text-xs">
+              <TabsTrigger 
+                value="media" 
+                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+              >
                 {t("admin.customPage.form.tabMedia")}
               </TabsTrigger>
-              <TabsTrigger value="seo" className="text-xs">
+              <TabsTrigger 
+                value="seo" 
+                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+              >
                 {t("admin.customPage.form.tabSeo")}
               </TabsTrigger>
-              <TabsTrigger value="json" className="text-xs">
+              <TabsTrigger 
+                value="json" 
+                className="rounded-md py-2 text-xs data-[state=active]:bg-primary data-[state=active]:text-primary-foreground transition-all"
+              >
                 {t("admin.customPage.form.tabJson")}
               </TabsTrigger>
             </TabsList>
@@ -512,13 +524,15 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
             </TabsContent>
 
             <TabsContent value="json" className="mt-0">
-              <AdminJsonEditor
-                value={values}
-                disabled={disabled}
-                onChange={(next) => setValues(next as CustomPageFormValues)}
-                label="Custom Page JSON"
-                helperText={t("admin.customPage.form.jsonHelperText")}
-              />
+              <Card className="premium-card bg-card/20 border-white/5 p-6">
+                <AdminJsonEditor
+                  value={values}
+                  disabled={disabled}
+                  onChange={(next) => setValues(next as CustomPageFormValues)}
+                  label="Custom Page JSON"
+                  helperText={t("admin.customPage.form.jsonHelperText")}
+                />
+              </Card>
             </TabsContent>
           </Tabs>
         </CardContent>
