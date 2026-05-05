@@ -1,0 +1,1 @@
+ana sayfada mobilde hamburger menude sorunlar var. sayfa disina tasiyor. 
