@@ -62,6 +62,20 @@ export async function fetchMenuItems(locale: string): Promise<Record<string, unk
   }
 }
 
+export async function fetchProductCategories(locale: string): Promise<Record<string, unknown>[]> {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/categories?module_key=kompozit&is_active=1&locale=${encodeURIComponent(locale)}`,
+      { next: { revalidate: 300 } },
+    );
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data as any)?.items ?? [];
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchFooterSections(locale: string): Promise<Record<string, unknown>[]> {
   try {
     const res = await fetch(

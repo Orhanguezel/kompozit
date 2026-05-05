@@ -8,6 +8,12 @@ export interface MenuItemLike {
   children?: MenuItemLike[];
 }
 
+interface CategoryLike {
+  name?: unknown;
+  title?: unknown;
+  slug?: unknown;
+}
+
 export interface FooterSectionLike {
   title: string;
   items: Array<{ label: string; url: string }>;
@@ -29,11 +35,46 @@ export function ensureMenuItems(
   input: Record<string, unknown>[],
   locale: string,
   t: TranslateFn,
+  categories: CategoryLike[] = [],
 ): Record<string, unknown>[] {
-  if (input && input.length > 0) {
-    return input;
-  }
-  return buildDefaultMenu(locale, t) as unknown as Record<string, unknown>[];
+  const baseItems = input && input.length > 0
+    ? input
+    : buildDefaultMenu(locale, t) as unknown as Record<string, unknown>[];
+
+  const categoryChildren = categories
+    .map((category) => {
+      const title = String(category.name ?? category.title ?? '').trim();
+      const slug = String(category.slug ?? '').trim();
+      if (!title || !slug) return null;
+
+      return {
+        title,
+        url: `/products?category=${encodeURIComponent(slug)}`,
+      };
+    })
+    .filter((item): item is MenuItemLike => Boolean(item));
+
+  if (categoryChildren.length === 0) return baseItems;
+
+  const allProductsTitle = locale.startsWith('en') ? 'All Products' : 'Tüm Ürünler';
+
+  return baseItems.map((item) => {
+    const rawUrl = String(item.url ?? item.href ?? '').trim();
+    const normalizedUrl = rawUrl
+      .replace(/^https?:\/\/[^/]+/i, '')
+      .replace(/^\/[a-z]{2}(?=\/|$)/i, '')
+    const path = (normalizedUrl.split('?')[0] ?? '').replace(/\/$/, '') || '/';
+
+    if (path !== '/products') return item;
+
+    return {
+      ...item,
+      children: [
+        { title: allProductsTitle, url: '/products' },
+        ...categoryChildren,
+      ],
+    };
+  });
 }
 
 export function buildDefaultFooterSections(

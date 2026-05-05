@@ -94,7 +94,8 @@ export default async function ProductsPage({
     fetchProductsB2bContent(locale),
   ]);
   const fallbackProducts = getFallbackProducts(locale);
-  const visibleProducts = products.length > 0 ? products : fallbackProducts;
+  const hasFilters = Boolean(category || tag);
+  const visibleProducts = products.length > 0 ? products : hasFilters ? [] : fallbackProducts;
 
   return (
     <main className="relative bg-[var(--carbon)]">
