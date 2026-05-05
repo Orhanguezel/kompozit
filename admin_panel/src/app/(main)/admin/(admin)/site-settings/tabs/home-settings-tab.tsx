@@ -107,24 +107,48 @@ function statsFormToSetting(form: StatsForm): StatsForm & { items: Array<StatIte
 // ---- Hero ----
 
 type HeroForm = {
+  badge: string;
   title: string;
   subtitle: string;
-  ctaLabel: string;
-  ctaHref: string;
-  secondaryLabel: string;
+  primaryCtaLabel: string;
+  primaryCtaHref: string;
+  secondaryCtaLabel: string;
+  secondaryCtaHref: string;
+  workflowLabel: string;
+  workflowTitle: string;
+  workflowBadgeTitle: string;
+  workflowBadgeSubtitle: string;
 };
 
-const EMPTY_HERO: HeroForm = { title: "", subtitle: "", ctaLabel: "", ctaHref: "", secondaryLabel: "" };
+const EMPTY_HERO: HeroForm = {
+  badge: "",
+  title: "",
+  subtitle: "",
+  primaryCtaLabel: "",
+  primaryCtaHref: "",
+  secondaryCtaLabel: "",
+  secondaryCtaHref: "",
+  workflowLabel: "",
+  workflowTitle: "",
+  workflowBadgeTitle: "",
+  workflowBadgeSubtitle: "",
+};
 
 function toHeroForm(v: unknown): HeroForm {
   if (!v || typeof v !== "object") return EMPTY_HERO;
   const o = v as Record<string, unknown>;
   return {
+    badge: String(o.badge ?? ""),
     title: String(o.title ?? ""),
     subtitle: String(o.subtitle ?? ""),
-    ctaLabel: String(o.ctaLabel ?? ""),
-    ctaHref: String(o.ctaHref ?? ""),
-    secondaryLabel: String(o.secondaryLabel ?? ""),
+    primaryCtaLabel: String(o.primaryCtaLabel ?? o.ctaLabel ?? ""),
+    primaryCtaHref: String(o.primaryCtaHref ?? o.ctaHref ?? ""),
+    secondaryCtaLabel: String(o.secondaryCtaLabel ?? o.secondaryLabel ?? ""),
+    secondaryCtaHref: String(o.secondaryCtaHref ?? o.secondaryHref ?? ""),
+    workflowLabel: String(o.workflowLabel ?? ""),
+    workflowTitle: String(o.workflowTitle ?? ""),
+    workflowBadgeTitle: String(o.workflowBadgeTitle ?? ""),
+    workflowBadgeSubtitle: String(o.workflowBadgeSubtitle ?? ""),
   };
 }
 
@@ -285,6 +309,15 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
       <Section title={t("sections.hero.title")} description={t("sections.hero.description")}>
         <div className="space-y-3">
           <div className="space-y-1">
+            <Label>Rozet Metni</Label>
+            <Input
+              value={hero.badge}
+              onChange={(e) => setHero((p) => ({ ...p, badge: e.target.value }))}
+              placeholder="B2B Kompozit Üretim"
+              disabled={busy}
+            />
+          </div>
+          <div className="space-y-1">
             <Label>{t("fields.titleHtml")}</Label>
             <Input
               value={hero.title}
@@ -307,8 +340,8 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
             <div className="space-y-1">
               <Label>{t("fields.primaryCtaLabel")}</Label>
               <Input
-                value={hero.ctaLabel}
-                onChange={(e) => setHero((p) => ({ ...p, ctaLabel: e.target.value }))}
+                value={hero.primaryCtaLabel}
+                onChange={(e) => setHero((p) => ({ ...p, primaryCtaLabel: e.target.value }))}
                 placeholder={t("placeholders.heroCtaLabel")}
                 disabled={busy}
               />
@@ -316,8 +349,8 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
             <div className="space-y-1">
               <Label>{t("fields.primaryCtaUrl")}</Label>
               <Input
-                value={hero.ctaHref}
-                onChange={(e) => setHero((p) => ({ ...p, ctaHref: e.target.value }))}
+                value={hero.primaryCtaHref}
+                onChange={(e) => setHero((p) => ({ ...p, primaryCtaHref: e.target.value }))}
                 placeholder={t("placeholders.heroCtaHref")}
                 disabled={busy}
               />
@@ -325,9 +358,52 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
             <div className="space-y-1">
               <Label>{t("fields.secondaryCtaLabel")}</Label>
               <Input
-                value={hero.secondaryLabel}
-                onChange={(e) => setHero((p) => ({ ...p, secondaryLabel: e.target.value }))}
+                value={hero.secondaryCtaLabel}
+                onChange={(e) => setHero((p) => ({ ...p, secondaryCtaLabel: e.target.value }))}
                 placeholder={t("placeholders.heroSecondaryLabel")}
+                disabled={busy}
+              />
+            </div>
+          </div>
+          <div className="space-y-1">
+            <Label>İkinci CTA URL</Label>
+            <Input
+              value={hero.secondaryCtaHref}
+              onChange={(e) => setHero((p) => ({ ...p, secondaryCtaHref: e.target.value }))}
+              placeholder="/offer"
+              disabled={busy}
+            />
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1">
+              <Label>İş Akışı Etiketi</Label>
+              <Input
+                value={hero.workflowLabel}
+                onChange={(e) => setHero((p) => ({ ...p, workflowLabel: e.target.value }))}
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label>İş Akışı Başlığı</Label>
+              <Input
+                value={hero.workflowTitle}
+                onChange={(e) => setHero((p) => ({ ...p, workflowTitle: e.target.value }))}
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label>İş Akışı Rozet Başlığı</Label>
+              <Input
+                value={hero.workflowBadgeTitle}
+                onChange={(e) => setHero((p) => ({ ...p, workflowBadgeTitle: e.target.value }))}
+                disabled={busy}
+              />
+            </div>
+            <div className="space-y-1">
+              <Label>İş Akışı Rozet Alt Başlığı</Label>
+              <Input
+                value={hero.workflowBadgeSubtitle}
+                onChange={(e) => setHero((p) => ({ ...p, workflowBadgeSubtitle: e.target.value }))}
                 disabled={busy}
               />
             </div>

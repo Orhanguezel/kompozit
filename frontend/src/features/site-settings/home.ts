@@ -69,17 +69,19 @@ function normalizeHero(value: unknown): HomeHeroContent | null {
     badge: String(source.badge ?? '').trim(),
     title: String(source.title ?? '').trim(),
     subtitle: String(source.subtitle ?? '').trim(),
-    primaryCtaLabel: String(source.primaryCtaLabel ?? '').trim(),
-    primaryCtaHref: String(source.primaryCtaHref ?? '').trim(),
-    secondaryCtaLabel: String(source.secondaryCtaLabel ?? '').trim(),
-    secondaryCtaHref: String(source.secondaryCtaHref ?? '').trim(),
+    primaryCtaLabel: String(source.primaryCtaLabel ?? source.ctaLabel ?? '').trim(),
+    primaryCtaHref: String(source.primaryCtaHref ?? source.ctaHref ?? '').trim(),
+    secondaryCtaLabel: String(source.secondaryCtaLabel ?? source.secondaryLabel ?? '').trim(),
+    secondaryCtaHref: String(source.secondaryCtaHref ?? source.secondaryHref ?? '').trim(),
     workflowLabel: String(source.workflowLabel ?? '').trim(),
     workflowTitle: String(source.workflowTitle ?? '').trim(),
     workflowBadgeTitle: String(source.workflowBadgeTitle ?? '').trim(),
     workflowBadgeSubtitle: String(source.workflowBadgeSubtitle ?? '').trim(),
   };
 
-  return Object.values(hero).every(isNonEmptyString) ? hero : null;
+  return [hero.title, hero.subtitle, hero.primaryCtaLabel, hero.primaryCtaHref, hero.secondaryCtaLabel, hero.secondaryCtaHref].every(isNonEmptyString)
+    ? hero
+    : null;
 }
 
 function normalizeMetrics(value: unknown): HomeMetricsContent | null {
