@@ -10,7 +10,7 @@
 
 import * as React from "react";
 
-import { LayoutList, RefreshCcw, Search, SlidersHorizontal } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
@@ -22,8 +22,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
 import { useAdminTranslations } from "@/i18n";
 import type { TranslateFn } from "@/i18n";
-import { useDeleteSiteSettingAdminMutation, useListSiteSettingsAdminQuery } from "@/integrations/hooks";
-import type { SiteSetting } from "@/integrations/shared";
+import { useListSiteSettingsAdminQuery } from "@/integrations/hooks";
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 import { ApiSettingsTab } from "../tabs/api-settings-tab";
@@ -36,13 +35,10 @@ import { HomeSettingsTab } from "../tabs/home-settings-tab";
 import { LocalesSettingsTab } from "../tabs/locales-settings-tab";
 import { SeoSettingsTab } from "../tabs/seo-settings-tab";
 import { SmtpSettingsTab } from "../tabs/smtp-settings-tab";
-import { SiteSettingsList } from "./site-settings-list";
 
 /* ----------------------------- helpers ----------------------------- */
 
 type SettingsTab =
-  | "list"
-  | "global_list"
   | "general"
   | "seo"
   | "smtp"
@@ -147,13 +143,7 @@ function pickInitialLocale(appLocales: LocaleConfigItem[] | undefined, defaultLo
   return firstActive ? String(firstActive) : "de";
 }
 
-function editHref(key: string, locale: string) {
-  return `/admin/site-settings/${encodeURIComponent(key)}?locale=${encodeURIComponent(locale)}`;
-}
-
 function tabTitle(tab: SettingsTab, t: TranslateFn): string {
-  if (tab === "list") return t("admin.siteSettings.tabs.list");
-  if (tab === "global_list") return t("admin.siteSettings.tabs.globalList");
   if (tab === "general") return t("admin.siteSettings.tabs.general");
   if (tab === "seo") return t("admin.siteSettings.tabs.seo");
   if (tab === "smtp") return t("admin.siteSettings.tabs.smtp");
@@ -166,8 +156,6 @@ function tabTitle(tab: SettingsTab, t: TranslateFn): string {
 }
 
 function tabDescription(tab: SettingsTab, t: TranslateFn): string {
-  if (tab === "list") return t("admin.siteSettings.management.localeRecords");
-  if (tab === "global_list") return t("admin.siteSettings.management.globalRecords");
   if (tab === "general") return t("admin.siteSettings.general.title");
   if (tab === "seo") return t("admin.siteSettings.tabs.seo");
   if (tab === "smtp") return t("admin.siteSettings.tabs.smtp");
@@ -177,50 +165,6 @@ function tabDescription(tab: SettingsTab, t: TranslateFn): string {
   if (tab === "locales") return t("admin.siteSettings.locales.title");
   if (tab === "branding") return t("admin.siteSettings.branding.title");
   return t("admin.siteSettings.management.homeContent");
-}
-
-/* ----------------------------- list panels ----------------------------- */
-
-function ListPanel({
-  locale,
-  search,
-  prefix,
-  onDeleteRow,
-}: {
-  locale: string; // selected locale OR '*'
-  search: string;
-  prefix?: string;
-  onDeleteRow: (row: SiteSetting) => void;
-}) {
-  const qArgs = React.useMemo(() => {
-    const q = search.trim() || undefined;
-    return {
-      locale,
-      q,
-      prefix: prefix || undefined,
-      sort: "key" as const,
-      order: "asc" as const,
-      limit: 200,
-      offset: 0,
-    };
-  }, [locale, search, prefix]);
-
-  const listQ = useListSiteSettingsAdminQuery(qArgs, {
-    skip: !locale,
-    refetchOnMountOrArgChange: true,
-  });
-
-  const loading = listQ.isLoading || listQ.isFetching;
-
-  return (
-    <SiteSettingsList
-      settings={(listQ.data ?? []) as SiteSetting[]}
-      loading={loading}
-      selectedLocale={locale}
-      onDelete={onDeleteRow}
-      getEditHref={(s) => editHref(String(s.key || ""), locale)}
-    />
-  );
 }
 
 /* ----------------------------- main component ----------------------------- */
@@ -252,11 +196,8 @@ export default function AdminSiteSettingsClient() {
   const initialLocale = React.useMemo(() => pickInitialLocale(localeRows, ""), [localeRows]);
 
   const [tab, setTab] = React.useState<SettingsTab>("general");
-  const [search, setSearch] = React.useState("");
   const [locale, setLocale] = React.useState<string>("");
   const [localeTouched, setLocaleTouched] = React.useState<boolean>(false);
-
-  const [deleteSetting, { isLoading: isDeleting }] = useDeleteSiteSettingAdminMutation();
 
   const adminLocale = usePreferencesStore((s) => s.adminLocale);
   const t = useAdminTranslations(adminLocale || undefined);
@@ -273,9 +214,7 @@ export default function AdminSiteSettingsClient() {
     }
   }, [initialLocale, locale, localeTouched]);
 
-  const headerLoading = localeSettingsQ.isFetching || localeSettingsQ.isLoading;
-
-  const disabled = headerLoading || isDeleting;
+  const disabled = localeSettingsQ.isFetching || localeSettingsQ.isLoading;
 
   const onRefresh = async () => {
     try {
@@ -286,55 +225,15 @@ export default function AdminSiteSettingsClient() {
     }
   };
 
-  const handleDeleteRow = async (row: SiteSetting) => {
-    const key = String(row?.key || "").trim();
-    const rowLocale = row?.locale ? String(row.locale) : undefined;
-    if (!key) return;
-
-    const ok = window.confirm(t("admin.siteSettings.list.deleteConfirm", { key, locale: rowLocale || locale || "—" }));
-    if (!ok) return;
-
-    try {
-      await deleteSetting({ key, locale: rowLocale ?? undefined }).unwrap();
-      toast.success(t("admin.siteSettings.messages.deleted"));
-    } catch (err) {
-      toast.error(getErrMessage(err, t("admin.siteSettings.messages.error")));
-    }
-  };
-
   const localeReady = Boolean(locale?.trim());
-  const isGlobalTab = tab === "global_list" || tab === "smtp" || tab === "locales";
+  const isGlobalTab = tab === "smtp" || tab === "locales";
 
   return (
     <div className="w-full max-w-full space-y-6 overflow-x-hidden px-2 pb-6 md:px-0 md:pb-0">
-      {isScopedBrand ? (
-        <div className="rounded-xl border border-orange-200 bg-linear-to-r from-orange-50 via-amber-50 to-white px-4 py-3 shadow-sm">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="default" className="bg-orange-600 text-white hover:bg-orange-600">
-              {String(brand || "").toUpperCase()} Workspace
-            </Badge>
-            <Badge variant="outline" className="border-orange-300 bg-white/80 text-orange-800">
-              Scope: {brandPrefix}
-            </Badge>
-          </div>
-          <p className="mt-2 text-orange-900 text-sm">
-            {t("admin.siteSettings.scoped.note")}
-          </p>
-        </div>
-      ) : null}
-
-      {/* PAGE HEAD (UsersListClient style) */}
       <div className="space-y-2">
         <div className="flex flex-wrap items-center gap-2">
           <h1 className="font-semibold text-lg">{t("admin.siteSettings.title")}</h1>
-          {isScopedBrand ? (
-            <Badge variant="default" className="gap-1.5">
-              <span className="size-1.5 rounded-full bg-white/80" />
-              {String(brand || "").toUpperCase()} Scope
-            </Badge>
-          ) : (
-            <Badge variant="secondary">{t("admin.siteSettings.badges.global")}</Badge>
-          )}
+          <Badge variant="secondary">Kompozit</Badge>
         </div>
         <p className="text-muted-foreground text-sm">
           {isScopedBrand
@@ -343,31 +242,25 @@ export default function AdminSiteSettingsClient() {
         </p>
       </div>
 
-      {/* FILTERS (UsersListClient style) */}
       <Card>
         <CardHeader className="gap-2">
-          <CardTitle className="text-base">{t("admin.siteSettings.filters.title")}</CardTitle>
-          <CardDescription>{t("admin.siteSettings.filters.description")}</CardDescription>
+          <div className="flex items-start justify-between gap-3">
+            <div className="space-y-1">
+              <CardTitle className="text-base">{tabTitle(tab, t)}</CardTitle>
+              <CardDescription>{tabDescription(tab, t)}</CardDescription>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {isGlobalTab ? <Badge variant="secondary">{t("admin.siteSettings.badges.global")}</Badge> : null}
+              {!isGlobalTab && localeReady ? <Badge variant="secondary">{locale}</Badge> : null}
+              {disabled ? <Badge variant="outline">{t("admin.siteSettings.messages.loading")}</Badge> : null}
+            </div>
+          </div>
         </CardHeader>
 
         <CardContent className="space-y-4">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-end">
-            <div className="w-full flex-1 space-y-2">
-              <Label htmlFor="q">{t("admin.siteSettings.filters.search")}</Label>
-              <div className="relative">
-                <Search className="-translate-y-1/2 pointer-events-none absolute top-1/2 left-3 size-4 text-muted-foreground" />
-                <Input
-                  id="q"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder={t("admin.siteSettings.filters.searchPlaceholder")}
-                  className="w-full pl-9"
-                  disabled={disabled}
-                />
-              </div>
-            </div>
-
-            <div className="w-full space-y-2 lg:w-56">
+          <div className="flex flex-col gap-3 rounded-md border bg-muted/20 p-3 md:flex-row md:items-end md:justify-between">
+            <div className="w-full space-y-2 md:max-w-xs">
               <Label>{t("admin.siteSettings.filters.language")}</Label>
               <Select
                 value={localeReady ? locale : ""}
@@ -396,90 +289,17 @@ export default function AdminSiteSettingsClient() {
                   ))}
                 </SelectContent>
               </Select>
-              {isGlobalTab ? (
-                <div className="text-muted-foreground text-xs">
-                  {t("admin.siteSettings.filters.languageDisabledNote")}
-                </div>
-              ) : null}
             </div>
-
-            <div className="flex w-full gap-2 lg:w-auto">
-              <Button
-                type="button"
-                variant="ghost"
-                onClick={onRefresh}
-                disabled={disabled}
-                title={t("admin.siteSettings.filters.refreshButton")}
-                className="flex-1 lg:flex-initial"
-              >
-                <RefreshCcw className="size-4" />
-                <span className="ml-2 lg:hidden">{t("admin.siteSettings.filters.refreshButton")}</span>
-              </Button>
-
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  setSearch("");
-                  if (!isGlobalTab) {
-                    setLocaleTouched(false);
-                    setLocale(initialLocale);
-                  }
-                }}
-                disabled={disabled}
-                className="flex-1 lg:flex-initial"
-              >
-                {t("admin.siteSettings.filters.resetButton")}
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* CONTENT */}
-      <Card>
-        <CardHeader className="gap-2">
-          <div className="flex items-start justify-between gap-3">
-            <div className="space-y-1">
-              <CardTitle className="text-base">{tabTitle(tab, t)}</CardTitle>
-              <CardDescription>{tabDescription(tab, t)}</CardDescription>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {isScopedBrand ? (
-                <Badge variant="outline" className="border-orange-200 bg-orange-50 text-orange-700">
-                  Scope: {brandPrefix}
-                </Badge>
-              ) : null}
-              {isGlobalTab ? <Badge variant="secondary">{t("admin.siteSettings.badges.global")}</Badge> : null}
-              {!isGlobalTab && localeReady ? <Badge variant="secondary">{locale}</Badge> : null}
-              {disabled ? <Badge variant="outline">{t("admin.siteSettings.messages.loading")}</Badge> : null}
-            </div>
-          </div>
-        </CardHeader>
-
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            <div className="rounded-lg border bg-muted/30 p-3">
-              <div className="mb-1 flex items-center gap-2 font-medium text-sm">
-                <LayoutList className="size-4 text-muted-foreground" />
-                {t("admin.siteSettings.management.title")}
-              </div>
-              <div className="text-muted-foreground text-xs">
-                {tabDescription(tab, t)}
-              </div>
-            </div>
-            <div className="rounded-lg border bg-muted/30 p-3">
-              <div className="mb-1 flex items-center gap-2 font-medium text-sm">
-                <SlidersHorizontal className="size-4 text-muted-foreground" />
-                {t("admin.siteSettings.filters.title")}
-              </div>
-              <div className="text-muted-foreground text-xs">
-                {isGlobalTab
-                  ? t("admin.siteSettings.filters.languageDisabledNote")
-                  : t("admin.siteSettings.filters.searchPlaceholder")}
-              </div>
-            </div>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onRefresh}
+              disabled={disabled}
+              title={t("admin.siteSettings.filters.refreshButton")}
+            >
+              <RefreshCcw className="size-4" />
+              <span className="ml-2">{t("admin.siteSettings.filters.refreshButton")}</span>
+            </Button>
           </div>
 
           {!localeReady ? (
@@ -490,12 +310,6 @@ export default function AdminSiteSettingsClient() {
             <Tabs value={tab} onValueChange={(v) => setTab(v as SettingsTab)}>
               <div className="-mx-2 overflow-x-auto px-2 md:mx-0 md:overflow-x-visible md:px-0">
                 <TabsList className="inline-flex min-w-full flex-nowrap justify-start md:flex-wrap">
-                  <TabsTrigger value="list" className="whitespace-nowrap">
-                    {t("admin.siteSettings.tabs.list")}
-                  </TabsTrigger>
-                  <TabsTrigger value="global_list" className="whitespace-nowrap">
-                    {t("admin.siteSettings.tabs.globalList")}
-                  </TabsTrigger>
                   <TabsTrigger value="general" className="whitespace-nowrap">
                     {t("admin.siteSettings.tabs.general")}
                   </TabsTrigger>
@@ -535,14 +349,6 @@ export default function AdminSiteSettingsClient() {
                   ) : null}
                 </TabsList>
               </div>
-
-              <TabsContent value="list" className="mt-4">
-                <ListPanel locale={locale} search={search} prefix={brandPrefix} onDeleteRow={handleDeleteRow} />
-              </TabsContent>
-
-              <TabsContent value="global_list" className="mt-4">
-                <ListPanel locale="*" search={search} prefix={brandPrefix} onDeleteRow={handleDeleteRow} />
-              </TabsContent>
 
               <TabsContent value="general" className="mt-4">
                 <GeneralSettingsTab locale={locale} settingPrefix={brandPrefix} />
