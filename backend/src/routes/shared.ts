@@ -1,5 +1,5 @@
 import type { FastifyInstance } from 'fastify';
-import { createDbAdminRoutes, type ModuleMap } from '@ensotek/shared-backend/modules/db_admin';
+import { createDbAdminRoutes, type ModuleMap } from '@/modules/db_admin';
 
 // Kimlik doğrulama & kullanıcı yönetimi
 import { registerAuth, registerUserAdmin } from '@ensotek/shared-backend/modules/auth';
