@@ -4,6 +4,7 @@ import type { FastifyInstance } from 'fastify';
 
 import { registerContentReactions } from '@/modules/contentReactions/router';
 import { registerFooterSections } from '@/modules/footerSections/router';
+import { registerFooterSectionsAdmin } from '@/modules/footerSections/admin.routes';
 import { registerMenuItems } from '@/modules/menuItems/router';
 import { registerMenuItemsAdmin } from '@/modules/menuItems/admin.routes';
 import { registerOffer } from '@/modules/offer/router';
@@ -23,6 +24,7 @@ export async function registerProjectPublic(api: FastifyInstance) {
 export async function registerProjectAdmin(adminApi: FastifyInstance) {
   for (const reg of [
     registerDashboardAdmin,
+    registerFooterSectionsAdmin,
     registerMenuItemsAdmin,
     registerOfferAdmin,
     registerReviewsAdmin,

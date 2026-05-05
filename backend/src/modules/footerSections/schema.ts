@@ -20,3 +20,9 @@ export const footerSectionsI18n = mysqlTable("footer_sections_i18n", {
   created_at:  datetime("created_at", { fsp: 3 }).notNull().default(sql`CURRENT_TIMESTAMP(3)`),
   updated_at:  datetime("updated_at", { fsp: 3 }).notNull().default(sql`CURRENT_TIMESTAMP(3)`),
 });
+
+export type FooterSectionRow = typeof footerSections.$inferSelect;
+export type NewFooterSectionRow = typeof footerSections.$inferInsert;
+
+export type FooterSectionI18nRow = typeof footerSectionsI18n.$inferSelect;
+export type NewFooterSectionI18nRow = typeof footerSectionsI18n.$inferInsert;

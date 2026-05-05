@@ -18,6 +18,7 @@ import {
   LayoutDashboard,
   type LucideIcon,
   MessageSquare,
+  Navigation,
   Newspaper,
   Puzzle,
   RefreshCcw,
@@ -63,6 +64,7 @@ export type AdminNavItemKey =
   | "sparepart"
   | "services"
   | "sliders"
+  | "navigation"
   | "menu_items"
   | "footer_sections"
   | "faqs"
@@ -128,6 +130,7 @@ export const adminNavConfig: AdminNavConfigGroup[] = [
       { key: "kompozit_corporate", url: "/admin/custompage?module=kompozit_about", icon: FileText },
       { key: "kompozit_legal", url: "/admin/custompage?module=kompozit_legal", icon: FileSearch },
       { key: "kompozit_settings", url: "/admin/site-settings", icon: Settings },
+      { key: "navigation", url: "/admin/navigation", icon: Navigation },
     ],
   },
   {
@@ -161,6 +164,7 @@ const FALLBACK_TITLES: Record<AdminNavItemKey, string> = {
   sparepart: "Spare Parts",
   services: "Services",
   sliders: "Sliders",
+  navigation: "Navigation",
   menu_items: "Menu Items",
   footer_sections: "Footer Sections",
   faqs: "FAQs",
