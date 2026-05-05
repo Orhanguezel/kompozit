@@ -65,7 +65,7 @@ SET
   `image_url` = '/uploads/kompozit/ctp-cam-elyaf-01.jpg',
   `storage_asset_id` = 'c3000003-0003-4003-8003-000000000003',
   `updated_at` = NOW(3)
-WHERE `id` = 'bs010001-7001-4001-9001-ssssssss0001';
+WHERE `id` = 'b5010001-7001-4001-9001-555555550001';
 
 UPDATE `custom_pages`
 SET
@@ -73,7 +73,7 @@ SET
   `image_url` = '/uploads/kompozit/karbon-fiber-doku-01.jpg',
   `storage_asset_id` = 'c3000002-0002-4002-8002-000000000002',
   `updated_at` = NOW(3)
-WHERE `id` = 'bs010002-7002-4002-9002-ssssssss0002';
+WHERE `id` = 'b5010002-7002-4002-9002-555555550002';
 
 UPDATE `custom_pages`
 SET
@@ -81,7 +81,7 @@ SET
   `image_url` = '/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg',
   `storage_asset_id` = 'c3000007-0007-4007-8007-000000000007',
   `updated_at` = NOW(3)
-WHERE `id` = 'bs010003-7003-4003-9003-ssssssss0003';
+WHERE `id` = 'b5010003-7003-4003-9003-555555550003';
 
 UPDATE `custom_pages`
 SET
@@ -89,7 +89,7 @@ SET
   `image_url` = '/uploads/kompozit/ctp-dokuma-hibrit-01.jpg',
   `storage_asset_id` = 'c3000004-0004-4004-8004-000000000004',
   `updated_at` = NOW(3)
-WHERE `id` = 'bs010004-7004-4004-9004-ssssssss0004';
+WHERE `id` = 'b5010004-7004-4004-9004-555555550004';
 
 -- Blog (kompozit_blog)
 UPDATE `custom_pages`

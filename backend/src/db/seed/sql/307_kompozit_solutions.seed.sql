@@ -11,6 +11,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 START TRANSACTION;
 
+DELETE FROM `custom_pages_i18n`
+WHERE `page_id` LIKE 'bs01000%' OR `id` LIKE 'bs02000%';
+
+DELETE FROM `custom_pages`
+WHERE `module_key` = 'kompozit_solutions' AND `id` LIKE 'bs01000%';
+
 INSERT INTO `custom_pages`
 (
   `id`,
@@ -29,10 +35,10 @@ INSERT INTO `custom_pages`
   `sub_category_id`
 )
 VALUES
-  ('bs010001-7001-4001-9001-ssssssss0001', 'kompozit_solutions', 1, 1, 10, 10, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
-  ('bs010002-7002-4002-9002-ssssssss0002', 'kompozit_solutions', 1, 1, 20, 20, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
-  ('bs010003-7003-4003-9003-ssssssss0003', 'kompozit_solutions', 1, 1, 30, 30, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
-  ('bs010004-7004-4004-9004-ssssssss0004', 'kompozit_solutions', 1, 1, 40, 40, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL)
+  ('b5010001-7001-4001-9001-555555550001', 'kompozit_solutions', 1, 1, 10, 10, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
+  ('b5010002-7002-4002-9002-555555550002', 'kompozit_solutions', 1, 1, 20, 20, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
+  ('b5010003-7003-4003-9003-555555550003', 'kompozit_solutions', 1, 1, 30, 30, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
+  ('b5010004-7004-4004-9004-555555550004', 'kompozit_solutions', 1, 1, 40, 40, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL)
 ON DUPLICATE KEY UPDATE
   `module_key` = VALUES(`module_key`),
   `is_published` = VALUES(`is_published`),
@@ -55,8 +61,8 @@ INSERT INTO `custom_pages_i18n`
 )
 VALUES
   (
-    'bs020001-8001-4001-a001-ssssssss0001',
-    'bs010001-7001-4001-9001-ssssssss0001',
+    'b5020001-8001-4001-a001-555555550001',
+    'b5010001-7001-4001-9001-555555550001',
     'tr',
     'Kompozit saksı ve peyzaj ürünleri',
     'solution-planters',
@@ -67,8 +73,8 @@ VALUES
     'kompozit saksı, peyzaj, CTP saksı, dış mekan kompozit'
   ),
   (
-    'bs020002-8002-4002-a002-ssssssss0002',
-    'bs010001-7001-4001-9001-ssssssss0001',
+    'b5020002-8002-4002-a002-555555550002',
+    'b5010001-7001-4001-9001-555555550001',
     'en',
     'Composite planters and landscape products',
     'solution-planters',
@@ -79,8 +85,8 @@ VALUES
     'composite planters, fiberglass planter, landscape composite'
   ),
   (
-    'bs020003-8003-4003-a003-ssssssss0003',
-    'bs010002-7002-4002-9002-ssssssss0002',
+    'b5020003-8003-4003-a003-555555550003',
+    'b5010002-7002-4002-9002-555555550002',
     'tr',
     'Kompozit tabut ve defin hizmetleri ürünleri',
     'solution-coffins',
@@ -91,8 +97,8 @@ VALUES
     'kompozit tabut, fiberglass tabut, hafif tabut üretimi'
   ),
   (
-    'bs020004-8004-4004-a004-ssssssss0004',
-    'bs010002-7002-4002-9002-ssssssss0002',
+    'b5020004-8004-4004-a004-555555550004',
+    'b5010002-7002-4002-9002-555555550002',
     'en',
     'Composite coffins and funeral-sector products',
     'solution-coffins',
@@ -103,8 +109,8 @@ VALUES
     'composite coffin, fiberglass coffin, lightweight coffin manufacturing'
   ),
   (
-    'bs020005-8005-4005-a005-ssssssss0005',
-    'bs010003-7003-4003-9003-ssssssss0003',
+    'b5020005-8005-4005-a005-555555550005',
+    'b5010003-7003-4003-9003-555555550003',
     'tr',
     'Kompozit depo ve tank çözümleri',
     'solution-storage-tanks',
@@ -115,8 +121,8 @@ VALUES
     'kompozit tank, CTP depo, FRP tank, kimyasal dayanım'
   ),
   (
-    'bs020006-8006-4006-a006-ssssssss0006',
-    'bs010003-7003-4003-9003-ssssssss0003',
+    'b5020006-8006-4006-a006-555555550006',
+    'b5010003-7003-4003-9003-555555550003',
     'en',
     'Composite storage tanks and containment',
     'solution-storage-tanks',
@@ -127,8 +133,8 @@ VALUES
     'FRP tank, fiberglass storage tank, composite containment'
   ),
   (
-    'bs020007-8007-4007-a007-ssssssss0007',
-    'bs010004-7004-4004-9004-ssssssss0004',
+    'b5020007-8007-4007-a007-555555550007',
+    'b5010004-7004-4004-9004-555555550004',
     'tr',
     'Özel B2B kompozit imalat ve ihracat',
     'solution-custom-b2b',
@@ -139,8 +145,8 @@ VALUES
     'b2b kompozit, özel imalat, oem kompozit, ihracat üretim'
   ),
   (
-    'bs020008-8008-4008-a008-ssssssss0008',
-    'bs010004-7004-4004-9004-ssssssss0004',
+    'b5020008-8008-4008-a008-555555550008',
+    'b5010004-7004-4004-9004-555555550004',
     'en',
     'Custom B2B composite manufacturing & export programs',
     'solution-custom-b2b',
