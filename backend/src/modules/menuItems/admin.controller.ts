@@ -17,6 +17,8 @@ import {
 } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { DEFAULT_LOCALE } from "@/core/i18n";
+
+const SITE_ID = 'kompozit' as const;
 import {
   menuItems,
   menuItemsI18n,
@@ -444,6 +446,7 @@ export const adminCreateMenuItem: RouteHandler = async (
       location: body.location,
       icon: body.icon ?? null,
       section_id: body.section_id ?? null,
+      site_id: SITE_ID,
       order_num: body.display_order ?? 0,
       is_active: toBool(body.is_active) ?? true,
       created_at: new Date() as any,

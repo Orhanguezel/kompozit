@@ -5,6 +5,8 @@ import { alias } from "drizzle-orm/mysql-core";
 
 import { db } from "@/db/client";
 import { DEFAULT_LOCALE } from "@/core/i18n";
+
+const SITE_ID = 'kompozit' as const;
 import { menuItems } from "@/modules/menuItems/schema";
 import { footerSections, footerSectionsI18n, type NewFooterSectionRow, type NewFooterSectionI18nRow } from "./schema";
 import {
@@ -207,7 +209,7 @@ export const adminCreateFooterSection: RouteHandler = async (req, reply) => {
 
     const parentInsert: NewFooterSectionRow = {
       id,
-      site_id: null,
+      site_id: SITE_ID,
       is_active: toBool(body.is_active) ?? true,
       display_order: body.display_order ?? 0,
       created_at: new Date() as any,
