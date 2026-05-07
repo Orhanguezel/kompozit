@@ -13,6 +13,7 @@ import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { fetchRelatedContent } from '@/lib/related-content';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
+import { RichContentDisplay } from '@/components/ui/RichContentDisplay';
 import { RelatedLinks } from '@/components/seo/RelatedLinks';
 import { buildMediaAlt } from '@/lib/media-seo';
 import { Reveal } from '@/components/motion/Reveal';
@@ -196,9 +197,9 @@ export default async function ProductDetailPage({
                   {tProd('technicalScope')}
                 </h3>
                 {product.description && (
-                  <div
-                    className="prose prose-lg max-w-none text-[var(--color-text-secondary)] prose-p:text-[var(--color-text-secondary)] prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:tracking-tight prose-headings:text-[var(--color-text-primary)] prose-strong:text-[var(--color-text-primary)] prose-li:text-[var(--color-text-secondary)] prose-a:text-[var(--color-gold)] hover:prose-a:underline"
-                    dangerouslySetInnerHTML={{ __html: product.description }}
+                  <RichContentDisplay
+                    html={product.description}
+                    className="prose prose-lg max-w-none text-(--color-text-secondary) prose-p:text-(--color-text-secondary) prose-headings:font-(--font-display) prose-headings:tracking-tight prose-headings:text-(--color-text-primary) prose-strong:text-(--color-text-primary) prose-li:text-(--color-text-secondary) prose-a:text-(--color-gold) hover:prose-a:underline"
                   />
                 )}
               </div>
