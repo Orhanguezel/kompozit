@@ -289,12 +289,13 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
         <table className="w-full table-fixed border-collapse text-xs">
           <thead>
             <tr className="border-b bg-muted/30 text-left">
-              <th className="w-10 px-3 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">#</th>
-              <th className="w-[30%] px-3 py-2 text-xs font-bold uppercase tracking-wider">{t("admin.customPage.form.title")}</th>
-              <th className="w-[25%] px-3 py-2 text-xs font-bold uppercase tracking-wider">Slug</th>
-              <th className="w-[12%] px-3 py-2 text-center text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.published")}</th>
-              <th className="w-[15%] px-3 py-2 text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.created")}</th>
-              <th className="w-[120px] px-3 py-2 text-right text-xs font-bold uppercase tracking-wider">{t("admin.common.actions")}</th>
+              <th className="w-8 px-3 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider">#</th>
+              <th className="w-[28%] px-3 py-2 text-xs font-bold uppercase tracking-wider">{t("admin.customPage.form.title")}</th>
+              <th className="w-[22%] px-3 py-2 text-xs font-bold uppercase tracking-wider">Slug</th>
+              <th className="w-[9%] px-3 py-2 text-center text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.published")}</th>
+              <th className="w-[9%] px-3 py-2 text-center text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.featured")}</th>
+              <th className="w-[12%] px-3 py-2 text-xs font-bold uppercase tracking-wider">{t("admin.customPage.list.created")}</th>
+              <th className="w-25 px-3 py-2 text-right text-xs font-bold uppercase tracking-wider">{t("admin.common.actions")}</th>
             </tr>
           </thead>
 
@@ -324,10 +325,19 @@ export const CustomPageList: React.FC<CustomPageListProps> = ({
                   </td>
 
                   <td className="px-2 py-1.5 text-center">
-                    <div className="inline-flex flex-wrap items-center justify-center gap-1">
-                      {renderStatus(p)}
-                      {renderFeatured(p)}
-                    </div>
+                    <Switch
+                      checked={!!p.is_published}
+                      onCheckedChange={() => handleTogglePublished(p)}
+                      disabled={busy}
+                    />
+                  </td>
+
+                  <td className="px-2 py-1.5 text-center">
+                    <Switch
+                      checked={!!p.featured}
+                      onCheckedChange={() => handleToggleFeatured(p)}
+                      disabled={busy}
+                    />
                   </td>
 
                   <td className="px-3 py-2 text-xs text-muted-foreground" title={`${formatDate(p.created_at)}`}>
