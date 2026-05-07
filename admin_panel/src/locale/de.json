@@ -3858,6 +3858,7 @@
       },
       "filters": {
         "searchPlaceholder": "Nach Name oder Slug suchen...",
+        "locale": "Sprache",
         "allLocales": "Alle Sprachen",
         "allModules": "Alle Module",
         "onlyActive": "Nur aktive",
@@ -3905,7 +3906,9 @@
         "locale": "Sprache",
         "module": "Modul",
         "active": "Aktiv",
+        "inactive": "Inaktiv",
         "featured": "Hervorgehoben",
+        "notFeatured": "Normal",
         "actions": "Aktionen"
       },
       "detail": {

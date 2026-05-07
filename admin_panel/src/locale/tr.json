@@ -3875,6 +3875,7 @@
       },
       "filters": {
         "searchPlaceholder": "İsim veya slug ile ara...",
+        "locale": "Dil",
         "allLocales": "Tüm Diller",
         "allModules": "Tüm Modüller",
         "onlyActive": "Sadece aktif",
@@ -3922,7 +3923,9 @@
         "locale": "Dil",
         "module": "Modül",
         "active": "Aktif",
+        "inactive": "Pasif",
         "featured": "Öne Çıkan",
+        "notFeatured": "Normal",
         "actions": "İşlemler"
       },
       "detail": {

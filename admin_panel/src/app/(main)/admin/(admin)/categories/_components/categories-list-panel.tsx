@@ -288,8 +288,8 @@ export default function CategoriesListPanel({ initialModuleKey }: { initialModul
                     <TableHead className="w-[22%]">{t("table.slug")}</TableHead>
                     <TableHead className="w-20">{t("table.locale")}</TableHead>
                     <TableHead className="w-28">{t("table.module")}</TableHead>
-                    <TableHead className="w-20 text-center">{t("table.active")}</TableHead>
-                    <TableHead className="w-24 text-center">{t("table.featured")}</TableHead>
+                    <TableHead className="w-28">{t("table.active")}</TableHead>
+                    <TableHead className="w-36">{t("table.featured")}</TableHead>
                     <TableHead className="w-24 text-right">{t("table.actions")}</TableHead>
                   </TableRow>
                 </TableHeader>
