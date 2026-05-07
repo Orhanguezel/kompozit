@@ -17,6 +17,9 @@ import { toast } from "sonner";
 import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
 import type { AdminLocaleOption } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
 import { AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
+import { type AIAction, AIActionDropdown } from "@/app/(main)/admin/_components/common/AIActionDropdown";
+import { AIResultsPanel } from "@/app/(main)/admin/_components/common/AIResultsPanel";
+import { type LocaleContent, useAIContentAssist } from "@/app/(main)/admin/_components/common/useAIContentAssist";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
 import { Card, CardContent, CardHeader } from "@ensotek/shared-ui/admin/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@ensotek/shared-ui/admin/ui/tabs";
@@ -192,6 +195,9 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
   const t = useAdminT();
   const safeDefaultLocale = norm(defaultLocale || "de") || "de";
 
+  const { assist: aiAssist, loading: aiLoading } = useAIContentAssist();
+  const [aiResults, setAiResults] = useState<LocaleContent[] | null>(null);
+
   const [values, setValues] = useState<CustomPageFormValues>(
     buildInitialValues(initialData, safeDefaultLocale, initialModuleKey),
   );
@@ -309,6 +315,51 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
     }
   };
 
+  const handleAIAction = async (action: AIAction) => {
+    const targetLocales = (localeSelectOptions || []).map((l) => l.value).filter(Boolean);
+    if (!targetLocales.length) targetLocales.push(values.locale || "tr");
+    const result = await aiAssist({
+      title: values.title,
+      summary: values.summary,
+      content: values.content,
+      tags: values.tags,
+      locale: values.locale || safeDefaultLocale,
+      target_locales: targetLocales,
+      module_key: values.module_key || "custom_page",
+      action,
+    });
+    if (!result) return;
+    setAiResults(result);
+    const current = result.find((r) => r.locale === values.locale) || result[0];
+    if (current) {
+      setValues((prev) => ({
+        ...prev,
+        title: current.title || prev.title,
+        slug: current.slug || prev.slug,
+        summary: current.summary || prev.summary,
+        content: current.content || prev.content,
+        meta_title: current.meta_title || prev.meta_title,
+        meta_description: current.meta_description || prev.meta_description,
+        tags: current.tags || prev.tags,
+      }));
+    }
+  };
+
+  const handleApplyAILocale = (lc: LocaleContent) => {
+    void handleLocaleChange(lc.locale);
+    setValues((prev) => ({
+      ...prev,
+      locale: lc.locale,
+      title: lc.title || prev.title,
+      slug: lc.slug || prev.slug,
+      summary: lc.summary || prev.summary,
+      content: lc.content || prev.content,
+      meta_title: lc.meta_title || prev.meta_title,
+      meta_description: lc.meta_description || prev.meta_description,
+      tags: lc.tags || prev.tags,
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (disabled) return;
@@ -395,6 +446,12 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
                 </button>
               ) : null}
 
+              <AIActionDropdown
+                onAction={handleAIAction}
+                loading={aiLoading}
+                disabled={disabled || !values.title.trim()}
+              />
+
               <button
                 type="submit"
                 className="gold-gradient rounded-full px-8 py-2.5 font-bold text-sm text-primary-foreground shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-60"
@@ -417,6 +474,16 @@ export const CustomPageForm: React.FC<CustomPageFormProps> = ({
             </div>
           </div>
         </CardHeader>
+
+        {aiResults && aiResults.length > 1 && (
+          <AIResultsPanel
+            results={aiResults}
+            currentLocale={values.locale || safeDefaultLocale}
+            onApply={handleApplyAILocale}
+            onClose={() => setAiResults(null)}
+          />
+        )}
+
         <CardContent className="p-6">
           <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="w-full">
             <TabsList className="mb-6 premium-card p-1 bg-card/40 border-white/5 h-auto grid grid-cols-2 sm:grid-cols-4 gap-1">

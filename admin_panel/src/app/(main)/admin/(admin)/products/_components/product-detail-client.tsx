@@ -22,6 +22,9 @@ import { AdminImageUploadField } from "@/app/(main)/admin/_components/common/Adm
 import { ImagesGalleryTab } from "@/app/(main)/admin/_components/common/ImagesGalleryTab";
 import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
 import { type AdminLocaleOption, AdminLocaleSelect } from "@/app/(main)/admin/_components/common/AdminLocaleSelect";
+import { type AIAction, AIActionDropdown } from "@/app/(main)/admin/_components/common/AIActionDropdown";
+import { AIResultsPanel } from "@/app/(main)/admin/_components/common/AIResultsPanel";
+import { type LocaleContent, useAIContentAssist } from "@/app/(main)/admin/_components/common/useAIContentAssist";
 import RichContentEditor from "@/app/(main)/admin/_components/common/RichContentEditor";
 import { useAdminLocales } from "@/app/(main)/admin/_components/common/useAdminLocales";
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
@@ -97,6 +100,10 @@ export default function ProductDetailClient({ id, itemType }: Props) {
   const { localeOptions } = useAdminLocales();
   const [activeLocale, setActiveLocale] = React.useState<string>(adminLocale || "tr");
   const [activeTab, setActiveTab] = React.useState<"form" | "specs" | "faqs" | "reviews" | "json">("form");
+
+  // ── AI ──
+  const { assist: aiAssist, loading: aiLoading } = useAIContentAssist();
+  const [aiResults, setAiResults] = React.useState<LocaleContent[] | null>(null);
 
   // ── RTK Query ──
   const {
@@ -256,6 +263,49 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     );
   }, [localeOptions]);
 
+  const handleAIAction = async (action: AIAction) => {
+    const targetLocales = localesForSelect.map((l) => l.value).filter(Boolean);
+    if (!targetLocales.length) targetLocales.push(activeLocale || "tr");
+    const result = await aiAssist({
+      title: formData.title,
+      summary: formData.description,
+      content: formData.description,
+      tags: formData.tags,
+      locale: activeLocale,
+      target_locales: targetLocales,
+      module_key: "product",
+      action,
+    });
+    if (!result) return;
+    setAiResults(result);
+    const current = result.find((r) => r.locale === activeLocale) || result[0];
+    if (current) {
+      setFormData((prev) => ({
+        ...prev,
+        title: current.title || prev.title,
+        slug: current.slug || prev.slug,
+        description: current.content || current.summary || prev.description,
+        meta_title: current.meta_title || prev.meta_title,
+        meta_description: current.meta_description || prev.meta_description,
+        tags: current.tags || prev.tags,
+      }));
+    }
+  };
+
+  const handleApplyAILocale = (lc: LocaleContent) => {
+    setActiveLocale(lc.locale);
+    setFormData((prev) => ({
+      ...prev,
+      locale: lc.locale,
+      title: lc.title || prev.title,
+      slug: lc.slug || prev.slug,
+      description: lc.content || lc.summary || prev.description,
+      meta_title: lc.meta_title || prev.meta_title,
+      meta_description: lc.meta_description || prev.meta_description,
+      tags: lc.tags || prev.tags,
+    }));
+  };
+
   // ─── Render ──────────────────────────────────────────────────
 
   return (
@@ -290,10 +340,25 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                 onChange={handleLocaleChange}
                 disabled={isLoading}
               />
+              <AIActionDropdown
+                onAction={handleAIAction}
+                loading={aiLoading}
+                disabled={isLoading || !formData.title.trim()}
+              />
             </div>
           </div>
         </CardHeader>
       </Card>
+
+      {/* AI Sonuçları */}
+      {aiResults && aiResults.length > 1 && (
+        <AIResultsPanel
+          results={aiResults}
+          currentLocale={activeLocale}
+          onApply={handleApplyAILocale}
+          onClose={() => setAiResults(null)}
+        />
+      )}
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)}>
