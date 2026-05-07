@@ -8,4 +8,6 @@
 
 - [x] 6. https://karbonkompozit.com.tr/admin/custompage liste sayfasinda tabloda aktif ve öne cikan sutunlari olsun. suan karisik. 
 
-- [ ] 7. zengin metin iceriklerinin genisletilmis halleri tüm custompage ürünler vs heryerde olsun. cözümler. yani zengin metin icerikleri nerde kullaniliyorsa tek kod olsun ve tek yerden import edelim. 
+- [x] 7. zengin metin iceriklerinin genisletilmis halleri tüm custompage ürünler vs heryerde olsun. cözümler. yani zengin metin icerikleri nerde kullaniliyorsa tek kod olsun ve tek yerden import edelim. 
+
+- [x] 8. ürünler canlida gözükmüyor: shared-backend ProductItemType ve normalizeItemType'tan bereketfide cikarildi, kompozit eklendi. 
