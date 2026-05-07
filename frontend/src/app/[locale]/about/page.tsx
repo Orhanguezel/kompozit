@@ -72,7 +72,7 @@ export default async function AboutPage({
   const headerTitle = typeof page?.title === 'string' && page.title.trim() ? page.title : t('about.title');
 
   return (
-    <main className="relative bg-[var(--carbon)]">
+    <main className="relative bg-(--carbon)">
       <div className="gold-grid-bg absolute inset-0 z-0 opacity-20" />
 
       <div className="section-py relative z-10">
@@ -103,26 +103,26 @@ export default async function AboutPage({
           {/* Stats Bar (Industrial Style) */}
           <div className="industrial-grid-cc mb-24 sm:grid-cols-2 lg:grid-cols-3">
              <Reveal delay={100} className="grid-item-cc p-12 text-center group">
-               <p className="font-display text-[3.5rem] leading-none text-[var(--gold)] transition-transform group-hover:scale-110">
+               <p className="font-display text-[3.5rem] leading-none text-(--gold) transition-transform group-hover:scale-110">
                  {t('about.sections.stats.experience')}
                </p>
-               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
+               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-(--silver) opacity-60">
                  {t('about.sections.stats.expLabel')}
                </p>
              </Reveal>
              <Reveal delay={200} className="grid-item-cc p-12 text-center group">
-               <p className="font-display text-[3.5rem] leading-none text-[var(--gold)] transition-transform group-hover:scale-110">
+               <p className="font-display text-[3.5rem] leading-none text-(--gold) transition-transform group-hover:scale-110">
                  {t('about.sections.stats.projects')}
                </p>
-               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
+               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-(--silver) opacity-60">
                  {t('about.sections.stats.projectsLabel')}
                </p>
              </Reveal>
              <Reveal delay={300} className="grid-item-cc p-12 text-center group sm:col-span-2 lg:col-span-1">
-               <p className="font-display text-[3.5rem] leading-none text-[var(--gold)] transition-transform group-hover:scale-110">
+               <p className="font-display text-[3.5rem] leading-none text-(--gold) transition-transform group-hover:scale-110">
                  {t('about.sections.stats.capacity')}
                </p>
-               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
+               <p className="mt-4 text-[10px] font-bold uppercase tracking-[3px] text-(--silver) opacity-60">
                  {t('about.sections.stats.capacityLabel')}
                </p>
              </Reveal>
@@ -131,20 +131,20 @@ export default async function AboutPage({
           <div className="grid gap-20 lg:grid-cols-[1fr_350px]">
             <div className="space-y-20">
               <Reveal>
-                <section className="prose prose-invert prose-lg max-w-none">
-                  <p className="font-serif text-[1.4rem] font-normal italic leading-snug text-[var(--gold)] border-l-2 border-[var(--gold)]/30 pl-10 py-2">
+                <section className="prose prose-lg max-w-none [&_h1]:text-(--cream) [&_h2]:text-(--cream) [&_h3]:text-(--cream) [&_h4]:text-(--cream) [&_strong]:text-(--cream) [&_a]:text-(--gold) [&_li]:text-(--silver) [&_p]:text-(--silver)">
+                  <p className="font-serif text-[1.4rem] font-normal italic leading-snug text-(--gold) border-l-2 border-(--gold)/30 pl-10 py-2">
                     {intro}
                   </p>
                   {pageContent ? (
-                    <div className="mt-16 text-[var(--silver)] font-light leading-relaxed space-y-6" dangerouslySetInnerHTML={{ __html: pageContent }} />
+                    <div className="mt-16 text-(--silver) font-light leading-relaxed space-y-6" dangerouslySetInnerHTML={{ __html: pageContent }} />
                   ) : null}
                 </section>
               </Reveal>
 
               <div className="grid gap-12 sm:grid-cols-2">
                 <Reveal delay={100}>
-                  <div className="p-10 border border-[var(--gold)]/10 bg-[var(--graphite)] backdrop-blur-sm">
-                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-[var(--white)] mb-8 border-b border-[var(--gold)]/10 pb-4">
+                  <div className="p-10 border border-(--gold)/20 bg-(--graphite) backdrop-blur-sm">
+                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-(--white) mb-8 border-b border-(--gold)/10 pb-4">
                       {t('about.sections.expertiseTitle')}
                     </h3>
                     <ul className="space-y-4">
@@ -153,8 +153,8 @@ export default async function AboutPage({
                          t('about.sections.expertiseItems.two'),
                          t('about.sections.expertiseItems.three'),
                        ].map((item, i) => (
-                         <li key={i} className="flex gap-4 text-sm font-light text-[var(--silver)]">
-                           <span className="text-[var(--gold)] font-bold">◆</span>
+                         <li key={i} className="flex gap-4 text-sm font-light text-(--silver)">
+                           <span className="text-(--gold) font-bold">◆</span>
                            {item}
                          </li>
                        ))}
@@ -163,8 +163,8 @@ export default async function AboutPage({
                 </Reveal>
 
                 <Reveal delay={200}>
-                  <div className="p-10 border border-[var(--gold)]/10 bg-[var(--graphite)] backdrop-blur-sm">
-                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-[var(--white)] mb-8 border-b border-[var(--gold)]/10 pb-4">
+                  <div className="p-10 border border-(--gold)/20 bg-(--graphite) backdrop-blur-sm">
+                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-(--white) mb-8 border-b border-(--gold)/10 pb-4">
                       {t('about.sections.processTitle')}
                     </h3>
                     <ul className="space-y-4">
@@ -173,8 +173,8 @@ export default async function AboutPage({
                          t('about.sections.processItems.two'),
                          t('about.sections.processItems.three'),
                        ].map((item, i) => (
-                         <li key={i} className="flex gap-4 text-sm font-light text-[var(--silver)]">
-                           <span className="text-[var(--gold)] font-bold">◇</span>
+                         <li key={i} className="flex gap-4 text-sm font-light text-(--silver)">
+                           <span className="text-(--gold) font-bold">◇</span>
                            {item}
                          </li>
                        ))}
@@ -184,19 +184,19 @@ export default async function AboutPage({
               </div>
 
               <Reveal delay={300}>
-                <section className="border-l-2 border-[var(--gold)]/40 bg-[var(--gold)]/[0.04] px-8 py-10">
+                <section className="border-l-2 border-(--gold)/40 bg-(--gold)/[0.04] px-8 py-10">
                   <span className="section-label-cc">{t('about.ensotek.label')}</span>
-                  <h2 className="mt-4 font-display text-[2rem] font-normal uppercase tracking-[4px] text-[var(--white)]">
+                  <h2 className="mt-4 font-display text-[2rem] font-normal uppercase tracking-[4px] text-(--white)">
                     {t('about.ensotek.title')}
                   </h2>
-                  <p className="mt-6 max-w-3xl text-sm font-light leading-relaxed text-[var(--silver)]">
+                  <p className="mt-6 max-w-3xl text-sm font-light leading-relaxed text-(--silver)">
                     {t('about.ensotek.description')}
                   </p>
                   <a
                     href="https://www.ensotek.com.tr"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-8 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[3px] text-[var(--gold)] transition-colors hover:text-[var(--white)]"
+                    className="mt-8 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[3px] text-(--gold) transition-colors hover:text-(--white)"
                   >
                     {t('about.ensotek.cta')}
                     <ArrowRight className="size-4" />
@@ -207,11 +207,11 @@ export default async function AboutPage({
 
             <aside>
               <Reveal delay={400} className="sticky top-32 space-y-8">
-                <div className="p-10 border border-[var(--gold)]/20 bg-[var(--gold)]/5">
-                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-[var(--gold)] mb-6">
+                <div className="p-10 border border-(--gold)/20 bg-(--gold)/5">
+                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-(--gold) mb-6">
                     {t('about.sidebar.partnershipTitle')}
                   </h3>
-                  <p className="font-display text-[1.8rem] leading-tight text-[var(--white)] mb-10">
+                  <p className="font-display text-[1.8rem] leading-tight text-(--white) mb-10">
                     {t('about.sidebar.partnershipLead')}
                   </p>
                   <Link
@@ -223,8 +223,8 @@ export default async function AboutPage({
                   </Link>
                 </div>
 
-                <div className="p-10 border border-[var(--gold)]/10 bg-[var(--graphite)]">
-                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-[var(--white)] mb-8">
+                <div className="p-10 border border-(--gold)/10 bg-(--graphite)">
+                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-(--white) mb-8">
                     {t('about.sidebar.sectorsHeading')}
                   </h3>
                   <ul className="space-y-5">
@@ -233,8 +233,8 @@ export default async function AboutPage({
                       t('about.sections.sectorsItems.two'),
                       t('about.sections.sectorsItems.three'),
                     ].map((sector, i) => (
-                      <li key={i} className="flex items-center gap-4 text-xs font-bold uppercase tracking-[2px] text-[var(--silver)] group transition-colors hover:text-[var(--gold)]">
-                        <div className="size-1.5 bg-[var(--gold)]/40 transition-colors group-hover:bg-[var(--gold)]" />
+                      <li key={i} className="flex items-center gap-4 text-xs font-bold uppercase tracking-[2px] text-(--silver) group transition-colors hover:text-(--gold)">
+                        <div className="size-1.5 bg-(--gold)/40 transition-colors group-hover:bg-(--gold)" />
                         {sector}
                       </li>
                     ))}
