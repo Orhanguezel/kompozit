@@ -88,8 +88,11 @@ export function Header({
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const items = normalizeItems(menuItems, locale);
-  const logoSrc = logo?.dark || logo?.default || logo?.light;
-  const mobileLogoSrc = logo?.light || logo?.default || logo?.dark;
+  const darkLogoSrc = logo?.dark || logo?.default || logo?.light;
+  const lightLogoSrc = logo?.light || logo?.default || logo?.dark;
+  const logoSrc = darkLogoSrc;
+  const mobileLogoSrc = lightLogoSrc;
+  const hasBothLogos = Boolean(logo?.dark && logo?.light && logo.dark !== logo.light);
   const logoAlt = logo?.alt || 'MOE Kompozit';
   const phone = contactInfo?.phone?.trim() || '';
   const email = contactInfo?.email?.trim() || '';
@@ -115,7 +118,7 @@ export function Header({
           href={localizedPath(locale, '/')}
           className="group relative flex shrink-0 items-center gap-3 transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-carbon)]"
         >
-          {logoSrc ? (
+          {darkLogoSrc ? (
             <div
               suppressHydrationWarning
               className={`relative transition-all duration-500 ${
@@ -125,14 +128,24 @@ export function Header({
               }`}
             >
               <Image
-                src={logoSrc}
+                src={darkLogoSrc}
                 alt={logoAlt}
                 width={300}
                 height={80}
-                className="h-full w-auto object-contain object-center transition-all duration-300 group-hover:opacity-80 drop-shadow-sm"
+                className={`h-full w-auto object-contain object-center transition-all duration-300 group-hover:opacity-80 drop-shadow-sm${hasBothLogos ? ' logo-dark-mode' : ''}`}
                 priority
                 fetchPriority="high"
               />
+              {hasBothLogos && lightLogoSrc && (
+                <Image
+                  src={lightLogoSrc}
+                  alt={logoAlt}
+                  width={300}
+                  height={80}
+                  className="logo-light-mode absolute inset-0 h-full w-auto object-contain object-center transition-all duration-300 group-hover:opacity-80 drop-shadow-sm"
+                  priority
+                />
+              )}
             </div>
           ) : (
             <>

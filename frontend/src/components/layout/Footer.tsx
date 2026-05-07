@@ -69,7 +69,10 @@ export function Footer({
   const address = contact.address?.trim();
   const hours = contact.working_hours?.trim() || contact.hours?.trim();
   const companyName = contact.companyName?.trim() || contact.company_name?.trim();
-  const logoSrc = logo?.light || logo?.default || logo?.dark;
+  const darkLogoSrc = logo?.dark || logo?.default || logo?.light;
+  const lightLogoSrc = logo?.light || logo?.default || logo?.dark;
+  const logoSrc = darkLogoSrc;
+  const hasBothLogos = Boolean(logo?.dark && logo?.light && logo.dark !== logo.light);
   const logoAlt = logo?.alt || 'MOE Kompozit';
 
   const footerDesc = String(footerContent?.description || '').trim();
@@ -104,15 +107,24 @@ export function Footer({
           {/* Brand + Contact Column */}
           <div className="space-y-8 lg:pr-8">
             {/* Logo */}
-            {logoSrc ? (
-              <Link href={localizedPath(locale, '/')} className="inline-block transition-transform duration-300 hover:scale-105">
+            {darkLogoSrc ? (
+              <Link href={localizedPath(locale, '/')} className="inline-block relative transition-transform duration-300 hover:scale-105">
                 <Image
-                  src={logoSrc}
+                  src={darkLogoSrc}
                   alt={logoAlt}
                   width={220}
                   height={66}
-                  className="h-14 w-auto object-contain"
+                  className={`h-14 w-auto object-contain${hasBothLogos ? ' logo-dark-mode' : ''}`}
                 />
+                {hasBothLogos && lightLogoSrc && (
+                  <Image
+                    src={lightLogoSrc}
+                    alt={logoAlt}
+                    width={220}
+                    height={66}
+                    className="logo-light-mode absolute inset-0 h-14 w-auto object-contain"
+                  />
+                )}
               </Link>
             ) : null}
 

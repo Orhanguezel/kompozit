@@ -131,6 +131,12 @@ html[data-theme-mode='light'] ::-webkit-scrollbar-thumb {
   border-color: var(--color-bg);
 }
 
+/* --- LOGO DARK / LIGHT MODE SWITCHING --- */
+.logo-dark-mode { display: block; }
+.logo-light-mode { display: none; }
+html[data-theme-mode='light'] .logo-dark-mode { display: none; }
+html[data-theme-mode='light'] .logo-light-mode { display: block; }
+
 /* --- SURFACE CARDS & FORM CONTROLS (token contract) --- */
 .surface-card {
   border: 1px solid var(--color-input-border);
