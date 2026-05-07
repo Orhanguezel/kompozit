@@ -10,6 +10,7 @@ import { normalizeRichContent } from '@/lib/rich-content';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { BrandCtaPanel } from '@/components/patterns/BrandCtaPanel';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { RichContentDisplay } from '@/components/ui/RichContentDisplay';
 import { buildMediaAlt } from '@/lib/media-seo';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { solutionFaqData } from '@/seo/faq-data';
@@ -163,9 +164,9 @@ export default async function SolutionDetailPage({
 
       <div className="relative z-10 mx-auto max-w-3xl px-4 py-16 lg:px-8">
         {content ? (
-          <div
-            className="prose prose-lg max-w-none leading-relaxed text-[var(--color-text-secondary)] prose-p:mb-5 prose-p:leading-relaxed prose-p:text-[var(--color-text-secondary)] prose-headings:scroll-mt-24 prose-headings:mt-10 prose-headings:mb-4 prose-headings:font-[var(--font-display)] prose-headings:font-normal prose-headings:text-[var(--color-text-primary)] prose-strong:text-[var(--color-text-primary)] prose-li:my-1.5 prose-li:text-[var(--color-text-secondary)] prose-a:text-[var(--color-gold)] md:prose-xl"
-            dangerouslySetInnerHTML={{ __html: content }}
+          <RichContentDisplay
+            html={content}
+            className="prose prose-lg max-w-none leading-relaxed text-(--color-text-secondary) prose-p:mb-5 prose-p:leading-relaxed prose-p:text-(--color-text-secondary) prose-headings:scroll-mt-24 prose-headings:mt-10 prose-headings:mb-4 prose-headings:font-(--font-display) prose-headings:text-(--color-text-primary) prose-strong:text-(--color-text-primary) prose-li:my-1.5 prose-li:text-(--color-text-secondary) prose-a:text-(--color-gold) md:prose-xl"
           />
         ) : null}
 

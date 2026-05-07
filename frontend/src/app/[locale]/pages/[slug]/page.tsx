@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { API_BASE_URL } from '@/lib/utils';
 import { normalizeRichContent } from '@/lib/rich-content';
 import { ContentPageHeader } from '@/components/patterns/ContentPageHeader';
+import { RichContentDisplay } from '@/components/ui/RichContentDisplay';
 import { buildPageMetadata } from '@/seo';
 
 async function fetchCustomPage(slug: string, locale: string) {
@@ -56,9 +57,9 @@ export default async function CustomPage({
             description={page.summary || ''}
           />
           {content && (
-            <div
+            <RichContentDisplay
+              html={content}
               className="prose prose-theme mt-8 max-w-none"
-              dangerouslySetInnerHTML={{ __html: content }}
             />
           )}
         </div>

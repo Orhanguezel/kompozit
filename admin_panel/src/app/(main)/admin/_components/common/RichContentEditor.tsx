@@ -22,11 +22,15 @@ import {
   Heading3,
   Image as ImageIcon,
   Italic,
+  Link2,
   List,
   ListOrdered,
+  Minus,
   Table2,
+  Twitter,
   Type,
   Underline,
+  Youtube,
 } from "lucide-react";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
@@ -229,6 +233,55 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
     }
   };
 
+  const insertLink = () => {
+    if (disabled || typeof window === "undefined") return;
+    const url = window.prompt(t("common.editor.promptLinkUrl") || "Link URL:");
+    if (!url?.trim()) return;
+    const sel = window.getSelection();
+    const text = sel && sel.toString().trim() ? sel.toString() : url;
+    focusEditor();
+    exec("insertHTML", `<a href="${url.trim()}" target="_blank" rel="noopener noreferrer">${text}</a>`);
+  };
+
+  const insertHr = () => {
+    if (disabled) return;
+    focusEditor();
+    insertHtmlAtCursor("<hr /><p></p>");
+    if (editorRef.current) propagateChange(editorRef.current.innerHTML);
+  };
+
+  const insertYoutube = () => {
+    if (disabled || typeof window === "undefined") return;
+    const url = window.prompt(t("common.editor.promptYoutubeUrl") || "YouTube URL:");
+    if (!url?.trim()) return;
+
+    const shortsMatch = url.match(/youtube\.com\/shorts\/([a-zA-Z0-9_-]+)/);
+    const watchMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    const videoId = (shortsMatch ?? watchMatch)?.[1];
+    if (!videoId) return;
+
+    const isShorts = Boolean(shortsMatch);
+    const containerStyle = isShorts
+      ? 'style="width:100%;max-width:320px;margin:1rem auto;aspect-ratio:9/16;"'
+      : 'style="width:100%;max-width:100%;margin:1rem 0;aspect-ratio:16/9;"';
+    const html = `<div class="${isShorts ? "yt-shorts-embed" : "yt-video-embed"}" ${containerStyle} contenteditable="false"><iframe src="https://www.youtube.com/embed/${videoId}" title="YouTube" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="width:100%;height:100%;border:0;border-radius:6px;"></iframe></div><p></p>`;
+    focusEditor();
+    insertHtmlAtCursor(html);
+    if (editorRef.current) propagateChange(editorRef.current.innerHTML);
+  };
+
+  const insertTwitter = () => {
+    if (disabled || typeof window === "undefined") return;
+    const url = window.prompt(t("common.editor.promptTwitterUrl") || "Tweet URL (x.com veya twitter.com):");
+    if (!url?.trim()) return;
+
+    const safeUrl = url.trim().replace("twitter.com", "x.com");
+    const html = `<blockquote class="twitter-tweet" data-dnt="true"><a href="${safeUrl}"></a></blockquote><p></p>`;
+    focusEditor();
+    insertHtmlAtCursor(html);
+    if (editorRef.current) propagateChange(editorRef.current.innerHTML);
+  };
+
   const ToolbarButton = (props: React.ComponentProps<typeof Button>) => (
     <Button type="button" variant="outline" size="sm" {...props} />
   );
@@ -338,6 +391,40 @@ const RichContentEditor: React.FC<RichContentEditorProps> = ({
                 title={onUploadImage ? t("common.editor.uploadAndInsertImage") : t("common.editor.insertImage")}
               >
                 <ImageIcon className="size-4" />
+              </ToolbarButton>
+
+              <ToolbarButton
+                onMouseDown={(e) => (e.preventDefault(), insertLink())}
+                disabled={disabled || activeTab !== "visual"}
+                title={t("common.editor.insertLink") || "Link ekle"}
+              >
+                <Link2 className="size-4" />
+              </ToolbarButton>
+
+              <ToolbarButton
+                onMouseDown={(e) => (e.preventDefault(), insertHr())}
+                disabled={disabled || activeTab !== "visual"}
+                title={t("common.editor.insertHr") || "Yatay çizgi"}
+              >
+                <Minus className="size-4" />
+              </ToolbarButton>
+
+              <span className="mx-1 h-5 w-px bg-border" />
+
+              <ToolbarButton
+                onMouseDown={(e) => (e.preventDefault(), insertYoutube())}
+                disabled={disabled || activeTab !== "visual"}
+                title={t("common.editor.insertYoutube") || "YouTube video ekle"}
+              >
+                <Youtube className="size-4" />
+              </ToolbarButton>
+
+              <ToolbarButton
+                onMouseDown={(e) => (e.preventDefault(), insertTwitter())}
+                disabled={disabled || activeTab !== "visual"}
+                title={t("common.editor.insertTwitter") || "Tweet embed ekle"}
+              >
+                <Twitter className="size-4" />
               </ToolbarButton>
 
               <span className="mx-1 h-5 w-px bg-border" />

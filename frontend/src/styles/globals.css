@@ -137,6 +137,26 @@ html[data-theme-mode='light'] ::-webkit-scrollbar-thumb {
 html[data-theme-mode='light'] .logo-dark-mode { display: none; }
 html[data-theme-mode='light'] .logo-light-mode { display: block; }
 
+/* --- RICH CONTENT EMBEDS --- */
+.yt-video-embed,
+.yt-shorts-embed {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+}
+.yt-video-embed iframe,
+.yt-shorts-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.yt-video-embed { aspect-ratio: 16/9; max-width: 100%; margin: 1rem 0; }
+.yt-shorts-embed { aspect-ratio: 9/16; max-width: 320px; margin: 1rem auto; }
+
+.twitter-tweet { margin: 1rem auto !important; }
+
 /* --- SURFACE CARDS & FORM CONTROLS (token contract) --- */
 .surface-card {
   border: 1px solid var(--color-input-border);

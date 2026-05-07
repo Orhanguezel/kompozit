@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { API_BASE_URL } from '@/lib/utils';
 import { normalizeRichContent } from '@/lib/rich-content';
 import { ContentPageHeader } from '@/components/patterns/ContentPageHeader';
+import { RichContentDisplay } from '@/components/ui/RichContentDisplay';
 import { buildPageMetadata } from '@/seo';
 
 type LegalFallback = {
@@ -99,10 +100,7 @@ export default async function LegalPage({
           description={resolved.description}
         />
         {content && (
-          <div
-            className="prose prose-theme mt-8 max-w-none"
-            dangerouslySetInnerHTML={{ __html: content }}
-          />
+          <RichContentDisplay html={content} className="prose prose-theme mt-8 max-w-none" />
         )}
         </div>
       </div>

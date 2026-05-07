@@ -9,6 +9,7 @@ import { API_BASE_URL } from '@/lib/utils';
 import { normalizeRichContent } from '@/lib/rich-content';
 import { ContentPageHeader } from '@/components/patterns/ContentPageHeader';
 import { InfoListPanel } from '@/components/patterns/InfoListPanel';
+import { RichContentDisplay } from '@/components/ui/RichContentDisplay';
 import {
   JsonLd,
   buildPageMetadataFromSettings,
@@ -136,7 +137,7 @@ export default async function AboutPage({
                     {intro}
                   </p>
                   {pageContent ? (
-                    <div className="mt-16 text-(--silver) font-light leading-relaxed space-y-6" dangerouslySetInnerHTML={{ __html: pageContent }} />
+                    <RichContentDisplay html={pageContent} className="mt-16 text-(--silver) font-light leading-relaxed space-y-6" />
                   ) : null}
                 </section>
               </Reveal>
