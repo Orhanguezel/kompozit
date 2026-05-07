@@ -10,7 +10,7 @@
 
 import * as React from "react";
 
-import { ChevronRight, Globe, Home, ImageIcon, Languages, Mail, RefreshCcw, Settings, Sliders } from "lucide-react";
+import { Bot, ChevronRight, Globe, Home, ImageIcon, Languages, Mail, RefreshCcw, Settings, Sliders } from "lucide-react";
 import { toast } from "sonner";
 
 import { Badge } from "@ensotek/shared-ui/admin/ui/badge";
@@ -31,6 +31,7 @@ import { CloudinarySettingsTab } from "../tabs/cloudinary-settings-tab";
 // tabs (content sources)
 import { GeneralSettingsTab } from "../tabs/general-settings-tab";
 import { HomeSettingsTab } from "../tabs/home-settings-tab";
+import { LlmsTxtTab } from "../tabs/llms-txt-tab";
 import { LocalesSettingsTab } from "../tabs/locales-settings-tab";
 import { SeoSettingsTab } from "../tabs/seo-settings-tab";
 import { SmtpSettingsTab } from "../tabs/smtp-settings-tab";
@@ -46,7 +47,8 @@ type SettingsTab =
   | "api"
   | "locales"
   | "branding"
-  | "home";
+  | "home"
+  | "llms_txt";
 
 type LocaleOption = { value: string; label: string; isDefault?: boolean; isActive?: boolean };
 type LocaleConfigItem = {
@@ -158,6 +160,7 @@ function tabTitle(tab: SettingsTab, t: TranslateFn): string {
   if (tab === "api") return t("admin.siteSettings.tabs.api");
   if (tab === "locales") return t("admin.siteSettings.tabs.locales");
   if (tab === "branding") return t("admin.siteSettings.tabs.branding");
+  if (tab === "llms_txt") return "llms.txt";
   return t("admin.siteSettings.tabs.home");
 }
 
@@ -170,6 +173,7 @@ function tabDescription(tab: SettingsTab, t: TranslateFn): string {
   if (tab === "api") return t("admin.siteSettings.api.title");
   if (tab === "locales") return t("admin.siteSettings.locales.title");
   if (tab === "branding") return t("admin.siteSettings.branding.title");
+  if (tab === "llms_txt") return "AI sistemler için /llms.txt içeriği";
   return t("admin.siteSettings.management.homeContent");
 }
 
@@ -232,7 +236,7 @@ export default function AdminSiteSettingsClient() {
   };
 
   const localeReady = Boolean(locale?.trim());
-  const isGlobalTab = tab === "smtp" || tab === "api" || tab === "locales";
+  const isGlobalTab = tab === "smtp" || tab === "api" || tab === "locales" || tab === "llms_txt";
   const menuItems: SettingsMenuItem[] = React.useMemo(
     () => [
       {
@@ -276,6 +280,12 @@ export default function AdminSiteSettingsClient() {
         label: t("admin.siteSettings.tabs.locales"),
         description: t("admin.siteSettings.locales.title"),
         icon: Languages,
+      },
+      {
+        value: "llms_txt",
+        label: "llms.txt",
+        description: "AI sistemler için /llms.txt içeriği",
+        icon: Bot,
       },
     ],
     [t],
@@ -448,7 +458,7 @@ export default function AdminSiteSettingsClient() {
           </CardHeader>
 
           <CardContent className="relative z-10 p-5 md:p-10">
-            {!localeReady ? (
+            {!localeReady && !isGlobalTab ? (
               <div className="rounded-2xl border border-border/70 bg-background/30 p-5 text-muted-foreground text-sm">
                 {t("admin.siteSettings.management.loadingMeta")}
               </div>
@@ -473,6 +483,8 @@ export default function AdminSiteSettingsClient() {
                 ) : null}
 
                 {!isScopedBrand && tab === "branding" ? <BrandingSettingsTab locale={locale} /> : null}
+
+                {tab === "llms_txt" ? <LlmsTxtTab settingPrefix={brandPrefix} /> : null}
               </div>
             )}
           </CardContent>

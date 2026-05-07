@@ -1,7 +1,22 @@
 import { AVAILABLE_LOCALES } from '@/i18n/locales';
+import { API_BASE_URL } from '@/lib/utils';
 import { localizedUrl, siteUrlBase, stripTrailingSlash } from '@/seo/helpers';
 
 export const revalidate = 86400;
+
+async function fetchLlmsTxtSetting(): Promise<string | null> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/site_settings/kompozit__llms_txt?locale=tr`, {
+      next: { revalidate: 86400 },
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const val = data?.value ?? data?.setting?.value;
+    return typeof val === 'string' && val.trim() ? val : null;
+  } catch {
+    return null;
+  }
+}
 
 const PATHS = [
   '/',
@@ -18,6 +33,16 @@ const PATHS = [
 ] as const;
 
 export async function GET() {
+  const dbText = await fetchLlmsTxtSetting();
+  if (dbText) {
+    return new Response(dbText.endsWith('\n') ? dbText : `${dbText}\n`, {
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'public, max-age=86400, s-maxage=86400',
+      },
+    });
+  }
+
   const base = stripTrailingSlash(siteUrlBase());
   const lines: string[] = [
     '# MOE Kompozit - Endustriyel Kompozit Cozumleri',
