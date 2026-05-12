@@ -17,7 +17,7 @@ function extractMapsSrc(raw: string): string {
   const trimmed = raw.trim();
   if (trimmed.startsWith('<iframe')) {
     const match = trimmed.match(/src="([^"]+)"/);
-    return match ? match[1] : '';
+    return match?.[1] ?? '';
   }
   return trimmed;
 }
