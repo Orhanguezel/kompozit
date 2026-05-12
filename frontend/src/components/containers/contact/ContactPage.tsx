@@ -131,6 +131,28 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
             </Reveal>
           </div>
 
+          {info.mapsEmbedUrl && (
+            <Reveal delay={300}>
+              <section className="mt-24" aria-label="Konum">
+                <div className="mb-8">
+                  <span className="section-label-cc">Location</span>
+                </div>
+                <div className="overflow-hidden border border-(--color-border)">
+                  <iframe
+                    src={info.mapsEmbedUrl}
+                    width="100%"
+                    height="450"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Harita"
+                  />
+                </div>
+              </section>
+            </Reveal>
+          )}
+
           {labels.faqItems.length > 0 && (
             <section className="mt-32 max-w-4xl" aria-labelledby="contact-faq-heading">
               <Reveal>

@@ -9,7 +9,18 @@ export type ParsedContactInfo = {
   whatsapp: string;
   email: string;
   hours: string;
+  mapsEmbedUrl: string;
 };
+
+function extractMapsSrc(raw: string): string {
+  if (!raw) return '';
+  const trimmed = raw.trim();
+  if (trimmed.startsWith('<iframe')) {
+    const match = trimmed.match(/src="([^"]+)"/);
+    return match ? match[1] : '';
+  }
+  return trimmed;
+}
 
 const DEFAULTS: ParsedContactInfo = {
   companyName: '',
@@ -18,6 +29,7 @@ const DEFAULTS: ParsedContactInfo = {
   whatsapp: '',
   email: '',
   hours: '',
+  mapsEmbedUrl: '',
 };
 
 export function parseContactSettingValue(value: unknown): ParsedContactInfo {
@@ -41,6 +53,7 @@ export function parseContactSettingValue(value: unknown): ParsedContactInfo {
     whatsapp: String(raw.whatsapp ?? raw.phone ?? DEFAULTS.whatsapp),
     email: String(raw.email ?? DEFAULTS.email),
     hours: String(raw.working_hours ?? raw.hours ?? DEFAULTS.hours),
+    mapsEmbedUrl: extractMapsSrc(String(raw.maps_embed_url ?? '')),
   };
 }
 
