@@ -32,7 +32,7 @@ export const LlmsTxtTab: React.FC<LlmsTxtTabProps> = ({ settingPrefix }) => {
   const fullKey = `${settingPrefix || ""}llms_txt`;
 
   const { data, isLoading, isFetching, refetch } = useGetSiteSettingAdminByKeyQuery(
-    { key: fullKey, locale: "*" },
+    { key: fullKey, locale: "tr" },
     { refetchOnMountOrArgChange: true },
   );
 
@@ -52,7 +52,7 @@ export const LlmsTxtTab: React.FC<LlmsTxtTabProps> = ({ settingPrefix }) => {
   const handleSave = async () => {
     if (localText === null) return;
     try {
-      await updateSetting({ key: fullKey, locale: "*", value: localText as any }).unwrap();
+      await updateSetting({ key: fullKey, locale: "tr", value: localText as any }).unwrap();
       toast.success("llms.txt kaydedildi");
       await refetch();
     } catch (err: any) {
