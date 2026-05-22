@@ -47,7 +47,7 @@ export default async function CustomPage({
   const content = normalizeRichContent(page.content);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[var(--color-carbon)] text-[var(--color-cream)]">
+    <div className="relative min-h-screen overflow-hidden bg-(--color-bg) text-(--color-text-primary)">
       <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-[0.1]" aria-hidden />
 
       <div className="section-py relative z-10">
