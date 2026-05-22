@@ -68,7 +68,9 @@ const nextConfig = {
       "default-src 'self'",
       "script-src 'self' 'unsafe-eval' 'unsafe-inline'",
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "img-src 'self' blob: data: https://res.cloudinary.com https://www.karbonkompozit.com.tr https://karbonkompozit.com.tr",
+      // Yerel gelistirmede gorseller backend'ten (STORAGE_PUBLIC_API_BASE) gelir;
+      // bu origin'ler img-src'ye eklenmezse thumbnail'lar CSP tarafindan bloklanir.
+      `img-src 'self' blob: data: https://res.cloudinary.com https://www.karbonkompozit.com.tr https://karbonkompozit.com.tr${isDev ? " http://127.0.0.1:8186 http://localhost:8186" : ""}`,
       `connect-src 'self' ${isDev ? apiBase : ""} https://cdn.jsdelivr.net https://api.cloudinary.com https://www.karbonkompozit.com.tr https://karbonkompozit.com.tr`.trim(),
       "font-src 'self' https://fonts.gstatic.com data:",
       "object-src 'none'",

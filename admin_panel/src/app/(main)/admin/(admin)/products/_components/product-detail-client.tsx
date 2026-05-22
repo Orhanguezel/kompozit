@@ -204,6 +204,11 @@ export default function ProductDetailClient({ id, itemType }: Props) {
       return;
     }
 
+    if (!formData.category_id) {
+      toast.error(t("detail.categoryRequired"));
+      return;
+    }
+
     const tagsArray = formData.tags
       ? formData.tags
           .toString()
@@ -392,7 +397,9 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                   <div className="space-y-6 lg:col-span-2">
                     {/* Başlık */}
                     <div className="space-y-2">
-                      <Label htmlFor="title">{t("detail.fields.title")}</Label>
+                      <Label htmlFor="title">
+                        {t("detail.fields.title")} <span className="text-destructive">*</span>
+                      </Label>
                       <Input
                         id="title"
                         value={formData.title}
@@ -543,7 +550,9 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                   <div className="space-y-6">
                     {/* Kategori */}
                     <div className="space-y-2">
-                      <Label>{t("detail.fields.category")}</Label>
+                      <Label>
+                        {t("detail.fields.category")} <span className="text-destructive">*</span>
+                      </Label>
                       <Select
                         value={formData.category_id || "none"}
                         onValueChange={(v) => {

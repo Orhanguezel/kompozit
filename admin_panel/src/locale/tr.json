@@ -4106,6 +4106,7 @@
         "createDescription": "Yeni ürün oluştur",
         "editDescription": "{title} düzenle",
         "titleRequired": "Başlık (title) zorunludur",
+        "categoryRequired": "Kategori seçimi zorunludur",
         "createSuccess": "Ürün oluşturuldu",
         "updateSuccess": "Ürün güncellendi",
         "errorPrefix": "Hata: {message}",
@@ -4118,7 +4119,7 @@
           "json": "JSON"
         },
         "fields": {
-          "title": "Başlık *",
+          "title": "Başlık",
           "slug": "Slug",
           "price": "Fiyat",
           "stock": "Stok",

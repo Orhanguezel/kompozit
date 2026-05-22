@@ -4089,6 +4089,7 @@
         "createDescription": "Neues Produkt erstellen",
         "editDescription": "{title} bearbeiten",
         "titleRequired": "Titel ist erforderlich",
+        "categoryRequired": "Kategorieauswahl ist erforderlich",
         "createSuccess": "Produkt erstellt",
         "updateSuccess": "Produkt aktualisiert",
         "errorPrefix": "Fehler: {message}",
@@ -4101,7 +4102,7 @@
           "json": "JSON"
         },
         "fields": {
-          "title": "Titel *",
+          "title": "Titel",
           "slug": "Slug",
           "price": "Preis",
           "stock": "Lager",
