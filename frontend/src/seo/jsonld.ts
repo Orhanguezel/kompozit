@@ -116,6 +116,7 @@ export function article(input: {
   dateModified?: string;
   author?: string;
   publisher?: {
+    '@id'?: string;
     name: string;
     logo?: string;
   };
@@ -134,6 +135,7 @@ export function article(input: {
       ? {
           publisher: {
             '@type': 'Organization',
+            ...(input.publisher['@id'] ? { '@id': input.publisher['@id'] } : {}),
             name: input.publisher.name,
             ...(input.publisher.logo ? { logo: input.publisher.logo } : {}),
           },

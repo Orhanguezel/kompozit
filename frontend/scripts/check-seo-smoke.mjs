@@ -76,9 +76,16 @@ const helpersSource = await readFile(path.join(ROOT, 'src', 'seo', 'helpers.ts')
 if (
   !helpersSource.includes('localeAlternates') ||
   !helpersSource.includes('buildPageMetadata') ||
-  !helpersSource.includes("/opengraph-image")
+  !helpersSource.includes("/opengraph-image") ||
+  !helpersSource.includes('sanitizeSeoTitle') ||
+  !helpersSource.includes('estimateTitlePixelWidth')
 ) {
   failures.push('src/seo/helpers.ts: missing metadata helper contract');
+}
+
+const jsonldSource = await readFile(path.join(ROOT, 'src', 'seo', 'jsonld.ts'), 'utf8');
+if (!jsonldSource.includes("'@id'?: string") || !jsonldSource.includes("input.publisher['@id']")) {
+  failures.push('src/seo/jsonld.ts: missing publisher @id alignment');
 }
 
 const sitemapSource = await readFile(path.join(ROOT, 'src', 'app', 'sitemap.ts'), 'utf8');
@@ -89,6 +96,31 @@ for (const pattern of ['/products', '/gallery', '/blog', '/legal']) {
 }
 if (!sitemapSource.includes('images: resolveSitemapImages')) {
   failures.push('src/app/sitemap.ts: missing image sitemap coverage');
+}
+
+const robotsSource = await readFile(path.join(ROOT, 'src', 'app', 'robots.ts'), 'utf8');
+if (!robotsSource.includes('sitemap: `${siteUrl}/sitemap.xml`')) {
+  failures.push('src/app/robots.ts: missing explicit sitemap output');
+}
+
+for (const iconFile of ['icon.tsx', 'apple-icon.tsx', 'opengraph-image.tsx', 'twitter-image.tsx']) {
+  const source = await readFile(path.join(ROOT, 'src', 'app', iconFile), 'utf8');
+  if (!source.includes('ImageResponse')) {
+    failures.push(`src/app/${iconFile}: expected generated image route`);
+  }
+}
+
+for (const file of [
+  path.join(ROOT, 'src', 'components', 'layout', 'Header.tsx'),
+  path.join(ROOT, 'src', 'components', 'layout', 'Footer.tsx'),
+  path.join(ROOT, 'src', 'components', 'patterns', 'ListingCard.tsx'),
+  path.join(ROOT, 'src', 'components', 'patterns', 'MediaOverlayCard.tsx'),
+  path.join(ROOT, 'src', 'components', 'seo', 'RelatedLinks.tsx'),
+]) {
+  const source = await readFile(file, 'utf8');
+  if (!source.includes('title=')) {
+    failures.push(`${path.relative(ROOT, file)}: missing link annotation title strategy`);
+  }
 }
 
 if (failures.length > 0) {

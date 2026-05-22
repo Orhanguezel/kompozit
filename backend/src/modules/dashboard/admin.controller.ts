@@ -14,9 +14,9 @@ import { products } from "@/modules/products/schema";
 import { storageAssets } from '@/modules/storage/schema';
 import { referencesTable } from '@/modules/references/schema';
 import { galleries } from '@/modules/gallery/schema';
-import { menuItems } from "@/modules/menuItems/schema";
-import { reviews } from "@/modules/review/schema";
-import { offersTable } from '@/modules/offer/schema';
+import { menuItems } from "@ensotek/shared-backend/modules/menuItems/schema";
+import { reviews } from "@ensotek/shared-backend/modules/review/schema";
+import { offersTable } from '@ensotek/shared-backend/modules/offer/schema';
 
 // Shared-backend şemaları
 import { categories } from "@ensotek/shared-backend/modules/categories/schema";

@@ -7,6 +7,8 @@ const DEFAULT_TITLE_SUFFIX = 'MOE Kompozit';
 const DEFAULT_OG_IMAGE = '/opengraph-image';
 const DEFAULT_AUTHOR_NAME = 'MOE Kompozit';
 const DEFAULT_PUBLISHER_NAME = 'MOE Kompozit';
+const TITLE_SEPARATOR = ' - ';
+const TITLE_PIXEL_LIMIT = 560;
 
 export function stripTrailingSlash(s: string): string {
   return s.endsWith('/') ? s.slice(0, -1) : s;
@@ -74,14 +76,42 @@ function stripHtml(input: string): string {
 
 function clipText(input: string, max: number): string {
   if (input.length <= max) return input;
-  return `${input.slice(0, max - 1).trimEnd()}…`;
+  return `${input.slice(0, max - 3).trimEnd()}...`;
+}
+
+function sanitizeSeoTitle(input: string): string {
+  return stripHtml(input)
+    .replace(/[|<>[\]{}]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function estimateTitlePixelWidth(input: string): number {
+  return Array.from(input).reduce((total, char) => {
+    if (char === ' ') return total + 4;
+    if (/[A-ZÇĞİÖŞÜ]/.test(char)) return total + 8.5;
+    if (/[mwMW]/.test(char)) return total + 9;
+    if (/[ilıI1.,:;!]/.test(char)) return total + 3.8;
+    return total + 7;
+  }, 0);
+}
+
+function clipTitleByPixelWidth(input: string, maxPixels = TITLE_PIXEL_LIMIT): string {
+  if (estimateTitlePixelWidth(input) <= maxPixels) return input;
+
+  let output = input;
+  while (output.length > 12 && estimateTitlePixelWidth(`${output}...`) > maxPixels) {
+    output = output.slice(0, -1).trimEnd();
+  }
+
+  return `${output}...`;
 }
 
 export function buildSeoTitle(title: string, suffix = DEFAULT_TITLE_SUFFIX): string {
-  const clean = stripHtml(title).trim();
+  const clean = sanitizeSeoTitle(title);
   if (!clean) return suffix;
-  if (clean.includes(suffix)) return clipText(clean, 60);
-  return clipText(`${clean} | ${suffix}`, 60);
+  const withSuffix = clean.includes(suffix) ? clean : `${clean}${TITLE_SEPARATOR}${suffix}`;
+  return clipTitleByPixelWidth(clipText(withSuffix, 64));
 }
 
 export function buildSeoDescription(...parts: Array<string | null | undefined>): string {

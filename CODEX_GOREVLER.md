@@ -51,24 +51,24 @@ Taşınan dosyalarda `@/...` alias'ları shared-backend göreli yollarına çevr
   SQL'i kompozit seed dosyasında (`314_kompozit_admin_schema_extensions.sql`) kalır — taşıma yok.
 
 ### Her modül için adımlar
-- [ ] Dosyaları hedef klasöre kopyala.
-- [ ] İmport'ları yukarıdaki haritaya göre düzelt.
-- [ ] `packages/shared-backend/package.json` `exports` map'ine modülü ekle
+- [x] Dosyaları hedef klasöre kopyala.
+- [x] İmport'ları yukarıdaki haritaya göre düzelt.
+- [x] `packages/shared-backend/package.json` `exports` map'ine modülü ekle
       (mevcut modül pattern'i gibi: `"./modules/<m>": "./modules/<m>/index.ts"` ve
       `"./modules/<m>/*": "./modules/<m>/*.ts"`).
-- [ ] `kompozit/backend/src/routes/project.ts` — `registerOffer`, `registerOfferAdmin`,
+- [x] `kompozit/backend/src/routes/project.ts` — `registerOffer`, `registerOfferAdmin`,
       `registerReviews`, `registerReviewsAdmin`, `registerFooterSections`,
       `registerFooterSectionsAdmin`, `registerMenuItems`, `registerMenuItemsAdmin`
       import'larını `@/modules/<m>/...` yerine `@ensotek/shared-backend/modules/<m>/...` yap.
-- [ ] Eski `kompozit/backend/src/modules/<modül>/` klasörünü sil.
+- [x] Eski `kompozit/backend/src/modules/<modül>/` klasörünü sil.
 
 ### Görev 1 — kabul kriterleri
-- [ ] `kompozit/backend` temiz derlenir (`bun run build`, TS hatası yok).
-- [ ] `kompozit/admin_panel` temiz derlenir.
+- [x] `kompozit/backend` temiz derlenir (`bun run build`, TS hatası yok).
+- [x] `kompozit/admin_panel` temiz derlenir.
 - [ ] `POST /api/offers` çalışır (boş gövde → 400, geçerli gövde → 201).
 - [ ] `GET /api/menu_items`, `GET /api/footer_sections`, review public endpoint'leri → 200.
 - [ ] Admin panelde offer / review listeleri açılır ve çalışır.
-- [ ] 4 modül `packages/shared-backend/modules/` altında; `kompozit/backend/src/modules/` altında YOK.
+- [x] 4 modül `packages/shared-backend/modules/` altında; `kompozit/backend/src/modules/` altında YOK.
 
 ---
 
@@ -77,13 +77,13 @@ Taşınan dosyalarda `@/...` alias'ları shared-backend göreli yollarına çevr
 `https://karbonkompozit.com.tr/tr/contact` sayfasında Türkçe sayfada İngilizce / Türkçe
 olmayan metinler görünüyor.
 
-- [ ] Şu dosyalar incelenir: `frontend/src/components/containers/contact/ContactPage.tsx`,
+- [x] Şu dosyalar incelenir: `frontend/src/components/containers/contact/ContactPage.tsx`,
       `frontend/src/app/[locale]/contact/page.tsx`,
       `frontend/public/locales/tr.json` (contact bölümü).
-- [ ] İletişim verisi `site_settings`'ten de gelebilir (`contact_info` anahtarı) — kontrol et.
-- [ ] Türkçe olmayan / eksik tüm metinler düzgün Türkçe'ye çevrilir
+- [x] İletişim verisi `site_settings`'ten de gelebilir (`contact_info` anahtarı) — kontrol et.
+- [x] Türkçe olmayan / eksik tüm metinler düzgün Türkçe'ye çevrilir
       (gerçek Türkçe karakterlerle).
-- [ ] `en.json` contact bölümü de tutarlı kalmalı (İngilizce sayfada İngilizce doğru).
+- [x] `en.json` contact bölümü de tutarlı kalmalı (İngilizce sayfada İngilizce doğru).
 
 ---
 
@@ -92,17 +92,17 @@ olmayan metinler görünüyor.
 Mobil menü kötü görünüyor: ana başlık metinleri (ANA SAYFA, ÜRÜNLER, ÇÖZÜMLER, KURUMSAL,
 İLETİŞİM) aşırı büyük; alt menü öğeleri sıkışık; dikey ritim ve hiyerarşi bozuk.
 
-- [ ] Dosya: `frontend/src/components/layout/Header.tsx` (mobil menü buradadır).
-- [ ] Ana menü öğeleri makul font boyutuna indirilir.
-- [ ] Alt menü öğeleri arasına yeterli boşluk; ana öğe ↔ alt öğe hiyerarşisi netleşir.
-- [ ] Menü içi dikey boşluk/padding düzenlenir; öğeler ekrana sığar, taşma olmaz.
-- [ ] Açılış/kapanış geçişi ve kapatma (X) butonu düzgün çalışır.
-- [ ] Hem light hem dark modda kontrol edilir.
+- [x] Dosya: `frontend/src/components/layout/Header.tsx` (mobil menü buradadır).
+- [x] Ana menü öğeleri makul font boyutuna indirilir.
+- [x] Alt menü öğeleri arasına yeterli boşluk; ana öğe ↔ alt öğe hiyerarşisi netleşir.
+- [x] Menü içi dikey boşluk/padding düzenlenir; öğeler ekrana sığar, taşma olmaz.
+- [x] Açılış/kapanış geçişi ve kapatma (X) butonu düzgün çalışır.
+- [x] Hem light hem dark modda kontrol edilir.
 
 ---
 
 ## Test / teslim
 
-- [ ] `kompozit/backend` + `admin_panel` + `frontend` üçü de temiz derlenir.
+- [x] `kompozit/backend` + `admin_panel` + `frontend` üçü de temiz derlenir.
 - [ ] Değişiklikler commit + push edilir; canlıya manuel deploy (CI/CD kullanılmıyor).
 - [ ] Canlı kontrol: `/api/offers`, `/tr/contact`, mobil menü.

@@ -96,6 +96,7 @@ export function Header({
   const logoAlt = logo?.alt || 'MOE Kompozit';
   const phone = contactInfo?.phone?.trim() || '';
   const email = contactInfo?.email?.trim() || '';
+  const isTurkish = locale.startsWith('tr');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -116,6 +117,8 @@ export function Header({
       <div className="mx-auto flex max-w-[1300px] items-center justify-between gap-6 px-6 lg:px-12">
         <Link
           href={localizedPath(locale, '/')}
+          title={`${logoAlt} ana sayfa`}
+          aria-label={`${logoAlt} ana sayfa`}
           className="group relative flex shrink-0 items-center gap-3 transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-carbon)]"
         >
           {darkLogoSrc ? (
@@ -161,7 +164,7 @@ export function Header({
           <ul className="flex list-none items-center gap-10">
             {items.map((item) => (
               <li key={item.url} className="group relative">
-                <Link href={item.url!} className={`inline-flex items-center gap-1.5 ${navLinkClass}`}>
+                <Link href={item.url!} title={`${item.title} sayfasına git`} className={`inline-flex items-center gap-1.5 ${navLinkClass}`}>
                   {item.title}
                   {(item.children?.length ?? 0) > 0 && !isSolutionsItem(item) && (
                     <ChevronDown className="size-3 opacity-50 transition-transform duration-300 group-hover:rotate-180" />
@@ -175,6 +178,7 @@ export function Header({
                         <Link
                           key={child.url}
                           href={child.url!}
+                          title={`${child.title} sayfasına git`}
                           className="flex items-center gap-3 rounded-xl px-4 py-3 text-[0.8rem] font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-[var(--color-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)]"
                         >
                           <div className="size-1.5 rounded-full bg-[var(--color-gold)]/40" />
@@ -197,6 +201,7 @@ export function Header({
 
           <Link
             href={localizedPath(locale, '/offer')}
+            title={`${t('offer')} formuna git`}
             className="relative hidden items-center border border-[var(--gold)] bg-transparent px-7 py-2.5 text-[0.75rem] font-semibold uppercase tracking-[3px] text-[var(--gold)] transition-all duration-300 after:hidden hover:bg-[var(--gold)] hover:text-[var(--carbon)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--carbon)] sm:inline-flex"
           >
             {t('offer')}
@@ -232,7 +237,7 @@ export function Header({
 
         {/* Mobile Header Bar */}
         <div className="flex h-24 items-center justify-between border-b border-[var(--gold)]/10 px-6">
-           <Link href={localizedPath(locale, '/')} className="flex items-center gap-4" onClick={() => setMobileOpen(false)}>
+           <Link href={localizedPath(locale, '/')} title={`${logoAlt} ana sayfa`} className="flex items-center gap-4" onClick={() => setMobileOpen(false)}>
               {mobileLogoSrc ? (
                 <div className="relative h-8 w-[140px] shrink-0">
                   <Image
@@ -261,24 +266,26 @@ export function Header({
            </button>
         </div>
 
-        <div className="mx-auto max-w-lg space-y-12 p-10 py-20 relative z-10">
-          <ul className="space-y-4">
+        <div className="relative z-10 mx-auto max-w-lg space-y-8 px-6 py-10 sm:px-8 sm:py-12">
+          <ul className="space-y-2.5">
             {items.map((item, index) => (
               <li key={item.url} style={{ transitionDelay: `${index * 50}ms` }} className={`transition-all duration-500 ${mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                 <Link
                   href={item.url!}
-                  className="block font-display text-[2.8rem] uppercase leading-tight tracking-[-1px] text-[var(--white)] hover:text-[var(--gold)]"
+                  title={`${item.title} sayfasına git`}
+                  className="block rounded-xl px-3 py-2 font-display text-2xl uppercase leading-tight tracking-[1px] text-[var(--white)] transition-colors hover:bg-white/5 hover:text-[var(--gold)] sm:text-3xl"
                   onClick={() => setMobileOpen(false)}
                 >
                   {item.title}
                 </Link>
                 {item.children?.length && !isSolutionsItem(item) ? (
-                  <div className="mt-4 flex flex-wrap gap-x-8 gap-y-2">
+                  <div className="ml-3 mt-2 grid gap-2 border-l border-[var(--gold)]/15 pl-4">
                     {item.children.map((child) => (
                       <Link
                         key={child.url}
                         href={child.url!}
-                        className="text-xs font-bold uppercase tracking-[2px] text-[var(--silver)] opacity-60 hover:text-[var(--gold)] hover:opacity-100"
+                        title={`${child.title} sayfasına git`}
+                        className="rounded-lg px-3 py-2 text-sm font-semibold uppercase tracking-[1.5px] text-[var(--silver)] transition-colors hover:bg-white/5 hover:text-[var(--gold)]"
                         onClick={() => setMobileOpen(false)}
                       >
                         {child.title}
@@ -290,9 +297,10 @@ export function Header({
             ))}
           </ul>
 
-          <div className="grid gap-6 border-t border-[var(--gold)]/10 pt-16">
+          <div className="grid gap-5 border-t border-[var(--gold)]/10 pt-8">
             <Link
               href={localizedPath(locale, '/offer')}
+              title={`${t('offer')} formuna git`}
               className="hero-btn-primary shimmer-btn w-full justify-center"
               onClick={() => setMobileOpen(false)}
             >
@@ -300,35 +308,35 @@ export function Header({
               <MoveRight className="size-5" />
             </Link>
 
-            <div className="grid grid-cols-2 gap-4">
-               <div className="flex flex-col items-center gap-2 border border-[var(--gold)]/10 bg-white/5 p-6">
-                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)]">Theme</span>
+            <div className="grid grid-cols-2 gap-3">
+               <div className="flex flex-col items-center gap-2 border border-[var(--gold)]/10 bg-white/5 p-4">
+                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)]">{isTurkish ? 'Tema' : 'Theme'}</span>
                  <ThemeToggle />
                </div>
-               <div className="flex flex-col items-center gap-2 border border-[var(--gold)]/10 bg-white/5 p-6">
-                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)]">Locale</span>
+               <div className="flex flex-col items-center gap-2 border border-[var(--gold)]/10 bg-white/5 p-4">
+                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)]">{isTurkish ? 'Dil' : 'Locale'}</span>
                  <LanguageSwitcher locale={locale} activeLocales={activeLocales} />
                </div>
             </div>
           </div>
 
-          <div className="grid gap-8 border-t border-[var(--gold)]/10 pt-16 text-[var(--silver)]">
-            <div className="flex items-center gap-6 group">
-              <div className="flex size-14 shrink-0 items-center justify-center border border-[var(--gold)]/15 bg-white/5 group-hover:bg-[var(--gold)] transition-colors">
-                <Phone className="size-6 text-[var(--gold)] group-hover:text-[var(--carbon)] transition-colors" />
+          <div className="grid gap-5 border-t border-[var(--gold)]/10 pt-8 text-[var(--silver)]">
+            <div className="flex items-center gap-4 group">
+              <div className="flex size-11 shrink-0 items-center justify-center border border-[var(--gold)]/15 bg-white/5 group-hover:bg-[var(--gold)] transition-colors">
+                <Phone className="size-5 text-[var(--gold)] group-hover:text-[var(--carbon)] transition-colors" />
               </div>
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">Direct Line</p>
-                <p className="font-display text-[1.4rem] uppercase tracking-[2px] text-[var(--white)]">{phone}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">{isTurkish ? 'Telefon' : 'Direct Line'}</p>
+                <p className="font-display text-lg uppercase tracking-[1.5px] text-[var(--white)]">{phone}</p>
               </div>
             </div>
-            <div className="flex items-center gap-6 group">
-              <div className="flex size-14 shrink-0 items-center justify-center border border-[var(--gold)]/15 bg-white/5 group-hover:bg-[var(--gold)] transition-colors">
-                <Mail className="size-6 text-[var(--gold)] group-hover:text-[var(--carbon)] transition-colors" />
+            <div className="flex items-center gap-4 group">
+              <div className="flex size-11 shrink-0 items-center justify-center border border-[var(--gold)]/15 bg-white/5 group-hover:bg-[var(--gold)] transition-colors">
+                <Mail className="size-5 text-[var(--gold)] group-hover:text-[var(--carbon)] transition-colors" />
               </div>
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">Inquiries</p>
-                <p className="font-display text-[1.4rem] uppercase tracking-[2px] text-[var(--white)]">{email}</p>
+              <div className="min-w-0">
+                <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">{isTurkish ? 'E-posta' : 'Inquiries'}</p>
+                <p className="break-words font-display text-lg uppercase tracking-[1.5px] text-[var(--white)]">{email}</p>
               </div>
             </div>
           </div>

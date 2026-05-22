@@ -29,7 +29,7 @@ export async function generateMetadata({
     fallback: {
       title: locale.startsWith('en')
         ? `${t('title')} - Technical Contact for Sampling and Quotes`
-        : `${t('title')} - Numune ve Teklif Icin Teknik Iletisim`,
+        : `${t('title')} - Numune ve Teklif İçin Teknik İletişim`,
       description: seoT('contactDescription'),
     },
   });
@@ -84,6 +84,8 @@ export default async function ContactPage({
           hoursLabel: t('contact.info.hours'),
           responseTitle: t('contact.response.title'),
           responseItems,
+          mapLabel: t('contact.mapLabel'),
+          faqLabel: t('contact.faqLabel'),
           faqTitle: t('contact.faq.title'),
           faqIntro: t('contact.faq.intro'),
           faqItems: faqEntities,

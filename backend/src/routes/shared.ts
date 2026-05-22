@@ -25,6 +25,12 @@ import { registerAudit, registerAuditAdmin, registerAuditStream } from '@ensotek
 // İletişim formu
 import { registerContacts, registerContactsAdmin } from '@ensotek/shared-backend/modules/contact';
 
+// Menü ve footer
+import { registerMenuItems } from '@ensotek/shared-backend/modules/menuItems/router';
+import { registerMenuItemsAdmin } from '@ensotek/shared-backend/modules/menuItems/admin.routes';
+import { registerFooterSections } from '@ensotek/shared-backend/modules/footerSections/router';
+import { registerFooterSectionsAdmin } from '@ensotek/shared-backend/modules/footerSections/admin.routes';
+
 // CMS sayfaları
 import { registerCustomPages, registerCustomPagesAdmin } from '@ensotek/shared-backend/modules/customPages';
 
@@ -58,6 +64,12 @@ import { registerReferencesAdmin } from '@ensotek/shared-backend/modules/referen
 // Kütüphane (dokümanlar)
 import { registerLibrary } from '@ensotek/shared-backend/modules/library/router';
 import { registerLibraryAdmin } from '@ensotek/shared-backend/modules/library/admin.routes';
+
+// Teklif ve yorumlar
+import { registerOffer } from '@ensotek/shared-backend/modules/offer/router';
+import { registerOfferAdmin } from '@ensotek/shared-backend/modules/offer/admin.routes';
+import { registerReviews } from '@ensotek/shared-backend/modules/review/router';
+import { registerReviewsAdmin } from '@ensotek/shared-backend/modules/review/admin.routes';
 
 const dbAdminModules = {
   site_settings: {
@@ -138,6 +150,8 @@ export async function registerSharedPublic(api: FastifyInstance) {
   await registerNotifications(api);
   await registerAudit(api);
   await registerContacts(api);
+  await registerMenuItems(api);
+  await registerFooterSections(api);
   await registerCustomPages(api);
   await registerCategories(api);
   await registerSubCategories(api);
@@ -147,6 +161,8 @@ export async function registerSharedPublic(api: FastifyInstance) {
   await registerGallery(api);
   await registerReferences(api);
   await registerLibrary(api);
+  await registerOffer(api);
+  await registerReviews(api);
 }
 
 export async function registerSharedAdmin(adminApi: FastifyInstance) {
@@ -155,6 +171,8 @@ export async function registerSharedAdmin(adminApi: FastifyInstance) {
     registerUserAdmin,
     registerStorageAdmin,
     registerContactsAdmin,
+    registerMenuItemsAdmin,
+    registerFooterSectionsAdmin,
     registerCustomPagesAdmin,
     registerCategoriesAdmin,
     registerSubCategoriesAdmin,
@@ -167,6 +185,8 @@ export async function registerSharedAdmin(adminApi: FastifyInstance) {
     registerGalleryAdmin,
     registerReferencesAdmin,
     registerLibraryAdmin,
+    registerOfferAdmin,
+    registerReviewsAdmin,
     createDbAdminRoutes(dbAdminModules),
   ]) {
     await adminApi.register(reg);

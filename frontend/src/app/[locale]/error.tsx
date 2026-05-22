@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 
-import { FALLBACK_LOCALE } from '@/i18n/locales';
+import { localizedPath } from '@/seo/helpers';
 
 export default function LocaleSegmentError({
   error,
@@ -20,7 +20,7 @@ export default function LocaleSegmentError({
     console.error(error);
   }, [error]);
 
-  const homeHref = locale === FALLBACK_LOCALE ? '/' : `/${locale}`;
+  const homeHref = localizedPath(locale, '/');
 
   return (
     <div className="section-py mx-auto max-w-lg px-4 text-center">

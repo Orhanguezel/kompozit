@@ -17,6 +17,8 @@
 - Ana locale URL'leri kendi canonical'ina doner.
 - Query parametreli riskli URL'ler temiz path canonical kullanir.
 - `/` URL'i locale stratejisine uygun sekilde yonlenir.
+- `https://karbonkompozit.com.tr/*` tek adimda `https://www.karbonkompozit.com.tr/*` adresine 301 doner.
+- HTTP varyantlari tek adimda `https://www.karbonkompozit.com.tr/*` adresine 301 doner.
 
 ### Hreflang
 
@@ -28,6 +30,12 @@
 - `robots.txt` yayin ortaminda aciktir.
 - `Disallow` sadece teknik alanlari kapsar.
 - `sitemap` satiri dogru domaine isaret eder.
+- `Server` header'i version bilgisi acik etmeyecek sekilde minimize edilir.
+
+### Icons
+
+- `/icon`, `/apple-icon`, `/opengraph-image` ve `/twitter-image` 200 doner.
+- Manifest icon kayitlari `/icon` ve `/apple-icon` route'larini isaret eder.
 
 ### Sitemap
 
@@ -63,3 +71,5 @@
 - Crawl raporu JSON cikti dosyasi
 - Sitemap sample URL kontrol notu
 - Search Console submit tarih/notu
+- Analytics/Pixels karar notu: Google Analytics veya alternatif analytics aktif mi; Facebook Pixel kullaniliyor mu, kullanilmiyorsa bilincli karar notu.
+- Kurumsal sosyal profil URL'leri: Facebook, Twitter/X, Instagram, YouTube, LinkedIn site settings/footer/schema alanlarinda tanimli mi.

@@ -427,6 +427,8 @@
     "title": "İletişim",
     "description": "Ürün seçimi, teknik uygunluk, numune talebi ve proje planlaması için ekibimizle iletişime geçin.",
     "label": "Diyalog",
+    "mapLabel": "Konum",
+    "faqLabel": "Soru",
     "officeLabel": "Ofis",
     "features": {
       "one": "24S Teknik Yanıt",
@@ -469,17 +471,17 @@
     },
     "faq": {
       "title": "Sık Sorulan Sorular",
-      "intro": "B2B kompozit uretim ve teklif surecimize dair kisa yanitlar.",
+      "intro": "B2B kompozit üretim ve teklif sürecimize dair kısa yanıtlar.",
       "q1": "Minimum sipariş adedi (MOQ) var mı?",
       "a1": "MOQ; parça geometrisi, kalıp ihtiyacı, malzeme ve süreç tipine göre değişir. Talebinizi iletin, değerlendirelim.",
       "q2": "Numune üretimi ne kadar sürer?",
       "a2": "Karmaşıklık, yüzey beklentisi ve mevcut kalıp durumuna göre değişir. Talebinizi iletince net bir süreç takvimi sunuyoruz.",
       "q3": "Hangi malzemelerde çalışıyorsunuz?",
-      "a3": "Karbon fiber, CTP/FRP, cam elyaf ve hibrit takviye yapilari ile panel, profil, muhafaza ve ozel parca hatlarinda destek veriyoruz.",
+      "a3": "Karbon fiber, CTP/FRP, cam elyaf ve hibrit takviye yapıları ile panel, profil, muhafaza ve özel parça hatlarında destek veriyoruz.",
       "q4": "Teknik çizim formatları olarak neleri kabul ediyorsunuz?",
       "a4": "STEP, IGES, DXF/DWG ve PDF şartnameler yaygın olarak kullanılır. Dosyaları teklifle birlikte paylaşabilirsiniz.",
       "q5": "İhracat ve lojistik desteği sunuyor musunuz?",
-      "a5": "B2B sevkiyatlar icin paketleme ve dokumantasyon tarafinda ihracata uygun duzenlemeler yapilabilir; proje bazinda netlestirilir."
+      "a5": "B2B sevkiyatlar için paketleme ve dokümantasyon tarafında ihracata uygun düzenlemeler yapılabilir; proje bazında netleştirilir."
     }
   },
   "offer": {

@@ -28,8 +28,8 @@ export function MediaOverlayCard({
   return (
     <Link
       href={href}
-      title={`${title} detay sayfasina git`}
-      aria-label={`${title} detay sayfasina git`}
+      title={`${title} detay sayfasına git`}
+      aria-label={`${title} detay sayfasına git`}
       className={`group relative block overflow-hidden bg-[var(--color-bg-secondary)] shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] ${aspectClassName}`}
     >
       <OptimizedImage

@@ -111,6 +111,7 @@ export default async function BlogPostPage({
                 datePublished: post.created_at,
                 dateModified: post.updated_at,
                 publisher: {
+                  '@id': `${localizedUrl(locale, '/')}#/schema/organization`,
                   name: org.name,
                   logo: org.logo as string | undefined,
                 },

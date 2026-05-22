@@ -205,7 +205,7 @@ export function Footer({
                   <li key={item.url}>
                     <Link
                       href={item.url!}
-                      title={`${item.label} sayfasina git`}
+                      title={`${item.label} sayfasına git`}
                       className="text-xs font-light text-(--silver) transition-all duration-300 hover:text-(--gold) hover:pl-2 flex items-center gap-2 group"
                     >
                       <span className="size-1 rounded-full bg-(--gold) opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -229,7 +229,7 @@ export function Footer({
           <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-8 gap-y-4">
             <Link
               href={localizedPath(locale, '/legal/privacy')}
-              title={`${privacyLabel || t('privacy')} sayfasina git`}
+              title={`${privacyLabel || t('privacy')} sayfasına git`}
               className="text-[10px] font-bold uppercase tracking-[2.5px] text-(--silver) hover:text-(--gold) transition-colors"
             >
               {privacyLabel || t('privacy')}
@@ -238,7 +238,7 @@ export function Footer({
             {termsLabel && (
               <Link
                 href={localizedPath(locale, '/legal/terms')}
-                title={`${termsLabel || t('terms')} sayfasina git`}
+                title={`${termsLabel || t('terms')} sayfasına git`}
                 className="text-[10px] font-bold uppercase tracking-[2.5px] text-(--silver) hover:text-(--gold) transition-colors"
               >
                 {termsLabel || t('terms')}

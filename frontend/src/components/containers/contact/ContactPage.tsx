@@ -13,6 +13,8 @@ type ContactPageLabels = {
   hoursLabel: string;
   responseTitle: string;
   responseItems: string[];
+  mapLabel: string;
+  faqLabel: string;
   faqTitle: string;
   faqIntro: string;
   faqItems: Array<{ question: string; answer: string }>;
@@ -135,7 +137,7 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
             <Reveal delay={300}>
               <section className="mt-24" aria-label="Konum">
                 <div className="mb-8">
-                  <span className="section-label-cc">Location</span>
+                  <span className="section-label-cc">{labels.mapLabel}</span>
                 </div>
                 <div className="overflow-hidden border border-(--color-border)">
                   <iframe
@@ -157,7 +159,7 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
             <section className="mt-32 max-w-4xl" aria-labelledby="contact-faq-heading">
               <Reveal>
                 <div className="mb-16">
-                  <span className="section-label-cc">Inquiry</span>
+                  <span className="section-label-cc">{labels.faqLabel}</span>
                   <h2 id="contact-faq-heading" className="section-title-cc text-[3.5rem]">
                     {labels.faqTitle}
                   </h2>

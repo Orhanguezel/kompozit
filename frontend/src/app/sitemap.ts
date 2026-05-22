@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { localeAlternates, localizedUrl } from '@/seo/helpers';
-import { AVAILABLE_LOCALES } from '@/i18n/locales';
+import { AVAILABLE_LOCALES, hasLocale } from '@/i18n/locales';
+import { getLocaleSettings } from '@/i18n/locale-settings';
 import { API_BASE_URL } from '@/lib/utils';
 import { KOMPOZIT_SOLUTIONS_MODULE_KEY } from '@/features/solutions';
 
@@ -17,12 +18,13 @@ type SitemapItem = {
 function sitemapEntry(
   locale: string,
   path: string,
+  locales: string[],
   entry: Omit<MetadataRoute.Sitemap[number], 'url' | 'alternates'> = {},
 ): MetadataRoute.Sitemap[number] {
   return {
     url: localizedUrl(locale, path),
     alternates: {
-      languages: localeAlternates(path),
+      languages: localeAlternates(path, locales),
     },
     ...entry,
   };
@@ -140,7 +142,9 @@ function resolveSitemapImages(item?: SitemapItem): string[] | undefined {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const locales = AVAILABLE_LOCALES;
+  const { activeLocales } = await getLocaleSettings();
+  const locales = activeLocales.filter(hasLocale);
+  const sitemapLocales = locales.length ? locales : AVAILABLE_LOCALES;
 
   const entries: MetadataRoute.Sitemap = [];
 
@@ -156,7 +160,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { path: '/offer', changeFrequency: 'monthly' as const, priority: 0.8 },
   ];
 
-  for (const locale of locales) {
+  for (const locale of sitemapLocales) {
     const [products, galleries, blogPosts, solutionPages, legalPages] = await Promise.all([
       fetchItems(`/products?item_type=kompozit&locale=${encodeURIComponent(locale)}`),
       fetchItems(`/galleries?module_key=kompozit&locale=${encodeURIComponent(locale)}`),
@@ -166,14 +170,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ]);
 
     for (const route of staticRoutes) {
-      entries.push(sitemapEntry(locale, route.path || '/', {
+      entries.push(sitemapEntry(locale, route.path || '/', sitemapLocales, {
         changeFrequency: route.changeFrequency,
         priority: route.priority,
       }));
     }
 
     for (const item of products) {
-      entries.push(sitemapEntry(locale, `/products/${item.slug}`, {
+      entries.push(sitemapEntry(locale, `/products/${item.slug}`, sitemapLocales, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'weekly',
         priority: 0.8,
@@ -182,7 +186,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const item of galleries) {
-      entries.push(sitemapEntry(locale, `/gallery/${item.slug}`, {
+      entries.push(sitemapEntry(locale, `/gallery/${item.slug}`, sitemapLocales, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'monthly',
         priority: 0.6,
@@ -191,7 +195,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const item of blogPosts) {
-      entries.push(sitemapEntry(locale, `/blog/${item.slug}`, {
+      entries.push(sitemapEntry(locale, `/blog/${item.slug}`, sitemapLocales, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'monthly',
         priority: 0.7,
@@ -200,7 +204,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const item of solutionPages) {
-      entries.push(sitemapEntry(locale, `/solutions/${item.slug}`, {
+      entries.push(sitemapEntry(locale, `/solutions/${item.slug}`, sitemapLocales, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'monthly',
         priority: 0.72,
@@ -208,7 +212,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
 
     for (const item of legalPages) {
-      entries.push(sitemapEntry(locale, `/legal/${item.slug}`, {
+      entries.push(sitemapEntry(locale, `/legal/${item.slug}`, sitemapLocales, {
         lastModified: resolveLastModified(item),
         changeFrequency: 'yearly',
         priority: 0.3,

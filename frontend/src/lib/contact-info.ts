@@ -60,9 +60,9 @@ export function parseContactSettingValue(value: unknown): ParsedContactInfo {
 const DAY_LABELS: Record<string, Record<string, string>> = {
   tr: {
     mon: 'Pazartesi',
-    tue: 'Sali',
-    wed: 'Carsamba',
-    thu: 'Persembe',
+    tue: 'Salı',
+    wed: 'Çarşamba',
+    thu: 'Perşembe',
     fri: 'Cuma',
     sat: 'Cumartesi',
     sun: 'Pazar',
@@ -88,7 +88,7 @@ export function parseBusinessHoursSettingValue(value: unknown, locale: string): 
     ? { ...DAY_LABELS.en }
     : { ...DAY_LABELS.tr };
   const openRows = rows.filter((row) => row && !row.closed && row.open && row.close);
-  if (!openRows.length) return locale.startsWith('en') ? 'Closed' : 'Kapali';
+  if (!openRows.length) return locale.startsWith('en') ? 'Closed' : 'Kapalı';
 
   const first = openRows[0] as BusinessHourRow;
   const last = openRows[openRows.length - 1] as BusinessHourRow;

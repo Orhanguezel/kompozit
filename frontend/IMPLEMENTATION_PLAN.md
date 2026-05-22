@@ -93,7 +93,7 @@ Tek bir dogru URL yapisi tanimlamak ve varsayilan locale icin duplicate URL risk
 - [x] `src/i18n/routing.ts` ile `next.config.ts` rewrite mantigini ayni URL stratejisine getir.
 - [x] Canonical ve `alternates.languages` uretimini merkezi helper uzerinden standardize et. *(Uygulama: `src/seo/helpers.ts` `localizedPath/localizedUrl/localeAlternates`.)*
 - [x] `src/components/layout/LanguageSwitcher.tsx` icinde default locale icin kok URL davranisi tanimla.
-- [ ] Tum `href={`/${locale}...`}` kullanimlarini locale helper ile uretilecek sekilde refactor et.
+- [x] Tum `href={`/${locale}...`}` kullanimlarini locale helper ile uretilecek sekilde refactor et.
 - [x] `x-default` alternate link ekle.
 
 ### Acceptance Criteria
@@ -118,8 +118,8 @@ Tek bir dogru URL yapisi tanimlamak ve varsayilan locale icin duplicate URL risk
 ### Tasks
 
 - [x] `src/i18n/locales/index.ts` icinde `en.json` import ve kaydini tamamla.
-- [ ] Backend `activeLocales/defaultLocale` cevabi ile frontend static locale registry arasindaki bagimliligi netlestir.
-- [ ] `generateStaticParams()` ve request locale secimini sadece gercekten desteklenen locale'ler ile hizala.
+- [x] Backend `activeLocales/defaultLocale` cevabi ile frontend static locale registry arasindaki bagimliligi netlestir. *(Uygulama: `src/i18n/locale-settings.ts`, unsupported locale'ler static registry ile filtreleniyor.)*
+- [x] `generateStaticParams()` ve request locale secimini sadece gercekten desteklenen locale'ler ile hizala.
 - [ ] Dil bazli menu, footer, SEO settings ve custom page iceriklerinin eksiksiz geldigi dogrulanmali.
 - [ ] `en` sayfalar icin title, description, nav ve CTA icerikleri gercek Ingilizce olmalı.
 - [ ] Empty translation fallback davranisi tanimlanmali; sessizce Turkceye dusmemeli.
@@ -146,14 +146,14 @@ Arama motoruna eksiksiz, temiz ve guvenilir URL envanteri vermek.
 
 ### Tasks
 
-- [ ] `src/app/sitemap.ts` icinde blog slug'larini dahil et.
-- [ ] Legal/custom pages icin indekslenebilir slug'lari dahil et.
-- [ ] Gerekirse sitemap'i bol: `sitemap-index`, `products`, `blog`, `gallery`, `pages`.
-- [ ] Locale listesini hardcoded yerine aktif locale kaynagindan cek.
-- [ ] `lastModified` alanlarini API `updated_at` verisinden uret.
+- [x] `src/app/sitemap.ts` icinde blog slug'larini dahil et.
+- [x] Legal/custom pages icin indekslenebilir slug'lari dahil et.
+- [x] Gerekirse sitemap'i bol: `sitemap-index`, `products`, `blog`, `gallery`, `pages`. *(Karar: mevcut URL hacmi icin tek sitemap yeterli.)*
+- [x] Locale listesini hardcoded yerine aktif locale kaynagindan cek.
+- [x] `lastModified` alanlarini API `updated_at` verisinden uret.
 - [ ] Kategori sayfalari indekslenecekse query string yerine temiz route tasarla (`/products/category/[slug]` gibi).
-- [ ] `robots.ts` icinde gerekirse query pattern ve non-SEO path'ler icin daha net disallow kurallari tanimla.
-- [ ] `llms.txt` ekleme kararini ver ve marka politikasina gore uygula.
+- [x] `robots.ts` icinde gerekirse query pattern ve non-SEO path'ler icin daha net disallow kurallari tanimla.
+- [x] `llms.txt` ekleme kararini ver ve marka politikasina gore uygula.
 
 ### Acceptance Criteria
 
@@ -410,45 +410,45 @@ Sayfa ici guven sinyallerini, okunabilirligi ve link acikligini teknik SEO denet
 ### Tasks
 
 - [x] `author` ve `publisher` metadata stratejisini ortak helper katmanina ekle.
-- [ ] Publisher sinyalini Organization/Article schema ile hizala.
-- [ ] Favicon, icon, apple-touch ve related icon output'unu route bazli tekrar dogrula.
-- [ ] `robots.txt` icine acik sitemap adresi ve gerekli crawl kurallarini tekrar degerlendir.
-- [ ] `https` + non-`www`/`www` redirect politikasini netlestir ve production redirect matrix'ini uygula.
-- [ ] `www` varyanti indexlenmeyecekse tek adimda kanonik host'a yonlendir.
-- [ ] Title helper'inda pixel-width odakli kisaltma ve CTR dengesi icin ek kontrol uygula.
-- [ ] Meta title sanitization kurali ekle; problemli karakterleri ve separator politikasini standardize et.
+- [x] Publisher sinyalini Organization/Article schema ile hizala.
+- [x] Favicon, icon, apple-touch ve related icon output'unu route bazli tekrar dogrula.
+- [x] `robots.txt` icine acik sitemap adresi ve gerekli crawl kurallarini tekrar degerlendir.
+- [x] `https` + non-`www`/`www` redirect politikasini netlestir ve production redirect matrix'ini uygula.
+- [x] `www` varyanti indexlenmeyecekse tek adimda kanonik host'a yonlendir.
+- [x] Title helper'inda pixel-width odakli kisaltma ve CTR dengesi icin ek kontrol uygula.
+- [x] Meta title sanitization kurali ekle; problemli karakterleri ve separator politikasini standardize et.
 - [ ] H1 ile body copy arasindaki ana kavram eslesmesini landing bazinda guclendir.
-- [ ] Apple Touch icon output'unun her route'ta dogru servis edildigini tekrar dogrula.
+- [x] Apple Touch icon output'unun her route'ta dogru servis edildigini tekrar dogrula.
 - [ ] Blog/detail ve gerekirse landing sayfalarinda social sharing coverage standardi tanimla.
 - [ ] Tekrarlanan anchor text'leri ve asiri uzun link metinlerini yeniden duzenle.
 - [ ] Uygun yerlerde sinyal bozmayacak sekilde sinirli ve baglamsal external link stratejisi degerlendir.
-- [ ] Nginx/server katmaninda `Server` veya version disclosure header'ini minimize et.
+- [x] Nginx/server katmaninda `Server` veya version disclosure header'ini minimize et.
 - [ ] Gercek status code donduren, branded ve crawl-friendly bir ozel 404 sayfasi davranisini production'da tekrar dogrula.
-- [ ] Search Console teslim/checklist adimini proje rollout checklist'ine dahil et.
-- [ ] Google Analytics veya alternatif analytics baglantisi kararini netlestir; en azindan plan karari dokumante et.
-- [ ] Facebook Pixel kullanilacaksa event/consent stratejisiyle birlikte planla; kullanilmayacaksa bunu bilincli karar olarak not et.
+- [x] Search Console teslim/checklist adimini proje rollout checklist'ine dahil et.
+- [x] Google Analytics veya alternatif analytics baglantisi kararini netlestir; en azindan plan karari dokumante et.
+- [x] Facebook Pixel kullanilacaksa event/consent stratejisiyle birlikte planla; kullanilmayacaksa bunu bilincli karar olarak not et.
 - [ ] Facebook, Twitter/X, Instagram, YouTube ve LinkedIn kurumsal profil URL'lerini site settings / footer / schema katmanina bagla.
 - [ ] Body, excerpt, utility text ve footer copy alanlari icin minimum okunabilir font-size standardi tanimla.
-- [ ] Global nav, footer, CTA, product/gallery/blog card ve featured content linklerine `title` veya uygun aciklayici annotation strategy ekle.
-- [ ] `Devamini Oku`, `Tumunu Gor`, `Teklif Al`, `Urunleri Kesfet` gibi generic anchor text kullanimlarini context-aware hale getir veya annotation ile destekle.
-- [ ] Home page ve global layout icin link annotation smoke checklist'i ekle.
+- [x] Global nav, footer, CTA, product/gallery/blog card ve featured content linklerine `title` veya uygun aciklayici annotation strategy ekle.
+- [x] `Devamini Oku`, `Tumunu Gor`, `Teklif Al`, `Urunleri Kesfet` gibi generic anchor text kullanimlarini context-aware hale getir veya annotation ile destekle.
+- [x] Home page ve global layout icin link annotation smoke checklist'i ekle.
 
 ### Audit Inputs To Address
 
-- [ ] Meta Author Kullanimi: pasif, author kullanilmiyor.
-- [ ] Meta Publisher Etiketi: pasif, publisher kullanilmiyor.
+- [x] Meta Author Kullanimi: pasif, author kullanilmiyor.
+- [x] Meta Publisher Etiketi: pasif, publisher kullanilmiyor.
 - [ ] Font Boyutlari: dokumanda okunabilir yazı tipi boyutlari sinyali yetersiz.
-- [ ] Favicon Kullanimi: pasif veya tutarsiz sinyal.
-- [ ] Robots Txt Dosyasi:
+- [x] Favicon Kullanimi: pasif veya tutarsiz sinyal.
+- [x] Robots Txt Dosyasi:
   - Dizine Eklenebilirlik: etkin
   - Dosya Durumu: etkin
   - Kural Kullanimi: pasif
   - Sitemap Adresi: pasif
-- [ ] Yönlendirme Doğrulaması:
+- [x] Yönlendirme Doğrulaması:
   - Https Kullanımı: aktif
   - Https Yönlendirme: aktif
   - www Yönlendirme: pasif
-- [ ] Title:
+- [x] Title:
   - `Karbon Fiber, CTP ve Cam Elyaf Kompozit Uretimi | MOE Kompo...`
   - Pixel width onerilen siniri asiyor (`599px`)
   - Istenmeyen karakter politikasi uyarisi var
@@ -465,11 +465,11 @@ Sayfa ici guven sinyallerini, okunabilirligi ve link acikligini teknik SEO denet
 - [ ] Özel 404 sayfası:
   - Ozel 404 sayfasi bulunamadi
   - Sunucu yaniti `200`
-- [ ] Arama konsolu:
+- [x] Arama konsolu:
   - Google Search Console bagli degil
-- [ ] Google analizi:
+- [x] Google analizi:
   - Google Analytics bagli degil
-- [ ] Facebook pikseli:
+- [x] Facebook pikseli:
   - Facebook Pixel bulunamadi
 - [ ] Sosyal profil sinyalleri:
   - Facebook sayfasi bulunamadi
@@ -477,42 +477,42 @@ Sayfa ici guven sinyallerini, okunabilirligi ve link acikligini teknik SEO denet
   - Instagram sayfasi bulunamadi
   - YouTube sayfasi bulunamadi
   - LinkedIn sayfasi bulunamadi
-- [ ] Title Etiketi Olmayan Linkler: asagidaki bulgular kapsama alinacak.
+- [x] Title Etiketi Olmayan Linkler: asagidaki bulgular kapsama alinacak.
 
 ### Link Annotation Findings Queue
 
-- [ ] `tr` Yazı: `MOE Kompozit`
-- [ ] `tr` Yazı: `Ana Sayfa`
-- [ ] `products` Yazı: `Ürünler`
-- [ ] `gallery` Yazı: `Galeri`
-- [ ] `blog` Yazı: `Blog`
-- [ ] `about` Yazı: `Hakkımızda`
-- [ ] `contact` Yazı: `İletişim`
-- [ ] `offer` Yazı: `Teklif Al`
-- [ ] `products` Yazı: `Ürünleri Keşfet`
-- [ ] `offer` Yazı: `Teklif Al`
-- [ ] `products` Yazı: `Tümünü Gör`
-- [ ] `karbon-fiber-panel-prototipi` Yazı: `Karbon Fiber Panel PrototipiKarbon fiber takviyeli panel prototipi; hafiflik, rijitlik ve seri uretim oncesi dogrulama ihtiyaclari icin ornek bir kompozit urun kaydidir.`
-- [ ] `ctp-koruyucu-govde-paneli` Yazı: `CTP Koruyucu Govde PaneliCam takviyeli polyester tabanli koruyucu govde paneli; saha dayanimı, kimyasal direnç ve proses tekrarlanabilirligi odakli ornek urun kaydidir.`
-- [ ] `cam-elyaf-servis-kapagi` Yazı: `Cam Elyaf Servis KapagiCam elyaf esasli servis kapagi; dis ortam dayanimı ve kolay montaj gerektiren saha ekipmanlari icin ornek bir galeri ve urun destek kaydidir.`
-- [ ] `gallery` Yazı: `Tümünü Gör`
-- [ ] `karbon-fiber-panel-uygulama-galerisi` Yazı: `Karbon Fiber Panel Uygulama GalerisiKarbon fiber panel prototipinden nihai yuzey kontrolune uzanan ornek uygulama galerisi.`
-- [ ] `ctp-govde-paneli-uretim-galerisi` Yazı: `CTP Govde Paneli Uretim GalerisiCTP govde panelinde kalip, laminasyon ve son trim surecini gosteren ornek galeri.`
-- [ ] `karbon-fiber-nedir` Yazı: `Devamını Oku`
-- [ ] `blog` Yazı: `Tümünü Gör`
-- [ ] `ctp-fiberglass-farklari` Yazı: `Devamını Oku`
-- [ ] `kompozit-kalite-kontrol` Yazı: `Devamını Oku`
-- [ ] `offer` Yazı: `Teklif Al`
-- [ ] `products` Yazı: `Ürünler`
-- [ ] `gallery` Yazı: `Galeri`
-- [ ] `blog` Yazı: `Blog`
-- [ ] `offer` Yazı: `Teklif Al`
-- [ ] `about` Yazı: `Hakkımızda`
-- [ ] `contact` Yazı: `İletişim`
-- [ ] `privacy` Yazı: `Gizlilik Politikası`
-- [ ] `terms` Yazı: `Kullanım Koşulları`
-- [ ] `privacy` Yazı: `Gizlilik Politikası`
-- [ ] `terms` Yazı: `Kullanım Koşulları`
+- [x] `tr` Yazı: `MOE Kompozit`
+- [x] `tr` Yazı: `Ana Sayfa`
+- [x] `products` Yazı: `Ürünler`
+- [x] `gallery` Yazı: `Galeri`
+- [x] `blog` Yazı: `Blog`
+- [x] `about` Yazı: `Hakkımızda`
+- [x] `contact` Yazı: `İletişim`
+- [x] `offer` Yazı: `Teklif Al`
+- [x] `products` Yazı: `Ürünleri Keşfet`
+- [x] `offer` Yazı: `Teklif Al`
+- [x] `products` Yazı: `Tümünü Gör`
+- [x] `karbon-fiber-panel-prototipi` Yazı: `Karbon Fiber Panel PrototipiKarbon fiber takviyeli panel prototipi; hafiflik, rijitlik ve seri uretim oncesi dogrulama ihtiyaclari icin ornek bir kompozit urun kaydidir.`
+- [x] `ctp-koruyucu-govde-paneli` Yazı: `CTP Koruyucu Govde PaneliCam takviyeli polyester tabanli koruyucu govde paneli; saha dayanimı, kimyasal direnç ve proses tekrarlanabilirligi odakli ornek urun kaydidir.`
+- [x] `cam-elyaf-servis-kapagi` Yazı: `Cam Elyaf Servis KapagiCam elyaf esasli servis kapagi; dis ortam dayanimı ve kolay montaj gerektiren saha ekipmanlari icin ornek bir galeri ve urun destek kaydidir.`
+- [x] `gallery` Yazı: `Tümünü Gör`
+- [x] `karbon-fiber-panel-uygulama-galerisi` Yazı: `Karbon Fiber Panel Uygulama GalerisiKarbon fiber panel prototipinden nihai yuzey kontrolune uzanan ornek uygulama galerisi.`
+- [x] `ctp-govde-paneli-uretim-galerisi` Yazı: `CTP Govde Paneli Uretim GalerisiCTP govde panelinde kalip, laminasyon ve son trim surecini gosteren ornek galeri.`
+- [x] `karbon-fiber-nedir` Yazı: `Devamını Oku`
+- [x] `blog` Yazı: `Tümünü Gör`
+- [x] `ctp-fiberglass-farklari` Yazı: `Devamını Oku`
+- [x] `kompozit-kalite-kontrol` Yazı: `Devamını Oku`
+- [x] `offer` Yazı: `Teklif Al`
+- [x] `products` Yazı: `Ürünler`
+- [x] `gallery` Yazı: `Galeri`
+- [x] `blog` Yazı: `Blog`
+- [x] `offer` Yazı: `Teklif Al`
+- [x] `about` Yazı: `Hakkımızda`
+- [x] `contact` Yazı: `İletişim`
+- [x] `privacy` Yazı: `Gizlilik Politikası`
+- [x] `terms` Yazı: `Kullanım Koşulları`
+- [x] `privacy` Yazı: `Gizlilik Politikası`
+- [x] `terms` Yazı: `Kullanım Koşulları`
 
 ### Acceptance Criteria
 
