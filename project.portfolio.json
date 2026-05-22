@@ -1,0 +1,58 @@
+{
+  "title": "Karbonkompozit",
+  "slug": "karbonkompozit",
+  "summary": "Corporate web platform for carbon composite material solutions — product catalog, content management and multilingual site on a Next.js + Fastify stack with shared backend packages.",
+  "category": "CORPORATE WEBSITE",
+  "services": [
+    "Frontend Development",
+    "Backend Development",
+    "Architecture & Optimization",
+    "DevOps & Deployment"
+  ],
+  "techs": [
+    "Next.js",
+    "React",
+    "TypeScript",
+    "Fastify",
+    "Drizzle ORM",
+    "MySQL",
+    "Bun",
+    "Zod",
+    "next-intl",
+    "Tailwind CSS",
+    "React Query",
+    "Redux Toolkit",
+    "Cloudinary",
+    "JWT",
+    "Docker",
+    "Nginx",
+    "CI/CD"
+  ],
+  "features": [
+    "Admin panel",
+    "Product catalog management",
+    "Content management",
+    "Multi-language site",
+    "SEO & Lighthouse audits"
+  ],
+  "designHighlights": [
+    "Shared backend packages via workspace",
+    "Smoke-tested content flows",
+    "Production deployed at karbonkompozit.com.tr"
+  ],
+  "featured": true,
+  "displayOrder": 4,
+  "clientName": "Own Project",
+  "status": "live",
+  "startDate": "2025-03-01",
+  "completeDate": null,
+  "completionTimeLabel": "Ongoing",
+  "repoUrl": "https://github.com/Orhanguezel/kompozit",
+  "websiteUrl": "https://karbonkompozit.com.tr",
+  "demoUrl": "https://karbonkompozit.com.tr",
+  "featuredImage": "/assets/imgs/work/projects/karbonkompozit.png",
+  "featuredImageAlt": "Karbonkompozit Corporate Website",
+  "resumeTitle": "Karbonkompozit",
+  "resumeSubtitle": "Carbon Composite Corporate Platform",
+  "excludeFromPortfolio": false
+}
