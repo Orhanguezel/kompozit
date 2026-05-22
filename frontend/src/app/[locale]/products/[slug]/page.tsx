@@ -9,7 +9,7 @@ import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildOrganizationSchemaItems, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { BrandCtaPanel } from '@/components/patterns/BrandCtaPanel';
 import { TechnicalSpecs } from '@/components/patterns/TechnicalSpecs';
-import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { ProductGallery } from '@/components/products/ProductGallery';
 import { fetchRelatedContent } from '@/lib/related-content';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
@@ -89,6 +89,21 @@ export default async function ProductDetailPage({
     product.image_url != null && String(product.image_url).trim()
       ? (resolvePublicAssetUrl(product.image_url) ?? product.image_url)
       : undefined;
+  const mediaAlt = buildMediaAlt({
+    locale,
+    kind: 'product',
+    title: product.title,
+    alt: product.alt,
+    caption: product.caption,
+    description: product.description,
+  });
+  const galleryImages: string[] = (
+    Array.isArray(product.images) && product.images.length > 0
+      ? product.images
+      : [product.image_url]
+  )
+    .filter((value: unknown): value is string => typeof value === 'string' && value.trim().length > 0)
+    .map((value: string) => resolvePublicAssetUrl(value) ?? value);
   const schemaItems = [
     ...buildOrganizationSchemaItems(locale, {
       description: typeof product.description === 'string' ? product.description : undefined,
@@ -141,27 +156,7 @@ export default async function ProductDetailPage({
             {/* Product Image Stage */}
             <div className="relative">
               <div className="sticky top-28">
-                <div className="group aspect-square cursor-zoom-in overflow-hidden rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_15%,transparent)] bg-[var(--color-bg-secondary)] shadow-2xl shadow-black/10 dark:shadow-black/40">
-                  {heroImage && (
-                    <OptimizedImage
-                      src={heroImage}
-                      alt={buildMediaAlt({
-                        locale,
-                        kind: 'product',
-                        title: product.title,
-                        alt: product.alt,
-                        caption: product.caption,
-                        description: product.description,
-                      })}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      priority
-                      sizes="(max-width: 1024px) 100vw, 50vw"
-                    />
-                  )}
-                </div>
-
-                {/* Image thumbnails/gallery if they exist would go here */}
+                <ProductGallery images={galleryImages} alt={mediaAlt} />
               </div>
             </div>
 
