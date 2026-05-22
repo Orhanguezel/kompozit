@@ -1,8 +1,5 @@
 # MOE Kompozit - Endustriyel Kompozit Cozumleri
-> Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan Ensotek alt markasi.
-
-## Ensotek Bagi
-MOE Kompozit, Ensotek Turkiye'nin kompozit uretim alt markasidir. Ensotek'in sogutma kulesi sektorundeki 39+ yillik muhendislik ve kalite deneyimi, MOE Kompozit'in karbon fiber, CTP tank, FRP boru, pultruzyon profil ve ozel kompozit parca uretimine aktarilir.
+> Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan bagimsiz endustriyel kompozit ureticisi.
 
 ## Uretim Yetkinlikleri
 - Karbon fiber bilesenleri: savunma, havacilik, enerji ve ulasim icin hafif parcalar.
@@ -19,8 +16,7 @@ ISO 9001 odakli kalite sistemi, AS9100 baseline hedefi, teknik sartnameye gore m
 
 ## Iletisim
 - Website: https://karbonkompozit.com.tr
-- Teklif ve teknik talepler: offers@moekompozit.com
-- Ana grup: https://www.ensotek.com.tr
+- Teklif ve teknik talepler: info@karbonkompozit.com.tr
 
 ## Web Hiyerarsisi
 - /tr/urunler: 7 ana urun kategorisi.

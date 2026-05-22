@@ -228,7 +228,7 @@ export default async function LocaleLayout({
       url: siteUrl,
       logo: orgLogoUrl,
       description:
-        'Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan Ensotek alt markasi.',
+        'Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan bagimsiz endustriyel kompozit ureticisi.',
       email: asStr(contactInfo.email) || undefined,
       telephone: asStr(contactInfo.phone) || undefined,
       address: asStr(contactInfo.address) || undefined,

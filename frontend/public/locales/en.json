@@ -19,7 +19,6 @@
   },
   "footer": {
     "description": "Industrial solutions in carbon fiber, FRP and fiberglass composite manufacturing.",
-    "ensotekRelation": "MOE Kompozit is the composite manufacturing sub-brand of Ensotek.",
     "rights": "All rights reserved",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
@@ -626,13 +625,7 @@
       "partnershipCta": "Request a technical quote",
       "sectorsHeading": "Expert sectors"
     },
-    "tagline": "Where science meets craftsmanship",
-    "ensotek": {
-      "label": "Ensotek Link",
-      "title": "Composite manufacturing backed by Ensotek engineering",
-      "description": "MOE Kompozit is Ensotek's composite sub-brand, built on industrial production, quality management and project discipline. Ensotek's CTP/FRP material know-how from the cooling tower sector is transferred into carbon fiber, fiberglass, custom panels, covers, housings and project-specific composite parts.",
-      "cta": "Visit Ensotek Turkey"
-    }
+    "tagline": "Where science meets craftsmanship"
   },
   "legal": {
     "title": "Legal",
@@ -648,7 +641,7 @@
     "referencesDescription": "MOE Kompozit references summarize enterprise collaboration, application types and repeatable composite production delivery discipline.",
     "galleryDescription": "View composite production facility, molding, assembly, product detail and completed project visuals in the MOE Kompozit gallery.",
     "blogDescription": "Technical blog content on carbon fiber, FRP, fiberglass, molding, surface quality and industrial composite applications.",
-    "aboutDescription": "Discover how MOE Kompozit applies Ensotek engineering experience to carbon fiber, FRP and fiberglass composite projects.",
+    "aboutDescription": "Discover how MOE Kompozit delivers carbon fiber, FRP and fiberglass composite projects.",
     "contactDescription": "Contact MOE Kompozit for technical fit, sampling, lead time and quote discussions for carbon fiber, FRP and fiberglass projects.",
     "offerDescription": "Create a fast B2B quote request for your composite project with category, sector, quantity, lead time and technical files.",
     "keywords": "carbon fiber, FRP, fiberglass, composite, industrial manufacturing, custom production"

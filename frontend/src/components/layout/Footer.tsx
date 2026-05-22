@@ -77,7 +77,6 @@ export function Footer({
 
   const footerDesc = String(footerContent?.description || '').trim();
   const footerRights = String(footerContent?.rights || '').trim();
-  const ensotekRelation = String(footerContent?.ensotek_relation || '').trim();
   const designedBy = String(footerContent?.designed_by || '').trim();
   const privacyLabel = String(footerContent?.privacy_label || '').trim();
   const termsLabel = String(footerContent?.terms_label || '').trim();
@@ -108,7 +107,12 @@ export function Footer({
           <div className="space-y-8 lg:pr-8">
             {/* Logo */}
             {darkLogoSrc ? (
-              <Link href={localizedPath(locale, '/')} className="inline-block relative transition-transform duration-300 hover:scale-105">
+              <Link
+                href={localizedPath(locale, '/')}
+                title={`${logoAlt} ana sayfa`}
+                aria-label={`${logoAlt} ana sayfa`}
+                className="inline-block relative transition-transform duration-300 hover:scale-105"
+              >
                 <Image
                   src={darkLogoSrc}
                   alt={logoAlt}
@@ -133,20 +137,6 @@ export function Footer({
               <p className="max-w-xs text-sm font-light leading-relaxed text-(--silver)">
                 {footerDesc || t('description')}
               </p>
-
-              <div className="max-w-xs border-l-2 border-(--gold)/30 pl-4 py-1">
-                <p className="text-[11px] font-medium uppercase tracking-[1px] text-(--silver)/80">
-                  {ensotekRelation || t('ensotekRelation')}
-                </p>
-                <a
-                  href="https://www.ensotek.com.tr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-1 text-xs font-semibold text-(--gold) transition-colors hover:text-(--white)"
-                >
-                  ENSOTEK &rsaquo;
-                </a>
-              </div>
             </div>
 
             {/* Contact info */}
@@ -215,6 +205,7 @@ export function Footer({
                   <li key={item.url}>
                     <Link
                       href={item.url!}
+                      title={`${item.label} sayfasina git`}
                       className="text-xs font-light text-(--silver) transition-all duration-300 hover:text-(--gold) hover:pl-2 flex items-center gap-2 group"
                     >
                       <span className="size-1 rounded-full bg-(--gold) opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -238,6 +229,7 @@ export function Footer({
           <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-8 gap-y-4">
             <Link
               href={localizedPath(locale, '/legal/privacy')}
+              title={`${privacyLabel || t('privacy')} sayfasina git`}
               className="text-[10px] font-bold uppercase tracking-[2.5px] text-(--silver) hover:text-(--gold) transition-colors"
             >
               {privacyLabel || t('privacy')}
@@ -246,6 +238,7 @@ export function Footer({
             {termsLabel && (
               <Link
                 href={localizedPath(locale, '/legal/terms')}
+                title={`${termsLabel || t('terms')} sayfasina git`}
                 className="text-[10px] font-bold uppercase tracking-[2.5px] text-(--silver) hover:text-(--gold) transition-colors"
               >
                 {termsLabel || t('terms')}
@@ -260,7 +253,8 @@ export function Footer({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-[10px] font-bold uppercase tracking-[2.5px] text-(--silver) hover:text-(--gold) transition-colors"
-                  title={item.id}
+                  title={`${item.id} sosyal profilini ac`}
+                  aria-label={`${item.id} sosyal profilini ac`}
                 >
                   {item.id}
                 </a>
@@ -274,6 +268,7 @@ export function Footer({
                 href="https://guezelwebdesign.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                title="Guzel Web Design web sitesini ac"
                 className="text-(--gold) opacity-100 transition-colors hover:text-(--white) font-bold"
               >
                 GWD

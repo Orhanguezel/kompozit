@@ -19,7 +19,6 @@
   },
   "footer": {
     "description": "Karbon fiber, CTP ve cam elyaf kompozit uretiminde endustriyel cozumler.",
-    "ensotekRelation": "MOE Kompozit, Ensotek'in kompozit üretim alt markasıdır.",
     "rights": "Tüm hakları saklıdır",
     "privacy": "Gizlilik Politikası",
     "terms": "Kullanım Koşulları",
@@ -627,13 +626,6 @@
       "sectorsHeading": "Uzman olduğumuz sektörler"
     },
     "tagline": "Bilimin zanaatla buluştuğu nokta"
-    ,
-    "ensotek": {
-      "label": "Ensotek Bağı",
-      "title": "Ensotek mühendislik birikimiyle kompozit üretim",
-      "description": "MOE Kompozit, Ensotek'in endüstriyel üretim, kalite yönetimi ve proje disiplini üzerine kurulu kompozit alt markasıdır. Soğutma kulesi sektöründe oluşan CTP/FRP malzeme deneyimi; karbon fiber, cam elyaf, özel panel, kapak, muhafaza ve proje bazlı kompozit parça üretimine aktarılır.",
-      "cta": "Ensotek Türkiye'yi ziyaret et"
-    }
   },
   "legal": {
     "title": "Yasal",
@@ -649,7 +641,7 @@
     "referencesDescription": "MOE Kompozit referansları; kurumsal iş birlikleri, uygulama tipleri ve tekrarlanabilir kompozit üretim disiplinini özetler.",
     "galleryDescription": "Kompozit üretim tesisi, kalıplama, montaj, ürün detayları ve tamamlanan proje görsellerini MOE Kompozit galerisinde inceleyin.",
     "blogDescription": "Karbon fiber, CTP, cam elyaf, kalıplama, yüzey kalitesi ve kompozit sektör uygulamaları hakkında teknik blog içerikleri.",
-    "aboutDescription": "MOE Kompozit'in Ensotek mühendislik birikimiyle karbon fiber, CTP ve cam elyaf projelerinde nasıl çalıştığını keşfedin.",
+    "aboutDescription": "MOE Kompozit'in karbon fiber, CTP ve cam elyaf kompozit projelerinde nasıl çalıştığını keşfedin.",
     "contactDescription": "Karbon fiber, CTP ve cam elyaf projeniz için teknik uygunluk, numune, termin ve teklif görüşmesi yapmak üzere bize ulaşın.",
     "offerDescription": "Kompozit projeniz için ürün kategorisi, sektör, miktar, termin ve teknik dosyalarla hızlı B2B teklif talebi oluşturun.",
     "keywords": "karbon fiber, CTP, cam elyaf, kompozit, endüstriyel üretim, özel üretim"

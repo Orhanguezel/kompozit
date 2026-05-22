@@ -184,26 +184,6 @@ export default async function AboutPage({
                 </Reveal>
               </div>
 
-              <Reveal delay={300}>
-                <section className="border-l-2 border-(--gold)/40 bg-(--gold)/[0.04] px-8 py-10">
-                  <span className="section-label-cc">{t('about.ensotek.label')}</span>
-                  <h2 className="mt-4 font-display text-[2rem] font-normal uppercase tracking-[4px] text-(--white)">
-                    {t('about.ensotek.title')}
-                  </h2>
-                  <p className="mt-6 max-w-3xl text-sm font-light leading-relaxed text-(--silver)">
-                    {t('about.ensotek.description')}
-                  </p>
-                  <a
-                    href="https://www.ensotek.com.tr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-8 inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[3px] text-(--gold) transition-colors hover:text-(--white)"
-                  >
-                    {t('about.ensotek.cta')}
-                    <ArrowRight className="size-4" />
-                  </a>
-                </section>
-              </Reveal>
             </div>
 
             <aside>
