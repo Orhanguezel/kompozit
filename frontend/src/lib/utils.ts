@@ -28,3 +28,19 @@ export function resolvePublicAssetUrl(value?: string | null): string | null {
   const normalized = trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
   return normalized;
 }
+
+/** HTML iceren metni duz metne cevirir — kart/ozet alanlarinda <h2>, <p> gibi
+ *  etiketlerin yazi olarak gorunmesini onler. */
+export function stripHtmlToText(value?: string | null): string {
+  if (!value) return '';
+  return String(value)
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/&quot;/gi, '"')
+    .replace(/&#0?39;|&apos;/gi, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}

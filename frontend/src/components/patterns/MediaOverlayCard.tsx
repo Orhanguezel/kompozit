@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { Plus } from 'lucide-react';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { stripHtmlToText } from '@/lib/utils';
 
 type MediaOverlayCardProps = {
   href: string;
@@ -27,6 +28,8 @@ export function MediaOverlayCard({
   return (
     <Link
       href={href}
+      title={`${title} detay sayfasina git`}
+      aria-label={`${title} detay sayfasina git`}
       className={`group relative block overflow-hidden bg-[var(--color-bg-secondary)] shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] ${aspectClassName}`}
     >
       <OptimizedImage
@@ -53,9 +56,9 @@ export function MediaOverlayCard({
           </h3>
           <div className="mt-3 grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100">
              <div className="overflow-hidden">
-                {description ? (
+                {stripHtmlToText(description) ? (
                   <p className="pb-1 text-sm leading-relaxed text-white/82 line-clamp-2">
-                    {description}
+                    {stripHtmlToText(description)}
                   </p>
                 ) : null}
              </div>

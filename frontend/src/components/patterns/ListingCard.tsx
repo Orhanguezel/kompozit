@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { stripHtmlToText } from '@/lib/utils';
 
 type ListingCardProps = {
   href: string;
@@ -34,10 +35,13 @@ export function ListingCard({
 }: ListingCardProps) {
   const paddedIndex = listIndex != null ? String(listIndex).padStart(2, '0') : null;
   const geometricIcon = listIndex === 1 ? '■' : listIndex === 2 ? '◆' : '◇';
+  const plainDescription = stripHtmlToText(description);
 
   return (
     <Link
       href={href}
+      title={`${title} detay sayfasina git`}
+      aria-label={`${title} detay sayfasina git`}
       className="product-card-cc group border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_18px_60px_rgba(0,0,0,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] dark:bg-[var(--color-surface-muted)] dark:shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
     >
       {/* Visual Area */}
@@ -76,9 +80,9 @@ export function ListingCard({
           {title}
         </h3>
 
-        {description && (
+        {plainDescription && (
           <p className="mt-4 line-clamp-3 text-sm font-light leading-relaxed text-[var(--color-text-secondary)]">
-            {description}
+            {plainDescription}
           </p>
         )}
 
