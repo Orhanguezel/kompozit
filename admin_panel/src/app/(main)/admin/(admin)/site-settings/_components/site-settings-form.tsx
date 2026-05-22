@@ -287,7 +287,7 @@ export const SiteSettingsForm: React.FC<SiteSettingsFormProps> = ({
               label={imageUpload?.label ?? t("admin.siteSettings.form.imageLabel")}
               helperText={imageUpload?.helperText}
               bucket={imageUpload?.bucket ?? "public"}
-              folder={imageUpload?.folder ?? "uploads"}
+              folder={imageUpload?.folder ?? "general"}
               metadata={imageUpload?.metadata}
               value={imageUpload?.value ?? ""}
               onChange={(url) => imageUpload?.onChange?.(url)}

@@ -611,7 +611,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         if (!formData.image_url && urls.length > 0) handleChange("image_url", urls[0]);
                       }}
                       disabled={isLoading}
-                      folder="uploads/products"
+                      folder="products"
                     />
                   </div>
                 </div>
@@ -711,7 +711,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                         if (!formData.image_url && urls.length > 0) handleChange("image_url", urls[0]);
                       }}
                       disabled={isLoading}
-                      folder="uploads/products"
+                      folder="products"
                     />
                   </div>
               </div>

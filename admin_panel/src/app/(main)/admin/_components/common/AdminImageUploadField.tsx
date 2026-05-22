@@ -193,7 +193,7 @@ export const AdminImageUploadField: React.FC<AdminImageUploadFieldProps> = ({
   label = "Görsel",
   helperText,
   bucket = "public",
-  folder = "uploads",
+  folder = "general",
   metadata,
 
   value,

@@ -31,7 +31,7 @@ export function ImagesGalleryTab({
   onCoverAltChange,
   onImagesChange,
   disabled,
-  folder = "uploads",
+  folder = "general",
 }: ImagesGalleryTabProps) {
   const handleRemove = (idx: number) => {
     const removed = images[idx];
