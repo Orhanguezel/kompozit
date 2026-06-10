@@ -24,7 +24,7 @@ export interface Product {
 export const productsService = {
   getAll: async (params?: Record<string, unknown>): Promise<Product[]> => {
     const res = await api.get('/products', {
-      params: { item_type: 'kompozit', is_active: 1, ...params },
+      params: { item_type: 'kompozit', is_active: 1, sort: 'order_num', order: 'desc', ...params },
     });
     return Array.isArray(res.data) ? res.data : (res.data as any)?.items ?? [];
   },

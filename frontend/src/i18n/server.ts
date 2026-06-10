@@ -76,6 +76,31 @@ export async function fetchProductCategories(locale: string): Promise<Record<str
   }
 }
 
+export async function fetchActiveProductCategorySlugs(locale: string): Promise<string[]> {
+  try {
+    const params = new URLSearchParams({
+      item_type: 'kompozit',
+      is_active: '1',
+      locale,
+      limit: '200',
+      sort: 'order_num',
+      order: 'desc',
+    });
+    const res = await fetch(`${API_BASE_URL}/products?${params}`, {
+      next: { revalidate: 300 },
+    });
+    if (!res.ok) return [];
+    const data = await res.json();
+    const products = Array.isArray(data) ? data : (data as any)?.items ?? [];
+    const slugs = products
+      .map((product: any) => String(product.category?.slug ?? '').trim())
+      .filter(Boolean);
+    return Array.from(new Set(slugs));
+  } catch {
+    return [];
+  }
+}
+
 export async function fetchFooterSections(locale: string): Promise<Record<string, unknown>[]> {
   try {
     const res = await fetch(

@@ -6,7 +6,13 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { getLocaleSettings } from '@/i18n/locale-settings';
-import { fetchSetting, fetchMenuItems, fetchFooterSections, fetchProductCategories } from '@/i18n/server';
+import {
+  fetchActiveProductCategorySlugs,
+  fetchSetting,
+  fetchMenuItems,
+  fetchFooterSections,
+  fetchProductCategories,
+} from '@/i18n/server';
 import { getTranslations } from 'next-intl/server';
 import { siteUrlBase, asStr, asObj, localeAlternates, localizedUrl } from '@/seo';
 import { resolvePublicAssetUrl } from '@/lib/utils';
@@ -167,6 +173,7 @@ export default async function LocaleLayout({
     companyProfileSetting,
     contactInfo,
     productCategories,
+    activeProductCategorySlugs,
     footerContentSetting,
   ] =
     await Promise.all([
@@ -181,6 +188,7 @@ export default async function LocaleLayout({
       fetchSetting('company_profile', locale),
       fetchParsedContactInfo(locale),
       fetchProductCategories(locale),
+      fetchActiveProductCategorySlugs(locale),
       fetchSetting('footer_content', locale),
     ]);
 
@@ -205,7 +213,11 @@ export default async function LocaleLayout({
     light: (resolvePublicAssetUrl(lightLogoRaw) ?? lightLogoRaw),
     alt: logoAlt,
   };
-  const stableMenuItems = ensureMenuItems(menuItems, locale, navT, productCategories);
+  const activeProductCategorySlugSet = new Set(activeProductCategorySlugs);
+  const populatedProductCategories = productCategories.filter((category) => (
+    activeProductCategorySlugSet.has(String(category.slug ?? '').trim())
+  ));
+  const stableMenuItems = ensureMenuItems(menuItems, locale, navT, populatedProductCategories);
   const stableFooterSections = ensureFooterSections(footerSections, locale, navT, footerT);
   const footerSocialNav = buildFooterSocialNavFromSetting(readSettingValue(socialsSetting));
   const companyProfile = readSettingValue(companyProfileSetting);

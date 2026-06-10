@@ -6,8 +6,8 @@ VALUES
     'tr',
     JSON_OBJECT(
       'catalogEyebrow', 'B2B katalog',
-      'catalogTitle', 'Seri uretim, ozel olcu ve teknik sartnameye gore parca ihtiyaciniz mi var?',
-      'catalogBody', 'Katalogdaki her urun hatti; malzeme, proses, miktar ve termin icin proje bazli degerlendirilir. Teklif ve muhendislik gorusu icin dogrudan iletisime gecebilirsiniz.',
+      'catalogTitle', 'Seri uretim, lunapark urunleri, ozel olcu veya teknik sartnameye gore parca ihtiyaciniz mi var?',
+      'catalogBody', 'Katalogdaki her urun hatti; malzeme, proses, yuzey bitisi, renk, miktar ve termin icin proje bazli degerlendirilir. Lunapark ve tema park uygulamalari dahil teklif ve muhendislik gorusu icin dogrudan iletisime gecebilirsiniz.',
       'requestQuote', 'Teklif talep et',
       'talkToEngineering', 'Muhendislik ile gorus',
       'detailEyebrow', 'Teknik netlestirme',
@@ -39,8 +39,8 @@ VALUES
     'en',
     JSON_OBJECT(
       'catalogEyebrow', 'B2B catalogue',
-      'catalogTitle', 'Need composite parts for series production, custom dimensions, or technical specifications?',
-      'catalogBody', 'Each product line in the catalogue is reviewed against material, process, volume, and lead-time requirements. Contact us directly for quotation and engineering input.',
+      'catalogTitle', 'Need composite parts for series production, amusement park products, custom dimensions, or technical specifications?',
+      'catalogBody', 'Each product line in the catalogue is reviewed against material, process, surface finish, color, volume, and lead-time requirements. Contact us directly for quotation and engineering input, including amusement and theme park applications.',
       'requestQuote', 'Request a quote',
       'talkToEngineering', 'Talk to engineering',
       'detailEyebrow', 'Technical alignment',

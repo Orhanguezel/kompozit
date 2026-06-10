@@ -60,7 +60,7 @@ function homeHref(locale: string, path: string): string {
 async function fetchFeaturedProducts(locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/products?item_type=kompozit&is_active=1&locale=${locale}&limit=6`,
+      `${API_BASE_URL}/products?item_type=kompozit&is_active=1&locale=${locale}&limit=6&sort=order_num&order=desc`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];

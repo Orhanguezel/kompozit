@@ -14,14 +14,21 @@ import { ProductB2bBanner } from '@/components/sections/ProductB2bBanner';
 import { fetchProductsB2bContent } from '@/features/site-settings/products-b2b';
 import { Reveal } from '@/components/motion/Reveal';
 
-async function fetchProducts(locale: string, filters?: { category?: string; tag?: string }) {
+async function fetchProducts(
+  locale: string,
+  filters?: { categoryId?: string; hasCategoryFilter?: boolean; tag?: string },
+) {
+  if (filters?.hasCategoryFilter && !filters.categoryId) return [];
+
   const params = new URLSearchParams({
     item_type: 'kompozit',
     is_active: '1',
     locale,
     limit: '50',
+    sort: 'order_num',
+    order: 'desc',
   });
-  if (filters?.category) params.set('category_slug', filters.category);
+  if (filters?.categoryId) params.set('category_id', filters.categoryId);
   if (filters?.tag) params.set('tag', filters.tag);
   try {
     const res = await fetch(`${API_BASE_URL}/products?${params}`, {
@@ -47,6 +54,17 @@ async function fetchCategories(locale: string) {
   } catch {
     return [];
   }
+}
+
+async function fetchActiveCategorySlugs(locale: string) {
+  const products = await fetchProducts(locale);
+  return Array.from(
+    new Set(
+      products
+        .map((product: any) => String(product.category?.slug ?? '').trim())
+        .filter(Boolean),
+    ),
+  );
 }
 
 export async function generateMetadata({
@@ -88,11 +106,19 @@ export default async function ProductsPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale });
 
-  const [products, categories, b2bContent] = await Promise.all([
-    fetchProducts(locale, { category, tag }),
+  const [categories, activeCategorySlugs, b2bContent] = await Promise.all([
     fetchCategories(locale),
+    fetchActiveCategorySlugs(locale),
     fetchProductsB2bContent(locale),
   ]);
+  const activeCategorySlugSet = new Set(activeCategorySlugs);
+  const populatedCategories = categories.filter((c: any) => activeCategorySlugSet.has(String(c.slug ?? '').trim()));
+  const selectedCategory = category ? populatedCategories.find((c: any) => c.slug === category) : null;
+  const products = await fetchProducts(locale, {
+    categoryId: selectedCategory?.id,
+    hasCategoryFilter: Boolean(category),
+    tag,
+  });
   const fallbackProducts = getFallbackProducts(locale);
   const hasFilters = Boolean(category || tag);
   const visibleProducts = products.length > 0 ? products : hasFilters ? [] : fallbackProducts;
@@ -128,7 +154,7 @@ export default async function ProductsPage({
           <ProductB2bBanner locale={locale} content={b2bContent} />
 
           {/* Category filter */}
-          {categories.length > 0 && (
+          {populatedCategories.length > 0 && (
             <div className="mt-12 mb-16 flex flex-wrap gap-4">
               <Link
                 href={localizedPath(locale, '/products')}
@@ -140,7 +166,7 @@ export default async function ProductsPage({
               >
                 {t('products.allCategories')}
               </Link>
-              {categories.map((c: any) => (
+              {populatedCategories.map((c: any) => (
                 <Link
                   key={c.id}
                   href={`${localizedPath(locale, '/products')}?category=${encodeURIComponent(c.slug)}`}

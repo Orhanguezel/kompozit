@@ -162,7 +162,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   for (const locale of sitemapLocales) {
     const [products, galleries, blogPosts, solutionPages, legalPages] = await Promise.all([
-      fetchItems(`/products?item_type=kompozit&locale=${encodeURIComponent(locale)}`),
+      fetchItems(`/products?item_type=kompozit&locale=${encodeURIComponent(locale)}&sort=order_num&order=desc`),
       fetchItems(`/galleries?module_key=kompozit&locale=${encodeURIComponent(locale)}`),
       fetchItems(`/custom-pages?module_key=kompozit_blog&locale=${encodeURIComponent(locale)}`),
       fetchSolutionsItems(locale),

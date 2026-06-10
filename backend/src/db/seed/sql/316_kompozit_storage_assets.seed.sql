@@ -81,14 +81,14 @@ INSERT INTO `products` (`id`, `item_type`, `category_id`, `sub_category_id`, `pr
 VALUES
   ('kd030001-9001-4001-9001-ffffffff0001', 'kompozit', 'cccc0001-4001-4001-8001-cccccccc0001', NULL, 0.00, '/uploads/kompozit/urunler-1.jpeg',  'c3000020-0020-4020-8020-000000000020', JSON_ARRAY('/uploads/kompozit/urunler-1.jpeg'),  JSON_ARRAY('c3000020-0020-4020-8020-000000000020'), 1, 1, 201, 'MOE-KMP-001', 0, 5.00, 0),
   ('kd030002-9002-4002-9002-ffffffff0002', 'kompozit', 'cccc0002-4002-4002-8002-cccccccc0002', NULL, 0.00, '/uploads/kompozit/urunler-2.jpeg',  'c3000021-0021-4021-8021-000000000021', JSON_ARRAY('/uploads/kompozit/urunler-2.jpeg'),  JSON_ARRAY('c3000021-0021-4021-8021-000000000021'), 1, 1, 202, 'MOE-KMP-002', 0, 5.00, 0),
-  ('kd030003-9003-4003-9003-ffffffff0003', 'kompozit', 'cccc0003-4003-4003-8003-cccccccc0003', NULL, 0.00, '/uploads/kompozit/urunler-3.jpeg',  'c3000022-0022-4022-8022-000000000022', JSON_ARRAY('/uploads/kompozit/urunler-3.jpeg'),  JSON_ARRAY('c3000022-0022-4022-8022-000000000022'), 1, 1, 203, 'MOE-KMP-003', 0, 5.00, 0),
+  ('kd030003-9003-4003-9003-ffffffff0003', 'kompozit', 'cccc0004-4004-4004-8004-cccccccc0004', NULL, 0.00, '/uploads/kompozit/urunler-3.jpeg',  'c3000022-0022-4022-8022-000000000022', JSON_ARRAY('/uploads/kompozit/urunler-3.jpeg'),  JSON_ARRAY('c3000022-0022-4022-8022-000000000022'), 1, 1, 203, 'MOE-KMP-003', 0, 5.00, 0),
   ('kd030004-9004-4004-9004-ffffffff0004', 'kompozit', 'cccc0004-4004-4004-8004-cccccccc0004', NULL, 0.00, '/uploads/kompozit/urunler-4.jpeg',  'c3000023-0023-4023-8023-000000000023', JSON_ARRAY('/uploads/kompozit/urunler-4.jpeg'),  JSON_ARRAY('c3000023-0023-4023-8023-000000000023'), 1, 1, 204, 'MOE-KMP-004', 0, 5.00, 0),
   ('kd030005-9005-4005-9005-ffffffff0005', 'kompozit', 'cccc0005-4005-4005-8005-cccccccc0005', NULL, 0.00, '/uploads/kompozit/urunler-5.jpeg',  'c3000024-0024-4024-8024-000000000024', JSON_ARRAY('/uploads/kompozit/urunler-5.jpeg'),  JSON_ARRAY('c3000024-0024-4024-8024-000000000024'), 1, 0, 205, 'MOE-KMP-005', 0, 5.00, 0),
   ('kd030006-9006-4006-9006-ffffffff0006', 'kompozit', 'cccc0006-4006-4006-8006-cccccccc0006', NULL, 0.00, '/uploads/kompozit/urunler-6.jpeg',  'c3000025-0025-4025-8025-000000000025', JSON_ARRAY('/uploads/kompozit/urunler-6.jpeg'),  JSON_ARRAY('c3000025-0025-4025-8025-000000000025'), 1, 0, 206, 'MOE-KMP-006', 0, 5.00, 0),
   ('kd030007-9007-4007-9007-ffffffff0007', 'kompozit', 'cccc0007-4007-4007-8007-cccccccc0007', NULL, 0.00, '/uploads/kompozit/urunler-7.jpeg',  'c3000026-0026-4026-8026-000000000026', JSON_ARRAY('/uploads/kompozit/urunler-7.jpeg'),  JSON_ARRAY('c3000026-0026-4026-8026-000000000026'), 1, 0, 207, 'MOE-KMP-007', 0, 5.00, 0),
   ('kd030008-9008-4008-9008-ffffffff0008', 'kompozit', 'cccc0001-4001-4001-8001-cccccccc0001', NULL, 0.00, '/uploads/kompozit/urunler-8.jpeg',  'c3000027-0027-4027-8027-000000000027', JSON_ARRAY('/uploads/kompozit/urunler-8.jpeg'),  JSON_ARRAY('c3000027-0027-4027-8027-000000000027'), 1, 0, 208, 'MOE-KMP-008', 0, 5.00, 0),
   ('kd030009-9009-4009-9009-ffffffff0009', 'kompozit', 'cccc0002-4002-4002-8002-cccccccc0002', NULL, 0.00, '/uploads/kompozit/urunler-9.jpeg',  'c3000028-0028-4028-8028-000000000028', JSON_ARRAY('/uploads/kompozit/urunler-9.jpeg'),  JSON_ARRAY('c3000028-0028-4028-8028-000000000028'), 1, 0, 209, 'MOE-KMP-009', 0, 5.00, 0),
-  ('kd030010-9010-4010-9010-ffffffff0010', 'kompozit', 'cccc0003-4003-4003-8003-cccccccc0003', NULL, 0.00, '/uploads/kompozit/urunler-10.jpeg', 'c3000015-0015-4015-8015-000000000015', JSON_ARRAY('/uploads/kompozit/urunler-10.jpeg'), JSON_ARRAY('c3000015-0015-4015-8015-000000000015'), 1, 0, 210, 'MOE-KMP-010', 0, 5.00, 0),
+  ('kd030010-9010-4010-9010-ffffffff0010', 'kompozit', 'cccc0004-4004-4004-8004-cccccccc0004', NULL, 0.00, '/uploads/kompozit/urunler-10.jpeg', 'c3000015-0015-4015-8015-000000000015', JSON_ARRAY('/uploads/kompozit/urunler-10.jpeg'), JSON_ARRAY('c3000015-0015-4015-8015-000000000015'), 1, 0, 210, 'MOE-KMP-010', 0, 5.00, 0),
   ('kd030011-9011-4011-9011-ffffffff0011', 'kompozit', 'cccc0004-4004-4004-8004-cccccccc0004', NULL, 0.00, '/uploads/kompozit/urunler-11.jpeg', 'c3000016-0016-4016-8016-000000000016', JSON_ARRAY('/uploads/kompozit/urunler-11.jpeg'), JSON_ARRAY('c3000016-0016-4016-8016-000000000016'), 1, 0, 211, 'MOE-KMP-011', 0, 5.00, 0),
   ('kd030012-9012-4012-9012-ffffffff0012', 'kompozit', 'cccc0005-4005-4005-8005-cccccccc0005', NULL, 0.00, '/uploads/kompozit/urunler-12.jpeg', 'c3000017-0017-4017-8017-000000000017', JSON_ARRAY('/uploads/kompozit/urunler-12.jpeg'), JSON_ARRAY('c3000017-0017-4017-8017-000000000017'), 1, 0, 212, 'MOE-KMP-012', 0, 5.00, 0),
   ('kd030013-9013-4013-9013-ffffffff0013', 'kompozit', 'cccc0006-4006-4006-8006-cccccccc0006', NULL, 0.00, '/uploads/kompozit/urunler-13.jpeg', 'c3000018-0018-4018-8018-000000000018', JSON_ARRAY('/uploads/kompozit/urunler-13.jpeg'), JSON_ARRAY('c3000018-0018-4018-8018-000000000018'), 1, 0, 213, 'MOE-KMP-013', 0, 5.00, 0),
@@ -110,9 +110,53 @@ ON DUPLICATE KEY UPDATE
   `review_count` = VALUES(`review_count`),
   `updated_at` = NOW(3);
 
+-- Saksı, vazo ve dekoratif kompozit objeler tek ürün altında galeri olarak sunulur.
+UPDATE `products`
+SET
+  `category_id` = 'cccc0004-4004-4004-8004-cccccccc0004',
+  `image_url` = '/uploads/kompozit/urunler-11.jpeg',
+  `storage_asset_id` = 'c3000016-0016-4016-8016-000000000016',
+  `images` = JSON_ARRAY(
+    '/uploads/kompozit/urunler-11.jpeg',
+    '/uploads/kompozit/urunler-1.jpeg',
+    '/uploads/kompozit/urunler-2.jpeg',
+    '/uploads/kompozit/urunler-3.jpeg',
+    '/uploads/kompozit/urunler-4.jpeg',
+    '/uploads/kompozit/urunler-5.jpeg',
+    '/uploads/kompozit/urunler-6.jpeg',
+    '/uploads/kompozit/urunler-7.jpeg',
+    '/uploads/kompozit/urunler-8.jpeg',
+    '/uploads/kompozit/urunler-9.jpeg',
+    '/uploads/kompozit/urunler-10.jpeg',
+    '/uploads/kompozit/urunler-12.jpeg',
+    '/uploads/kompozit/urunler-13.jpeg',
+    '/uploads/kompozit/urunler-14.jpeg'
+  ),
+  `storage_image_ids` = JSON_ARRAY(
+    'c3000016-0016-4016-8016-000000000016',
+    'c3000020-0020-4020-8020-000000000020',
+    'c3000021-0021-4021-8021-000000000021',
+    'c3000022-0022-4022-8022-000000000022',
+    'c3000023-0023-4023-8023-000000000023',
+    'c3000024-0024-4024-8024-000000000024',
+    'c3000025-0025-4025-8025-000000000025',
+    'c3000026-0026-4026-8026-000000000026',
+    'c3000027-0027-4027-8027-000000000027',
+    'c3000028-0028-4028-8028-000000000028',
+    'c3000015-0015-4015-8015-000000000015',
+    'c3000017-0017-4017-8017-000000000017',
+    'c3000018-0018-4018-8018-000000000018',
+    'c3000019-0019-4019-8019-000000000019'
+  ),
+  `is_active` = 1,
+  `is_featured` = 1,
+  `order_num` = 230,
+  `updated_at` = NOW(3)
+WHERE `product_code` = 'MOE-KMP-001';
+
 INSERT INTO `product_i18n` (`product_id`, `locale`, `title`, `slug`, `description`, `alt`, `tags`, `specifications`, `meta_title`, `meta_description`)
 VALUES
-  ('kd030001-9001-4001-9001-ffffffff0001', 'tr', 'Eskitme Bronz Kompozit Saksı', 'eskitme-bronz-kompozit-saksi', 'Bronz efektli yatay saksı formunda dekoratif kompozit obje.', 'Eskitme bronz yatay kompozit saksı', JSON_ARRAY('kompozit', 'saksı', 'dekoratif obje', 'bronz efekt'), JSON_OBJECT('kaynak', 'urunler-1.jpeg', 'form', 'Yatay saksı'), 'Eskitme Bronz Kompozit Saksı | MOE Kompozit', 'Bronz efektli yatay kompozit saksı katalog kaydı.'),
+  ('kd030001-9001-4001-9001-ffffffff0001', 'tr', 'Dekoratif Kompozit Saksı ve Vazo Ürünleri', 'dekoratif-kompozit-saksi-vazo-urunleri', '<h2>Dekoratif Kompozit Saksı ve Vazo Ürünleri</h2><p>Peyzaj, belediye alanları, otel bahçeleri, sosyal tesisler ve dış mekan projeleri için farklı form, renk ve yüzey dokularında üretilebilen dekoratif kompozit saksı, vazo ve küp ürün grubudur.</p><h3>Ürün Kapsamı</h3><ul><li>Yatay saksı, dik vazo, küp, amfora ve bahçe seti formları</li><li>Bronz, terracotta, krem, hardal, eskitme ve proje rengine göre özel yüzeyler</li><li>Hafif, taşınabilir, dış ortam koşullarına dayanıklı kompozit gövde</li></ul><h3>Proje Kullanımı</h3><p>Tüm görseller tek ürün ailesi altında sunulur. Ölçü, renk, yüzey efekti ve adet bilgisine göre aynı kalıp ailesinden proje bazlı üretim planlanabilir.</p>', 'Dekoratif kompozit saksı ve vazo ürünleri', JSON_ARRAY('kompozit', 'saksı', 'vazo', 'küp', 'peyzaj', 'dekoratif obje', 'dış mekan'), JSON_OBJECT('formlar', JSON_ARRAY('Yatay saksı', 'Dik vazo', 'Küp', 'Amfora', 'Bahçe seti'), 'yuzey', 'Proje ihtiyacına göre renklendirilebilir dekoratif yüzey', 'kullanim', JSON_ARRAY('Peyzaj', 'Belediye alanları', 'Otel ve sosyal tesis', 'Dış mekan dekorasyonu')), 'Dekoratif Kompozit Saksı ve Vazo Ürünleri | MOE Kompozit', 'Peyzaj ve dış mekan projeleri için dekoratif kompozit saksı, vazo, küp ve amfora ürün grubu.'),
   ('kd030002-9002-4002-9002-ffffffff0002', 'tr', 'Eskitme Dokulu Kompozit Küp', 'eskitme-dokulu-kompozit-kup', 'Dik formda, eskitme yüzey dokusuna sahip dekoratif kompozit küp.', 'Eskitme dokulu dik kompozit küp', JSON_ARRAY('kompozit', 'küp', 'dekoratif obje', 'eskitme yüzey'), JSON_OBJECT('kaynak', 'urunler-2.jpeg', 'form', 'Dik küp'), 'Eskitme Dokulu Kompozit Küp | MOE Kompozit', 'Eskitme yüzeyli dik kompozit küp katalog kaydı.'),
   ('kd030003-9003-4003-9003-ffffffff0003', 'tr', 'Terracotta Kompozit Bahçe Vazosu', 'terracotta-kompozit-bahce-vazosu', 'Terracotta tonunda, dış mekan kullanımı için dekoratif kompozit bahçe vazosu.', 'Terracotta kompozit bahçe vazosu', JSON_ARRAY('kompozit', 'terracotta', 'bahçe vazosu', 'dış mekan'), JSON_OBJECT('kaynak', 'urunler-3.jpeg', 'form', 'Dik vazo'), 'Terracotta Kompozit Bahçe Vazosu | MOE Kompozit', 'Terracotta renkli kompozit bahçe vazosu katalog kaydı.'),
   ('kd030004-9004-4004-9004-ffffffff0004', 'tr', 'Bronz Efektli Yatay Kompozit Küp', 'bronz-efektli-yatay-kompozit-kup', 'Bronz yüzey efektli, yatay sergilenen dekoratif kompozit küp formu.', 'Bronz efektli yatay kompozit küp', JSON_ARRAY('kompozit', 'küp', 'bronz efekt', 'dekoratif'), JSON_OBJECT('kaynak', 'urunler-4.jpeg', 'form', 'Yatay küp'), 'Bronz Efektli Yatay Kompozit Küp | MOE Kompozit', 'Bronz efektli yatay kompozit küp katalog kaydı.'),
@@ -126,7 +170,7 @@ VALUES
   ('kd030012-9012-4012-9012-ffffffff0012', 'tr', 'Karışık Renk Kompozit Küp Seti', 'karisik-renk-kompozit-kup-seti', 'Kiremit ve bronz tonlarını bir araya getiren karışık kompozit küp seti.', 'Karışık renk kompozit küp seti', JSON_ARRAY('kompozit', 'küp seti', 'karışık renk', 'dekoratif'), JSON_OBJECT('kaynak', 'urunler-12.jpeg', 'form', 'Karışık set'), 'Karışık Renk Kompozit Küp Seti | MOE Kompozit', 'Karışık renk kompozit küp seti katalog kaydı.'),
   ('kd030013-9013-4013-9013-ffffffff0013', 'tr', 'Ayaklı Eskitme Kompozit Küp', 'ayakli-eskitme-kompozit-kup', 'Ayaklı taban detayı ve eskitme yüzeyiyle dik kompozit küp objesi.', 'Ayaklı eskitme kompozit küp', JSON_ARRAY('kompozit', 'ayaklı küp', 'eskitme yüzey', 'dekoratif'), JSON_OBJECT('kaynak', 'urunler-13.jpeg', 'form', 'Ayaklı küp'), 'Ayaklı Eskitme Kompozit Küp | MOE Kompozit', 'Ayaklı eskitme kompozit küp katalog kaydı.'),
   ('kd030014-9014-4014-9014-ffffffff0014', 'tr', 'Bronz Patinalı Kompozit Saksı', 'bronz-patinali-kompozit-saksi', 'Bronz patina yüzeyi belirgin, yatay formda dekoratif kompozit saksı.', 'Bronz patinalı kompozit saksı', JSON_ARRAY('kompozit', 'saksı', 'bronz patina', 'dekoratif obje'), JSON_OBJECT('kaynak', 'urunler-14.jpeg', 'form', 'Yatay saksı'), 'Bronz Patinalı Kompozit Saksı | MOE Kompozit', 'Bronz patinalı kompozit saksı katalog kaydı.'),
-  ('kd030001-9001-4001-9001-ffffffff0001', 'en', 'Aged Bronze Composite Amphora', 'aged-bronze-composite-amphora', 'Decorative composite object in a horizontal amphora form with an aged bronze effect.', 'Aged bronze horizontal composite amphora', JSON_ARRAY('composite', 'amphora', 'decorative object', 'bronze effect'), JSON_OBJECT('source', 'urunler-1.jpeg', 'form', 'Horizontal amphora'), 'Aged Bronze Composite Amphora | MOE Kompozit', 'Aged bronze horizontal composite amphora catalog record.'),
+  ('kd030001-9001-4001-9001-ffffffff0001', 'en', 'Decorative Composite Planters and Vases', 'decorative-composite-planters-vases', '<h2>Decorative Composite Planters and Vases</h2><p>A decorative composite planter, vase and urn product family for landscape, municipal, hotel garden, social facility and outdoor design projects.</p><h3>Product Scope</h3><ul><li>Horizontal planters, upright vases, urns, amphora forms and garden sets</li><li>Bronze, terracotta, cream, mustard, aged and project-specific finishes</li><li>Lightweight composite body suitable for outdoor conditions</li></ul><h3>Project Use</h3><p>All visuals are presented under one product family. Dimensions, colors, surface effects and quantities can be planned project by project from the same mold family.</p>', 'Decorative composite planters and vases', JSON_ARRAY('composite', 'planter', 'vase', 'urn', 'amphora', 'landscape', 'decorative object', 'outdoor'), JSON_OBJECT('forms', JSON_ARRAY('Horizontal planter', 'Upright vase', 'Urn', 'Amphora', 'Garden set'), 'finish', 'Decorative surface finish customizable by project', 'usage', JSON_ARRAY('Landscape', 'Municipal areas', 'Hotel and social facility', 'Outdoor decoration')), 'Decorative Composite Planters and Vases | MOE Kompozit', 'Decorative composite planter, vase, urn and amphora product family for landscape and outdoor projects.'),
   ('kd030002-9002-4002-9002-ffffffff0002', 'en', 'Aged Texture Composite Urn', 'aged-texture-composite-urn', 'Upright decorative composite urn with an aged surface texture.', 'Aged texture upright composite urn', JSON_ARRAY('composite', 'urn', 'decorative object', 'aged finish'), JSON_OBJECT('source', 'urunler-2.jpeg', 'form', 'Upright urn'), 'Aged Texture Composite Urn | MOE Kompozit', 'Aged surface upright composite urn catalog record.'),
   ('kd030003-9003-4003-9003-ffffffff0003', 'en', 'Terracotta Composite Garden Vase', 'terracotta-composite-garden-vase', 'Terracotta-toned decorative composite garden vase for outdoor display.', 'Terracotta composite garden vase', JSON_ARRAY('composite', 'terracotta', 'garden vase', 'outdoor'), JSON_OBJECT('source', 'urunler-3.jpeg', 'form', 'Upright vase'), 'Terracotta Composite Garden Vase | MOE Kompozit', 'Terracotta composite garden vase catalog record.'),
   ('kd030004-9004-4004-9004-ffffffff0004', 'en', 'Bronze Effect Horizontal Composite Urn', 'bronze-effect-horizontal-composite-urn', 'Decorative horizontal composite urn form with a bronze surface effect.', 'Bronze effect horizontal composite urn', JSON_ARRAY('composite', 'urn', 'bronze effect', 'decorative'), JSON_OBJECT('source', 'urunler-4.jpeg', 'form', 'Horizontal urn'), 'Bronze Effect Horizontal Composite Urn | MOE Kompozit', 'Bronze effect horizontal composite urn catalog record.'),
@@ -150,3 +194,50 @@ ON DUPLICATE KEY UPDATE
   `meta_title` = VALUES(`meta_title`),
   `meta_description` = VALUES(`meta_description`),
   `updated_at` = NOW(3);
+
+-- Saksı/vazo görselleri MOE-KMP-001 galerisinde korunur; kopya ürünler admin listesinden kaldırılır.
+DELETE pi FROM `product_i18n` pi
+JOIN `products` p ON p.`id` = pi.`product_id`
+WHERE p.`product_code` LIKE 'MOE-KMP-%'
+  AND p.`product_code` <> 'MOE-KMP-001';
+
+DELETE FROM `products`
+WHERE `product_code` LIKE 'MOE-KMP-%'
+  AND `product_code` <> 'MOE-KMP-001';
+
+-- Auto-generated storage_assets entries for lunapark product images
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000030-0030-4030-8030-000000000030', NULL, 'lunapark-01-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-01-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 575786, 1448, 1086, '/uploads/kompozit/lunapark-01-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000031-0031-4031-8031-000000000031', NULL, 'lunapark-02-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-02-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 570680, 1448, 1086, '/uploads/kompozit/lunapark-02-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000032-0032-4032-8032-000000000032', NULL, 'lunapark-03-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-03-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 587163, 1448, 1086, '/uploads/kompozit/lunapark-03-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000033-0033-4033-8033-000000000033', NULL, 'lunapark-04-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-04-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 538785, 1448, 1086, '/uploads/kompozit/lunapark-04-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000034-0034-4034-8034-000000000034', NULL, 'lunapark-05-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-05-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 512126, 1086, 1448, '/uploads/kompozit/lunapark-05-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000035-0035-4035-8035-000000000035', NULL, 'lunapark-06-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-06-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 558590, 1086, 1448, '/uploads/kompozit/lunapark-06-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000036-0036-4036-8036-000000000036', NULL, 'lunapark-07-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-07-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 500013, 1086, 1448, '/uploads/kompozit/lunapark-07-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000037-0037-4037-8037-000000000037', NULL, 'lunapark-08-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-08-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 568512, 1086, 1448, '/uploads/kompozit/lunapark-08-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000038-0038-4038-8038-000000000038', NULL, 'lunapark-09-renkli.jpg', 'kompozit', 'uploads/kompozit/lunapark-09-renkli.jpg', 'uploads/kompozit', 'image/jpeg', 564342, 1448, 1086, '/uploads/kompozit/lunapark-09-renkli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000039-0039-4039-8039-000000000039', NULL, 'lunapark-10-ham.jpg', 'kompozit', 'uploads/kompozit/lunapark-10-ham.jpg', 'uploads/kompozit', 'image/jpeg', 292161, 1086, 1448, '/uploads/kompozit/lunapark-10-ham.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000040-0040-4040-8040-000000000040', NULL, 'lunapark-11-ham.jpg', 'kompozit', 'uploads/kompozit/lunapark-11-ham.jpg', 'uploads/kompozit', 'image/jpeg', 300205, 1448, 1086, '/uploads/kompozit/lunapark-11-ham.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+
+-- Generated product image for CTP protective body panel
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000041-0041-4041-8041-000000000041', NULL, 'ctp-koruyucu-govde-paneli.jpg', 'kompozit', 'uploads/kompozit/ctp-koruyucu-govde-paneli.jpg', 'uploads/kompozit', 'image/jpeg', 187288, 1536, 1024, '/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+INSERT INTO `storage_assets` (`id`, `user_id`, `name`, `bucket`, `path`, `folder`, `mime`, `size`, `width`, `height`, `url`, `provider`, `created_at`, `updated_at`) VALUES ('c3000042-0042-4042-8042-000000000042', NULL, 'kompozit-uretim-proses-01.jpg', 'kompozit', 'uploads/kompozit/kompozit-uretim-proses-01.jpg', 'uploads/kompozit', 'image/jpeg', 290834, 1376, 768, '/uploads/kompozit/kompozit-uretim-proses-01.jpg', 'local', NOW(3), NOW(3)) ON DUPLICATE KEY UPDATE `name` = VALUES(`name`), `size` = VALUES(`size`), `width` = VALUES(`width`), `height` = VALUES(`height`), `url` = VALUES(`url`), `updated_at` = VALUES(`updated_at`);
+
+UPDATE `products` SET
+  `image_url` = '/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg',
+  `storage_asset_id` = 'c3000041-0041-4041-8041-000000000041',
+  `images` = JSON_ARRAY(
+    '/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg',
+    '/uploads/kompozit/ctp-cam-elyaf-01.jpg',
+    '/uploads/kompozit/ctp-dokuma-hibrit-01.jpg',
+    '/uploads/kompozit/kompozit-uretim-proses-01.jpg',
+    '/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg'
+  ),
+  `storage_image_ids` = JSON_ARRAY(
+    'c3000041-0041-4041-8041-000000000041',
+    'c3000003-0003-4003-8003-000000000003',
+    'c3000004-0004-4004-8004-000000000004',
+    'c3000042-0042-4042-8042-000000000042',
+    'c3000007-0007-4007-8007-000000000007'
+  ),
+  `updated_at` = NOW(3)
+WHERE `id` = 'kd010002-7002-4002-9002-dddddddd0002';

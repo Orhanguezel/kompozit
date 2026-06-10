@@ -1,7 +1,16 @@
 import { AVAILABLE_LOCALES, FALLBACK_LOCALE } from './locales';
 
+const PUBLIC_API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? 'http://127.0.0.1:8186/api';
+const INTERNAL_API_BASE_URL = `${
+  process.env.BACKEND_INTERNAL_URL ||
+  process.env.BACKEND_URL ||
+  'http://127.0.0.1:8186'
+}`.replace(/\/api\/?$/, '');
+
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? 'http://127.0.0.1:8186/api';
+  typeof window === 'undefined' && PUBLIC_API_BASE_URL.startsWith('/')
+    ? `${INTERNAL_API_BASE_URL}/api`
+    : PUBLIC_API_BASE_URL;
 
 type LocaleItem = {
   code?: unknown;
