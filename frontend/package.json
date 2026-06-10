@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --port 3020",
-    "build": "next build",
+    "build": "next build && node scripts/copy-standalone-public.mjs",
     "start": "next start --port 3020",
-    "start:standalone": "PORT=${PORT:-3020} HOSTNAME=${HOSTNAME:-127.0.0.1} node .next/standalone/server.js",
+    "start:standalone": "PORT=${PORT:-3020} HOSTNAME=${HOSTNAME:-127.0.0.1} node .next/standalone/kompozit/frontend/server.js",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "test:theme": "node scripts/check-theme-tokens.mjs",
