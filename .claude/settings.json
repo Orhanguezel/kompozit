@@ -1,5 +1,51 @@
 {
   "permissions": {
-    "defaultMode": "bypassPermissions"
+    "allow": [
+      "Bash(node -e \"console.log\\(require.resolve\\('@ensotek/shared-backend/modules/products/validation'\\)\\)\")",
+      "Bash(find / -path '*Ensotek*shared-backend/modules/products/validation.ts')",
+      "Bash(sed -n '4124,4162p' src/locale/en.json)",
+      "Bash(sed -n '4088,4128p' src/locale/de.json)",
+      "Bash(ls -la modules/mail*)",
+      "Bash(find modules/mail -type f)",
+      "Bash(ssh -o ConnectTimeout=20 vps-Ensotek 'echo \"=== whoami ===\"; whoami; echo \"=== /var/www/Ensotek ===\"; ls -la /var/www/Ensotek/ 2>/dev/null; echo \"=== home ===\"; ls -la ~ 2>/dev/null | head -30; echo \"=== pm2 ===\"; pm2 list 2>/dev/null')",
+      "Bash(ssh -o ConnectTimeout=20 vps-Ensotek 'export PM2_HOME=/root/.pm2; echo \"=== PM2 \\(script paths\\) ===\"; pm2 jlist 2>/dev/null | node -e \"let d=\\\\\"\\\\\";process.stdin.on\\(\\\\\"data\\\\\",c=>d+=c\\).on\\(\\\\\"end\\\\\",\\(\\)=>{try{JSON.parse\\(d\\).forEach\\(p=>console.log\\(p.name,\\\\\"|\\\\\",p.pm2_env.status,\\\\\"|cwd:\\\\\",p.pm2_env.pm_cwd,\\\\\"|script:\\\\\",p.pm2_env.pm_exec_path\\)\\)}catch\\(e\\){console.log\\(\\\\\"parse-fail\\\\\"\\)}}\\)}\" 2>/dev/null *)",
+      "Bash(ssh -o ConnectTimeout=20 vps-Ensotek 'pm2 list 2>&1; echo \"=== ecosystem configs ===\"; echo \"--- kompozit_backend ---\"; cat /var/www/Ensotek/kompozit_backend/ecosystem.config.cjs 2>/dev/null; echo \"--- kompozit/backend source ecosystem ---\"; cat /var/www/Ensotek/kompozit/backend/ecosystem.config.cjs 2>/dev/null')",
+      "Bash(ssh -o ConnectTimeout=20 vps-Ensotek 'echo \"=== kompozit_backend/node_modules/@ensotek ===\"; ls -la /var/www/Ensotek/kompozit_backend/node_modules/@ensotek/ 2>/dev/null *)",
+      "Bash(ssh -o ConnectTimeout=20 vps-Ensotek 'cd /var/www/Ensotek *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'set -e *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'cd /var/www/Ensotek/kompozit_backend *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'echo \"=== bellek ===\"; free -h | head -2 *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'for p in kompozit-admin-panel kompozit-frontend; do *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'echo \"=== swap + mem ===\"; free -h; echo \"=== disk ===\"; df -h /var/www | tail -1 *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'cd /var/www/Ensotek/kompozit/admin_panel && NODE_OPTIONS=\"--max-old-space-size=2048\" bun run build 2>&1 | tail -20')",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'pm2 restart kompozit-admin-panel --update-env 2>&1 | grep -E \"kompozit-admin\" | head -2 *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'cd /var/www/Ensotek/kompozit/frontend && NODE_OPTIONS=\"--max-old-space-size=2048\" bun run build 2>&1 | tail -22')",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'pm2 restart kompozit-frontend --update-env 2>&1 | grep -E \"kompozit-frontend\" | head -1 *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'echo \"=== canli site \\(redirect takipli\\) ===\" *)",
+      "Bash(ssh -o ConnectTimeout=25 vps-Ensotek 'echo \"=== dist mail modulu ===\"; ls /var/www/Ensotek/kompozit_backend/dist/modules/mail/ 2>/dev/null; ls /var/www/Ensotek/kompozit_backend/dist/modules/mail/mail/ 2>/dev/null *)",
+      "Bash(ssh -o *)",
+      "Bash(sed -n '19,26p' public/locales/en.json)",
+      "Bash(sed -n '626,640p' public/locales/en.json)",
+      "Bash(sed -n '649,653p' public/locales/en.json)",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/tr.json','utf8'\\)\\); console.log\\('tr.json OK'\\)\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('public/locales/en.json','utf8'\\)\\); console.log\\('en.json OK'\\)\")",
+      "Bash(curl -s -L -m 15 -o /dev/null -w \"HTTP %{http_code}\\\\n\" \"https://karbonkompozit.com.tr/tr/offer\")",
+      "Bash(curl -s -m 10 -o /dev/null -w ' /api/__TRACKED_VAR__ -> %{http_code}\\\\n' https://karbonkompozit.com.tr/api/__TRACKED_VAR__)",
+      "Bash(curl -s -m 10 -o /tmp/r -w '%{http_code}' https://karbonkompozit.com.tr/api/site_settings/kompozit__llms_txt__TRACKED_VAR__)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://karbonkompozit.com.tr/uploads/products/lunapark-tren-kabini-roller-coaster.jpg\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://karbonkompozit.com.tr/_next/image?url=https%3A%2F%2Fkarbonkompozit.com.tr%2Fuploads%2Fproducts%2Flunapark-tren-kabini-roller-coaster.jpg&w=640&q=75\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"https://karbonkompozit.com.tr/uploads/products/\")",
+      "Bash(curl -s \"https://karbonkompozit.com.tr/api/products?item_type=kompozit&is_active=1&limit=300\")",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s \"https://karbonkompozit.com.tr/tr/products?category=lunapark-urunleri\")"
+    ],
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "/home/orhan/Documents/Projeler/Ensotek/packages/shared-backend/modules/mail",
+      "/home/orhan/Documents/Projeler/Ensotek/packages/shared-backend/plugins",
+      "/home/orhan/Documents/Projeler/Ensotek/packages/shared-backend/modules/gallery",
+      "/home/orhan/Documents/Projeler/Ensotek/packages/shared-ui/public/lib",
+      "/home/orhan/Documents/Projeler/Ensotek/packages/shared-backend/core"
+    ]
   }
 }
