@@ -5,7 +5,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { absoluteAssetUrl, API_BASE_URL } from '@/lib/utils';
+import { resolvePublicAssetUrl, API_BASE_URL } from '@/lib/utils';
 import { normalizeRichContent } from '@/lib/rich-content';
 import { JsonLd, buildPageMetadata, jsonld, localizedPath, localizedUrl, organizationJsonLd } from '@/seo';
 import { buildOrganizationSchemaItems } from '@/seo/organization-schema';
@@ -82,7 +82,7 @@ export default async function BlogPostPage({
   ]);
   const org = organizationJsonLd(locale);
   const postImage = getPostImage(post);
-  const imageSrc = absoluteAssetUrl(postImage) || BLOG_PLACEHOLDER_SRC;
+  const imageSrc = resolvePublicAssetUrl(postImage) || BLOG_PLACEHOLDER_SRC;
   const breadcrumbs = [
     { label: t('nav.home'), href: localizedPath(locale, '/') },
     { label: t('nav.blog'), href: localizedPath(locale, '/blog') },

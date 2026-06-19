@@ -44,6 +44,32 @@ const normalizeList = (raw: unknown): ApiCustomPage[] => {
 
 const BASE = "/admin/custom-pages";
 
+// ---- İçerik & SEO kalite skoru tipleri (backend: customPages/quality.ts) ----
+export type CustomPageQualityBreakItem = {
+  key: string;
+  label: string;
+  points: number;
+  max: number;
+  pass: boolean;
+  detail?: string;
+  hint?: string;
+};
+
+export type CustomPageQualityScoreBlock = {
+  score: number;
+  breakdown: CustomPageQualityBreakItem[];
+};
+
+export type CustomPageQuality = {
+  pageId: string;
+  locale: string | null;
+  slug: string | null;
+  status: "published" | "draft";
+  readiness: number;
+  content: CustomPageQualityScoreBlock & { wordCount: number; headings: number };
+  seo: CustomPageQualityScoreBlock;
+};
+
 export const customPagesAdminApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     listCustomPagesAdmin: build.query<
@@ -87,6 +113,16 @@ export const customPagesAdminApi = baseApi.injectEndpoints({
       }),
       transformResponse: (response: ApiCustomPage) => mapApiCustomPageToDto(response),
       providesTags: (_result, _error, { slug }) => [{ type: "CustomPageSlug" as const, id: slug }],
+    }),
+
+    getCustomPageQualityAdmin: build.query<CustomPageQuality, { id: string; locale?: string }>({
+      query: ({ id, locale }) => ({
+        url: `${BASE}/${encodeURIComponent(id)}/quality`,
+        method: "GET",
+        params: cleanParams({ locale }),
+      }),
+      transformResponse: (response: { data: CustomPageQuality }) => response.data,
+      providesTags: (_result, _error, { id }) => [{ type: "CustomPage" as const, id }],
     }),
 
     createCustomPageAdmin: build.mutation<CustomPageDto, CustomPageCreatePayload>({
@@ -141,6 +177,8 @@ export const {
   useLazyListCustomPagesAdminQuery,
   useGetCustomPageAdminQuery,
   useLazyGetCustomPageAdminQuery,
+  useGetCustomPageQualityAdminQuery,
+  useLazyGetCustomPageQualityAdminQuery,
   useGetCustomPageBySlugAdminQuery,
   useLazyGetCustomPageBySlugAdminQuery,
   useCreateCustomPageAdminMutation,

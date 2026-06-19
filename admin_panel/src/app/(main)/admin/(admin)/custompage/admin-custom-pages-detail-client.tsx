@@ -27,6 +27,7 @@ import {
 import type { CustomPageCreatePayload, CustomPageDto, CustomPageUpdatePayload } from "@/integrations/shared";
 
 import { CustomPageForm, type CustomPageFormValues } from "./_components/custom-page-form";
+import { CustomPageQualityPanel } from "./_components/custom-page-quality-panel";
 import type { LocaleOption } from "./_components/custom-page-header";
 
 function isUuidLike(v?: string) {
@@ -277,6 +278,9 @@ export default function AdminCustomPageDetailClient({
     );
   }
 
+  const qualityPageId = String(page?.id || id || "");
+  const showQuality = !isCreateMode && isUuidLike(qualityPageId);
+
   return (
     <div className="carbon-mesh min-h-screen pb-12">
       <CustomPageForm
@@ -292,6 +296,12 @@ export default function AdminCustomPageDetailClient({
         onSubmit={handleSubmit}
         onCancel={onCancel}
       />
+
+      {showQuality ? (
+        <div className="mt-6">
+          <CustomPageQualityPanel pageId={qualityPageId} locale={queryLocale} />
+        </div>
+      ) : null}
     </div>
   );
 }

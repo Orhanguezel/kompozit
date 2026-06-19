@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { fetchReferences, type PublicReference } from '@/features/references';
 import { getFallbackReferences } from '@/lib/content-fallbacks';
-import { absoluteAssetUrl } from '@/lib/utils';
+import { resolvePublicAssetUrl } from '@/lib/utils';
 import { localizedPath } from '@/seo';
 import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
@@ -39,7 +39,7 @@ function mapApiRef(locale: string, item: PublicReference): StripItem {
   const extUrl = item.website_url?.trim() ?? '';
   const external = extUrl.startsWith('http://') || extUrl.startsWith('https://');
   const href = external ? extUrl : extUrl ? hrefForFallbackPath(locale, extUrl) : localizedPath(locale, '/references');
-  const imageSrc = item.featured_image ? absoluteAssetUrl(item.featured_image) : undefined;
+  const imageSrc = item.featured_image ? resolvePublicAssetUrl(item.featured_image) ?? undefined : undefined;
   return {
     key: String(item.id ?? item.title),
     title: item.title,

@@ -8,7 +8,7 @@ import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedUrl } from '@/seo';
 import { fetchReferences } from '@/features/references';
 import { getFallbackReferences } from '@/lib/content-fallbacks';
-import { absoluteAssetUrl } from '@/lib/utils';
+import { resolvePublicAssetUrl } from '@/lib/utils';
 import { Reveal } from '@/components/motion/Reveal';
 
 export async function generateMetadata({
@@ -92,7 +92,7 @@ export default async function ReferencesPage({
                   title={item.title}
                   lineLabel={t('common.listingReferenceLine')}
                   description={item.summary || item.description}
-                  imageSrc={absoluteAssetUrl(item.featured_image || item.imageSrc) || undefined}
+                  imageSrc={resolvePublicAssetUrl(item.featured_image || item.imageSrc) || undefined}
                   imageAlt={item.featured_image_alt ?? item.title}
                   imageSizes="(max-width: 768px) 100vw, 33vw"
                   imageAspectClassName="aspect-[16/10]"
