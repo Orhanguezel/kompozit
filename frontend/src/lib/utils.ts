@@ -18,7 +18,7 @@ export const API_BASE_URL =
     : PUBLIC_API_BASE_URL;
 
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://karbonkompozit.com.tr';
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.karbonkompozit.com.tr';
 
 export function absoluteAssetUrl(value?: string | null): string | null {
   if (!value) return null;
