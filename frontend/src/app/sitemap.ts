@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { localeAlternates, localizedUrl } from '@/seo/helpers';
 import { AVAILABLE_LOCALES, hasLocale } from '@/i18n/locales';
 import { getLocaleSettings } from '@/i18n/locale-settings';
-import { API_BASE_URL } from '@/lib/utils';
+import { API_BASE_URL, SITE_URL } from '@/lib/utils';
 import { KOMPOZIT_SOLUTIONS_MODULE_KEY } from '@/features/solutions';
 
 type SitemapItem = {
@@ -133,7 +133,9 @@ function toAbsoluteImageUrl(value?: string | null): string | null {
   if (!value) return null;
   if (/^https?:\/\//i.test(value)) return value;
   const normalized = value.startsWith('/') ? value : `/${value}`;
-  return `${API_BASE_URL.replace(/\/api\/?$/, '')}${normalized}`;
+  // Görsel sitemap URL'leri public host (SITE_URL) ile üretilir; dahili API host'u
+  // (sunucuda 127.0.0.1) Google tarafından çekilemez ve sitemap kalitesini düşürür.
+  return `${SITE_URL.replace(/\/$/, '')}${normalized}`;
 }
 
 function resolveSitemapImages(item?: SitemapItem): string[] | undefined {
