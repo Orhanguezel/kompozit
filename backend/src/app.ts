@@ -70,8 +70,7 @@ export async function createApp() {
     transformStaticCSP: (header) => header.replace('style-src', "style-src 'unsafe-inline'"),
   });
 
-  const cookieSecret =
-    (globalThis as any).Bun?.env?.COOKIE_SECRET ?? process.env.COOKIE_SECRET ?? 'cookie-secret';
+  const cookieSecret = env.COOKIE_SECRET;
 
   await app.register(cookie, {
     secret: cookieSecret,
