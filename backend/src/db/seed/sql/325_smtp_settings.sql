@@ -12,7 +12,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- =============================================================
 INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
 VALUES
-(UUID(), 'smtp_host',       '*', 'smtp.gmail.com',                    NOW(3), NOW(3)),
+(UUID(), 'smtp_host',       '*', 'smtp.hostinger.com',                NOW(3), NOW(3)),
 (UUID(), 'smtp_port',       '*', '465',                               NOW(3), NOW(3)),
 (UUID(), 'smtp_username',   '*', 'no-reply@karbonkompozit.com.tr',    NOW(3), NOW(3)),
 (UUID(), 'smtp_password',   '*', 'change-me-in-admin',                NOW(3), NOW(3)),
