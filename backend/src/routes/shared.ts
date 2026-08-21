@@ -70,6 +70,7 @@ import { registerOffer } from '@ensotek/shared-backend/modules/offer/router';
 import { registerOfferAdmin } from '@ensotek/shared-backend/modules/offer/admin.routes';
 import { registerReviews } from '@ensotek/shared-backend/modules/review/router';
 import { registerReviewsAdmin } from '@ensotek/shared-backend/modules/review/admin.routes';
+import { registerSupportFaqsAdmin } from './support-faqs';
 
 const dbAdminModules = {
   site_settings: {
@@ -187,6 +188,7 @@ export async function registerSharedAdmin(adminApi: FastifyInstance) {
     registerLibraryAdmin,
     registerOfferAdmin,
     registerReviewsAdmin,
+    registerSupportFaqsAdmin,
     createDbAdminRoutes(dbAdminModules),
   ]) {
     await adminApi.register(reg);
