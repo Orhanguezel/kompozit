@@ -60,6 +60,7 @@ const PROFILE_PREFIXES: Record<NonNullable<Flags['profile']>, string[]> = {
     '325',
     '326',
     '327',
+    '328',
   ],
 };
 
