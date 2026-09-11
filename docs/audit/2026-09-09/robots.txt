@@ -1,0 +1,87 @@
+User-Agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: GPTBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: ChatGPT-User
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: Google-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: ClaudeBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: anthropic-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: cohere-ai
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: PerplexityBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: Perplexity-User
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: CCBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: Bytespider
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: Amazonbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: Applebot-Extended
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: DuckAssistBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: YouBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: Meta-ExternalAgent
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+
+User-Agent: SemrushBot
+Disallow: /
+
+User-Agent: AhrefsBot
+Disallow: /
+
+Sitemap: https://www.karbonkompozit.com.tr/sitemap.xml

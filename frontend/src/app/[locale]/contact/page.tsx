@@ -37,10 +37,13 @@ export async function generateMetadata({
 
 export default async function ContactPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ product?: string }>;
 }) {
   const { locale } = await params;
+  const { product } = await searchParams;
   const t = await getTranslations({ locale });
   const info = await fetchParsedContactInfo(locale);
   const responseItems = Object.values(t.raw('contact.response.items') as Record<string, string>);
@@ -72,6 +75,7 @@ export default async function ContactPage({
       />
       <ContactPageContainer
         locale={locale}
+        preselectedProduct={typeof product === 'string' ? product.slice(0, 255) : undefined}
         info={info}
         labels={{
           label: t('contact.label'),

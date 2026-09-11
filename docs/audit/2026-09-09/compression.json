@@ -1,0 +1,18 @@
+[
+  {
+    "repo": "kompozit",
+    "url": "https://www.karbonkompozit.com.tr/_next/static/chunks/f7c1edd1eac31eb5.css",
+    "status": 200,
+    "encoding": null,
+    "vary": null,
+    "bytes_decoded": 124200
+  },
+  {
+    "repo": "kompozit",
+    "url": "https://www.karbonkompozit.com.tr/_next/static/chunks/b86ce78d92410c7e.css",
+    "status": 200,
+    "encoding": null,
+    "vary": null,
+    "bytes_decoded": 7636
+  }
+]

@@ -15,7 +15,7 @@ const INTERNAL_API_BASE_URL = `${
 export const API_BASE_URL =
   typeof window === 'undefined' && PUBLIC_API_BASE_URL.startsWith('/')
     ? `${INTERNAL_API_BASE_URL}/api`
-    : PUBLIC_API_BASE_URL;
+    : typeof window !== 'undefined' ? '/api' : PUBLIC_API_BASE_URL;
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.karbonkompozit.com.tr';

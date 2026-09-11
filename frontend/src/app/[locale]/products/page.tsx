@@ -1,3 +1,4 @@
+import { APP_NAME } from '@/lib/brand-name';
 import 'server-only';
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -6,13 +7,14 @@ import Link from 'next/link';
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { ListingCard } from '@/components/patterns/ListingCard';
-import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { getFallbackProducts } from '@/lib/content-fallbacks';
 import { buildMediaAlt } from '@/lib/media-seo';
 import { SeoIssueBeacon } from '@/components/monitoring/SeoIssueBeacon';
 import { ProductB2bBanner } from '@/components/sections/ProductB2bBanner';
 import { fetchProductsB2bContent } from '@/features/site-settings/products-b2b';
 import { Reveal } from '@/components/motion/Reveal';
+import { fetchActiveProductCategoryPreviews } from '@/i18n/server';
+import { resolvePopulatedProductCategories } from '@/lib/product-categories';
 
 async function fetchProducts(
   locale: string,
@@ -56,17 +58,6 @@ async function fetchCategories(locale: string) {
   }
 }
 
-async function fetchActiveCategorySlugs(locale: string) {
-  const products = await fetchProducts(locale);
-  return Array.from(
-    new Set(
-      products
-        .map((product: any) => String(product.category?.slug ?? '').trim())
-        .filter(Boolean),
-    ),
-  );
-}
-
 export async function generateMetadata({
   params,
   searchParams,
@@ -76,11 +67,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const { category, tag } = await searchParams;
-  const [t, seoT] = await Promise.all([
+  const [t, seoT, categories, categoryPreviews] = await Promise.all([
     getTranslations({ locale, namespace: 'products' }),
     getTranslations({ locale, namespace: 'seo' }),
+    fetchCategories(locale),
+    fetchActiveProductCategoryPreviews(locale),
   ]);
-  return buildPageMetadataFromSettings({
+  const validCategory = category
+    ? resolvePopulatedProductCategories(categories, categoryPreviews).find((item) => item.slug === category)
+    : null;
+  const metadata = await buildPageMetadataFromSettings({
     locale,
     pathname: '/products',
     pageKey: 'products',
@@ -90,8 +86,19 @@ export async function generateMetadata({
         : `${t('title')} - Karbon Fiber, CTP ve Cam Elyaf Parcalar`,
       description: seoT('productsDescription'),
     },
-    noIndex: Boolean(category || tag),
+    noIndex: Boolean(tag || (category && !validCategory)),
   });
+  if (!validCategory) return metadata;
+
+  const categoryPath = `/products?category=${encodeURIComponent(category!)}`;
+  const canonical = localizedUrl(locale, categoryPath);
+  return {
+    ...metadata,
+    title: { absolute: `${String(validCategory.name || category)} | ${APP_NAME}` },
+    alternates: { canonical },
+    openGraph: { ...metadata.openGraph, url: canonical },
+    robots: { index: true, follow: true },
+  };
 }
 
 export default async function ProductsPage({
@@ -106,14 +113,13 @@ export default async function ProductsPage({
   setRequestLocale(locale);
   const t = await getTranslations({ locale });
 
-  const [categories, activeCategorySlugs, b2bContent] = await Promise.all([
+  const [categories, categoryPreviews, b2bContent] = await Promise.all([
     fetchCategories(locale),
-    fetchActiveCategorySlugs(locale),
+    fetchActiveProductCategoryPreviews(locale),
     fetchProductsB2bContent(locale),
   ]);
-  const activeCategorySlugSet = new Set(activeCategorySlugs);
-  const populatedCategories = categories.filter((c: any) => activeCategorySlugSet.has(String(c.slug ?? '').trim()));
-  const selectedCategory = category ? populatedCategories.find((c: any) => c.slug === category) : null;
+  const populatedCategories = resolvePopulatedProductCategories(categories, categoryPreviews);
+  const selectedCategory = category ? populatedCategories.find((c) => c.slug === category) : null;
   const products = await fetchProducts(locale, {
     categoryId: selectedCategory?.id,
     hasCategoryFilter: Boolean(category),
@@ -122,10 +128,11 @@ export default async function ProductsPage({
   const fallbackProducts = getFallbackProducts(locale);
   const hasFilters = Boolean(category || tag);
   const visibleProducts = products.length > 0 ? products : hasFilters ? [] : fallbackProducts;
+  const hasSingleProduct = visibleProducts.length === 1;
 
   return (
     <main className="relative bg-[var(--carbon)]">
-      <div className="section-py relative z-10">
+      <div className="relative z-10 pb-24 pt-10 lg:pt-14">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <JsonLd
             data={jsonld.graph([
@@ -144,18 +151,16 @@ export default async function ProductsPage({
           />
 
           <Reveal>
-            <div className="mb-16">
+            <div className="mb-8">
               <span className="section-label-cc">Catalogue</span>
               <h1 className="section-title-cc">{t('products.title')}</h1>
               <p className="section-subtitle-cc">{t('products.description')}</p>
             </div>
           </Reveal>
 
-          <ProductB2bBanner locale={locale} content={b2bContent} />
-
           {/* Category filter */}
           {populatedCategories.length > 0 && (
-            <div className="mt-12 mb-16 flex flex-wrap gap-4">
+            <div className="mb-8 flex flex-wrap gap-4">
               <Link
                 href={localizedPath(locale, '/products')}
                 className={`px-6 py-3 text-[10px] font-bold uppercase tracking-[3px] transition-all duration-300 border ${
@@ -202,7 +207,13 @@ export default async function ProductsPage({
               </div>
             )}
 
-            <div className="industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div
+              className={
+                hasSingleProduct
+                  ? 'industrial-grid-cc grid-cols-1'
+                  : 'industrial-grid-cc sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
+              }
+            >
               {visibleProducts.map((p: any, index: number) => (
                 <Reveal key={p.id ?? p.title} delay={index * 40} className="grid-item-cc">
                   <ListingCard
@@ -228,13 +239,14 @@ export default async function ProductsPage({
                       caption: p.caption,
                       description: p.description,
                     })}
-                    imageSizes="(max-width: 768px) 50vw, 25vw"
-                    imageAspectClassName="h-[450px]"
+                    imageSizes={hasSingleProduct ? '100vw' : '(max-width: 768px) 50vw, 25vw'}
+                    imageAspectClassName={hasSingleProduct ? 'h-[520px]' : 'h-[450px]'}
                   />
                 </Reveal>
               ))}
             </div>
           </div>
+          <ProductB2bBanner locale={locale} content={b2bContent} />
         </div>
       </div>
     </main>

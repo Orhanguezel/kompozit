@@ -673,7 +673,7 @@ export default function AdminAuditClient() {
 
         {/* ==================== ANALYTICS TAB ==================== */}
         <TabsContent value="analytics" className="space-y-4">
-          <AuditAnalyticsTab excludeLocalhost={excludeLocalhost} dateRange={{ from: from, to: to }} />
+          <AuditAnalyticsTab dateRange={{ from: from, to: to }} />
         </TabsContent>
 
         {/* ==================== REQUESTS TAB ==================== */}

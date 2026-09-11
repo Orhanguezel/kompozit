@@ -10,8 +10,8 @@ const requiredFiles = [
   path.join(ROOT, 'src', 'app', 'manifest.ts'),
   path.join(ROOT, 'src', 'app', 'opengraph-image.tsx'),
   path.join(ROOT, 'src', 'app', 'twitter-image.tsx'),
-  path.join(ROOT, 'src', 'app', 'icon.tsx'),
-  path.join(ROOT, 'src', 'app', 'apple-icon.tsx'),
+  path.join(ROOT, 'public', 'favicon.ico'),
+  path.join(ROOT, 'public', 'brand', 'moe-2026-09-09', 'icons', 'apple-touch-icon.png'),
   path.join(ROOT, 'src', 'seo', 'helpers.ts'),
   path.join(ROOT, 'src', 'components', 'seo', 'Breadcrumbs.tsx'),
   path.join(ROOT, 'src', 'components', 'seo', 'RelatedLinks.tsx'),
@@ -103,7 +103,7 @@ if (!robotsSource.includes('sitemap: `${siteUrl}/sitemap.xml`')) {
   failures.push('src/app/robots.ts: missing explicit sitemap output');
 }
 
-for (const iconFile of ['icon.tsx', 'apple-icon.tsx', 'opengraph-image.tsx', 'twitter-image.tsx']) {
+for (const iconFile of ['opengraph-image.tsx', 'twitter-image.tsx']) {
   const source = await readFile(path.join(ROOT, 'src', 'app', iconFile), 'utf8');
   if (!source.includes('ImageResponse')) {
     failures.push(`src/app/${iconFile}: expected generated image route`);

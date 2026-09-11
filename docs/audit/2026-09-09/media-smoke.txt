@@ -1,0 +1,2 @@
+exit=0
+Media SEO check passed

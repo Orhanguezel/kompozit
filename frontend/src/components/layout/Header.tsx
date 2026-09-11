@@ -1,11 +1,16 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { APP_NAME } from '@/lib/brand-name';
+
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { BrandLogo } from './BrandLogo';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import { ChevronDown, Mail, MoveRight, Phone, X } from 'lucide-react';
+import { Mail, Phone, X } from 'lucide-react';
+import offerStyles from './header-offer.module.css';
+import { DesktopMegaMenu, type HeaderMenuItem, type HeaderContactInfo } from './DesktopMegaMenu';
+import { resolvePublicAssetUrl } from '@/lib/utils';
 import { localizedPath } from '@/seo/helpers';
 
 const ThemeToggle = dynamic(
@@ -28,19 +33,7 @@ const LanguageSwitcher = dynamic(
   },
 );
 
-interface MenuItem {
-  title?: string;
-  url?: string;
-  children?: MenuItem[];
-  [key: string]: unknown;
-}
-
-type HeaderContactInfo = {
-  email?: string;
-  phone?: string;
-};
-
-function normalizeItems(raw: Record<string, unknown>[], locale: string): MenuItem[] {
+function normalizeItems(raw: Record<string, unknown>[], locale: string): HeaderMenuItem[] {
   return raw
     .map((r) => {
       const rawUrl = String(r.url ?? r.href ?? '#');
@@ -53,6 +46,8 @@ function normalizeItems(raw: Record<string, unknown>[], locale: string): MenuIte
       return {
         title: String(r.title ?? r.label ?? ''),
         url,
+        image: resolvePublicAssetUrl(String(r.image_url ?? r.image ?? '')) || undefined,
+        description: String(r.description ?? '').replace(/<[^>]*>/g, '').trim(),
         children: Array.isArray(r.children)
           ? normalizeItems(r.children as Record<string, unknown>[], locale)
           : [],
@@ -61,14 +56,11 @@ function normalizeItems(raw: Record<string, unknown>[], locale: string): MenuIte
     .filter((i) => i.title);
 }
 
-function isSolutionsItem(item: MenuItem): boolean {
+function isSolutionsItem(item: HeaderMenuItem): boolean {
   const path = String(item.url || '').toLowerCase();
   const normalized = path.replace(/^\/[a-z]{2}(?=\/)/, '');
   return normalized === '/solutions' || normalized.startsWith('/solutions?');
 }
-
-const navLinkClass =
-  "relative text-[0.8rem] font-medium uppercase tracking-[3px] text-[var(--light)] transition-colors duration-300 after:pointer-events-none after:absolute after:bottom-[-4px] after:left-0 after:h-px after:w-0 after:bg-[var(--gold)] after:transition-all after:duration-300 hover:text-[var(--gold)] hover:after:w-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--carbon)]";
 
 export function Header({
   menuItems,
@@ -86,17 +78,45 @@ export function Header({
 }) {
   const t = useTranslations('nav');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileToggleRef = useRef<HTMLButtonElement>(null);
+  const mobileNavRef = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const menu = mobileNavRef.current;
+    if (!menu) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const controls = () => Array.from(menu.querySelectorAll<HTMLElement>('a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex="0"]'))
+      .filter(node => node.getClientRects().length > 0);
+    const frame = requestAnimationFrame(() => controls()[0]?.focus());
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); setMobileOpen(false); }
+      if (event.key !== 'Tab') return;
+      const fields = controls();
+      const first = fields[0], last = fields.at(-1);
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    menu.addEventListener('keydown', onKeyDown);
+    const opener = mobileToggleRef.current;
+    return () => {
+      cancelAnimationFrame(frame);
+      menu.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      opener?.focus();
+    };
+  }, [mobileOpen]);
   const [scrolled, setScrolled] = useState(false);
   const items = normalizeItems(menuItems, locale);
   const darkLogoSrc = logo?.dark || logo?.default || logo?.light;
-  const lightLogoSrc = logo?.light || logo?.default || logo?.dark;
-  const logoSrc = darkLogoSrc;
-  const mobileLogoSrc = lightLogoSrc;
-  const hasBothLogos = Boolean(logo?.dark && logo?.light && logo.dark !== logo.light);
-  const logoAlt = logo?.alt || 'MOE Kompozit';
+  const logoAlt = logo?.alt || APP_NAME;
   const phone = contactInfo?.phone?.trim() || '';
   const email = contactInfo?.email?.trim() || '';
   const isTurkish = locale.startsWith('tr');
+  const offerLabel = t('offer');
+  const offerWords = offerLabel.trim().split(/\s+/);
+  const offerBreakAt = Math.max(1, Math.ceil(offerWords.length / 2));
+  const offerLines = [offerWords.slice(0, offerBreakAt).join(' '), offerWords.slice(offerBreakAt).join(' ')].filter(Boolean).join('\n');
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -106,6 +126,7 @@ export function Header({
   }, []);
 
   return (
+    <>
     <header
       className={`fixed left-0 right-0 top-0 z-50 w-full transition-all duration-500 ease-out ${
         scrolled
@@ -121,77 +142,21 @@ export function Header({
           aria-label={`${logoAlt} ana sayfa`}
           className="group relative flex shrink-0 items-center gap-3 transition-all duration-300 active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-carbon)]"
         >
-          {darkLogoSrc ? (
-            <div
-              suppressHydrationWarning
-              className={`relative transition-all duration-500 ${
-                scrolled
-                  ? 'h-8 lg:h-9'
-                  : 'h-11 lg:h-12'
-              }`}
-            >
-              <Image
-                src={darkLogoSrc}
-                alt={logoAlt}
-                width={300}
-                height={80}
-                className={`h-full w-auto object-contain object-center transition-all duration-300 group-hover:opacity-80 drop-shadow-sm${hasBothLogos ? ' logo-dark-mode' : ''}`}
-                priority
-                fetchPriority="high"
-              />
-              {hasBothLogos && lightLogoSrc && (
-                <Image
-                  src={lightLogoSrc}
-                  alt={logoAlt}
-                  width={300}
-                  height={80}
-                  className="logo-light-mode absolute inset-0 h-full w-auto object-contain object-center transition-all duration-300 group-hover:opacity-80 drop-shadow-sm"
-                  priority
-                />
-              )}
+          {darkLogoSrc && logo ? (
+            <div className={`shrink-0 transition-all duration-300 group-hover:opacity-80 ${scrolled ? 'h-10 lg:h-12' : 'h-12 lg:h-14'}`}>
+              <BrandLogo logo={logo} priority />
             </div>
           ) : (
             <>
               <div className="diamond-branding-icon shrink-0"></div>
               <span className="font-[var(--font-display)] text-[1.35rem] uppercase tracking-[6px] text-[var(--white)] lg:text-[1.8rem]">
-                MOE KOMPOZİT
+                {logoAlt}
               </span>
             </>
           )}
         </Link>
 
-        <nav className="hidden flex-1 justify-center xl:flex" aria-label="Main navigation">
-          <ul className="flex list-none items-center gap-10">
-            {items.map((item) => (
-              <li key={item.url} className="group relative">
-                <Link href={item.url!} title={`${item.title} sayfasına git`} className={`inline-flex items-center gap-1.5 ${navLinkClass}`}>
-                  {item.title}
-                  {(item.children?.length ?? 0) > 0 && !isSolutionsItem(item) && (
-                    <ChevronDown className="size-3 opacity-50 transition-transform duration-300 group-hover:rotate-180" />
-                  )}
-                </Link>
-
-                {(item.children?.length ?? 0) > 0 && !isSolutionsItem(item) && (
-                  <div className="invisible absolute -left-4 top-full z-[60] w-72 translate-y-3 pt-4 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className="rounded-2xl border border-white/10 bg-[var(--color-bg-secondary)]/98 p-4 shadow-[0_30px_100px_rgba(0,0,0,0.6)] backdrop-blur-3xl">
-                      {item.children!.map((child) => (
-                        <Link
-                          key={child.url}
-                          href={child.url!}
-                          title={`${child.title} sayfasına git`}
-                          className="flex items-center gap-3 rounded-xl px-4 py-3 text-[0.8rem] font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-white/5 hover:text-[var(--color-gold)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)]"
-                        >
-                          <div className="size-1.5 rounded-full bg-[var(--color-gold)]/40" />
-                          {child.title}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <DesktopMegaMenu items={items} locale={locale} contact={contactInfo} />
 
         <div className="flex items-center gap-3 lg:gap-5">
           <div className="hidden items-center gap-2 sm:flex lg:gap-3">
@@ -201,16 +166,19 @@ export function Header({
 
           <Link
             href={localizedPath(locale, '/offer')}
-            title={`${t('offer')} formuna git`}
-            className="relative hidden items-center border border-[var(--gold)] bg-transparent px-7 py-2.5 text-[0.75rem] font-semibold uppercase tracking-[3px] text-[var(--gold)] transition-all duration-300 after:hidden hover:bg-[var(--gold)] hover:text-[var(--carbon)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--carbon)] sm:inline-flex"
+            aria-label={offerLabel}
+            className={`${offerStyles.cta} ${offerStyles.desktop}`}
           >
-            {t('offer')}
+            <span className={offerStyles.label} aria-hidden="true">{offerLines}</span>
+            <span className={offerStyles.hoverLabel} aria-hidden="true">{offerLines}</span>
           </Link>
 
           <button
             type="button"
             className="flex size-11 items-center justify-center p-2 xl:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
+            ref={mobileToggleRef}
+            aria-controls="mobile-site-navigation"
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
@@ -218,41 +186,41 @@ export function Header({
               <X className="size-6 text-[var(--color-cream)]" />
             ) : (
               <span className="flex h-[14px] w-[28px] flex-col justify-between" aria-hidden>
-                <span className="h-px w-full rounded-full bg-[var(--color-cream)]" />
-                <span className="h-px w-full rounded-full bg-[var(--color-cream)]" />
-                <span className="h-px w-full rounded-full bg-[var(--color-cream)]" />
+                <span className="h-0.5 w-full rounded-full bg-[var(--color-text-primary)]" />
+                <span className="h-0.5 w-full rounded-full bg-[var(--color-text-primary)]" />
+                <span className="h-0.5 w-full rounded-full bg-[var(--color-text-primary)]" />
               </span>
             )}
           </button>
         </div>
       </div>
+    </header>
 
+      {/* Header disina render edilir: kaydirmada header'a gelen backdrop-filter (Safari'de -webkit-)
+          position:fixed icin containing block olusturur ve menuyu header kutusuna hapseder. */}
       <nav
+        id="mobile-site-navigation"
+        ref={mobileNavRef}
         className={`fixed inset-0 z-50 overflow-y-auto bg-[var(--carbon)] transition-all duration-700 ease-in-out xl:hidden ${
           mobileOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
         aria-hidden={!mobileOpen}
+        inert={!mobileOpen}
       >
-        <div className="gold-grid-bg absolute inset-0 opacity-10" />
+        <div className="gold-grid-bg pointer-events-none absolute inset-0 opacity-10" aria-hidden="true" />
 
         {/* Mobile Header Bar */}
         <div className="flex h-24 items-center justify-between border-b border-[var(--gold)]/10 px-6">
            <Link href={localizedPath(locale, '/')} title={`${logoAlt} ana sayfa`} className="flex items-center gap-4" onClick={() => setMobileOpen(false)}>
-              {mobileLogoSrc ? (
-                <div className="relative h-8 w-[140px] shrink-0">
-                  <Image
-                    src={mobileLogoSrc}
-                    alt={logoAlt}
-                    fill
-                    sizes="210px"
-                    className="object-contain object-left"
-                  />
+              {darkLogoSrc && logo ? (
+                <div className="h-12 shrink-0">
+                  <BrandLogo logo={logo} />
                 </div>
               ) : (
                 <>
                   <div className="diamond-branding-icon"></div>
                   <span className="font-display text-[1.4rem] uppercase tracking-[6px] text-[var(--white)]">
-                    MOE KOMPOZİT
+                    {logoAlt}
                   </span>
                 </>
               )}
@@ -300,12 +268,12 @@ export function Header({
           <div className="grid gap-5 border-t border-[var(--gold)]/10 pt-8">
             <Link
               href={localizedPath(locale, '/offer')}
-              title={`${t('offer')} formuna git`}
-              className="hero-btn-primary shimmer-btn w-full justify-center"
+              aria-label={offerLabel}
+              className={`${offerStyles.cta} ${offerStyles.mobile}`}
               onClick={() => setMobileOpen(false)}
             >
-              {t('offer')}
-              <MoveRight className="size-5" />
+              <span className={offerStyles.label} aria-hidden="true">{offerLines}</span>
+              <span className={offerStyles.hoverLabel} aria-hidden="true">{offerLines}</span>
             </Link>
 
             <div className="grid grid-cols-2 gap-3">
@@ -321,7 +289,7 @@ export function Header({
           </div>
 
           <div className="grid gap-5 border-t border-[var(--gold)]/10 pt-8 text-[var(--silver)]">
-            <div className="flex items-center gap-4 group">
+            <div className="flex min-w-0 items-center gap-4 group">
               <div className="flex size-11 shrink-0 items-center justify-center border border-[var(--gold)]/15 bg-white/5 group-hover:bg-[var(--gold)] transition-colors">
                 <Phone className="size-5 text-[var(--gold)] group-hover:text-[var(--carbon)] transition-colors" />
               </div>
@@ -330,18 +298,18 @@ export function Header({
                 <p className="font-display text-lg uppercase tracking-[1.5px] text-[var(--white)]">{phone}</p>
               </div>
             </div>
-            <div className="flex items-center gap-4 group">
+            <div className="flex min-w-0 items-center gap-4 group">
               <div className="flex size-11 shrink-0 items-center justify-center border border-[var(--gold)]/15 bg-white/5 group-hover:bg-[var(--gold)] transition-colors">
                 <Mail className="size-5 text-[var(--gold)] group-hover:text-[var(--carbon)] transition-colors" />
               </div>
               <div className="min-w-0">
                 <p className="text-[10px] font-bold uppercase tracking-[3px] opacity-40">{isTurkish ? 'E-posta' : 'Inquiries'}</p>
-                <p className="break-words font-display text-lg uppercase tracking-[1.5px] text-[var(--white)]">{email}</p>
+                <p className="[overflow-wrap:anywhere] font-display text-lg uppercase tracking-[1.5px] text-[var(--white)]">{email}</p>
               </div>
             </div>
           </div>
         </div>
       </nav>
-    </header>
+    </>
   );
 }

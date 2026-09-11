@@ -114,7 +114,7 @@ function buildLocalesOptions(appLocales: LocaleConfigItem[] | undefined, default
   });
 
   const mapped: LocaleOption[] = sorted
-    .filter((x) => x?.code)
+    .filter((x) => x?.code && x.is_active !== false)
     .map((x) => {
       const code = String(x.code);
       const labelBase = x.label ? `${x.label} (${code})` : code;

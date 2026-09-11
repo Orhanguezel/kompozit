@@ -249,7 +249,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { slug: string
        imageSrc: S.planter,
        specs: ['Hafif Yapı', 'Korozyon Direnci', 'Özel Renk Seçeneği'],
        category: 'Peyzaj',
-       content: '<h2>Peyzajda Kompozit Yaklasimi</h2><p>Kent mobilyalari ve buyuk olcekli saksilarda agirlik, korozyon ve yuzey deformasyonu en buyuk maliyet kalemleridir. MOE Kompozit olarak; UV dayanimi yuksek, CTP tabanli ve moduler uretime uygun peyzaj bilesenleri gelistiriyoruz.</p><h3>Muhendislik Avantajlari</h3><ul><li>Beton saksilara gore %80 daha hafif</li><li>Kimyasal gubrelere ve dis ortam nemine tam direnc</li><li>İstenilen RAL kodunda, puruzsuz yuzey bitis</li></ul>',
+       content: '<h2>Peyzajda Kompozit Yaklasimi</h2><p>Kent mobilyalari ve buyuk olcekli saksilarda agirlik, korozyon ve yuzey deformasyonu en buyuk maliyet kalemleridir. UV dayanimi yuksek, CTP tabanli ve moduler uretime uygun peyzaj bilesenleri gelistiriyoruz.</p><h3>Muhendislik Avantajlari</h3><ul><li>Ağırlık seçilen malzeme ve tasarıma göre değerlendirilir</li><li>Kimyasal ve dış ortam dayanımı proje koşullarına göre doğrulanır</li><li>İstenilen RAL kodunda, puruzsuz yuzey bitis</li></ul>',
     },
     {
        slug: 'solution-storage-tanks',
@@ -287,7 +287,7 @@ const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { slug: string
        imageSrc: S.planter,
        specs: ['Lightweight', 'Corrosion Resistance', 'Custom Colors'],
        category: 'Landscaping',
-       content: '<h2>Composite Approach in Landscaping</h2><p>In urban furniture and large-scale planters, weight, corrosion, and surface deformation are the biggest cost items. At MOE Composite, we develop GRP-based landscaping components suitable for UV resistance and modular production.</p><h3>Engineering Advantages</h3><ul><li>80% lighter than concrete planters</li><li>Full resistance to chemical fertilizers and outdoor humidity</li><li>Smooth surface finish in any requested RAL code</li></ul>',
+       content: '<h2>Composite Approach in Landscaping</h2><p>In urban furniture and large-scale planters, weight, corrosion, and surface deformation are the biggest cost items. We develop GRP-based landscaping components suitable for UV resistance and modular production.</p><h3>Engineering Advantages</h3><ul><li>Weight depends on the selected material and design</li><li>Chemical and outdoor resistance require validation for the project conditions</li><li>Smooth surface finish in any requested RAL code</li></ul>',
     },
     {
        slug: 'solution-storage-tanks',

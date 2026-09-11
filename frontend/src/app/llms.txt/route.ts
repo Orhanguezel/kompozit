@@ -1,3 +1,4 @@
+import { APP_NAME } from '@/lib/brand-name';
 import { AVAILABLE_LOCALES } from '@/i18n/locales';
 import { API_BASE_URL } from '@/lib/utils';
 import { localizedUrl, siteUrlBase, stripTrailingSlash } from '@/seo/helpers';
@@ -44,30 +45,7 @@ export async function GET() {
   }
 
   const base = stripTrailingSlash(siteUrlBase());
-  const lines: string[] = [
-    '# MOE Kompozit - Endustriyel Kompozit Cozumleri',
-    '',
-    '> Karbon fiber, CTP / FRP ve hibrit kompozit urun uretimi yapan bagimsiz endustriyel kompozit ureticisi.',
-    '',
-    `Site: ${base}`,
-    `Sitemap: ${base}/sitemap.xml`,
-    '',
-    '## Uretim Yetkinlikleri',
-    '- Karbon fiber bilesenleri: savunma, havacilik, enerji ve ulasim icin hafif parcalar.',
-    '- CTP / FRP tank ve borular: kimya, gida, su aritma ve endustriyel depolama.',
-    '- Pultruzyon profilleri: yapi, raf sistemleri ve ozel kesit profiller.',
-    '- RTM ve el yatirmasi: kompleks form, otomotiv, beyaz esya ve ozel seri uretim.',
-    '- Sehir mobilyasi ve endustriyel kompozit uygulamalari.',
-    '',
-    '## Hedef Sektorler',
-    'Savunma, enerji, endustriyel depolama, kimya, altyapi, ulasim, sehir mobilyasi, denizcilik ve ozel proje uretimi.',
-    '',
-    '## Iletisim',
-    '- Teklif ve teknik talepler: info@karbonkompozit.com.tr',
-    `- Web: ${base}`,
-    '',
-    '## Primary pages (localized)',
-  ];
+  const lines: string[] = [`# ${APP_NAME}`, '', `Site: ${base}`, `Sitemap: ${base}/sitemap.xml`, '', '## Public pages'];
 
   for (const loc of AVAILABLE_LOCALES) {
     lines.push(`### ${loc}`);

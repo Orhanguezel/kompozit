@@ -20,8 +20,7 @@ VALUES (
   '*',
   JSON_ARRAY(
     JSON_OBJECT('code', 'tr', 'label', 'Türkçe', 'is_default', true, 'is_active', true),
-    JSON_OBJECT('code', 'en', 'label', 'English', 'is_default', false, 'is_active', true),
-    JSON_OBJECT('code', 'de', 'label', 'Deutsch', 'is_default', false, 'is_active', false)
+    JSON_OBJECT('code', 'en', 'label', 'English', 'is_default', false, 'is_active', true)
   ),
   NOW(3), NOW(3)
 )
@@ -505,14 +504,7 @@ VALUES (
   UUID(),
   'kompozit__home.stats',
   'tr',
-  JSON_OBJECT(
-    'items', JSON_ARRAY(
-      JSON_OBJECT('value', '15+',      'label', 'Yıl kompozit deneyimi'),
-      JSON_OBJECT('value', '500+',     'label', 'Teslim edilen proje parçası'),
-      JSON_OBJECT('value', 'AS9100',   'label', 'Hassas üretim standardı'),
-      JSON_OBJECT('value', 'ISO 9001', 'label', 'Süreç ve kalite disiplini')
-    )
-  ),
+  '{"items": [{"value": "CTP", "label": "Kompozit çözümler"}, {"value": "Proje", "label": "Çizime göre değerlendirme"}, {"value": "Teknik", "label": "Gereksinim incelemesi"}, {"value": "Belge", "label": "Ürün özelinde doğrulama"}]}',
   NOW(3), NOW(3)
 )
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
@@ -525,14 +517,7 @@ VALUES (
   UUID(),
   'kompozit__home.stats',
   'en',
-  JSON_OBJECT(
-    'items', JSON_ARRAY(
-      JSON_OBJECT('value', '15+',      'label', 'Years in composites'),
-      JSON_OBJECT('value', '500+',     'label', 'Project parts delivered'),
-      JSON_OBJECT('value', 'AS9100',   'label', 'Precision manufacturing mindset'),
-      JSON_OBJECT('value', 'ISO 9001', 'label', 'Process and quality discipline')
-    )
-  ),
+  '{"items": [{"value": "CTP", "label": "Composite solutions"}, {"value": "Project", "label": "Drawing-based evaluation"}, {"value": "Technical", "label": "Requirements review"}, {"value": "Records", "label": "Product-specific verification"}]}',
   NOW(3), NOW(3)
 )
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
@@ -667,15 +652,7 @@ VALUES (
   UUID(),
   'kompozit__home.materials',
   'tr',
-  JSON_OBJECT(
-    'sectionLabel', 'Malzeme Mühendisliği',
-    'title', 'İleri Seviye Kompozit Yapılar',
-    'subtitle', 'Projenizin mukavemet ve ağırlık ihtiyacına göre optimize edilmiş karbon fiber ve CTP çözümleri',
-    'items', JSON_ARRAY(
-      JSON_OBJECT('id', 'carbon', 'name', 'Karbon Fiber', 'description', 'Yüksek mukavemet, düşük ağırlık ve üstün rijitlik gerektiren havacılık ve otomotiv uygulamaları için ideal çözüm.', 'specs', JSON_OBJECT('tensile', JSON_OBJECT('label', 'Çekme Mukavemeti', 'value', '3500+ MPa'), 'density', JSON_OBJECT('label', 'Yoğunluk', 'value', '1.6 g/cm³'), 'modulus', JSON_OBJECT('label', 'Elastisite Modülü', 'value', '230 GPa'), 'thermal', JSON_OBJECT('label', 'Termal Genleşme', 'value', 'Düşük'))),
-      JSON_OBJECT('id', 'frp', 'name', 'CTP / Cam Elyaf', 'description', 'Korozyon direnci, elektrik yalıtkanlığı ve maliyet etkinliği sunan endüstriyel muhafaza ve panel çözümleri.', 'specs', JSON_OBJECT('tensile', JSON_OBJECT('label', 'Çekme Mukavemeti', 'value', '1500+ MPa'), 'density', JSON_OBJECT('label', 'Yoğunluk', 'value', '1.9 g/cm³'), 'modulus', JSON_OBJECT('label', 'Elastisite Modülü', 'value', '45 GPa'), 'thermal', JSON_OBJECT('label', 'Termal Genleşme', 'value', 'Orta')))
-    )
-  ),
+  '{"sectionLabel": "Malzeme Mimarisi", "title": "Doğru laminat yapısını uygulamanıza göre seçin", "subtitle": "Karbon fiber ve CTP kompozit çözümlerini malzeme, ağırlık, rijitlik ve seri üretim gereksinimine göre konumlandırıyoruz.", "items": [{"id": "carbon", "name": "Karbon Fiber", "description": "Malzeme ve laminat yapısı; yük, ortam ve ürün doğrulama gereksinimlerine göre değerlendirilir.", "specs": {"tensile": {"label": "Çekme Mukavemeti", "value": "Projeye göre"}, "density": {"label": "Yoğunluk", "value": "Projeye göre"}, "modulus": {"label": "Elastisite Modülü", "value": "Projeye göre"}, "thermal": {"label": "Termal Kararlılık", "value": "Projeye göre"}}}, {"id": "frp", "name": "Cam Elyaf / CTP", "description": "Malzeme ve laminat yapısı; yük, ortam ve ürün doğrulama gereksinimlerine göre değerlendirilir.", "specs": {"tensile": {"label": "Çekme Mukavemeti", "value": "Projeye göre"}, "density": {"label": "Yoğunluk", "value": "Projeye göre"}, "modulus": {"label": "Elastisite Modülü", "value": "Projeye göre"}, "thermal": {"label": "Termal Kararlılık", "value": "Projeye göre"}}}]}',
   NOW(3), NOW(3)
 )
 ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
@@ -698,6 +675,43 @@ VALUES (
       JSON_OBJECT('id', 'landscaping', 'title', 'Kent ve Peyzaj', 'description', 'Modern şehir mobilyaları ve dayanıklı peyzaj elemanları.'),
       JSON_OBJECT('id', 'storage', 'title', 'Depolama', 'description', 'Kimyasal dayanımlı tank ve muhafaza sistemleri.'),
       JSON_OBJECT('id', 'custom', 'title', 'Özel Projeler', 'description', 'Müşteriye özel tasarım ve butik üretim desteği.')
+    )
+  ),
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME MATERIALS — EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.materials',
+  'en',
+  '{"sectionLabel": "Material Architecture", "title": "Choose the right laminate for your application", "subtitle": "We position carbon fiber and GRP composites by weight, stiffness, chemical resistance and production scalability.", "items": [{"id": "carbon", "name": "Carbon Fiber", "description": "Material and laminate construction are evaluated against loads, environment and product verification requirements.", "specs": {"tensile": {"label": "Tensile Strength", "value": "Project-specific"}, "density": {"label": "Density", "value": "Project-specific"}, "modulus": {"label": "Elastic Modulus", "value": "Project-specific"}, "thermal": {"label": "Thermal Stability", "value": "Project-specific"}}}, {"id": "frp", "name": "Fiberglass / GRP", "description": "Material and laminate construction are evaluated against loads, environment and product verification requirements.", "specs": {"tensile": {"label": "Tensile Strength", "value": "Project-specific"}, "density": {"label": "Density", "value": "Project-specific"}, "modulus": {"label": "Elastic Modulus", "value": "Project-specific"}, "thermal": {"label": "Thermal Stability", "value": "Project-specific"}}}]}',
+  NOW(3), NOW(3)
+)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`);
+
+-- =============================================================
+-- HOME INDUSTRIES — EN
+-- =============================================================
+INSERT INTO `site_settings` (`id`, `key`, `locale`, `value`, `created_at`, `updated_at`)
+VALUES (
+  UUID(),
+  'kompozit__home.industries',
+  'en',
+  JSON_OBJECT(
+    'sectionLabel', 'Industrial Applications',
+    'title', 'Solutions for Diverse Industries',
+    'subtitle', 'We integrate the advantages of composite technology into sector-specific requirements.',
+    'items', JSON_ARRAY(
+      JSON_OBJECT('id', 'defense', 'title', 'Defense', 'description', 'High-strength protective panels and lightweight structural components.'),
+      JSON_OBJECT('id', 'energy', 'title', 'Energy', 'description', 'Corrosion-resistant parts for wind and solar energy systems.'),
+      JSON_OBJECT('id', 'landscaping', 'title', 'Urban & Landscaping', 'description', 'Modern urban furniture and durable landscaping elements.'),
+      JSON_OBJECT('id', 'storage', 'title', 'Storage', 'description', 'Chemical-resistant tanks and enclosure systems.'),
+      JSON_OBJECT('id', 'custom', 'title', 'Custom Projects', 'description', 'Tailored design and specialized production support.')
     )
   ),
   NOW(3), NOW(3)

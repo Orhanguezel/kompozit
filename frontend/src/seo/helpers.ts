@@ -1,12 +1,13 @@
+import { APP_NAME } from '@/lib/brand-name';
 import type { Metadata } from 'next';
 import { SITE_URL } from '@/lib/utils';
 import { AVAILABLE_LOCALES, FALLBACK_LOCALE } from '@/i18n/locales';
 
-const DEFAULT_SITE_NAME = 'MOE Kompozit';
-const DEFAULT_TITLE_SUFFIX = 'MOE Kompozit';
+const DEFAULT_SITE_NAME = APP_NAME;
+const DEFAULT_TITLE_SUFFIX = APP_NAME;
 const DEFAULT_OG_IMAGE = '/opengraph-image';
-const DEFAULT_AUTHOR_NAME = 'MOE Kompozit';
-const DEFAULT_PUBLISHER_NAME = 'MOE Kompozit';
+const DEFAULT_AUTHOR_NAME = APP_NAME;
+const DEFAULT_PUBLISHER_NAME = APP_NAME;
 const TITLE_SEPARATOR = ' - ';
 const TITLE_PIXEL_LIMIT = 560;
 
@@ -167,7 +168,7 @@ export function buildPageMetadata(input: {
   const publisherName = input.publisherName || DEFAULT_PUBLISHER_NAME;
 
   return {
-    title,
+    title: { absolute: title },
     description,
     authors: [{ name: authorName }],
     creator: authorName,

@@ -1,3 +1,4 @@
+import { withRouteMetadata, requireLocalizedSlug } from '@/seo/inventory';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -29,12 +30,13 @@ async function fetchGallery(slug: string, locale: string) {
   }
 }
 
-export async function generateMetadata({
+async function buildMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('gallery', slug, locale);
   const gallery = await fetchGallery(slug, locale);
   if (!gallery) return {};
   return buildPageMetadata({
@@ -62,6 +64,7 @@ export default async function GalleryDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('gallery', slug, locale);
   const t = await getTranslations({ locale });
   const gallery = await fetchGallery(slug, locale);
   if (!gallery) notFound();
@@ -268,4 +271,9 @@ export default async function GalleryDetailPage({
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
+  return withRouteMetadata(await buildMetadata({ params }), locale, `/gallery/${slug}`);
 }

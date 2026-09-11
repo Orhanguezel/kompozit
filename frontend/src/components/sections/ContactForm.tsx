@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { Send } from 'lucide-react';
 import api from '@/lib/axios';
 
-export function ContactFormClient({ locale }: { locale: string }) {
+export function ContactFormClient({ locale, preselectedProduct }: { locale: string; preselectedProduct?: string }) {
   const t = useTranslations('contact.form');
   const tc = useTranslations('common');
   const [sending, setSending] = useState(false);
@@ -17,12 +17,12 @@ export function ContactFormClient({ locale }: { locale: string }) {
     const fd = new FormData(e.currentTarget);
     try {
       await api.post('/contacts', {
-        name: fd.get('name'),
-        email: fd.get('email'),
-        phone: fd.get('phone'),
-        company: fd.get('company'),
-        subject: fd.get('subject'),
-        message: fd.get('message'),
+        name: String(fd.get('name') ?? '').trim(),
+        email: String(fd.get('email') ?? '').trim(),
+        phone: String(fd.get('phone') ?? '').trim(),
+        company: String(fd.get('company') ?? '').trim(),
+        subject: String(fd.get('subject') ?? '').trim(),
+        message: String(fd.get('message') ?? '').trim(),
         source: 'kompozit',
         locale,
       });
@@ -58,6 +58,8 @@ export function ContactFormClient({ locale }: { locale: string }) {
           <input
             id="name"
             name="name"
+            minLength={2}
+            maxLength={255}
             required
             className={inputClasses}
           />
@@ -67,6 +69,7 @@ export function ContactFormClient({ locale }: { locale: string }) {
           <input
             id="email"
             name="email"
+            maxLength={255}
             type="email"
             required
             className={inputClasses}
@@ -77,6 +80,10 @@ export function ContactFormClient({ locale }: { locale: string }) {
           <input
             id="phone"
             name="phone"
+            type="tel"
+            required
+            minLength={5}
+            maxLength={64}
             className={inputClasses}
           />
         </div>
@@ -85,6 +92,7 @@ export function ContactFormClient({ locale }: { locale: string }) {
           <input
             id="company"
             name="company"
+            maxLength={255}
             className={inputClasses}
           />
         </div>
@@ -94,6 +102,10 @@ export function ContactFormClient({ locale }: { locale: string }) {
         <input
           id="subject"
           name="subject"
+          required
+          minLength={2}
+          maxLength={255}
+          defaultValue={preselectedProduct || ''}
           className={inputClasses}
         />
       </div>
@@ -102,6 +114,8 @@ export function ContactFormClient({ locale }: { locale: string }) {
         <textarea
           id="message"
           name="message"
+          minLength={10}
+          maxLength={5000}
           required
           rows={5}
           className={inputClasses}
@@ -112,7 +126,7 @@ export function ContactFormClient({ locale }: { locale: string }) {
         <button
           type="submit"
           disabled={sending}
-          className="group inline-flex w-full items-center justify-center gap-3 rounded-none bg-[var(--color-gold)] px-6 py-4 text-sm font-bold uppercase tracking-widest text-[#14110d] transition-all hover:bg-[var(--color-gold-bright)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:opacity-50"
+          className="group inline-flex w-full items-center justify-center gap-3 rounded-none bg-[var(--color-gold)] px-6 py-4 text-sm font-bold uppercase tracking-widest text-[var(--color-on-gold)] transition-all hover:bg-[var(--color-gold-bright)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] disabled:opacity-50"
         >
           <span>{sending ? tc('loading') : t('submit')}</span>
           {!sending && <Send className="size-4 opacity-80 transition-transform group-hover:translate-x-1" />}

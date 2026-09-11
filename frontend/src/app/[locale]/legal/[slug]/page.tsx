@@ -33,11 +33,11 @@ function getLegalFallback(locale: string, slug: string): LegalFallback | null {
     return {
       title: isEn ? 'Privacy Policy' : 'Gizlilik Politikasi',
       description: isEn
-        ? 'Overview of how MOE Kompozit handles contact, quotation and technical project data.'
-        : 'MOE Kompozit ile paylasilan iletisim, teklif ve teknik proje verilerinin nasil ele alindigina dair ozet bilgi.',
+        ? 'Overview of how the company handles contact, quotation and technical project data.'
+        : 'Şirket ile paylasilan iletisim, teklif ve teknik proje verilerinin nasil ele alindigina dair ozet bilgi.',
       content: isEn
-        ? '<p>MOE Kompozit uses submitted contact and quotation data only to evaluate requests, prepare offers and maintain project communication.</p><p>We do not request unnecessary personal data and we limit access to project files, drawings and technical documents to relevant operational teams.</p><p>For data updates or removal requests, you can contact us via the communication details provided on the contact page.</p>'
-        : '<p>MOE Kompozit, iletisim ve teklif formlari uzerinden iletilen verileri yalnizca talepleri degerlendirmek, teklif hazirlamak ve proje iletisimini surdurmek amaciyla kullanir.</p><p>Gereksiz kisisel veri talep etmeyiz; proje dosyalari, cizimler ve teknik dokumanlara erisimi ilgili operasyon ekipleriyle sinirli tutariz.</p><p>Veri guncelleme veya silme talepleri icin iletisim sayfasindaki kanallar uzerinden bize ulasabilirsiniz.</p>',
+        ? '<p>The company uses submitted contact and quotation data only to evaluate requests, prepare offers and maintain project communication.</p><p>We do not request unnecessary personal data and we limit access to project files, drawings and technical documents to relevant operational teams.</p><p>For data updates or removal requests, you can contact us via the communication details provided on the contact page.</p>'
+        : '<p>Şirket, iletisim ve teklif formlari uzerinden iletilen verileri yalnizca talepleri degerlendirmek, teklif hazirlamak ve proje iletisimini surdurmek amaciyla kullanir.</p><p>Gereksiz kisisel veri talep etmeyiz; proje dosyalari, cizimler ve teknik dokumanlara erisimi ilgili operasyon ekipleriyle sinirli tutariz.</p><p>Veri guncelleme veya silme talepleri icin iletisim sayfasindaki kanallar uzerinden bize ulasabilirsiniz.</p>',
     };
   }
 
@@ -45,8 +45,8 @@ function getLegalFallback(locale: string, slug: string): LegalFallback | null {
     return {
       title: isEn ? 'Terms of Use' : 'Kullanim Kosullari',
       description: isEn
-        ? 'General terms for using the MOE Kompozit website, technical content and quotation communication channels.'
-        : 'MOE Kompozit web sitesi, teknik icerikler ve teklif iletisim kanallarinin kullanimina dair genel kosullar.',
+        ? 'General terms for using the company website, technical content and quotation communication channels.'
+        : 'Şirket web sitesi, teknik icerikler ve teklif iletisim kanallarinin kullanimina dair genel kosullar.',
       content: isEn
         ? '<p>Information published on this website is provided for general technical and commercial guidance. Final product scope, material selection and production conditions are clarified during project review.</p><p>Visuals, technical notes and descriptions on the site do not constitute a final binding offer on their own.</p><p>All quotation and delivery commitments become valid only after mutual confirmation within the commercial process.</p>'
         : '<p>Bu sitede yer alan bilgiler genel teknik ve ticari yonlendirme amaciyla sunulur. Nihai urun kapsami, malzeme secimi ve uretim kosullari proje degerlendirme surecinde netlestirilir.</p><p>Sitedeki gorseller, teknik notlar ve aciklamalar tek basina baglayici nihai teklif niteliginde degildir.</p><p>Teklif, termin ve teslim kapsamindaki taahhutler ancak ticari surecte karsilikli teyit sonrasinda gecerli olur.</p>',

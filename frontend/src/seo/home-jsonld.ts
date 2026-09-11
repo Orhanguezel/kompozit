@@ -1,3 +1,4 @@
+import { APP_NAME } from '@/lib/brand-name';
 import 'server-only';
 
 import type { ParsedContactInfo } from '@/lib/contact-info';
@@ -18,7 +19,7 @@ export function buildHomePageSchemaGraph(
       pagePath: '/contact',
     }),
     jsonld.website({
-      name: 'MOE Kompozit',
+      name: APP_NAME,
       url: base,
       description: input.seoDescription,
       publisher: { '@id': orgId },

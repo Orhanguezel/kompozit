@@ -58,11 +58,11 @@ export async function GalleryShowcase({ locale, items = [] }: { locale: string; 
 
               {/* Overlay Caption */}
               <div className="absolute inset-0 z-10 flex items-center bg-black/38 p-6 transition-colors duration-500 group-hover:bg-black/48 sm:p-8 lg:p-10">
-                <div className="max-w-[92%] border-l-2 border-[var(--color-gold)] bg-[#050505]/92 px-5 py-4 shadow-[0_22px_70px_rgba(0,0,0,0.62)] ring-1 ring-white/10 backdrop-blur-md sm:px-6 sm:py-5">
+                <div className="max-w-[92%] border-l-2 border-[var(--color-gold)] bg-[color-mix(in_srgb,var(--color-media-overlay)_92%,transparent)] px-5 py-4 shadow-[0_22px_70px_rgba(0,0,0,0.62)] ring-1 ring-white/10 backdrop-blur-md sm:px-6 sm:py-5">
                  <span className="font-display text-[0.68rem] uppercase tracking-[3px] text-[var(--color-gold)] drop-shadow-[0_1px_8px_rgba(0,0,0,0.9)]">
                    {galleryItemCategory(row)}
                  </span>
-                 <h3 className="mt-2 font-display text-[1.25rem] font-normal uppercase leading-tight tracking-[2.5px] text-[#fffaf0] drop-shadow-[0_2px_14px_rgba(0,0,0,1)] sm:text-[1.45rem]">
+                 <h3 className="mt-2 font-display text-[1.25rem] font-normal uppercase leading-tight tracking-[2.5px] text-[var(--color-on-media)] drop-shadow-[0_2px_14px_rgba(0,0,0,1)] sm:text-[1.45rem]">
                    {title}
                  </h3>
                 </div>

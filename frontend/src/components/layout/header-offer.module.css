@@ -1,0 +1,69 @@
+.cta {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+  width: 168px;
+  overflow: hidden;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 0;
+  background: var(--color-brand);
+  color: var(--color-bg-dark);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.label,
+.hoverLabel {
+  display: block;
+  white-space: pre-line;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hoverLabel {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  right: 20px;
+  opacity: 0;
+  transform: translateY(-100%);
+}
+
+.cta:is(:hover, :focus-visible) {
+  background: var(--color-gold-bright);
+  color: var(--color-bg-dark);
+}
+
+.cta:is(:hover, :focus-visible) .label {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.cta:is(:hover, :focus-visible) .hoverLabel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cta:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 4px;
+}
+
+.desktop { display: none; }
+.mobile { width: 100%; }
+
+@media (min-width: 640px) {
+  .desktop { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta, .label, .hoverLabel { transition: none; }
+  .cta:is(:hover, :focus-visible) .label { opacity: 1; transform: none; }
+  .cta:is(:hover, :focus-visible) .hoverLabel { opacity: 0; }
+}

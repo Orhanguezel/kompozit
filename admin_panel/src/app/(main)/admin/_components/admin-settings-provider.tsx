@@ -108,7 +108,7 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
   configRef.current = config;
 
   // 2. Fetch Page Meta
-  const locale = adminLocale || config?.default_locale || "de";
+  const locale = adminLocale === "en" ? "en" : "tr";
   const { data: pagesRow, isLoading: pagesLoading } = useGetSiteSettingAdminByKeyQuery({
     key: ADMIN_PAGES_KEY,
     locale,
@@ -159,9 +159,7 @@ export function AdminSettingsProvider({ children }: { children: React.ReactNode 
     dispatch(preferencesActions.syncFromDom({}));
 
     // Zustand sync (UI kontrolleri Zustand okur)
-    if (config.default_locale) {
-      setAdminLocale(config.default_locale);
-    }
+    setAdminLocale(config.default_locale === "en" ? "en" : "tr");
     if (config.theme) {
       if (config.theme.mode) setThemeMode(config.theme.mode as ThemeMode);
       if (config.theme.preset) setThemePreset(config.theme.preset as ThemePreset);

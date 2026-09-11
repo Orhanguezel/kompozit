@@ -5,4 +5,15 @@ dist/
 .env.local
 .lighthouseci/
 *.tsbuildinfo
-docs/
+docs/*
+!docs/audit/
+docs/audit/*
+!docs/audit/2026-09-09/
+
+# GZL private project manifest
+project.portfolio.private.json
+
+# Runtime environment files stay local; commit only sanitized examples.
+.env.*
+!.env.example
+!.env.*.example

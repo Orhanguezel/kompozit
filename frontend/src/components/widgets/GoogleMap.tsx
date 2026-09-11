@@ -1,5 +1,7 @@
 'use client';
 
+import { APP_NAME } from '@/lib/brand-name';
+
 export function GoogleMap({ className }: { className?: string }) {
   const embedUrl = process.env.NEXT_PUBLIC_GOOGLE_MAPS_EMBED_URL;
 
@@ -15,7 +17,7 @@ export function GoogleMap({ className }: { className?: string }) {
         allowFullScreen
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
-        title="MOE Kompozit Konum"
+        title={APP_NAME}
       />
     </div>
   );

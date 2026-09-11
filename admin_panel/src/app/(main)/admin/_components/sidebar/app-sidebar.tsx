@@ -109,12 +109,12 @@ export function AppSidebar({
         <Link
           prefetch={false}
           href="/admin/dashboard"
-          className="flex items-center gap-3 px-3 py-4 transition-colors hover:bg-sidebar-accent/50"
+          className="flex items-center gap-3 px-3 py-4 transition-colors hover:bg-sidebar-accent/50 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
         >
           <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
             <LayoutDashboard className="size-5" />
           </div>
-          <div className="flex flex-col gap-0.5 leading-none">
+          <div className="flex min-w-0 flex-col gap-0.5 leading-none group-data-[collapsible=icon]:hidden">
             <span className="font-bold text-lg tracking-tight">{label || "MOE KOMPOZIT"}</span>
             <span className="font-medium text-[10px] text-muted-foreground uppercase tracking-widest">Admin Panel</span>
           </div>

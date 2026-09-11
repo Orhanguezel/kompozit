@@ -1,33 +1,25 @@
 'use client';
 
 import { Moon, Sun } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useSyncExternalStore } from 'react';
 import { applyThemeMode, readThemeMode } from '@/lib/preferences/theme-utils';
 import { THEME_STORAGE_KEYS, type ThemeMode } from '@/lib/preferences/theme';
 
+const subscribeTheme = (onChange: () => void) => {
+  window.addEventListener('storage', onChange);
+  window.addEventListener('ensotek-theme-change', onChange);
+  return () => { window.removeEventListener('storage', onChange); window.removeEventListener('ensotek-theme-change', onChange); };
+};
+const subscribeHydration = () => () => {};
 export function ThemeToggle() {
-  const [mounted, setMounted] = useState(false);
-  const [mode, setMode] = useState<ThemeMode>('dark');
-
-  useEffect(() => {
-    setMounted(true);
-    setMode(readThemeMode());
-
-    function onStorage(event: StorageEvent) {
-      if (event.key === THEME_STORAGE_KEYS.mode) {
-        setMode(readThemeMode());
-      }
-    }
-
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
-  }, []);
+  const mounted = useSyncExternalStore(subscribeHydration, () => true, () => false);
+  const mode = useSyncExternalStore(subscribeTheme, readThemeMode, () => 'dark' as ThemeMode);
 
   function toggleMode() {
     const nextMode: ThemeMode = mode === 'dark' ? 'light' : 'dark';
     applyThemeMode(nextMode);
     localStorage.setItem(THEME_STORAGE_KEYS.mode, nextMode);
-    setMode(nextMode);
+    window.dispatchEvent(new Event('ensotek-theme-change'));
   }
 
   const isDark = mounted && mode === 'dark';

@@ -160,15 +160,15 @@
       "privacyNote": "Spam yok. Endüstriyel düzeyde gizlilik."
     },
     "stats": {
-      "ariaLabel": "İstatistikler",
-      "yoeNumber": "15+",
-      "yoeLabel": "Yıl kompozit deneyimi",
-      "projectsNumber": "500+",
-      "projectsLabel": "Teslim edilen proje parçası",
-      "standardNumber": "AS9100",
-      "standardLabel": "Hassas üretim standardı",
-      "certNumber": "ISO 9001",
-      "certLabel": "Süreç ve kalite disiplini"
+      "ariaLabel": "Proje kapsamı",
+      "yoeNumber": "CTP",
+      "yoeLabel": "Kompozit çözümler",
+      "projectsNumber": "Proje",
+      "projectsLabel": "Çizime göre değerlendirme",
+      "standardNumber": "Teknik",
+      "standardLabel": "Gereksinim incelemesi",
+      "certNumber": "Belge",
+      "certLabel": "Ürün özelinde doğrulama"
     },
     "materials": {
       "sectionLabel": "Malzeme Mimarisi",
@@ -176,45 +176,45 @@
       "subtitle": "Karbon fiber ve CTP kompozit çözümlerini malzeme, ağırlık, rijitlik ve seri üretim gereksinimine göre konumlandırıyoruz.",
       "carbon": {
         "name": "Karbon Fiber",
-        "description": "Yüksek rijitlik, düşük ağırlık ve premium yüzey beklentisi olan muhafaza, panel ve OEM parçalarda tercih edilen performans odaklı yapıdır.",
+        "description": "Malzeme ve laminat yapısı; yük, ortam ve ürün doğrulama gereksinimlerine göre değerlendirilir.",
         "specs": {
           "tensile": {
             "label": "Çekme Mukavemeti",
-            "value": "600–1500 MPa"
+            "value": "Projeye göre"
           },
           "density": {
             "label": "Yoğunluk",
-            "value": "1,5–1,6 g/cm³"
+            "value": "Projeye göre"
           },
           "modulus": {
             "label": "Elastisite Modülü",
-            "value": "70–120 GPa"
+            "value": "Projeye göre"
           },
           "thermal": {
             "label": "Termal Kararlılık",
-            "value": "Yüksek"
+            "value": "Projeye göre"
           }
         }
       },
       "frp": {
         "name": "Cam Elyaf / CTP",
-        "description": "Kimyasal dayanım, saha ömrü ve maliyet dengesi arayan tank, panel, gövde ve dış ortam uygulamaları için çok yönlü kompozit altyapı.",
+        "description": "Malzeme ve laminat yapısı; yük, ortam ve ürün doğrulama gereksinimlerine göre değerlendirilir.",
         "specs": {
           "tensile": {
             "label": "Çekme Mukavemeti",
-            "value": "200–900 MPa"
+            "value": "Projeye göre"
           },
           "density": {
             "label": "Yoğunluk",
-            "value": "1,8–2,0 g/cm³"
+            "value": "Projeye göre"
           },
           "modulus": {
             "label": "Elastisite Modülü",
-            "value": "20–45 GPa"
+            "value": "Projeye göre"
           },
           "thermal": {
             "label": "Termal Kararlılık",
-            "value": "Orta-Yüksek"
+            "value": "Projeye göre"
           }
         }
       }
@@ -599,17 +599,17 @@
         "three": "Altyapı, enerji ve özel proje ekipleri"
       },
       "stats": {
-        "experience": "10+ Yıl",
-        "expLabel": "Sektör Deneyimi",
-        "projects": "250+ Proje",
-        "projectsLabel": "Başarıyla Teslim Edildi",
-        "capacity": "Dinamik Kapasite",
-        "capacityLabel": "Üretim Gücü"
+        "experience": "CTP",
+        "expLabel": "Kompozit çözümler",
+        "projects": "Proje",
+        "projectsLabel": "Çizime göre kapsam",
+        "capacity": "Planlama",
+        "capacityLabel": "Teklif sırasında teyit"
       },
       "certifications": {
         "title": "Kalite ve Standartlar",
         "items": {
-          "one": "ISO 9001:2015 Kalite Yönetimi",
+          "one": "Ürün özelinde kalite gereksinimleri",
           "two": "Teknik Uyum ve Toleranslar",
           "three": "Malzeme ve Süreç Takibi",
           "four": "B2B Proje Disiplini"

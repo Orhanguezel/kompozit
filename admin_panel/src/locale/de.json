@@ -935,6 +935,7 @@
         "users": "Benutzer",
         "reviews": "Bewertungen",
         "newsletter": "Newsletter",
+        "navigation": "Menü & Footer",
         "menu_items": "Menüpunkte",
         "sliders": "Slider",
         "footer_sections": "Footer-Bereiche",
@@ -967,7 +968,18 @@
         "kompozit_blog_comments": "Blog-Kommentare",
         "kompozit_corporate": "Unternehmensseiten",
         "kompozit_legal": "Rechtsseiten",
-        "kompozit_settings": "Komposit-Site-Einstellungen"
+        "kompozit_settings": "Komposit-Site-Einstellungen",
+        "marketing_center": "Marketing & Conversion",
+        "analytics": "Analysen",
+        "ga4": "Google Analytics (GA4)",
+        "search_console": "Search Console",
+        "google_ads": "Google Ads",
+        "social": "Soziale Medien",
+        "facebook": "Facebook",
+        "instagram": "Instagram",
+        "linkedin": "LinkedIn",
+        "x": "X (Twitter)",
+        "integrations": "Gmail-Integration"
       },
       "stats": {
         "deliveredOrders": "Gelieferte Bestellungen",

@@ -1,3 +1,4 @@
+import { installLeadTracking } from '../../../../packages/shared-ui/public/lib/lead-tracking';
 import axiosLib from 'axios';
 import { API_BASE_URL } from './utils';
 
@@ -29,5 +30,7 @@ api.interceptors.response.use(
     return Promise.reject(new Error(message));
   },
 );
+
+installLeadTracking(api);
 
 export default api;

@@ -45,13 +45,13 @@ export function MediaOverlayCard({
       <div className="absolute inset-0 bg-black/38 transition-colors duration-700 group-hover:bg-black/48" />
 
       <div className="absolute inset-0 flex items-center p-6 sm:p-8">
-        <div className="max-w-[92%] border-l-2 border-[var(--color-gold)] bg-[#050505]/92 px-5 py-4 shadow-[0_22px_70px_rgba(0,0,0,0.62)] ring-1 ring-white/10 backdrop-blur-md transition-colors duration-500 group-hover:bg-[#050505]/96">
+        <div className="max-w-[92%] border-l-2 border-[var(--color-gold)] bg-[color-mix(in_srgb,var(--color-media-overlay)_92%,transparent)] px-5 py-4 shadow-[0_22px_70px_rgba(0,0,0,0.62)] ring-1 ring-white/10 backdrop-blur-md transition-colors duration-500 group-hover:bg-[color-mix(in_srgb,var(--color-media-overlay)_96%,transparent)]">
           {meta ? (
             <div className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-gold)]">
               {meta}
             </div>
           ) : null}
-          <h3 className="font-[var(--font-display)] text-[1.6rem] font-normal uppercase leading-tight tracking-[0.08em] text-[#fffaf0] drop-shadow-[0_2px_14px_rgba(0,0,0,1)] sm:text-[2rem]">
+          <h3 className="font-[var(--font-display)] text-[1.6rem] font-normal uppercase leading-tight tracking-[0.08em] text-[var(--color-on-media)] drop-shadow-[0_2px_14px_rgba(0,0,0,1)] sm:text-[2rem]">
             {title}
           </h3>
           <div className="mt-3 grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100">

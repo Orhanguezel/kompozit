@@ -1,5 +1,7 @@
+import { ConsentPreferences } from '../../../../../packages/shared-ui/public/components/analytics/ConsentGate';
+import { APP_NAME } from '@/lib/brand-name';
 import Link from 'next/link';
-import Image from 'next/image';
+import { BrandLogo } from './BrandLogo';
 import { useTranslations } from 'next-intl';
 import { localizedPath } from '@/seo/helpers';
 
@@ -70,10 +72,7 @@ export function Footer({
   const hours = contact.working_hours?.trim() || contact.hours?.trim();
   const companyName = contact.companyName?.trim() || contact.company_name?.trim();
   const darkLogoSrc = logo?.dark || logo?.default || logo?.light;
-  const lightLogoSrc = logo?.light || logo?.default || logo?.dark;
-  const logoSrc = darkLogoSrc;
-  const hasBothLogos = Boolean(logo?.dark && logo?.light && logo.dark !== logo.light);
-  const logoAlt = logo?.alt || 'MOE Kompozit';
+  const logoAlt = logo?.alt || APP_NAME;
 
   const footerDesc = String(footerContent?.description || '').trim();
   const footerRights = String(footerContent?.rights || '').trim();
@@ -106,29 +105,14 @@ export function Footer({
           {/* Brand + Contact Column */}
           <div className="space-y-8 lg:pr-8">
             {/* Logo */}
-            {darkLogoSrc ? (
+            {darkLogoSrc && logo ? (
               <Link
                 href={localizedPath(locale, '/')}
                 title={`${logoAlt} ana sayfa`}
                 aria-label={`${logoAlt} ana sayfa`}
-                className="inline-block relative transition-transform duration-300 hover:scale-105"
+                className="inline-block relative h-14 transition-transform duration-300 hover:scale-105"
               >
-                <Image
-                  src={darkLogoSrc}
-                  alt={logoAlt}
-                  width={220}
-                  height={66}
-                  className={`h-14 w-auto object-contain${hasBothLogos ? ' logo-dark-mode' : ''}`}
-                />
-                {hasBothLogos && lightLogoSrc && (
-                  <Image
-                    src={lightLogoSrc}
-                    alt={logoAlt}
-                    width={220}
-                    height={66}
-                    className="logo-light-mode absolute inset-0 h-14 w-auto object-contain"
-                  />
-                )}
+                <BrandLogo logo={logo} />
               </Link>
             ) : null}
 
@@ -222,11 +206,12 @@ export function Footer({
         <div className="footer-bottom-cc pt-10 pb-6">
           <div className="space-y-2">
             <p className="text-[10px] font-medium uppercase tracking-[2px] text-(--silver)/70">
-              &copy; {year} MOE Kompozit. {footerRights || t('rights')}
+              &copy; {year} {logoAlt}. {footerRights || t('rights')}
             </p>
           </div>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-end gap-x-8 gap-y-4">
+            <ConsentPreferences locale={locale} />
             <Link
               href={localizedPath(locale, '/legal/privacy')}
               title={`${privacyLabel || t('privacy')} sayfasına git`}

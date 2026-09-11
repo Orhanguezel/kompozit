@@ -199,7 +199,7 @@ type MaterialSpec = { label: string; value: string };
 type MaterialItem = { id: string; name: string; description: string; specs: Record<string, MaterialSpec> };
 type MaterialsForm = { sectionLabel: string; title: string; subtitle: string; items: MaterialItem[] };
 
-const EMPTY_MATERIALS: MaterialsForm = {
+const EMPTY_MATERIALS_TR: MaterialsForm = {
   sectionLabel: "Malzeme Mühendisliği",
   title: "İleri Seviye Kompozit Yapılar",
   subtitle: "Projeniz için en uygun malzeme seçimini uzman kadromuzla birlikte yapıyoruz.",
@@ -229,14 +229,44 @@ const EMPTY_MATERIALS: MaterialsForm = {
   ],
 };
 
-function toMaterialsForm(v: unknown): MaterialsForm {
-  if (!v || typeof v !== "object") return EMPTY_MATERIALS;
+const EMPTY_MATERIALS_EN: MaterialsForm = {
+  sectionLabel: "Material Architecture",
+  title: "Choose the Right Laminate for Your Application",
+  subtitle: "We position carbon fiber and GRP composites by weight, stiffness, chemical resistance and production scalability.",
+  items: [
+    {
+      id: "carbon",
+      name: "Carbon Fiber",
+      description: "A performance-oriented structure for parts requiring high stiffness, low weight and premium surface quality.",
+      specs: {
+        tensile: { label: "Tensile Strength", value: "600–1500 MPa" },
+        density: { label: "Density", value: "1.5–1.6 g/cm³" },
+        modulus: { label: "Elastic Modulus", value: "70–120 GPa" },
+        thermal: { label: "Thermal Stability", value: "High" },
+      },
+    },
+    {
+      id: "frp",
+      name: "Fiberglass / GRP",
+      description: "A versatile platform balancing chemical resistance, service life and cost for industrial applications.",
+      specs: {
+        tensile: { label: "Tensile Strength", value: "200–900 MPa" },
+        density: { label: "Density", value: "1.8–2.0 g/cm³" },
+        modulus: { label: "Elastic Modulus", value: "20–45 GPa" },
+        thermal: { label: "Thermal Stability", value: "Medium-High" },
+      },
+    },
+  ],
+};
+
+function toMaterialsForm(v: unknown, fallback: MaterialsForm): MaterialsForm {
+  if (!v || typeof v !== "object") return fallback;
   const o = v as Record<string, any>;
   return {
-    sectionLabel: String(o.sectionLabel || EMPTY_MATERIALS.sectionLabel),
-    title: String(o.title || EMPTY_MATERIALS.title),
-    subtitle: String(o.subtitle || EMPTY_MATERIALS.subtitle),
-    items: Array.isArray(o.items) && o.items.length > 0 ? o.items : EMPTY_MATERIALS.items,
+    sectionLabel: String(o.sectionLabel || fallback.sectionLabel),
+    title: String(o.title || fallback.title),
+    subtitle: String(o.subtitle || fallback.subtitle),
+    items: Array.isArray(o.items) && o.items.length > 0 ? o.items : fallback.items,
   };
 }
 
@@ -245,7 +275,7 @@ function toMaterialsForm(v: unknown): MaterialsForm {
 type IndustryItem = { id: string; title: string; description: string };
 type IndustriesForm = { sectionLabel: string; title: string; subtitle: string; items: IndustryItem[] };
 
-const EMPTY_INDUSTRIES: IndustriesForm = {
+const EMPTY_INDUSTRIES_TR: IndustriesForm = {
   sectionLabel: "Endüstriyel Uygulamalar",
   title: "Farklı Sektörler İçin Çözümler",
   subtitle: "Geniş uygulama yelpazesi ile tüm sektörlere özel kompozit çözümleri üretiyoruz.",
@@ -258,14 +288,27 @@ const EMPTY_INDUSTRIES: IndustriesForm = {
   ],
 };
 
-function toIndustriesForm(v: unknown): IndustriesForm {
-  if (!v || typeof v !== "object") return EMPTY_INDUSTRIES;
+const EMPTY_INDUSTRIES_EN: IndustriesForm = {
+  sectionLabel: "Industrial Applications",
+  title: "Solutions for Diverse Industries",
+  subtitle: "We integrate the advantages of composite technology into sector-specific requirements.",
+  items: [
+    { id: "defense", title: "Defense", description: "High-strength protective panels and lightweight structural components." },
+    { id: "energy", title: "Energy", description: "Corrosion-resistant parts for wind and solar energy systems." },
+    { id: "landscaping", title: "Urban & Landscaping", description: "Modern urban furniture and durable landscaping elements." },
+    { id: "storage", title: "Storage", description: "Chemical-resistant tanks and enclosure systems." },
+    { id: "custom", title: "Custom Projects", description: "Tailored design and specialized production support." },
+  ],
+};
+
+function toIndustriesForm(v: unknown, fallback: IndustriesForm): IndustriesForm {
+  if (!v || typeof v !== "object") return fallback;
   const o = v as Record<string, any>;
   return {
-    sectionLabel: String(o.sectionLabel || EMPTY_INDUSTRIES.sectionLabel),
-    title: String(o.title || EMPTY_INDUSTRIES.title),
-    subtitle: String(o.subtitle || EMPTY_INDUSTRIES.subtitle),
-    items: Array.isArray(o.items) && o.items.length > 0 ? o.items : EMPTY_INDUSTRIES.items,
+    sectionLabel: String(o.sectionLabel || fallback.sectionLabel),
+    title: String(o.title || fallback.title),
+    subtitle: String(o.subtitle || fallback.subtitle),
+    items: Array.isArray(o.items) && o.items.length > 0 ? o.items : fallback.items,
   };
 }
 
@@ -363,6 +406,8 @@ function Section({ title, description, children }: { title: string; description?
 export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settingPrefix = "" }) => {
   const t = useAdminT("admin.siteSettings.homeSettings");
   const prefix = settingPrefix;
+  const materialsFallback = locale.startsWith("en") ? EMPTY_MATERIALS_EN : EMPTY_MATERIALS_TR;
+  const industriesFallback = locale.startsWith("en") ? EMPTY_INDUSTRIES_EN : EMPTY_INDUSTRIES_TR;
 
   // -- About --
   const aboutQ = useGetSiteSettingAdminByKeyQuery(
@@ -453,24 +498,24 @@ export const HomeSettingsTab: React.FC<HomeSettingsTabProps> = ({ locale, settin
     { key: `${prefix}home.materials`, locale },
     { refetchOnMountOrArgChange: true },
   );
-  const [materials, setMaterials] = React.useState<MaterialsForm>(EMPTY_MATERIALS);
+  const [materials, setMaterials] = React.useState<MaterialsForm>(materialsFallback);
   React.useEffect(() => {
     if (!materialsQ.isLoading && !materialsQ.isFetching) {
-      setMaterials(toMaterialsForm(parseSettingValue(materialsQ.data)));
+      setMaterials(toMaterialsForm(parseSettingValue(materialsQ.data), materialsFallback));
     }
-  }, [materialsQ.data, materialsQ.isLoading, materialsQ.isFetching]);
+  }, [materialsQ.data, materialsQ.isLoading, materialsQ.isFetching, materialsFallback]);
 
   // -- Industries --
   const industriesQ = useGetSiteSettingAdminByKeyQuery(
     { key: `${prefix}home.industries`, locale },
     { refetchOnMountOrArgChange: true },
   );
-  const [industries, setIndustries] = React.useState<IndustriesForm>(EMPTY_INDUSTRIES);
+  const [industries, setIndustries] = React.useState<IndustriesForm>(industriesFallback);
   React.useEffect(() => {
     if (!industriesQ.isLoading && !industriesQ.isFetching) {
-      setIndustries(toIndustriesForm(parseSettingValue(industriesQ.data)));
+      setIndustries(toIndustriesForm(parseSettingValue(industriesQ.data), industriesFallback));
     }
-  }, [industriesQ.data, industriesQ.isLoading, industriesQ.isFetching]);
+  }, [industriesQ.data, industriesQ.isLoading, industriesQ.isFetching, industriesFallback]);
 
   const [updateSetting, { isLoading: isSaving }] = useUpdateSiteSettingAdminMutation();
 

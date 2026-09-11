@@ -12,6 +12,8 @@ interface CategoryLike {
   name?: unknown;
   title?: unknown;
   slug?: unknown;
+  image_url?: unknown;
+  description?: unknown;
 }
 
 export interface FooterSectionLike {
@@ -50,9 +52,11 @@ export function ensureMenuItems(
       return {
         title,
         url: `/products?category=${encodeURIComponent(slug)}`,
+        image_url: String(category.image_url ?? ''),
+        description: String(category.description ?? ''),
       };
     })
-    .filter((item): item is MenuItemLike => Boolean(item));
+    .filter((item) => item !== null);
 
   if (categoryChildren.length === 0) return baseItems;
 

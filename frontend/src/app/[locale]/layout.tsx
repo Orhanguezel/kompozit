@@ -1,3 +1,4 @@
+import { APP_NAME, resolveBrandName } from '@/lib/brand-name';
 import 'server-only';
 
 import type { CSSProperties, ReactNode } from 'react';
@@ -7,7 +8,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 
 import { getLocaleSettings } from '@/i18n/locale-settings';
 import {
-  fetchActiveProductCategorySlugs,
+  fetchActiveProductCategoryPreviews,
   fetchSetting,
   fetchMenuItems,
   fetchFooterSections,
@@ -16,9 +17,11 @@ import {
 import { getTranslations } from 'next-intl/server';
 import { siteUrlBase, asStr, asObj, localeAlternates, localizedUrl } from '@/seo';
 import { resolvePublicAssetUrl } from '@/lib/utils';
+import { resolveBrandIcon, resolveBrandLogo } from '@/lib/brand-assets';
 import { ensureFooterSections, ensureMenuItems } from '@/lib/navigation-fallback';
 import { buildFooterSocialNavFromSetting } from '@/lib/footer-social';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
+import { resolvePopulatedProductCategories } from '@/lib/product-categories';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -84,7 +87,7 @@ export async function generateMetadata({
     ? openGraphValue.images.map((item) => asStr(item).trim()).filter(Boolean)
     : [];
 
-  const siteName = pickFirstString(val.site_name, logoValue.logo_alt, 'MOE Kompozit');
+  const siteName = pickFirstString(val.site_name, logoValue.logo_alt, APP_NAME);
   const title = pickFirstString(metaVal.title, val.site_title, val.title_default, t('defaultTitle'));
   const description = pickFirstString(
     metaVal.description,
@@ -93,14 +96,12 @@ export async function generateMetadata({
     t('defaultDescription'),
   );
   const titleTemplate = pickFirstString(val.title_template) || `%s | ${siteName}`;
-  const faviconUrl =
-    resolvePublicAssetUrl(
-      pickFirstString(logoValue.favicon_url, logoValue.favicon, logoValue.icon_url),
-    ) ?? undefined;
-  const appleTouchIconUrl =
-    resolvePublicAssetUrl(
-      pickFirstString(logoValue.apple_touch_icon_url, logoValue.apple_touch_icon),
-    ) ?? undefined;
+  const faviconUrl = resolveBrandIcon(
+    pickFirstString(logoValue.favicon_url, logoValue.favicon, logoValue.icon_url), 'favicon',
+  );
+  const appleTouchIconUrl = resolveBrandIcon(
+    pickFirstString(logoValue.apple_touch_icon_url, logoValue.apple_touch_icon), 'apple',
+  );
   const ogImageRaw = pickFirstString(ogImages[0], val.og_image, ogValue.url, ogValue.image_url);
   const ogImage = ogImageRaw
     ? (resolvePublicAssetUrl(ogImageRaw) ?? ogImageRaw)
@@ -117,16 +118,10 @@ export async function generateMetadata({
       canonical: localizedUrl(locale, '/'),
       languages: localeAlternates('/'),
     },
+    manifest: '/manifest.webmanifest',
     icons: {
-      ...(faviconUrl
-        ? {
-            icon: [
-              { url: faviconUrl, sizes: '16x16' },
-              { url: faviconUrl, sizes: '32x32' },
-            ],
-          }
-        : {}),
-      ...(appleTouchIconUrl ? { apple: appleTouchIconUrl } : {}),
+      icon: [{ url: resolvePublicAssetUrl(faviconUrl) || faviconUrl }],
+      apple: [{ url: resolvePublicAssetUrl(appleTouchIconUrl) || appleTouchIconUrl, sizes: '180x180' }],
     },
     openGraph: {
       type: pickFirstString(openGraphValue.type, val.og_type, 'website') as 'website',
@@ -173,7 +168,7 @@ export default async function LocaleLayout({
     companyProfileSetting,
     contactInfo,
     productCategories,
-    activeProductCategorySlugs,
+    activeProductCategoryPreviews,
     footerContentSetting,
   ] =
     await Promise.all([
@@ -188,7 +183,7 @@ export default async function LocaleLayout({
       fetchSetting('company_profile', locale),
       fetchParsedContactInfo(locale),
       fetchProductCategories(locale),
-      fetchActiveProductCategorySlugs(locale),
+      fetchActiveProductCategoryPreviews(locale),
       fetchSetting('footer_content', locale),
     ]);
 
@@ -206,17 +201,14 @@ export default async function LocaleLayout({
   const defaultLogoRaw = pickFirstString(pickSettingUrl(siteLogoSetting), logoValue.logo_url, logoValue.url);
   const darkLogoRaw = pickFirstString(pickSettingUrl(siteLogoDarkSetting), logoValue.logo_dark_url, defaultLogoRaw);
   const lightLogoRaw = pickFirstString(pickSettingUrl(siteLogoLightSetting), logoValue.logo_light_url, defaultLogoRaw);
-  const logoAlt = pickFirstString(logoValue.alt, logoValue.logo_alt, branding.brand_name, 'MOE Kompozit');
+  const logoAlt = pickFirstString(logoValue.alt, logoValue.logo_alt, branding.brand_name, APP_NAME);
   const logoConfigs = {
-    default: (resolvePublicAssetUrl(defaultLogoRaw) ?? defaultLogoRaw),
-    dark: (resolvePublicAssetUrl(darkLogoRaw) ?? darkLogoRaw),
-    light: (resolvePublicAssetUrl(lightLogoRaw) ?? lightLogoRaw),
+    default: resolveBrandLogo(resolvePublicAssetUrl(defaultLogoRaw) ?? defaultLogoRaw, locale, 'light'),
+    dark: resolveBrandLogo(resolvePublicAssetUrl(darkLogoRaw) ?? darkLogoRaw, locale, 'dark'),
+    light: resolveBrandLogo(resolvePublicAssetUrl(lightLogoRaw) ?? lightLogoRaw, locale, 'light'),
     alt: logoAlt,
   };
-  const activeProductCategorySlugSet = new Set(activeProductCategorySlugs);
-  const populatedProductCategories = productCategories.filter((category) => (
-    activeProductCategorySlugSet.has(String(category.slug ?? '').trim())
-  ));
+  const populatedProductCategories = resolvePopulatedProductCategories(productCategories, activeProductCategoryPreviews);
   const stableMenuItems = ensureMenuItems(menuItems, locale, navT, populatedProductCategories);
   const stableFooterSections = ensureFooterSections(footerSections, locale, navT, footerT);
   const footerSocialNav = buildFooterSocialNavFromSetting(readSettingValue(socialsSetting));
@@ -236,7 +228,7 @@ export default async function LocaleLayout({
   const orgGraph = jsonld.graph([
     jsonld.org({
       '@id': `${siteUrl}#/schema/organization`,
-      name: 'MOE Kompozit',
+      name: resolveBrandName(branding.brand_name, companyProfile.company_name, logoAlt),
       url: siteUrl,
       logo: orgLogoUrl,
       description:
@@ -254,7 +246,7 @@ export default async function LocaleLayout({
       ],
     }),
     jsonld.website({
-      name: 'MOE Kompozit',
+      name: resolveBrandName(branding.brand_name, companyProfile.company_name, logoAlt),
       url: siteUrl,
       description: 'Endustriyel kompozit uretim ve B2B proje cozumleri.',
       publisher: { '@id': `${siteUrl}#/schema/organization` },

@@ -1,6 +1,9 @@
 'use client';
 
+import { LeadEvents } from '../../../../../packages/shared-ui/public/components/analytics/LeadEvents';
 import dynamic from 'next/dynamic';
+import { useLocale } from 'next-intl';
+import { ConsentGate } from '../../../../../packages/shared-ui/public/components/analytics/ConsentGate';
 
 const ScrollToTop = dynamic(
   () => import('@/components/layout/ScrollToTop').then((m) => m.ScrollToTop),
@@ -33,12 +36,15 @@ const WhatsAppButton = dynamic(
 );
 
 export function ClientShell({ whatsappPhone }: { whatsappPhone?: string }) {
+  const locale = useLocale();
   return (
     <>
       <ScrollToTop />
       <WebVitals />
-      <GoogleAnalytics />
-      <GoogleTagManager />
+      <ConsentGate locale={locale}>
+        <LeadEvents measurementId={process.env.NEXT_PUBLIC_GA_ID || ""} locale={locale} />
+        {process.env.NEXT_PUBLIC_ANALYTICS_PROVIDER === 'gtm' || !process.env.NEXT_PUBLIC_GA_ID ? <GoogleTagManager /> : <GoogleAnalytics />}
+      </ConsentGate>
       <WhatsAppButton phone={whatsappPhone} />
     </>
   );

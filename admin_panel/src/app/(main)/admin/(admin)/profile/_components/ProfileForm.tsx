@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-import { Camera, Loader2, Save } from "lucide-react";
+import { Camera, Loader2, Save, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
 
 import { useAdminT } from "@/app/(main)/admin/_components/common/useAdminT";
@@ -49,6 +49,18 @@ export function ProfileForm() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    if (!file.type.startsWith("image/")) {
+      toast.error(t("admin.profile.avatarUploadFailed"));
+      e.target.value = "";
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(t("admin.profile.avatarTooLarge"));
+      e.target.value = "";
+      return;
+    }
+
     try {
       const asset = await createAsset({
         file,
@@ -58,10 +70,33 @@ export function ProfileForm() {
 
       if (asset.url) {
         setAvatarUrl(asset.url);
+        await upsertProfile({
+          profile: {
+            full_name: fullName.trim() || profileData?.full_name || undefined,
+            avatar_url: asset.url,
+          },
+        }).unwrap();
         toast.success(t("admin.profile.avatarUploaded"));
       }
     } catch (_err) {
       toast.error(t("admin.profile.avatarUploadFailed"));
+    } finally {
+      e.target.value = "";
+    }
+  };
+
+  const handleRemoveAvatar = async () => {
+    try {
+      await upsertProfile({
+        profile: {
+          full_name: fullName.trim() || profileData?.full_name || undefined,
+          avatar_url: "",
+        },
+      }).unwrap();
+      setAvatarUrl("");
+      toast.success(t("admin.profile.avatarRemoved"));
+    } catch {
+      toast.error(t("admin.profile.updateFailed"));
     }
   };
 
@@ -70,12 +105,14 @@ export function ProfileForm() {
 
     try {
       // 1. Update Profile (Full Name, Avatar)
-      await upsertProfile({
+      const updatedProfile = await upsertProfile({
         profile: {
-          full_name: fullName,
+          full_name: fullName.trim(),
           avatar_url: avatarUrl,
         },
       }).unwrap();
+      setFullName(updatedProfile.full_name || "");
+      setAvatarUrl(updatedProfile.avatar_url || "");
 
       // 2. Update Auth User (Email)
       if (email !== statusData?.user?.email) {
@@ -124,6 +161,28 @@ export function ProfileForm() {
             <div className="flex-1 space-y-1 text-center sm:text-left">
               <h4 className="font-semibold">{fullName || email || t("admin.profile.defaultName")}</h4>
               <p className="text-muted-foreground text-sm">{avatarUrl ? t("admin.profile.avatarSet") : t("admin.profile.noAvatar")}</p>
+              <div className="flex flex-wrap justify-center gap-2 pt-2 sm:justify-start">
+                <Button type="button" variant="outline" size="sm" asChild disabled={isAnyLoading}>
+                  <label htmlFor="avatar-upload" className="cursor-pointer">
+                    <Upload className="mr-2 size-4" />
+                    {t("admin.profile.uploadAvatar")}
+                  </label>
+                </Button>
+                {avatarUrl && (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleRemoveAvatar}
+                    disabled={isAnyLoading}
+                    className="text-destructive hover:text-destructive"
+                  >
+                    <Trash2 className="mr-2 size-4" />
+                    {t("admin.profile.removeAvatar")}
+                  </Button>
+                )}
+              </div>
+              <p className="text-xs text-muted-foreground">{t("admin.profile.avatarHelp")}</p>
             </div>
           </div>
 

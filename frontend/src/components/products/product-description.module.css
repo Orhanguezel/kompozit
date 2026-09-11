@@ -1,0 +1,32 @@
+.layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+.section { min-width: 0; border-bottom: 1px solid var(--color-border); padding-bottom: 32px; }
+.wide { grid-column: 1 / -1; }
+.content h2 { margin-top: 0; font-size: clamp(24px, 2.2vw, 32px); line-height: 1.25; }
+.content h3 { font-size: 18px; margin-top: 24px; }
+.content p, .answer p { max-width: 85ch; font-size: 16px; line-height: 1.8; }
+.content hr { display: none; }
+.content ul, .content ol { grid-template-columns: 1fr; gap: 8px; }
+.content li { padding-block: 10px; font-size: 15px; line-height: 1.6; }
+.content li::before { top: 19px; }
+.content ol { counter-reset: steps; }
+.content ol > li { counter-increment: steps; padding-left: 42px; }
+.content ol > li::before { content: counter(steps, decimal-leading-zero); width: auto; height: auto; top: 10px; background: none; color: var(--color-brand); font-size: 12px; font-weight: 700; }
+.faq { display: grid; grid-template-columns: minmax(0, 1fr); }
+.question { border-top: 1px solid var(--color-border); }
+.question:last-child { border-bottom: 1px solid var(--color-border); }
+.question summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; cursor: pointer; list-style: none; color: var(--color-text-primary); font-size: 17px; font-weight: 600; line-height: 1.5; }
+.question summary::-webkit-details-marker { display: none; }
+.question summary:hover { color: var(--color-brand); }
+.question summary:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 4px; }
+.indicator { position: relative; flex: 0 0 20px; height: 20px; color: var(--color-brand); }
+.indicator::before, .indicator::after { content: ''; position: absolute; inset: 9px 3px; height: 2px; background: currentColor; }
+.indicator::after { transform: rotate(90deg); }
+.question[open] .indicator::after { transform: none; }
+.answer { padding: 0 44px 16px 0; }
+@media (min-width: 1024px) {
+  .layout { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 64px; row-gap: 48px; }
+}
+@media (max-width: 639px) {
+  .question summary { font-size: 16px; gap: 16px; }
+  .answer { padding-right: 0; }
+}

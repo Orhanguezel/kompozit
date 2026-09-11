@@ -1,3 +1,4 @@
+import { withRouteMetadata, requireLocalizedSlug } from '@/seo/inventory';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -31,12 +32,13 @@ function asText(v: unknown): string {
   return String(v);
 }
 
-export async function generateMetadata({
+async function buildMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('solutions', slug, locale);
   const page = await fetchSolutionBySlug(slug, locale);
   if (!page) return {};
   const title = asText(page.meta_title) || asText(page.title);
@@ -61,6 +63,7 @@ export default async function SolutionDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('solutions', slug, locale);
   const t = await getTranslations({ locale });
   const tSol = await getTranslations({ locale, namespace: 'solutions' });
   const page = await fetchSolutionBySlug(slug, locale);
@@ -196,4 +199,9 @@ export default async function SolutionDetailPage({
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
+  return withRouteMetadata(await buildMetadata({ params }), locale, `/solutions/${slug}`);
 }

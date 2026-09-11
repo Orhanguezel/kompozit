@@ -1,3 +1,5 @@
+import { APP_NAME } from '@/lib/brand-name';
+import { withRouteMetadata, requireLocalizedSlug } from '@/seo/inventory';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -13,7 +15,7 @@ import { ProductGallery } from '@/components/products/ProductGallery';
 import { fetchRelatedContent } from '@/lib/related-content';
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
-import { RichContentDisplay } from '@/components/ui/RichContentDisplay';
+import { ProductDescription } from '@/components/products/ProductDescription';
 import { RelatedLinks } from '@/components/seo/RelatedLinks';
 import { buildMediaAlt } from '@/lib/media-seo';
 import { Reveal } from '@/components/motion/Reveal';
@@ -33,12 +35,13 @@ async function fetchProduct(slug: string, locale: string) {
   }
 }
 
-export async function generateMetadata({
+async function buildMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('products', slug, locale);
   const product = await fetchProduct(slug, locale);
   if (!product) return {};
   const ogImg =
@@ -69,6 +72,7 @@ export default async function ProductDetailPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('products', slug, locale);
   const t = await getTranslations({ locale });
   const tProd = await getTranslations({ locale, namespace: 'products' });
   const product = await fetchProduct(slug, locale);
@@ -115,8 +119,8 @@ export default async function ProductDetailPage({
       description: product.description,
       image: heroImage,
       url: localizedUrl(locale, `/products/${slug}`),
-      brand: 'MOE Kompozit',
-      manufacturer: 'MOE Kompozit',
+      brand: APP_NAME,
+      manufacturer: APP_NAME,
       category: product.category?.name || (localeKey === 'en' ? 'Composite parts' : 'Kompozit parcalar'),
       sku: product.product_code || product.sku,
     }),
@@ -187,35 +191,20 @@ export default async function ProductDetailPage({
                 )}
               </header>
 
-              <div className="relative border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-10">
-                <h3 className="mb-6 text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-gold)]">
-                  {tProd('technicalScope')}
-                </h3>
-                {product.description && (
-                  <RichContentDisplay
-                    html={product.description}
-                    className="prose prose-lg max-w-none text-(--color-text-secondary) prose-p:text-(--color-text-secondary) prose-headings:font-(--font-display) prose-headings:tracking-tight prose-headings:text-(--color-text-primary) prose-strong:text-(--color-text-primary) prose-li:text-(--color-text-secondary) prose-a:text-(--color-gold) hover:prose-a:underline"
+              {product.specs_json && (
+                <div className="border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-10">
+                  <TechnicalSpecs
+                    title={tProd('specs')}
+                    specs={
+                      typeof product.specs_json === 'string'
+                        ? JSON.parse(product.specs_json)
+                        : product.specs_json
+                    }
                   />
-                )}
-              </div>
+                </div>
+              )}
 
-              {/* Technical Specifications Section */}
-              <div className="border-t border-[color-mix(in_srgb,var(--color-gold)_10%,transparent)] pt-10">
-                <TechnicalSpecs
-                  specs={
-                    product.specs_json
-                      ? (typeof product.specs_json === 'string' ? JSON.parse(product.specs_json) : product.specs_json)
-                      : [
-                        { label: 'Material Base', value: (product.tags?.[0] || 'Carbon/GRP Hybrid') },
-                        { label: 'Surface Finish', value: 'Technical Matte / Gloss Options' },
-                        { label: 'Process Origin', value: 'Precision Compression / Hand-lay' },
-                        { label: 'Production Fit', value: 'B2B Batch & High-Volume' }
-                      ]
-                  }
-                />
-              </div>
-
-              <div className="rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-secondary)_85%,transparent)] p-6 lg:flex lg:items-center lg:justify-between lg:gap-8">
+              <div className="rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_12%,transparent)] bg-[color-mix(in_srgb,var(--color-bg-secondary)_85%,transparent)] p-6">
                 <div className="max-w-xl space-y-2">
                   <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-[var(--color-gold)]">
                     {b2bContent.detailEyebrow}
@@ -229,7 +218,7 @@ export default async function ProductDetailPage({
                 </div>
                 <Link
                   href={`${localizedPath(locale, '/contact')}?product=${encodeURIComponent(product.title)}`}
-                  className="mt-5 inline-flex flex-shrink-0 items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_25%,transparent)] bg-[color-mix(in_srgb,var(--color-gold)_8%,transparent)] px-5 py-3 text-sm font-bold text-[var(--color-text-primary)] transition-all hover:border-[var(--color-gold)] hover:bg-[color-mix(in_srgb,var(--color-gold)_14%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] lg:mt-0"
+                  className="mt-5 inline-flex flex-shrink-0 items-center gap-2 rounded-sm border border-[color-mix(in_srgb,var(--color-gold)_25%,transparent)] bg-[color-mix(in_srgb,var(--color-gold)_8%,transparent)] px-5 py-3 text-sm font-bold text-[var(--color-text-primary)] transition-all hover:border-[var(--color-gold)] hover:bg-[color-mix(in_srgb,var(--color-gold)_14%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)]"
                 >
                   <MessagesSquare className="size-4 text-[var(--color-gold)]" />
                   {b2bContent.talkToEngineering}
@@ -254,6 +243,15 @@ export default async function ProductDetailPage({
               </div>
             </div>
           </div>
+
+          {product.description && (
+            <section className="mt-16 border-t border-(--color-border) pt-12 lg:mt-20" aria-labelledby="product-technical-scope">
+              <h2 id="product-technical-scope" className="mb-10 text-xs font-bold uppercase tracking-[0.25em] text-(--color-gold)">
+                {tProd('technicalScope')}
+              </h2>
+              <ProductDescription html={product.description} />
+            </section>
+          )}
 
           {/* B2B Trust Grid */}
           <div className="mt-24 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -312,4 +310,9 @@ export default async function ProductDetailPage({
       </div>
     </div>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
+  return withRouteMetadata(await buildMetadata({ params }), locale, `/products/${slug}`);
 }

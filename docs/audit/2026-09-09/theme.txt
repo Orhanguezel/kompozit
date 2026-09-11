@@ -1,0 +1,9 @@
+exit=1
+Theme token check failed:
+- src/app/api/og/route.tsx: raw hex color found
+- src/app/global-error.tsx: raw hex color found
+- src/components/patterns/MediaOverlayCard.tsx: raw hex color found
+- src/components/sections/ContactForm.tsx: raw hex color found
+- src/components/sections/GalleryShowcase.tsx: raw hex color found
+- src/components/sections/OfferForm.tsx: raw hex color found
+- src/styles/globals.css: missing surface-dark-link utility

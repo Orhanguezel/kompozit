@@ -1,7 +1,8 @@
+import { APP_NAME } from '@/lib/brand-name';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
-export const alt = 'MOE Kompozit';
+export const alt = APP_NAME;
 export const size = {
   width: 1200,
   height: 600,
@@ -35,7 +36,7 @@ export default function TwitterImage() {
           }}
         >
           <div style={{ display: 'flex', fontSize: 24, textTransform: 'uppercase', letterSpacing: 3, color: '#cbd5e1' }}>
-            MOE Kompozit
+            {APP_NAME}
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div style={{ display: 'flex', fontSize: 68, fontWeight: 700, lineHeight: 1.02, maxWidth: 900 }}>

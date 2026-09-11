@@ -1,6 +1,7 @@
 import type { NextConfig } from 'next';
 import path from 'node:path';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { BRAND_ASSET_ROOT } from './src/lib/brand-assets';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
@@ -14,6 +15,9 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
+      { source: '/icon', destination: `${BRAND_ASSET_ROOT}/icons/favicon-32x32.png`, permanent: false },
+      { source: '/apple-icon', destination: `${BRAND_ASSET_ROOT}/icons/apple-touch-icon.png`, permanent: false },
+      { source: '/blog/:slug', destination: '/tr/blog/:slug', permanent: true },
       { source: '/sitemap.xlm', destination: '/sitemap.xml', permanent: true },
       { source: '/', destination: '/tr', permanent: false },
     ];
@@ -28,6 +32,7 @@ const nextConfig: NextConfig = {
     ).replace(/\/api\/?$/, '');
 
     return [
+      { source: '/api/:path*', destination: `${backendBase}/api/:path*` },
       { source: '/uploads/:path*', destination: `${backendBase}/uploads/:path*` },
       { source: '/storage/:path*', destination: `${backendBase}/storage/:path*` },
     ];

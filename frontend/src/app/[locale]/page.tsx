@@ -29,6 +29,7 @@ import { getFallbackGalleries, getFallbackProducts } from '@/lib/content-fallbac
 import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { fetchHomePageContent } from '@/features/site-settings/home';
 import { buildMediaAlt } from '@/lib/media-seo';
+import heroStyles from '@/components/sections/home-hero.module.css';
 
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 const PRODUCT_PLACEHOLDER_SRC = '/media/product-placeholder.svg';
@@ -168,32 +169,25 @@ export default async function HomePage({
     switch (id) {
       case 'hero':
         return (
-          <section key="hero" className="hero">
-            <div className="hero-bg" />
-            <div className="gold-grid-bg absolute inset-0 z-[1]" />
-            <div className="container relative z-10 mx-auto px-8 text-center">
-              <Reveal>
-                <span className="hero-label">{heroApi?.badge ?? 'Foundational Engineering'}</span>
-              </Reveal>
-              <Reveal delay={200}>
+          <section key="hero" className={`hero ${heroStyles.hero}`}>
+            <div className={heroStyles.layout}>
+              <div className={heroStyles.copy}>
+                <span className={heroStyles.eyebrow}>{heroApi?.badge ?? 'Foundational Engineering'}</span>
                 <h1
+                  className={heroStyles.title}
                   dangerouslySetInnerHTML={{
                     __html: heroApi?.title ?? (t.raw('home.hero.title') as string),
                   }}
                 />
-              </Reveal>
-              <Reveal delay={400}>
-                <p className="hero-subtitle">{heroApi?.subtitle ?? t('home.hero.subtitle')}</p>
-              </Reveal>
-              <Reveal delay={600}>
-                <div className="mt-12 flex flex-col items-center justify-center gap-6 sm:flex-row sm:gap-8">
+                <p className={heroStyles.subtitle}>{heroApi?.subtitle ?? t('home.hero.subtitle')}</p>
+                <div className={heroStyles.actions}>
                   <Link
                     href={
                       heroApi?.primaryCtaHref
                         ? homeHref(locale, heroApi.primaryCtaHref)
                         : localizedPath(locale, '/products')
                     }
-                    className="hero-btn-primary shimmer-btn"
+                    className="hero-btn-primary shimmer-btn group"
                   >
                     {heroApi?.primaryCtaLabel ?? t('home.hero.cta')}
                     <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -209,11 +203,17 @@ export default async function HomePage({
                     {heroApi?.secondaryCtaLabel ?? t('home.hero.ctaSecondary')}
                   </Link>
                 </div>
-              </Reveal>
-            </div>
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
-              <div className="flex h-12 w-6 justify-center rounded-full border border-[var(--gold)]/30 backdrop-blur-sm">
-                <div className="mt-2 h-2 w-1 animate-bounce bg-[var(--gold)]" />
+              </div>
+              <div className={heroStyles.visual} aria-hidden="true">
+                <Image
+                  src="/brand/hero/composite-materials-2026-09-09.webp"
+                  alt=""
+                  fill
+                  priority
+                  fetchPriority="high"
+                  sizes="(max-width: 767px) calc(100vw - 48px), 50vw"
+                  className={heroStyles.image}
+                />
               </div>
             </div>
           </section>
@@ -292,7 +292,7 @@ export default async function HomePage({
                       <div className="absolute -left-8 -top-8 z-30 hidden lg:block">
                         <div className="border border-[var(--gold)]/30 bg-[var(--carbon)] p-8 shadow-2xl backdrop-blur-3xl">
                           <p className="font-display text-[2.5rem] leading-none text-[var(--gold)]">
-                            {t('home.stats.yoeNumber').split('+')[0]}+
+                            {t('home.stats.yoeNumber')}
                           </p>
                           <p className="mt-2 text-[0.65rem] font-bold uppercase tracking-[3px] text-[var(--silver)]">
                             {t('home.stats.yoeLabel')}

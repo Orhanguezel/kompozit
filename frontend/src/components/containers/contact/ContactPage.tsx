@@ -22,11 +22,12 @@ type ContactPageLabels = {
 
 type ContactPageProps = {
   locale: string;
+  preselectedProduct?: string;
   info: ParsedContactInfo;
   labels: ContactPageLabels;
 };
 
-export function ContactPage({ locale, info, labels }: ContactPageProps) {
+export function ContactPage({ locale, info, labels, preselectedProduct }: ContactPageProps) {
   return (
     <main className="relative bg-[var(--color-bg)] text-[var(--color-text-primary)]">
       <div className="gold-grid-bg absolute inset-0 z-0 opacity-10 dark:opacity-20" />
@@ -129,7 +130,7 @@ export function ContactPage({ locale, info, labels }: ContactPageProps) {
             </div>
 
             <Reveal delay={250}>
-              <ContactFormSection locale={locale} />
+              <ContactFormSection locale={locale} preselectedProduct={preselectedProduct} />
             </Reveal>
           </div>
 

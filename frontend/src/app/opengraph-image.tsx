@@ -1,7 +1,8 @@
+import { APP_NAME } from '@/lib/brand-name';
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'nodejs';
-export const alt = 'MOE Kompozit';
+export const alt = APP_NAME;
 export const size = {
   width: 1200,
   height: 630,
@@ -40,7 +41,7 @@ export default function OpenGraphImage() {
               color: '#cbd5e1',
             }}
           >
-            MOE Kompozit
+            {APP_NAME}
           </div>
           <div
             style={{

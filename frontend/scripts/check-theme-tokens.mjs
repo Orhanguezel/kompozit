@@ -6,6 +6,10 @@ const SRC_DIR = path.join(ROOT, 'src');
 const ALLOWED_HEX_FILE = path.join('src', 'styles', 'globals.css');
 const ALLOWED_HEX_FILES = new Set([
   ALLOWED_HEX_FILE,
+  // ImageResponse renders without the website stylesheet, like the OG/icon entries below.
+  path.join('src', 'app', 'api', 'og', 'route.tsx'),
+  // This replaces the failed root layout: its emergency palette must work without CSS.
+  path.join('src', 'app', 'global-error.tsx'),
   path.join('src', 'app', 'opengraph-image.tsx'),
   path.join('src', 'app', 'twitter-image.tsx'),
   path.join('src', 'app', 'icon.tsx'),
@@ -64,8 +68,9 @@ async function walk(dir) {
       if (!content.includes("html[data-theme-mode='dark']")) {
         problems.push(`${rel}: missing dark theme root selector`);
       }
-      if (!content.includes('.surface-dark-link')) {
-        problems.push(`${rel}: missing surface-dark-link utility`);
+      // Validate live semantic tokens; surface-dark-link has no consumers in this app.
+      for (const token of ['--color-media-overlay', '--color-on-media', '--color-on-gold', '--color-gold-gradient-end']) {
+        if (!content.includes(`${token}:`)) problems.push(`${rel}: missing ${token}`);
       }
     }
   }

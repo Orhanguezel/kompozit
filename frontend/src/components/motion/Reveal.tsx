@@ -18,7 +18,7 @@ export function Reveal({ children, className = '', delay = 0 }: RevealProps) {
 
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (media.matches) {
-      setVisible(true);
+      node.classList.add('reveal-visible');
       return;
     }
 

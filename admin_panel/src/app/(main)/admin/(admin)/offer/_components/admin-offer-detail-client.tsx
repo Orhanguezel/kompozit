@@ -9,7 +9,21 @@ import * as React from "react";
 
 import { useRouter } from "next/navigation";
 
-import { ArrowLeft, Code, ExternalLink, FileText, FormInput, Mail, Save } from "lucide-react";
+import {
+  ArrowLeft,
+  CalendarDays,
+  Check,
+  CircleDollarSign,
+  Code,
+  ExternalLink,
+  FileCheck2,
+  FileText,
+  FormInput,
+  Mail,
+  Save,
+  Send,
+  UserRound,
+} from "lucide-react";
 import { toast } from "sonner";
 
 import { AdminJsonEditor } from "@/app/(main)/admin/_components/common/AdminJsonEditor";
@@ -142,6 +156,30 @@ function parseDecimal(s: string): number | null {
 
 function fmt2(n: number | null): string {
   return n == null ? "" : n.toFixed(2);
+}
+
+function formatMoney(value: string, currency: string): string {
+  const amount = parseDecimal(value);
+  if (amount == null) return "—";
+  try {
+    return new Intl.NumberFormat("tr-TR", {
+      style: "currency",
+      currency: currency || "EUR",
+      maximumFractionDigits: 2,
+    }).format(amount);
+  } catch {
+    return `${amount.toLocaleString("tr-TR")} ${currency || "EUR"}`;
+  }
+}
+
+const OFFER_FLOW: OfferStatus[] = ["new", "in_review", "quoted", "sent", "accepted"];
+
+function statusTone(status: OfferStatus): string {
+  if (status === "accepted") return "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300";
+  if (status === "rejected" || status === "cancelled") return "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300";
+  if (status === "sent") return "border-blue-500/30 bg-blue-500/10 text-blue-700 dark:text-blue-300";
+  if (status === "quoted") return "border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300";
+  return "border-border bg-muted/60 text-foreground";
 }
 
 function mapDtoToForm(v: OfferView): FormState {
@@ -425,40 +463,172 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
   }
 
   return (
-    <div className="space-y-6 carbon-mesh min-h-screen pb-12">
+    <div className="min-h-screen space-y-6 pb-12">
       {/* HEADER */}
-      <Card className="premium-card overflow-hidden border-none">
-        <div className="gold-gradient h-1.5 w-full" />
-        <CardHeader className="py-4">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="space-y-1">
-              <CardTitle className="text-xl font-bold tracking-tight">
-                {isCreate ? t("detail.createTitle") : t("detail.editTitle")}
-              </CardTitle>
-              <CardDescription className="text-muted-foreground/80">{t("detail.subtitle")}</CardDescription>
+      <Card className="overflow-hidden border-border/70 bg-card shadow-sm">
+        <div className="h-1.5 w-full bg-gradient-to-r from-[#b88a2c] via-[#e0bd6b] to-[#8d651b]" />
+        <CardContent className="p-0">
+          <div className="flex flex-col gap-6 p-5 lg:p-7">
+            <div className="flex flex-wrap items-start justify-between gap-5">
+              <div className="flex min-w-0 items-start gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => router.push("/admin/offer")}
+                  className="mt-1 shrink-0 rounded-xl"
+                  aria-label={t("actions.backToList")}
+                >
+                  <ArrowLeft className="size-4" />
+                </Button>
+                <div className="min-w-0 space-y-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="text-xs font-bold uppercase tracking-[0.22em] text-[#b88a2c]">
+                      MOE Kompozit
+                    </span>
+                    {!isCreate && (
+                      <Badge variant="outline" className={statusTone(form.status)}>
+                        {t(`status.${form.status}`)}
+                      </Badge>
+                    )}
+                  </div>
+                  <div>
+                    <h1 className="truncate text-2xl font-bold tracking-tight lg:text-3xl">
+                      {isCreate ? t("detail.createTitle") : form.offer_no || t("detail.editTitle")}
+                    </h1>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {form.company_name || form.customer_name || t("detail.subtitle")}
+                      {form.subject ? ` · ${form.subject}` : ""}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {!isCreate && form.id && (
+                  <>
+                    <Button variant="outline" onClick={onGeneratePdf} disabled={pdfState.isLoading || saving}>
+                      <FileText className="mr-2 size-4" />
+                      {pdfState.isLoading
+                        ? t("actions.generatingPdf")
+                        : form.pdf_url
+                          ? t("actions.regeneratePdf")
+                          : t("actions.generatePdf")}
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={onSendEmail}
+                      disabled={emailState.isLoading || saving || !form.pdf_url}
+                      title={!form.pdf_url ? t("messages.pdfRequired") : undefined}
+                    >
+                      <Send className="mr-2 size-4" />
+                      {emailState.isLoading ? t("actions.sendingEmail") : t("actions.sendEmail")}
+                    </Button>
+                  </>
+                )}
+                <Button
+                  onClick={onSave}
+                  disabled={busy}
+                  className="bg-[#b88a2c] font-semibold text-white hover:bg-[#9d7422]"
+                >
+                  <Save className="mr-2 size-4" />
+                  {saving ? t("actions.saving") : t("actions.save")}
+                </Button>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-3">
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => router.push("/admin/offer")}
-                className="rounded-full px-4 border-white/10"
-              >
-                <ArrowLeft className="mr-2 size-4" />
-                {t("actions.backToList")}
-              </Button>
-              <Button 
-                size="sm" 
-                onClick={onSave} 
-                disabled={busy}
-                className="gold-gradient rounded-full px-8 font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
-              >
-                <Save className="mr-2 size-4" />
-                {saving ? t("actions.saving") : t("actions.save")}
-              </Button>
-            </div>
+
+            {!isCreate && (
+              <>
+                <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+                  <div className="rounded-xl border bg-muted/25 p-4">
+                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                      <UserRound className="size-4 text-[#b88a2c]" />
+                      {t("fields.customerName")}
+                    </div>
+                    <p className="mt-2 truncate font-semibold">{form.customer_name || "—"}</p>
+                    <p className="truncate text-xs text-muted-foreground">{form.email || "—"}</p>
+                  </div>
+                  <div className="rounded-xl border bg-muted/25 p-4">
+                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                      <CircleDollarSign className="size-4 text-[#b88a2c]" />
+                      {t("fields.grossTotal")}
+                    </div>
+                    <p className="mt-2 text-lg font-bold">{formatMoney(form.gross_total, form.currency)}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t("fields.netTotal")}: {formatMoney(form.net_total, form.currency)}
+                    </p>
+                  </div>
+                  <div className="rounded-xl border bg-muted/25 p-4">
+                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                      <CalendarDays className="size-4 text-[#b88a2c]" />
+                      {t("fields.validUntil")}
+                    </div>
+                    <p className="mt-2 font-semibold">
+                      {form.valid_until
+                        ? new Intl.DateTimeFormat("tr-TR", { dateStyle: "long" }).format(new Date(`${form.valid_until}T12:00:00`))
+                        : "—"}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{form.locale?.toUpperCase() || "TR"} · {form.currency}</p>
+                  </div>
+                  <div className="rounded-xl border bg-muted/25 p-4">
+                    <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                      <FileCheck2 className="size-4 text-[#b88a2c]" />
+                      PDF &amp; e-posta
+                    </div>
+                    <p className="mt-2 font-semibold">{form.pdf_url ? t("actions.openPdf") : t("detail.pdfEmpty")}</p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      {form.email_sent_at ? `${t("detail.lastSent")}: ${form.email_sent_at}` : form.email}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="overflow-x-auto rounded-xl border bg-muted/20 px-4 py-3">
+                  <div className="flex min-w-[680px] items-center">
+                    {OFFER_FLOW.map((status, index) => {
+                      const currentIndex = OFFER_FLOW.indexOf(form.status);
+                      const complete = currentIndex >= index && currentIndex !== -1;
+                      const active = form.status === status;
+                      return (
+                        <React.Fragment key={status}>
+                          {index > 0 && (
+                            <div className={`h-px flex-1 ${complete ? "bg-[#b88a2c]" : "bg-border"}`} />
+                          )}
+                          <button
+                            type="button"
+                            onClick={() => setField("status", status)}
+                            className="group flex min-w-24 flex-col items-center gap-1.5"
+                            title={t(`status.${status}`)}
+                          >
+                            <span
+                              className={`grid size-7 place-items-center rounded-full border text-xs transition-colors ${
+                                active
+                                  ? "border-[#b88a2c] bg-[#b88a2c] text-white ring-4 ring-[#b88a2c]/15"
+                                  : complete
+                                    ? "border-[#b88a2c] bg-[#b88a2c]/10 text-[#9d7422]"
+                                    : "border-border bg-background text-muted-foreground"
+                              }`}
+                            >
+                              {complete && !active ? <Check className="size-3.5" /> : index + 1}
+                            </span>
+                            <span className={`text-[11px] font-medium ${active ? "text-foreground" : "text-muted-foreground"}`}>
+                              {t(`status.${status}`)}
+                            </span>
+                          </button>
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
+                  {(form.status === "rejected" || form.status === "cancelled") && (
+                    <div className="mt-3 text-center">
+                      <Badge variant="outline" className={statusTone(form.status)}>
+                        {t(`status.${form.status}`)}
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
-        </CardHeader>
+        </CardContent>
       </Card>
 
       {/* FORM DATA (edit only) */}
@@ -636,7 +806,7 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
                   <Input
                     value={form.locale}
                     onChange={(e) => setField("locale", e.target.value)}
-                    placeholder="tr / en / de"
+                    placeholder="tr / en"
                     disabled={busy}
                   />
                 </div>
@@ -645,7 +815,7 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
                   <Input
                     value={form.country_code}
                     onChange={(e) => setField("country_code", e.target.value.toUpperCase())}
-                    placeholder="TR / DE"
+                    placeholder="TR / EN"
                     disabled={busy}
                   />
                 </div>
@@ -728,7 +898,7 @@ export default function AdminOfferDetailClient({ id }: { id: string }) {
                   <Input
                     value={form.offer_no}
                     onChange={(e) => setField("offer_no", e.target.value)}
-                    placeholder="ENS-2025-0001"
+                    placeholder="MOE-2026-0001"
                     disabled={busy}
                   />
                 </div>

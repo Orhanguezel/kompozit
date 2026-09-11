@@ -1,0 +1,114 @@
+[
+  {
+    "id": "K01",
+    "priority": "P1",
+    "title": "Makaleler sitemap’te yok",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K02",
+    "priority": "P1",
+    "title": "Sitemap yanlış dil slug’ları üretiyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K03",
+    "priority": "P1",
+    "title": "Detay sayfalarında HTML hreflang eksik",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K04",
+    "priority": "P1",
+    "title": "Farklı dil slug’ı yanlış dilde içerik açıyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K05",
+    "priority": "P2",
+    "title": "Eski dil öneksiz makale geçişi geçici yönlendirme",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K06",
+    "priority": "P2",
+    "title": "50 title içinde marka iki defa",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K07",
+    "priority": "P2",
+    "title": "Blog/referans liste sayfalarında H1 yok",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K08",
+    "priority": "P1",
+    "title": "Ana sayfa formu kullanıcı seçmeden pazarlama rızası gönderiyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K09",
+    "priority": "P2",
+    "title": "Form etiketlerinin alanlarla programatik bağı eksik",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K10",
+    "priority": "P2",
+    "title": "İngilizce ana sayfa formunun sonuç mesajları Türkçe",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K11",
+    "priority": "P1",
+    "title": "Statik CSS/JS sıkıştırması eksik",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K12",
+    "priority": "P1",
+    "title": "Mobil ana içerik geç görünüyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K13",
+    "priority": "P2",
+    "title": "Kapalı mobil menü odaklanabilir kontroller bırakıyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K14",
+    "priority": "P2",
+    "title": "Görünür marka fallback’leri repo doktrinine uymuyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K15",
+    "priority": "P2",
+    "title": "Denetim kapıları canlı sorunları kapsamıyor; bazıları çalışmıyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  },
+  {
+    "id": "K16",
+    "priority": "P1",
+    "title": "Analitik çerezleri kullanıcı tercihinden önce oluşuyor",
+    "status": "open",
+    "report": "../../../DENETIM-RAPORU-2026-09-09.md"
+  }
+]

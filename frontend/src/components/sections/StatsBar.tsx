@@ -33,12 +33,12 @@ export async function StatsBar({
         {stats.map((item) => (
           <div
             key={`${item.number}-${item.label}`}
-            className="stats-item-cc max-lg:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(4n)]:border-r-0"
+            className="stats-item-cc min-w-0 max-lg:[&:nth-child(2n)]:border-r-0 lg:[&:nth-child(4n)]:border-r-0"
           >
-            <p className="font-[var(--font-display)] font-normal text-[3.5rem] leading-none text-[var(--gold)]">
+            <p className="font-[var(--font-display)] font-normal text-[clamp(1.2rem,4vw,2rem)] leading-tight [overflow-wrap:anywhere] text-[var(--gold)]">
               {item.number}
             </p>
-            <p className="mt-3 text-[0.75rem] font-medium uppercase tracking-[4px] text-[var(--silver)]">
+            <p className="mt-3 text-[0.75rem] font-medium uppercase tracking-[2px] lg:tracking-[4px] [overflow-wrap:anywhere] text-[var(--silver)]">
               {item.label}
             </p>
           </div>

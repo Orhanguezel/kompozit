@@ -1,7 +1,7 @@
 // =============================================================
 // FILE: src/integrations/endpoints/public/profiles.endpoints.ts
 // FINAL — Profiles RTK (me + public by id)
-// Backend: GET/PUT /auth/user (profil alanları + user); /profiles/me kaldırıldı
+// Backend: GET/PUT /profiles/v1/me
 // - GET  /profiles/:id       (public)  ✅ NEW
 // =============================================================
 
@@ -12,7 +12,7 @@ import { normalizeProfile } from "@/integrations/shared";
 export const profilesApi = baseApi.injectEndpoints({
   endpoints: (b) => ({
     getMyProfile: b.query<GetMyProfileResp, void>({
-      query: () => ({ url: "/auth/user", method: "GET" }),
+      query: () => ({ url: "/profiles/v1/me", method: "GET" }),
       transformResponse: (res: unknown): GetMyProfileResp => {
         if (!res || typeof res !== "object") return null;
         return normalizeProfile(res as any);
@@ -21,7 +21,7 @@ export const profilesApi = baseApi.injectEndpoints({
     }),
 
     upsertMyProfile: b.mutation<UpsertMyProfileResp, UpsertMyProfileReq>({
-      query: (body) => ({ url: "/auth/user", method: "PUT", body }),
+      query: (body) => ({ url: "/profiles/v1/me", method: "PUT", body }),
       transformResponse: (res: unknown): UpsertMyProfileResp => normalizeProfile(res as any),
       invalidatesTags: ["Profile", "User", "Auth"],
     }),

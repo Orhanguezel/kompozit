@@ -50,7 +50,6 @@ import type {
 const LOCALES: Array<{ value: string; label: string }> = [
   { value: 'tr', label: 'Türkçe' },
   { value: 'en', label: 'English' },
-  { value: 'de', label: 'Deutsch' },
 ];
 
 // =============================================================

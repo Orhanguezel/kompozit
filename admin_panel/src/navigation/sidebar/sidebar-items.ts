@@ -6,14 +6,19 @@
 // =============================================================
 
 import {
+  Activity,
+  BarChart3,
   Bell,
   Database,
   DollarSign,
+  Facebook,
   FileSearch,
   FileText,
   Folders,
   HardDrive,
   Images,
+  Instagram,
+  Linkedin,
   Layers,
   LayoutDashboard,
   type LucideIcon,
@@ -24,6 +29,8 @@ import {
   Puzzle,
   RefreshCcw,
   Settings,
+  Share2,
+  Twitter,
   Users,
 } from "lucide-react";
 
@@ -95,7 +102,18 @@ export type AdminNavItemKey =
   | "kompozit_blog_comments"
   | "kompozit_corporate"
   | "kompozit_legal"
-  | "kompozit_settings";
+  | "kompozit_settings"
+  | "marketing_center"
+  | "analytics"
+  | "ga4"
+  | "search_console"
+  | "google_ads"
+  | "social"
+  | "facebook"
+  | "instagram"
+  | "linkedin"
+  | "x"
+  | "integrations";
 
 export type AdminNavGroupKey = "general" | "content" | "moe_kompozit" | "marketing" | "communication" | "system";
 
@@ -130,15 +148,32 @@ export const adminNavConfig: AdminNavConfigGroup[] = [
       { key: "kompozit_blog_comments", url: "/admin/reviews?target_type=custom_page", icon: MessageSquare },
       { key: "kompozit_corporate", url: "/admin/custompage?module=kompozit_about", icon: FileText },
       { key: "kompozit_legal", url: "/admin/custompage?module=kompozit_legal", icon: FileSearch },
-      { key: "kompozit_settings", url: "/admin/site-settings", icon: Settings },
       { key: "contacts", url: "/admin/contacts?source=kompozit", icon: Mail },
       { key: "navigation", url: "/admin/navigation", icon: Navigation },
     ],
   },
   {
     id: 3,
+    key: "marketing",
+    items: [
+      { key: "marketing_center", url: "/admin/marketing", icon: Activity },
+      { key: "analytics", url: "/admin/analytics", icon: BarChart3 },
+      { key: "ga4", url: "/admin/ga4", icon: BarChart3 },
+      { key: "search_console", url: "/admin/search-console", icon: FileSearch },
+      { key: "google_ads", url: "/admin/google-ads", icon: Activity },
+      { key: "social", url: "/admin/social", icon: Share2 },
+      { key: "facebook", url: "/admin/social/facebook", icon: Facebook },
+      { key: "instagram", url: "/admin/social/instagram", icon: Instagram },
+      { key: "linkedin", url: "/admin/social/linkedin", icon: Linkedin },
+      { key: "x", url: "/admin/social/x", icon: Twitter },
+    ],
+  },
+  {
+    id: 4,
     key: "system",
     items: [
+      { key: "kompozit_settings", url: "/admin/site-settings", icon: Settings },
+      { key: "integrations", url: "/admin/integrations", icon: Mail },
       { key: "users", url: "/admin/users", icon: Users },
       { key: "notifications", url: "/admin/notifications", icon: Bell },
       { key: "storage", url: "/admin/storage", icon: HardDrive },
@@ -197,6 +232,17 @@ const FALLBACK_TITLES: Record<AdminNavItemKey, string> = {
   kompozit_corporate: "Kompozit Corporate Pages",
   kompozit_legal: "Kompozit Legal Pages",
   kompozit_settings: "Kompozit Site Settings",
+  marketing_center: "Marketing & SEO",
+  analytics: "Analytics",
+  ga4: "Google Analytics (GA4)",
+  search_console: "Search Console",
+  google_ads: "Google Ads",
+  social: "Social Media",
+  facebook: "Facebook",
+  instagram: "Instagram",
+  linkedin: "LinkedIn",
+  x: "X (Twitter)",
+  integrations: "Gmail Integration",
 };
 
 type SidebarGroupTranslationKey = `admin.sidebar.groups.${AdminNavGroupKey}`;

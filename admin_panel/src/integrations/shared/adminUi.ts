@@ -119,6 +119,17 @@ const emptyNav: AdminNavCopy = {
     kompozit_corporate: "",
     kompozit_legal: "",
     kompozit_settings: "",
+    marketing_center: "",
+    analytics: "",
+    ga4: "",
+    search_console: "",
+    google_ads: "",
+    social: "",
+    facebook: "",
+    instagram: "",
+    linkedin: "",
+    x: "",
+    integrations: "",
   },
 };
 
@@ -180,6 +191,17 @@ export function normalizeAdminUiCopy(raw: unknown): AdminUiCopy {
     kompozit_corporate: uiText(itemsRaw.kompozit_corporate),
     kompozit_legal: uiText(itemsRaw.kompozit_legal),
     kompozit_settings: uiText(itemsRaw.kompozit_settings),
+    marketing_center: uiText(itemsRaw.marketing_center),
+    analytics: uiText(itemsRaw.analytics),
+    ga4: uiText(itemsRaw.ga4),
+    search_console: uiText(itemsRaw.search_console),
+    google_ads: uiText(itemsRaw.google_ads),
+    social: uiText(itemsRaw.social),
+    facebook: uiText(itemsRaw.facebook),
+    instagram: uiText(itemsRaw.instagram),
+    linkedin: uiText(itemsRaw.linkedin),
+    x: uiText(itemsRaw.x),
+    integrations: uiText(itemsRaw.integrations),
   };
 
   const commonRaw = parseJsonObject(o.common);

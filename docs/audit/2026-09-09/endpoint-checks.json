@@ -1,0 +1,295 @@
+[
+  {
+    "url": "https://www.karbonkompozit.com.tr/",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/tr",
+    "chain": [
+      {
+        "url": "https://www.karbonkompozit.com.tr/",
+        "status": 307,
+        "location": "/tr"
+      }
+    ]
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/health",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/api/health",
+    "chain": [],
+    "data": {
+      "count": null,
+      "shape": [
+        "status",
+        "db",
+        "redis",
+        "uptime"
+      ],
+      "items": null
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/custom-pages?limit=500&locale=tr",
+    "status": 400,
+    "final": "https://www.karbonkompozit.com.tr/api/custom-pages?limit=500&locale=tr",
+    "chain": [],
+    "data": {
+      "error": {
+        "message": "validation_error",
+        "details": [
+          {
+            "code": "too_big",
+            "maximum": 250,
+            "type": "number",
+            "inclusive": true,
+            "exact": false,
+            "message": "Number must be less than or equal to 250",
+            "path": [
+              "limit"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/custom-pages?limit=200&locale=tr",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/api/custom-pages?limit=200&locale=tr",
+    "chain": [],
+    "data": {
+      "count": 13,
+      "shape": "list",
+      "items": [
+        {
+          "slug": "about",
+          "locale": "tr",
+          "module_key": "kompozit_about"
+        },
+        {
+          "slug": "karbon-fiber-nedir",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "solution-planters",
+          "locale": "tr",
+          "module_key": "kompozit_solutions"
+        },
+        {
+          "slug": "ctp-fiberglass-farklari",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "privacy",
+          "locale": "tr",
+          "module_key": "kompozit_legal"
+        },
+        {
+          "slug": "solution-coffins",
+          "locale": "tr",
+          "module_key": "kompozit_solutions"
+        },
+        {
+          "slug": "solution-storage-tanks",
+          "locale": "tr",
+          "module_key": "kompozit_solutions"
+        },
+        {
+          "slug": "kompozit-kalite-kontrol",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "terms",
+          "locale": "tr",
+          "module_key": "kompozit_legal"
+        },
+        {
+          "slug": "endustriyel-kompozit-gelecek",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "kvkk-aydinlatma-metni",
+          "locale": "tr",
+          "module_key": "kompozit_legal"
+        },
+        {
+          "slug": "solution-custom-b2b",
+          "locale": "tr",
+          "module_key": "kompozit_solutions"
+        },
+        {
+          "slug": "cookies",
+          "locale": "tr",
+          "module_key": "kompozit_legal"
+        }
+      ]
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/services?limit=500&is_published=true",
+    "status": 404,
+    "final": "https://www.karbonkompozit.com.tr/api/services?limit=500&is_published=true",
+    "chain": [],
+    "data": {
+      "error": {
+        "code": "NOT_FOUND",
+        "message": "Not Found",
+        "path": "/api/services?limit=500&is_published=true"
+      }
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/library?limit=500&is_published=true",
+    "status": 400,
+    "final": "https://www.karbonkompozit.com.tr/api/library?limit=500&is_published=true",
+    "chain": [],
+    "data": {
+      "error": {
+        "message": "invalid_query",
+        "issues": [
+          {
+            "code": "too_big",
+            "maximum": 200,
+            "type": "number",
+            "inclusive": true,
+            "exact": false,
+            "message": "Number must be less than or equal to 200",
+            "path": [
+              "limit"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/products?limit=500&is_published=true",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/api/products?limit=500&is_published=true",
+    "chain": [],
+    "data": {
+      "count": 0,
+      "shape": "list",
+      "items": []
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/custom-pages?module_key=kompozit_blog&locale=tr&is_active=1&limit=500",
+    "status": 400,
+    "final": "https://www.karbonkompozit.com.tr/api/custom-pages?module_key=kompozit_blog&locale=tr&is_active=1&limit=500",
+    "chain": [],
+    "data": {
+      "error": {
+        "message": "validation_error",
+        "details": [
+          {
+            "code": "too_big",
+            "maximum": 250,
+            "type": "number",
+            "inclusive": true,
+            "exact": false,
+            "message": "Number must be less than or equal to 250",
+            "path": [
+              "limit"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/api/custom-pages?module_key=kompozit_blog&locale=tr&is_published=1&limit=200",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/api/custom-pages?module_key=kompozit_blog&locale=tr&is_published=1&limit=200",
+    "chain": [],
+    "data": {
+      "count": 4,
+      "shape": "list",
+      "items": [
+        {
+          "slug": "karbon-fiber-nedir",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "ctp-fiberglass-farklari",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "kompozit-kalite-kontrol",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        },
+        {
+          "slug": "endustriyel-kompozit-gelecek",
+          "locale": "tr",
+          "module_key": "kompozit_blog"
+        }
+      ]
+    }
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/blog/ctp-fiberglass-farklari",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/tr/blog/ctp-fiberglass-farklari",
+    "chain": [
+      {
+        "url": "https://www.karbonkompozit.com.tr/blog/ctp-fiberglass-farklari",
+        "status": 307,
+        "location": "/tr/blog/ctp-fiberglass-farklari"
+      }
+    ]
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/en/blog/karbon-fiber-nedir",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/en/blog/karbon-fiber-nedir",
+    "chain": []
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/en/blog/what-is-carbon-fiber",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/en/blog/what-is-carbon-fiber",
+    "chain": []
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/tr/products/defense-industry-composite-parts",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/tr/products/defense-industry-composite-parts",
+    "chain": []
+  },
+  {
+    "url": "https://www.karbonkompozit.com.tr/tr/products/savunma-sanayi-kompozit-parcalari",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/tr/products/savunma-sanayi-kompozit-parcalari",
+    "chain": []
+  },
+  {
+    "url": "http://www.karbonkompozit.com.tr/tr",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/tr",
+    "chain": [
+      {
+        "url": "http://www.karbonkompozit.com.tr/tr",
+        "status": 301,
+        "location": "https://www.karbonkompozit.com.tr/tr"
+      }
+    ]
+  },
+  {
+    "url": "https://karbonkompozit.com.tr/tr",
+    "status": 200,
+    "final": "https://www.karbonkompozit.com.tr/tr",
+    "chain": [
+      {
+        "url": "https://karbonkompozit.com.tr/tr",
+        "status": 301,
+        "location": "https://www.karbonkompozit.com.tr/tr"
+      }
+    ]
+  }
+]

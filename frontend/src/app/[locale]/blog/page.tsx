@@ -86,6 +86,7 @@ export default async function BlogPage({
             ])}
           />
           <SectionHeader
+            as="h1"
             title={t('blog.title')}
             description={t('blog.description')}
             label="Expertise"

@@ -1,5 +1,7 @@
 'use client';
 
+import { APP_NAME } from '@/lib/brand-name';
+
 // Root-level error boundary — catches errors thrown in [locale]/layout.tsx
 // (which [locale]/error.tsx cannot catch, per Next.js App Router rules).
 // next-intl is NOT available here; use hard-coded fallback strings.
@@ -42,7 +44,7 @@ export default function GlobalError({
               marginBottom: '1rem',
             }}
           >
-            MOE Kompozit
+            {APP_NAME}
           </p>
           <h1
             style={{
@@ -85,6 +87,8 @@ export default function GlobalError({
           >
             Tekrar Dene / Retry
           </button>
+          {/* A full document reload is required when the root layout fails. */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
           <a
             href="/"
             style={{

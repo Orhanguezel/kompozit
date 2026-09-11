@@ -76,7 +76,7 @@ export async function MaterialCards({ locale, fromApi }: { locale: string; fromA
                     <dt className="text-[0.65rem] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">
                       {s.label}
                     </dt>
-                    <dd className="mt-2 font-display text-[1.8rem] font-normal text-[var(--gold)]">
+                    <dd className="mt-2 font-display text-base lg:text-lg leading-snug [overflow-wrap:anywhere] font-normal text-[var(--gold)]">
                       {s.value}
                     </dd>
                   </div>

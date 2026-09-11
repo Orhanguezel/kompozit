@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Wrench, Settings2, Layers3, Paperclip, ChevronRight } from 'lucide-react';
@@ -23,13 +23,14 @@ export function OfferFormClient({
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [sending, setSending] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Form states
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [company, setCompany] = useState('');
-  
+
   // Tab specific states
   const [productInterest, setProductInterest] = useState(preselectedProduct || '');
   const [productCategory, setProductCategory] = useState('');
@@ -144,6 +145,7 @@ export function OfferFormClient({
     setCompany('');
     setDetails('');
     setFiles([]);
+    if (fileInputRef.current) fileInputRef.current.value = '';
     setProductInterest(preselectedProduct || '');
     setProductCategory('');
     setSector('');
@@ -178,16 +180,16 @@ export function OfferFormClient({
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative flex flex-1 items-center justify-center gap-3 px-6 py-6 transition-all duration-500 ${
-                activeTab === tab.id 
-                  ? 'bg-[color-mix(in_srgb,var(--color-gold)_8%,transparent)] text-[var(--color-gold)]' 
+                activeTab === tab.id
+                  ? 'bg-[color-mix(in_srgb,var(--color-gold)_8%,transparent)] text-[var(--color-gold)]'
                   : 'text-[var(--color-text-muted)] hover:bg-[color-mix(in_srgb,var(--color-gold)_4%,transparent)] hover:text-[var(--color-text-primary)]'
               }`}
             >
               <tab.icon className={`size-4 transition-transform duration-500 ${activeTab === tab.id ? 'scale-110' : 'scale-100'}`} />
               <span className="text-[11px] font-bold uppercase tracking-[2px]">{tab.label}</span>
-              
+
               {activeTab === tab.id && (
-                <div 
+                <div
                   className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-gold)] to-transparent"
                 />
               )}
@@ -209,45 +211,45 @@ export function OfferFormClient({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className={labelClass}>{tc('name')}</label>
-                <input 
-                  type="text" 
-                  required 
-                  value={name} 
+                <label htmlFor="offerform-1" className={labelClass}>{tc('name')}</label>
+                <input id="offerform-1"
+                  type="text"
+                  required
+                  value={name}
                   onChange={e => setName(e.target.value)}
                   placeholder={t('placeholders.name')}
-                  className={inputClass} 
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
-                <label className={labelClass}>{tc('email')}</label>
-                <input 
-                  type="email" 
-                  required 
-                  value={email} 
+                <label htmlFor="offerform-2" className={labelClass}>{tc('email')}</label>
+                <input id="offerform-2"
+                  type="email"
+                  required
+                  value={email}
                   onChange={e => setEmail(e.target.value)}
                   placeholder={t('placeholders.email')}
-                  className={inputClass} 
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
-                <label className={labelClass}>{tc('phone')}</label>
-                <input 
-                  type="tel" 
-                  value={phone} 
+                <label htmlFor="offerform-3" className={labelClass}>{tc('phone')}</label>
+                <input id="offerform-3"
+                  type="tel"
+                  value={phone}
                   onChange={e => setPhone(e.target.value)}
                   placeholder={t('placeholders.phone')}
-                  className={inputClass} 
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
-                <label className={labelClass}>{tc('company')}</label>
-                <input 
-                  type="text" 
-                  value={company} 
+                <label htmlFor="offerform-4" className={labelClass}>{tc('company')}</label>
+                <input id="offerform-4"
+                  type="text"
+                  value={company}
                   onChange={e => setCompany(e.target.value)}
                   placeholder={t('placeholders.company')}
-                  className={inputClass} 
+                  className={inputClass}
                 />
               </div>
             </div>
@@ -273,19 +275,19 @@ export function OfferFormClient({
                 {activeTab === 'product' && (
                   <>
                     <div className="md:col-span-2 space-y-2">
-                      <label className={labelClass}>{t('productInterest')}</label>
-                      <input 
-                        type="text" 
-                        value={productInterest} 
+                      <label htmlFor="offerform-5" className={labelClass}>{t('productInterest')}</label>
+                      <input id="offerform-5"
+                        type="text"
+                        value={productInterest}
                         onChange={e => setProductInterest(e.target.value)}
                         placeholder={t('placeholders.productInterest')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('productCategory')}</label>
-                      <select 
-                        value={productCategory} 
+                      <label htmlFor="offerform-6" className={labelClass}>{t('productCategory')}</label>
+                      <select id="offerform-6"
+                        value={productCategory}
                         onChange={e => setProductCategory(e.target.value)}
                         className={`${inputClass} appearance-none`}
                       >
@@ -298,18 +300,18 @@ export function OfferFormClient({
                       </select>
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('sector')}</label>
-                      <input 
-                        type="text" 
-                        value={sector} 
+                      <label htmlFor="offerform-7" className={labelClass}>{t('sector')}</label>
+                      <input id="offerform-7"
+                        type="text"
+                        value={sector}
                         onChange={e => setSector(e.target.value)}
                         placeholder={t('placeholders.sector')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('quantity')}</label>
-                      <input
+                      <label htmlFor="offerform-8" className={labelClass}>{t('quantity')}</label>
+                      <input id="offerform-8"
                         type="text"
                         value={quantity}
                         onChange={e => setQuantity(e.target.value)}
@@ -318,8 +320,8 @@ export function OfferFormClient({
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('deadline')}</label>
-                      <input
+                      <label htmlFor="offerform-9" className={labelClass}>{t('deadline')}</label>
+                      <input id="offerform-9"
                         type="text"
                         value={deadline}
                         onChange={e => setDeadline(e.target.value)}
@@ -331,20 +333,20 @@ export function OfferFormClient({
                     {/* Technical Fields Group */}
                     <div className="mt-4 grid grid-cols-1 gap-4 border border-[var(--color-border)] bg-[color-mix(in_srgb,var(--color-bg-secondary)_55%,transparent)] p-6 sm:grid-cols-2 md:col-span-2 lg:grid-cols-3">
                       <div className="space-y-2">
-                        <label className={labelClass}>{t('material')}</label>
-                        <input type="text" value={material} onChange={e => setMaterial(e.target.value)} placeholder={t('placeholders.material')} className={inputClass} />
+                        <label htmlFor="offerform-10" className={labelClass}>{t('material')}</label>
+                        <input id="offerform-10" type="text" value={material} onChange={e => setMaterial(e.target.value)} placeholder={t('placeholders.material')} className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>{t('dimensions')}</label>
-                        <input type="text" value={dimensions} onChange={e => setDimensions(e.target.value)} placeholder={t('placeholders.dimensions')} className={inputClass} />
+                        <label htmlFor="offerform-11" className={labelClass}>{t('dimensions')}</label>
+                        <input id="offerform-11" type="text" value={dimensions} onChange={e => setDimensions(e.target.value)} placeholder={t('placeholders.dimensions')} className={inputClass} />
                       </div>
                       <div className="space-y-2">
-                        <label className={labelClass}>{t('usageEnvironment')}</label>
-                        <input type="text" value={usageEnvironment} onChange={e => setUsageEnvironment(e.target.value)} placeholder={t('placeholders.usageEnvironment')} className={inputClass} />
+                        <label htmlFor="offerform-12" className={labelClass}>{t('usageEnvironment')}</label>
+                        <input id="offerform-12" type="text" value={usageEnvironment} onChange={e => setUsageEnvironment(e.target.value)} placeholder={t('placeholders.usageEnvironment')} className={inputClass} />
                       </div>
                       <div className="space-y-2 sm:col-span-2 lg:col-span-3">
-                        <label className={labelClass}>{t('surfaceFinish')}</label>
-                        <input type="text" value={surfaceFinish} onChange={e => setSurfaceFinish(e.target.value)} placeholder={t('placeholders.surfaceFinish')} className={inputClass} />
+                        <label htmlFor="offerform-13" className={labelClass}>{t('surfaceFinish')}</label>
+                        <input id="offerform-13" type="text" value={surfaceFinish} onChange={e => setSurfaceFinish(e.target.value)} placeholder={t('placeholders.surfaceFinish')} className={inputClass} />
                       </div>
                     </div>
                   </>
@@ -354,33 +356,33 @@ export function OfferFormClient({
                 {activeTab === 'service' && (
                   <>
                     <div className="md:col-span-2 space-y-2">
-                      <label className={labelClass}>{t('productInterest')}</label>
-                      <input 
-                        type="text" 
-                        value={productInterest} 
+                      <label htmlFor="offerform-14" className={labelClass}>{t('productInterest')}</label>
+                      <input id="offerform-14"
+                        type="text"
+                        value={productInterest}
                         onChange={e => setProductInterest(e.target.value)}
                         placeholder={t('placeholders.serviceInterest')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('sector')}</label>
-                      <input 
-                        type="text" 
-                        value={sector} 
+                      <label htmlFor="offerform-15" className={labelClass}>{t('sector')}</label>
+                      <input id="offerform-15"
+                        type="text"
+                        value={sector}
                         onChange={e => setSector(e.target.value)}
                         placeholder={t('placeholders.sector')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('deadline')}</label>
-                      <input 
-                        type="text" 
-                        value={deadline} 
+                      <label htmlFor="offerform-16" className={labelClass}>{t('deadline')}</label>
+                      <input id="offerform-16"
+                        type="text"
+                        value={deadline}
                         onChange={e => setDeadline(e.target.value)}
                         placeholder={t('placeholders.deadline')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                   </>
@@ -390,46 +392,46 @@ export function OfferFormClient({
                 {activeTab === 'sparepart' && (
                   <>
                     <div className="md:col-span-2 space-y-2">
-                      <label className={labelClass}>{t('productInterest')}</label>
-                      <input 
-                        type="text" 
-                        value={productInterest} 
+                      <label htmlFor="offerform-17" className={labelClass}>{t('productInterest')}</label>
+                      <input id="offerform-17"
+                        type="text"
+                        value={productInterest}
                         onChange={e => setProductInterest(e.target.value)}
                         placeholder={t('placeholders.sparepartInterest')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('quantity')}</label>
-                      <input 
-                        type="text" 
-                        value={quantity} 
+                      <label htmlFor="offerform-18" className={labelClass}>{t('quantity')}</label>
+                      <input id="offerform-18"
+                        type="text"
+                        value={quantity}
                         onChange={e => setQuantity(e.target.value)}
                         placeholder={t('placeholders.quantity')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className={labelClass}>{t('deadline')}</label>
-                      <input 
-                        type="text" 
-                        value={deadline} 
+                      <label htmlFor="offerform-19" className={labelClass}>{t('deadline')}</label>
+                      <input id="offerform-19"
+                        type="text"
+                        value={deadline}
                         onChange={e => setDeadline(e.target.value)}
                         placeholder={t('placeholders.deadline')}
-                        className={inputClass} 
+                        className={inputClass}
                       />
                     </div>
                   </>
                 )}
 
                 <div className="md:col-span-2 space-y-2">
-                  <label className={labelClass}>{t('details')}</label>
-                  <textarea 
-                    rows={4} 
-                    value={details} 
+                  <label htmlFor="offerform-20" className={labelClass}>{t('details')}</label>
+                  <textarea id="offerform-20"
+                    rows={4}
+                    value={details}
                     onChange={e => setDetails(e.target.value)}
                     placeholder={t('detailsPlaceholder')}
-                    className={`${inputClass} resize-none`} 
+                    className={`${inputClass} resize-none`}
                   />
                 </div>
               </div>
@@ -448,9 +450,11 @@ export function OfferFormClient({
             </div>
 
             <div className="relative group">
-              <input 
-                type="file" 
-                multiple 
+              <input
+                type="file"
+                aria-label={t('attachFile')}
+                    ref={fileInputRef}
+                multiple
                 onChange={e => setFiles(Array.from(e.target.files || []))}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
               />
@@ -482,11 +486,11 @@ export function OfferFormClient({
             <p className="max-w-xs text-center text-[10px] uppercase tracking-[1px] text-[var(--color-text-muted)] sm:text-left">
               {t('privacyNote')}
             </p>
-            
+
             <button
               type="submit"
               disabled={sending}
-              className="group relative flex items-center gap-4 bg-gradient-to-r from-[var(--color-gold)] to-[#D4AF37] px-10 py-5 rounded-full text-black font-bold uppercase tracking-[3px] text-[11px] overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(212,175,55,0.2)] active:scale-95 disabled:opacity-50 disabled:grayscale"
+              className="group relative flex items-center gap-4 bg-gradient-to-r from-[var(--color-gold)] to-[var(--color-gold-gradient-end)] px-10 py-5 rounded-full text-black font-bold uppercase tracking-[3px] text-[11px] overflow-hidden transition-all duration-500 hover:scale-[1.02] hover:shadow-[0_20px_40px_rgba(212,175,55,0.2)] active:scale-95 disabled:opacity-50 disabled:grayscale"
             >
               <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out" />
               {sending ? (

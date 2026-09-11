@@ -72,6 +72,7 @@ export default async function ReferencesPage({
           />
 
           <SectionHeader
+            as="h1"
             title={t('references.title')}
             description={t('references.description')}
             label={t('references.trustLabel')}

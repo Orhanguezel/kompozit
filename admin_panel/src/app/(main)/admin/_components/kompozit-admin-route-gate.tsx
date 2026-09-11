@@ -29,6 +29,13 @@ const ALLOWED_PREFIXES = [
   "/admin/storage",
   "/admin/audit",
   "/admin/profile",
+  "/admin/marketing",
+  "/admin/analytics",
+  "/admin/ga4",
+  "/admin/search-console",
+  "/admin/google-ads",
+  "/admin/social",
+  "/admin/integrations",
 ] as const;
 
 function isAllowed(pathname: string | null): boolean {

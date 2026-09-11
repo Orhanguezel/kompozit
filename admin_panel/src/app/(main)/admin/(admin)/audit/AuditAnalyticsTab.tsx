@@ -109,13 +109,12 @@ function fmtMonth(monthStr: string): string {
 /* ----------------------------- types ----------------------------- */
 
 type Props = {
-  excludeLocalhost: boolean;
   dateRange: { from: string; to: string };
 };
 
 /* ----------------------------- component ----------------------------- */
 
-export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props) {
+export default function AuditAnalyticsTab({ dateRange }: Props) {
   const t = useAdminT("admin.audit");
 
   /* ---- build params ---- */
@@ -124,21 +123,18 @@ export default function AuditAnalyticsTab({ excludeLocalhost, dateRange }: Props
     const p: AnalyticsDateRangeParams = {};
     if (dateRange.from) p.created_from = dateRange.from;
     if (dateRange.to) p.created_to = dateRange.to;
-    if (excludeLocalhost) p.exclude_localhost = 1;
+    p.exclude_localhost = 1;
     return p;
-  }, [dateRange, excludeLocalhost]);
+  }, [dateRange]);
 
-  const summaryParams = useMemo(
-    () => (excludeLocalhost ? { exclude_localhost: 1 as const } : undefined),
-    [excludeLocalhost],
-  );
+  const summaryParams = useMemo(() => ({ exclude_localhost: 1 as const }), []);
 
   const monthlyParams = useMemo<AnalyticsMonthlyParams>(
     () => ({
       months: 12,
-      ...(excludeLocalhost ? { exclude_localhost: 1 as const } : {}),
+      exclude_localhost: 1 as const,
     }),
-    [excludeLocalhost],
+    [],
   );
 
   /* ---- queries ---- */

@@ -1,3 +1,4 @@
+import { withRouteMetadata, requireLocalizedSlug } from '@/seo/inventory';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -39,12 +40,13 @@ async function fetchPost(slug: string, locale: string) {
   }
 }
 
-export async function generateMetadata({
+async function buildMetadata({
   params,
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('blog', slug, locale);
   const post = await fetchPost(slug, locale);
   if (!post) return {};
   return buildPageMetadata({
@@ -72,6 +74,7 @@ export default async function BlogPostPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
+  await requireLocalizedSlug('blog', slug, locale);
   const t = await getTranslations({ locale });
   const post = await fetchPost(slug, locale);
   if (!post) notFound();
@@ -266,4 +269,9 @@ export default async function BlogPostPage({
       </div>
     </article>
   );
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
+  const { locale, slug } = await params;
+  return withRouteMetadata(await buildMetadata({ params }), locale, `/blog/${slug}`);
 }

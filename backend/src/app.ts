@@ -1,3 +1,5 @@
+import { registerTanitioContent } from '@ensotek/shared-backend/integrations/tanitio';
+import { pool as contentPool } from './db/client';
 import cors from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import cookie from '@fastify/cookie';
@@ -18,6 +20,12 @@ import { registerAllRoutes } from './routes';
 
 import { shouldSkipAuditLog, writeRequestAuditLog } from '@ensotek/shared-backend/modules/audit';
 import { startRetentionJob } from '@ensotek/shared-backend/modules/audit/service';
+
+// Offer documents are issued by MOE Kompozit. Ensotek can be the recipient,
+// therefore the shared backend's historic Ensotek brand fallback must not be
+// used for this application's PDF header.
+process.env.OFFER_PDF_BRAND_NAME ||= 'MOE Kompozit';
+process.env.OFFER_PDF_LOGO_URL ||= 'https://www.karbonkompozit.com.tr/uploads/kompozit/brand/moe_logo_refined_v2.png';
 
 export async function createApp() {
   const { default: buildFastify } = (await import('fastify')) as unknown as {
@@ -117,6 +125,8 @@ export async function createApp() {
 
   registerErrorHandlers(app);
   startRetentionJob();
+
+  await registerTanitioContent(app, { site: 'kompozit', apiKey: () => process.env.TANITIO_CONTENT_API_KEY, query: async (sql, values) => { const [rows] = await contentPool.query(sql, values); return rows as any[]; } });
 
   return app;
 }

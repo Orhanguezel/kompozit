@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 
 type SectionHeaderProps = {
   title: string;
+  as?: 'h1' | 'h2';
   description?: string;
   label?: string;
   align?: 'left' | 'center';
@@ -10,6 +11,7 @@ type SectionHeaderProps = {
 
 export function SectionHeader({
   title,
+  as: Heading = 'h2',
   description,
   label,
   align = 'left',
@@ -26,9 +28,9 @@ export function SectionHeader({
              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-[var(--color-gold-bright)]">{label}</span>
           </div>
         ) : null}
-        <h2 className="text-4xl font-normal tracking-tight lg:text-5xl font-[var(--font-display)] leading-[1.1] text-balance text-[var(--color-text-primary)]">
+        <Heading className="text-4xl font-normal tracking-tight lg:text-5xl font-[var(--font-display)] leading-[1.1] text-balance text-[var(--color-text-primary)]">
           {title}
-        </h2>
+        </Heading>
         {description ? (
           <p className={`mt-6 text-lg leading-relaxed text-[var(--color-text-secondary)] opacity-80 ${isCentered ? 'mx-auto' : ''}`}>
             {description}

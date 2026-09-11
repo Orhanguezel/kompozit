@@ -47,7 +47,9 @@ import type { ProductItemType } from "@/integrations/shared/product_admin.types"
 import { usePreferencesStore } from "@/stores/preferences/preferences-provider";
 
 import { ProductFaqsTab } from "./product-faqs-tab";
+import { ProductIndexStatus } from "./product-index-status";
 import { ProductReviewsTab } from "./product-reviews-tab";
+import { ProductSeoQuality } from "./product-seo-quality";
 import { ProductSpecsTab } from "./product-specs-tab";
 
 type ProductFormData = {
@@ -70,6 +72,28 @@ type ProductFormData = {
   meta_title: string;
   meta_description: string;
 };
+
+type ProductDraft = {
+  savedAt: string;
+  serverUpdatedAt: string | null;
+  data: ProductFormData;
+};
+
+const PRODUCT_DRAFT_PREFIX = "kompozit:admin:product-draft";
+
+function productDraftKey(id: string, itemType: ProductItemType, locale: string) {
+  return `${PRODUCT_DRAFT_PREFIX}:${itemType}:${id}:${locale}`;
+}
+
+function readProductDraft(key: string): ProductDraft | null {
+  try {
+    const parsed = JSON.parse(window.localStorage.getItem(key) || "") as ProductDraft;
+    if (!parsed?.data || typeof parsed.data !== "object" || typeof parsed.savedAt !== "string") return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
 
 function getObj(value: unknown): Record<string, unknown> | null {
   return typeof value === "object" && value !== null ? (value as Record<string, unknown>) : null;
@@ -114,6 +138,10 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     { id, locale: activeLocale, item_type: itemType },
     { skip: isNew },
   );
+  const { data: sourceLocaleItem } = useGetProductAdminQuery(
+    { id, locale: "tr", item_type: itemType },
+    { skip: isNew || activeLocale === "tr" },
+  );
 
   const { data: categories = [] } = useListProductCategoriesAdminQuery(
     { locale: activeLocale },
@@ -144,6 +172,13 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     meta_title: "",
     meta_description: "",
   });
+  const baselineRef = React.useRef("");
+  const hydratedDraftKeyRef = React.useRef("");
+  const fallbackNoticeKeyRef = React.useRef("");
+  const draftKey = React.useMemo(
+    () => productDraftKey(id, itemType, activeLocale),
+    [activeLocale, id, itemType],
+  );
 
   // ── Subcat listesi (category'ye göre) ──
   const { data: subcategories = [] } = useListProductSubcategoriesAdminQuery(
@@ -154,16 +189,19 @@ export default function ProductDetailClient({ id, itemType }: Props) {
   // ── Veri yüklenince formData'yı doldur ──
   React.useEffect(() => {
     if (item && !isNew) {
-      setFormData({
-        locale: item.locale || activeLocale,
-        title: item.title || "",
-        slug: item.slug || "",
+      const hasRequestedTranslation = Boolean(item.title?.trim());
+      if (!hasRequestedTranslation && activeLocale !== "tr" && !sourceLocaleItem) return;
+      const localizedItem = hasRequestedTranslation ? item : sourceLocaleItem!;
+      const serverData: ProductFormData = {
+        locale: activeLocale,
+        title: localizedItem.title || "",
+        slug: localizedItem.slug || "",
         price: item.price ?? "",
         stock_quantity: item.stock_quantity ?? "",
         product_code: item.product_code || "",
-        description: item.description || "",
-        image_alt: item.alt || "",
-        tags: Array.isArray(item.tags) ? item.tags.join(", ") : item.tags || "",
+        description: localizedItem.description || "",
+        image_alt: localizedItem.alt || "",
+        tags: Array.isArray(localizedItem.tags) ? localizedItem.tags.join(", ") : localizedItem.tags || "",
         category_id: item.category_id ? String(item.category_id) : "",
         sub_category_id: item.sub_category_id ? String(item.sub_category_id) : "",
         image_url: item.image_url || "",
@@ -171,11 +209,101 @@ export default function ProductDetailClient({ id, itemType }: Props) {
         images: Array.isArray((item as any).images) ? (item as any).images : [],
         is_active: item.is_active === 1 || item.is_active === true,
         is_featured: item.is_featured === 1 || item.is_featured === true,
-        meta_title: item.meta_title || "",
-        meta_description: item.meta_description || "",
-      });
+        meta_title: localizedItem.meta_title || "",
+        meta_description: localizedItem.meta_description || "",
+      };
+      const serverBaseline = JSON.stringify(serverData);
+      const draft = readProductDraft(draftKey);
+      const canRestoreDraft = draft?.serverUpdatedAt === (item.updated_at || null)
+        && JSON.stringify(draft.data) !== serverBaseline;
+      const restoredData = canRestoreDraft
+        ? {
+            ...draft!.data,
+            category_id: draft!.data.category_id || serverData.category_id,
+            title: draft!.data.title || serverData.title,
+          }
+        : serverData;
+
+      baselineRef.current = serverBaseline;
+      hydratedDraftKeyRef.current = draftKey;
+      setFormData(restoredData);
+
+      if (canRestoreDraft) {
+        toast.info("Kaydedilmemiş ürün taslağı geri yüklendi.");
+      } else if (draft) {
+        window.localStorage.removeItem(draftKey);
+      }
+
+      if (!hasRequestedTranslation && fallbackNoticeKeyRef.current !== draftKey) {
+        fallbackNoticeKeyRef.current = draftKey;
+        toast.info(`${activeLocale.toUpperCase()} içeriği henüz yok. Türkçe kaynak düzenleme için yüklendi.`);
+      }
     }
-  }, [item, isNew, activeLocale]);
+  }, [item, isNew, activeLocale, draftKey, sourceLocaleItem]);
+
+  React.useEffect(() => {
+    if (!isNew || hydratedDraftKeyRef.current === draftKey) return;
+
+    const draft = readProductDraft(draftKey);
+    const initialBaseline = JSON.stringify(formData);
+    baselineRef.current = initialBaseline;
+    hydratedDraftKeyRef.current = draftKey;
+    if (draft?.serverUpdatedAt === null) {
+      setFormData(draft.data);
+      toast.info("Kaydedilmemiş yeni ürün taslağı geri yüklendi.");
+    }
+  }, [draftKey, formData, isNew]);
+
+  const isDirty = hydratedDraftKeyRef.current === draftKey
+    && JSON.stringify(formData) !== baselineRef.current;
+
+  React.useEffect(() => {
+    if (!isDirty) return;
+
+    const timeout = window.setTimeout(() => {
+      const draft: ProductDraft = {
+        savedAt: new Date().toISOString(),
+        serverUpdatedAt: isNew ? null : (item?.updated_at || null),
+        data: formData,
+      };
+      window.localStorage.setItem(draftKey, JSON.stringify(draft));
+    }, 400);
+
+    return () => window.clearTimeout(timeout);
+  }, [draftKey, formData, isDirty, isNew, item?.updated_at]);
+
+  React.useEffect(() => {
+    if (!isDirty) return;
+
+    const warnBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = "";
+    };
+    const warnBeforeInternalNavigation = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const link = target.closest("a[href]");
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (link.target === "_blank" || link.hasAttribute("download")) return;
+
+      const destination = new URL(link.href, window.location.href);
+      if (destination.origin !== window.location.origin) return;
+      if (`${destination.pathname}${destination.search}` === `${window.location.pathname}${window.location.search}`) return;
+
+      if (!window.confirm("Kaydedilmemiş ürün değişiklikleri var. Sayfadan ayrılmak istediğinize emin misiniz?")) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    };
+
+    window.addEventListener("beforeunload", warnBeforeUnload);
+    document.addEventListener("click", warnBeforeInternalNavigation, true);
+    return () => {
+      window.removeEventListener("beforeunload", warnBeforeUnload);
+      document.removeEventListener("click", warnBeforeInternalNavigation, true);
+    };
+  }, [isDirty]);
 
   // ── Locale değişince yeniden çek ──
   React.useEffect(() => {
@@ -183,9 +311,17 @@ export default function ProductDetailClient({ id, itemType }: Props) {
   }, [id, isNew, refetch]);
 
   // ── Handler'lar ──
-  const handleBack = () => router.push(backUrl);
+  const handleBack = () => {
+    if (isDirty && !window.confirm("Kaydedilmemiş ürün değişiklikleri var. Sayfadan ayrılmak istediğinize emin misiniz?")) {
+      return;
+    }
+    router.push(backUrl);
+  };
 
   const handleLocaleChange = (next: string) => {
+    if (isDirty && !window.confirm("Bu dilde kaydedilmemiş ürün değişiklikleri var. Dili değiştirmek istediğinize emin misiniz?")) {
+      return;
+    }
     setActiveLocale(next);
     setFormData((prev) => ({ ...prev, locale: next }));
   };
@@ -198,13 +334,14 @@ export default function ProductDetailClient({ id, itemType }: Props) {
 
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
+    const resolvedCategoryId = formData.category_id || (!isNew ? item?.category_id : "") || "";
 
     if (!formData.title.trim()) {
       toast.error(t("detail.titleRequired"));
       return;
     }
 
-    if (!formData.category_id) {
+    if (!resolvedCategoryId) {
       toast.error(t("detail.categoryRequired"));
       return;
     }
@@ -227,7 +364,7 @@ export default function ProductDetailClient({ id, itemType }: Props) {
       description: formData.description || undefined,
       alt: formData.image_alt || undefined,
       tags: tagsArray,
-      category_id: formData.category_id || "",
+      category_id: resolvedCategoryId,
       sub_category_id: formData.sub_category_id || null,
       image_url: formData.image_url || null,
       images: formData.images || [],
@@ -242,13 +379,19 @@ export default function ProductDetailClient({ id, itemType }: Props) {
     try {
       if (isNew) {
         const result = await createProduct(payload).unwrap();
+        window.localStorage.removeItem(draftKey);
         toast.success(t("detail.createSuccess"));
         if (result?.id) {
           const typeParam = `?type=${encodeURIComponent(itemType)}`;
           router.push(`/admin/products/${result.id}${typeParam}`);
         }
       } else {
-        await updateProduct({ id, patch: payload }).unwrap();
+        const result = await updateProduct({ id, patch: payload }).unwrap();
+        window.localStorage.removeItem(draftKey);
+        baselineRef.current = JSON.stringify(formData);
+        if (result?.updated_at) {
+          await refetch();
+        }
         toast.success(t("detail.updateSuccess"));
       }
     } catch (error: unknown) {
@@ -339,6 +482,11 @@ export default function ProductDetailClient({ id, itemType }: Props) {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              {isDirty && (
+                <span className="hidden text-sm font-medium text-amber-600 md:inline">
+                  Kaydedilmemiş değişiklikler
+                </span>
+              )}
               <AdminLocaleSelect
                 options={localesForSelect}
                 value={activeLocale}
@@ -350,6 +498,14 @@ export default function ProductDetailClient({ id, itemType }: Props) {
                 loading={aiLoading}
                 disabled={isLoading || !formData.title.trim()}
               />
+              <Button onClick={() => handleSubmit()} disabled={isLoading || !isDirty}>
+                {isLoading ? (
+                  <RefreshCcw className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Save className="mr-2 h-4 w-4" />
+                )}
+                {t("actions.save")}
+              </Button>
             </div>
           </div>
         </CardHeader>
@@ -389,6 +545,16 @@ export default function ProductDetailClient({ id, itemType }: Props) {
 
         {/* ── Form Tab ─────────────────────────────────────────── */}
         <TabsContent value="form" className="mt-6 animate-in fade-in-50 duration-500">
+          <ProductSeoQuality
+            value={{
+              title: formData.title,
+              content: formData.description,
+              metaTitle: formData.meta_title,
+              metaDescription: formData.meta_description,
+              imageUrl: formData.image_url,
+            }}
+          />
+          <ProductIndexStatus locale={activeLocale} slug={formData.slug} disabled={isNew} />
           <form onSubmit={handleSubmit}>
             <Card className="premium-card">
               <CardContent className="space-y-8 pt-8">

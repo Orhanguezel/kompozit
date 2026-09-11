@@ -1,4 +1,5 @@
 import 'server-only';
+import type { ProductCategoryPreview } from '@/lib/product-categories';
 import { getLocaleSettings, API_BASE_URL } from './locale-settings';
 
 type JsonLike = string | number | boolean | null | JsonLike[] | { [key: string]: JsonLike };
@@ -76,7 +77,7 @@ export async function fetchProductCategories(locale: string): Promise<Record<str
   }
 }
 
-export async function fetchActiveProductCategorySlugs(locale: string): Promise<string[]> {
+export async function fetchActiveProductCategoryPreviews(locale: string): Promise<ProductCategoryPreview[]> {
   try {
     const params = new URLSearchParams({
       item_type: 'kompozit',
@@ -91,11 +92,20 @@ export async function fetchActiveProductCategorySlugs(locale: string): Promise<s
     });
     if (!res.ok) return [];
     const data = await res.json();
-    const products = Array.isArray(data) ? data : (data as any)?.items ?? [];
-    const slugs = products
-      .map((product: any) => String(product.category?.slug ?? '').trim())
-      .filter(Boolean);
-    return Array.from(new Set(slugs));
+    const products: Array<{ category?: { id?: string; name?: string; slug?: string }; image_url?: string }> =
+      Array.isArray(data) ? data : data?.items ?? [];
+    const categories = new Map<string, ProductCategoryPreview>();
+    for (const product of products) {
+      const slug = String(product.category?.slug ?? '').trim();
+      const id = String(product.category?.id ?? '').trim();
+      const name = String(product.category?.name ?? '').trim();
+      if (!id || !slug || !name) continue;
+      const image = String(product.image_url ?? '').trim();
+      if (!categories.has(id) || (!categories.get(id)?.image_url && image)) {
+        categories.set(id, { id, name, slug, image_url: image });
+      }
+    }
+    return [...categories.values()];
   } catch {
     return [];
   }

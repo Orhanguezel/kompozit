@@ -23,7 +23,13 @@ export function parseCorsOrigins(v?: string | string[]): boolean | string[] {
 export function pickUploadsRoot(rawFromSettings?: string | null): string {
   const fallback = path.join(process.cwd(), 'uploads');
   const envRoot = env.LOCAL_STORAGE_ROOT && String(env.LOCAL_STORAGE_ROOT).trim();
-  const candidate = envRoot || (rawFromSettings || '').trim() || fallback;
+  const configured = envRoot || (rawFromSettings || '').trim();
+  // `/uploads` is the browser URL prefix in legacy configuration. Treating it
+  // as an absolute filesystem directory writes files outside the application.
+  const candidate =
+    !configured || configured === '/uploads' || configured === 'uploads'
+      ? fallback
+      : path.resolve(configured);
 
   const ensureDir = (p: string): string => {
     try {

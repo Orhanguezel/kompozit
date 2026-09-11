@@ -160,15 +160,15 @@
       "privacyNote": "Zero spam. Industrial-grade confidentiality."
     },
     "stats": {
-      "ariaLabel": "Statistics",
-      "yoeNumber": "15+",
-      "yoeLabel": "Years in composites",
-      "projectsNumber": "500+",
-      "projectsLabel": "Project parts delivered",
-      "standardNumber": "AS9100",
-      "standardLabel": "Precision manufacturing mindset",
-      "certNumber": "ISO 9001",
-      "certLabel": "Process and quality discipline"
+      "ariaLabel": "Project scope",
+      "yoeNumber": "CTP",
+      "yoeLabel": "Composite solutions",
+      "projectsNumber": "Project",
+      "projectsLabel": "Drawing-based evaluation",
+      "standardNumber": "Technical",
+      "standardLabel": "Requirements review",
+      "certNumber": "Records",
+      "certLabel": "Product-specific verification"
     },
     "materials": {
       "sectionLabel": "Material Architecture",
@@ -176,45 +176,45 @@
       "subtitle": "We position carbon fiber and GRP composites by weight, stiffness, chemical resistance and production scalability.",
       "carbon": {
         "name": "Carbon Fiber",
-        "description": "The performance-oriented structure preferred for enclosures, panels and OEM parts requiring high stiffness, low weight and premium surface finish.",
+        "description": "Material and laminate construction are evaluated against loads, environment and product verification requirements.",
         "specs": {
           "tensile": {
             "label": "Tensile Strength",
-            "value": "600–1500 MPa"
+            "value": "Project-specific"
           },
           "density": {
             "label": "Density",
-            "value": "1.5–1.6 g/cm³"
+            "value": "Project-specific"
           },
           "modulus": {
             "label": "Elastic Modulus",
-            "value": "70–120 GPa"
+            "value": "Project-specific"
           },
           "thermal": {
             "label": "Thermal Stability",
-            "value": "High"
+            "value": "Project-specific"
           }
         }
       },
       "frp": {
         "name": "Fiberglass / GRP",
-        "description": "Versatile composite platform for tanks, panels, housings and outdoor applications balancing chemical resistance, service life and cost.",
+        "description": "Material and laminate construction are evaluated against loads, environment and product verification requirements.",
         "specs": {
           "tensile": {
             "label": "Tensile Strength",
-            "value": "200–900 MPa"
+            "value": "Project-specific"
           },
           "density": {
             "label": "Density",
-            "value": "1.8–2.0 g/cm³"
+            "value": "Project-specific"
           },
           "modulus": {
             "label": "Elastic Modulus",
-            "value": "20–45 GPa"
+            "value": "Project-specific"
           },
           "thermal": {
             "label": "Thermal Stability",
-            "value": "Medium-High"
+            "value": "Project-specific"
           }
         }
       }
@@ -599,17 +599,17 @@
         "three": "Infrastructure, energy and special project teams"
       },
       "stats": {
-        "experience": "10+ Years",
-        "expLabel": "Sector Expertise",
-        "projects": "250+ Projects",
-        "projectsLabel": "Successfully Delivered",
-        "capacity": "Dynamic Capacity",
-        "capacityLabel": "Production Power"
+        "experience": "CTP",
+        "expLabel": "Composite solutions",
+        "projects": "Project",
+        "projectsLabel": "Scope from drawings",
+        "capacity": "Planning",
+        "capacityLabel": "Confirmed with quotation"
       },
       "certifications": {
         "title": "Quality and Standards",
         "items": {
-          "one": "ISO 9001:2015 Quality Management",
+          "one": "Product-specific quality requirements",
           "two": "Technical Compliance and Tolerances",
           "three": "Material and Process Tracking",
           "four": "B2B Project Discipline"

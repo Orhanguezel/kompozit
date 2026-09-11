@@ -15,6 +15,12 @@
   --white: #f5f2ed;
   --accent: #d4a853;
 
+  /* Fixed contrast for media overlays and text on gold buttons, in either theme. */
+  --color-media-overlay: #050505;
+  --color-on-media: #fffaf0;
+  --color-on-gold: #14110d;
+  --color-gold-gradient-end: #d4af37;
+
   /* --- SEMANTIC TOKENS --- */
   --color-gold: var(--gold);
   --color-gold-bright: var(--gold-bright);
@@ -726,4 +732,82 @@ body {
   --tw-prose-pre-bg: var(--color-bg-secondary);
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
+}
+
+/* Long-form product content authored in the admin panel. */
+.product-rich-content {
+  color: var(--color-text-secondary);
+  font-size: clamp(1rem, 0.98rem + 0.12vw, 1.075rem);
+  line-height: 1.85;
+}
+
+.product-rich-content > :first-child {
+  margin-top: 0;
+}
+
+.product-rich-content h2 {
+  margin: 3.5rem 0 1.25rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.75rem);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--color-text-primary);
+}
+
+.product-rich-content h3 {
+  margin: 2.25rem 0 0.75rem;
+  font-size: clamp(1.1rem, 1rem + 0.35vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-text-primary);
+}
+
+.product-rich-content p {
+  margin: 0 0 1.25rem;
+}
+
+.product-rich-content strong {
+  color: var(--color-text-primary);
+  font-weight: 700;
+}
+
+.product-rich-content ul,
+.product-rich-content ol {
+  display: grid;
+  gap: 0.7rem;
+  margin: 1.25rem 0 1.75rem;
+  padding-left: 0;
+  list-style: none;
+}
+
+.product-rich-content li {
+  position: relative;
+  padding: 0.85rem 1rem 0.85rem 2.25rem;
+  border: 1px solid color-mix(in srgb, var(--color-gold) 12%, transparent);
+  background: color-mix(in srgb, var(--color-bg-secondary) 78%, transparent);
+}
+
+.product-rich-content li::before {
+  position: absolute;
+  top: 1.15rem;
+  left: 1rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: var(--color-gold);
+  content: '';
+}
+
+.product-rich-content hr {
+  margin: 3.5rem 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--color-gold) 18%, transparent);
+}
+
+@media (min-width: 768px) {
+  .product-rich-content ul,
+  .product-rich-content ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

@@ -35,6 +35,8 @@ export * from "@/integrations/endpoints/admin/gallery_admin.endpoints";
 export * from "@/integrations/endpoints/admin/ip_blocklist_admin.endpoints";
 export * from "@/integrations/endpoints/admin/library_admin.endpoints";
 export * from "@/integrations/endpoints/admin/menu_items_admin.endpoints";
+export * from "@/integrations/endpoints/admin/marketing_admin.endpoints";
+export * from "@/integrations/endpoints/admin/google_workspace_admin.endpoints";
 export * from "@/integrations/endpoints/admin/newsletter_admin.endpoints";
 export * from "@/integrations/endpoints/admin/notifications_admin.endpoints";
 export * from "@/integrations/endpoints/admin/offers_admin.endpoints";

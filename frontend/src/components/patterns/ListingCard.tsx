@@ -30,6 +30,7 @@ export function ListingCard({
   imageSrc,
   imageAlt = '',
   imageSizes = '(max-width: 768px) 100vw, 33vw',
+  imageAspectClassName,
   listIndex,
   specs,
 }: ListingCardProps) {
@@ -45,7 +46,7 @@ export function ListingCard({
       className="product-card-cc group border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-text-primary)] shadow-[0_18px_60px_rgba(0,0,0,0.08)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)] dark:bg-[var(--color-surface-muted)] dark:shadow-[0_18px_60px_rgba(0,0,0,0.24)]"
     >
       {/* Visual Area */}
-      <div className="product-visual-cc">
+      <div className={`product-visual-cc ${imageAspectClassName ?? ''}`}>
         {imageSrc ? (
           <OptimizedImage
             src={imageSrc}

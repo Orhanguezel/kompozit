@@ -1,25 +1,21 @@
+import { APP_NAME } from '@/lib/brand-name';
 import type { MetadataRoute } from 'next';
+import { resolveBrandIcon } from '@/lib/brand-assets';
+import { fetchSetting } from '@/i18n/server';
+import { asObj } from '@/seo/helpers';
 
-export default function manifest(): MetadataRoute.Manifest {
+export default async function manifest(): Promise<MetadataRoute.Manifest> {
+  const setting = await fetchSetting("site_logo", "tr");
+  const logo = asObj(setting?.value);
+  const icon = resolveBrandIcon(String(logo.favicon_url || logo.favicon || ""), "favicon");
   return {
-    name: 'MOE Kompozit',
-    short_name: 'MOE Kompozit',
+    name: APP_NAME,
+    short_name: APP_NAME,
     description: 'Industrial solutions in carbon fiber, FRP and fiberglass composite manufacturing.',
     start_url: '/tr',
     display: 'standalone',
-    background_color: '#0f172a',
-    theme_color: '#ea580c',
-    icons: [
-      {
-        src: '/icon',
-        sizes: '64x64',
-        type: 'image/png',
-      },
-      {
-        src: '/apple-icon',
-        sizes: '180x180',
-        type: 'image/png',
-      },
-    ],
+    background_color: '#111820',
+    theme_color: '#111820',
+    icons: [{ src: icon, sizes: "any" }],
   };
 }

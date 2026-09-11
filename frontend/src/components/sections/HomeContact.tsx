@@ -1,5 +1,8 @@
 'use client';
 
+import { leadFetch } from '../../../../../packages/shared-ui/public/lib/lead-tracking';
+
+import { useLocale } from 'next-intl';
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 import { Reveal } from '@/components/motion/Reveal';
@@ -40,6 +43,8 @@ const CONTACT_FALLBACK: Required<HomeContactInfo> = {
 };
 
 export function HomeContact({ labels, contactInfo }: HomeContactProps) {
+  const locale = useLocale();
+  const [result, setResult] = useState('');
   const [sending, setSending] = useState(false);
 
   const info = {
@@ -59,14 +64,14 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
       email: (formData.get('email') as string) || '',
       message: (formData.get('message') as string) || '',
       source: 'kompozit',
-      locale: window.location.pathname.split('/')[1] || 'tr',
-      consent_marketing: true,
-      consent_terms: true,
+      locale,
+      consent_marketing: formData.get('consent_marketing') === 'on',
+      consent_terms: formData.get('consent_terms') === 'on',
     };
 
     setSending(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/offers`, {
+      const res = await leadFetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/offers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -74,11 +79,11 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
 
       if (!res.ok) throw new Error('Failed to send');
 
-      alert('Mesajınız başarıyla iletildi. Teşekkürler!');
+      setResult(locale === 'en' ? 'Your message was sent. Thank you!' : 'Mesajınız başarıyla iletildi. Teşekkürler!');
       form.reset();
     } catch (err) {
       console.error('Contact error:', err);
-      alert('Mesaj gönderilirken bir hata oluştu. Lütfen tekrar deneyin.');
+      setResult(locale === 'en' ? 'Your message could not be sent. Please try again.' : 'Mesaj gönderilemedi. Lütfen tekrar deneyin.');
     } finally {
       setSending(false);
     }
@@ -180,10 +185,10 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                 <form className="relative z-10 space-y-6" onSubmit={handleSubmit}>
                   <div className="grid gap-6 sm:grid-cols-2">
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
+                      <label htmlFor="homecontact-1" className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                         {labels.namePlaceholder}
                       </label>
-                      <input
+                      <input id="homecontact-1"
                         type="text"
                         name="name"
                         required
@@ -192,10 +197,10 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
+                      <label htmlFor="homecontact-2" className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                         {labels.emailPlaceholder}
                       </label>
-                      <input
+                      <input id="homecontact-2"
                         type="email"
                         name="email"
                         required
@@ -206,10 +211,10 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
+                    <label htmlFor="homecontact-3" className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--color-text-muted)]">
                       {labels.messagePlaceholder}
                     </label>
-                    <textarea
+                    <textarea id="homecontact-3"
                       name="message"
                       required
                       rows={4}
@@ -218,6 +223,15 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                     />
                   </div>
 
+                  <label className="flex items-start gap-3 text-sm">
+                    <input type="checkbox" name="consent_terms" required className="mt-1" />
+                    <span>{locale === 'en' ? 'I have read the ' : 'Okudum ve kabul ediyorum: '}<a href={`/${locale}/legal/privacy`} className="underline">{locale === 'en' ? 'privacy notice' : 'gizlilik bildirimi'}</a></span>
+                  </label>
+                  <label className="flex items-start gap-3 text-sm">
+                    <input type="checkbox" name="consent_marketing" className="mt-1" />
+                    <span>{locale === 'en' ? 'I would like to receive marketing updates (optional).' : 'Pazarlama duyuruları almak istiyorum (isteğe bağlı).'}</span>
+                  </label>
+                  <p role="status" aria-live="polite">{result}</p>
                   <button
                     type="submit"
                     disabled={sending}
