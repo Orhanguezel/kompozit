@@ -225,13 +225,18 @@ export function Header({
                 </>
               )}
            </Link>
-           <button
-             onClick={() => setMobileOpen(false)}
-             className="flex size-12 items-center justify-center border border-[var(--gold)]/15 bg-white/5 text-[var(--gold)]"
-             aria-label="Close menu"
-           >
-             <X className="size-6" />
-           </button>
+           {/* Tema ve dil, menunun ustunde: kullanici istegi (2026-09-11) */}
+           <div className="flex items-center gap-2">
+             <ThemeToggle />
+             <LanguageSwitcher locale={locale} activeLocales={activeLocales} />
+             <button
+               onClick={() => setMobileOpen(false)}
+               className="flex size-12 items-center justify-center border border-[var(--gold)]/15 bg-white/5 text-[var(--gold)]"
+               aria-label="Close menu"
+             >
+               <X className="size-6" />
+             </button>
+           </div>
         </div>
 
         <div className="relative z-10 mx-auto max-w-lg space-y-8 px-6 py-10 sm:px-8 sm:py-12">
@@ -276,16 +281,6 @@ export function Header({
               <span className={offerStyles.hoverLabel} aria-hidden="true">{offerLines}</span>
             </Link>
 
-            <div className="grid grid-cols-2 gap-3">
-               <div className="flex flex-col items-center gap-2 border border-[var(--gold)]/10 bg-white/5 p-4">
-                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)]">{isTurkish ? 'Tema' : 'Theme'}</span>
-                 <ThemeToggle />
-               </div>
-               <div className="flex flex-col items-center gap-2 border border-[var(--gold)]/10 bg-white/5 p-4">
-                 <span className="text-[10px] font-bold uppercase tracking-[2px] text-[var(--silver)]">{isTurkish ? 'Dil' : 'Locale'}</span>
-                 <LanguageSwitcher locale={locale} activeLocales={activeLocales} />
-               </div>
-            </div>
           </div>
 
           <div className="grid gap-5 border-t border-[var(--gold)]/10 pt-8 text-[var(--silver)]">

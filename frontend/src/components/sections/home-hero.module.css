@@ -100,12 +100,14 @@ section.hero {
 }
 
 @media (max-width: 767px) {
-  section.hero { padding-top: 12px; }
-  .layout { grid-template-columns: 1fr; padding-inline: 24px; gap: 32px; }
-  .copy { padding-block: 32px 0; }
+  /* Sabit header'in altindaki bosluk main padding'inden gelir; hero ek bosluk eklemez (kullanici geri bildirimi 2026-09-11). */
+  section.hero { padding-top: 0; }
+  .layout { grid-template-columns: 1fr; padding-inline: 24px; gap: 24px; }
+  .copy { padding-block: 8px 0; }
+  .eyebrow { margin-bottom: 14px; }
   .hero .title { font-size: clamp(36px, 7.8vw, 56px); }
-  .subtitle { margin-top: 24px; font-size: 15px; line-height: 1.75; }
-  .actions { margin-top: 28px; gap: 12px; }
+  .subtitle { margin-top: 18px; font-size: 15px; line-height: 1.75; }
+  .actions { margin-top: 24px; gap: 12px; }
   .actions a { padding-inline: 18px; letter-spacing: 1px; }
   .visual { min-height: 0; aspect-ratio: 5 / 4; margin-bottom: 32px; }
 }
@@ -303,7 +305,7 @@ section.hero {
 }
 
 @media (max-width: 767px) {
-  .showcase { gap: 14px; padding: 0 0 36px; }
+  .showcase { gap: 12px; padding: 0 0 28px; }
   .mosaic {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-rows: auto;
