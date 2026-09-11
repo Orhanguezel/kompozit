@@ -101,7 +101,10 @@
         "b2bValue": "B2B",
         "b2bLabel": "Proje odaklı iş birliği"
       },
-      "scrollHint": "Aşağı kaydır"
+      "scrollHint": "Aşağı kaydır",
+      "showcaseHeading": "Ürün Gruplarımız",
+      "showcaseViewAll": "{count} ürünün tümünü gör",
+      "showcaseCategories": "Ürün kategorileri"
     },
     "products": {
       "title": "Ürünlerimiz",

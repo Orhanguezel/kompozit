@@ -30,6 +30,11 @@ import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { fetchHomePageContent } from '@/features/site-settings/home';
 import { buildMediaAlt } from '@/lib/media-seo';
 import heroStyles from '@/components/sections/home-hero.module.css';
+import {
+  HeroProductShowcase,
+  collectShowcaseCategories,
+  pickShowcaseProducts,
+} from '@/components/sections/HeroProductShowcase';
 
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 const PRODUCT_PLACEHOLDER_SRC = '/media/product-placeholder.svg';
@@ -61,7 +66,7 @@ function homeHref(locale: string, path: string): string {
 async function fetchFeaturedProducts(locale: string) {
   try {
     const res = await fetch(
-      `${API_BASE_URL}/products?item_type=kompozit&is_active=1&locale=${locale}&limit=6&sort=order_num&order=desc`,
+      `${API_BASE_URL}/products?item_type=kompozit&is_active=1&locale=${locale}&limit=24&sort=order_num&order=desc`,
       { next: { revalidate: 300 } },
     );
     if (!res.ok) return [];
@@ -144,6 +149,14 @@ export default async function HomePage({
   } = homeContent;
 
   const visibleProducts = products.length > 0 ? products.slice(0, 6) : getFallbackProducts(locale).slice(0, 6);
+  const showcaseSource = products.length > 0 ? products : getFallbackProducts(locale);
+  const heroShowcaseProducts = pickShowcaseProducts(showcaseSource, 3);
+  const heroShowcaseCategories = collectShowcaseCategories(showcaseSource, 6);
+  const heroShowcaseLabels = {
+    heading: t('home.hero.showcaseHeading'),
+    viewAll: t('home.hero.showcaseViewAll', { count: showcaseSource.length }),
+    categories: t('home.hero.showcaseCategories'),
+  };
   const visibleGalleries = galleries.length > 0 ? galleries.slice(0, 6) : getFallbackGalleries(locale);
   const aboutVisualRaw = aboutApi?.imageUrl || ABOUT_VISUAL_DEFAULT_SRC;
   const aboutVisualSrc = resolvePublicAssetUrl(aboutVisualRaw) ?? aboutVisualRaw ?? GALLERY_PLACEHOLDER_SRC;
@@ -204,17 +217,26 @@ export default async function HomePage({
                   </Link>
                 </div>
               </div>
-              <div className={heroStyles.visual} aria-hidden="true">
-                <Image
-                  src="/brand/hero/composite-materials-2026-09-09.webp"
-                  alt=""
-                  fill
-                  priority
-                  fetchPriority="high"
-                  sizes="(max-width: 767px) calc(100vw - 48px), 50vw"
-                  className={heroStyles.image}
+              {heroShowcaseProducts.length >= 2 ? (
+                <HeroProductShowcase
+                  locale={locale}
+                  products={heroShowcaseProducts}
+                  categories={heroShowcaseCategories}
+                  labels={heroShowcaseLabels}
                 />
-              </div>
+              ) : (
+                <div className={heroStyles.visual} aria-hidden="true">
+                  <Image
+                    src="/brand/hero/composite-materials-2026-09-09.webp"
+                    alt=""
+                    fill
+                    priority
+                    fetchPriority="high"
+                    sizes="(max-width: 767px) calc(100vw - 48px), 50vw"
+                    className={heroStyles.image}
+                  />
+                </div>
+              )}
             </div>
           </section>
         );

@@ -101,7 +101,10 @@
         "b2bValue": "B2B",
         "b2bLabel": "Project-based collaboration"
       },
-      "scrollHint": "Scroll down"
+      "scrollHint": "Scroll down",
+      "showcaseHeading": "Our Product Range",
+      "showcaseViewAll": "See all {count} products",
+      "showcaseCategories": "Product categories"
     },
     "products": {
       "title": "Our Products",
