@@ -21,6 +21,12 @@ type ListingCardProps = {
   listIndex?: number;
   /** Rotates placeholder gradient when `imageSrc` is missing (0–5). */
   visualVariant?: number;
+  /**
+   * Heading level for the card title. Listing pages where the cards are the
+   * page's top-level content pass 'h2' so the outline does not jump H1 → H3;
+   * cards nested under a section heading keep the default 'h3'.
+   */
+  headingLevel?: 'h2' | 'h3';
 };
 
 export function ListingCard({
@@ -33,6 +39,7 @@ export function ListingCard({
   imageAspectClassName,
   listIndex,
   specs,
+  headingLevel: Heading = 'h3',
 }: ListingCardProps) {
   const paddedIndex = listIndex != null ? String(listIndex).padStart(2, '0') : null;
   const geometricIcon = listIndex === 1 ? '■' : listIndex === 2 ? '◆' : '◇';
@@ -77,9 +84,9 @@ export function ListingCard({
 
       {/* Info Area */}
       <div className="p-8 lg:p-10">
-        <h3 className="line-clamp-1 font-display text-[1.4rem] font-normal uppercase tracking-[3px] text-[var(--color-text-primary)] transition-colors duration-300 group-hover:text-[var(--color-gold)]">
+        <Heading className="line-clamp-1 font-display text-[1.4rem] font-normal uppercase tracking-[3px] text-[var(--color-text-primary)] transition-colors duration-300 group-hover:text-[var(--color-gold)]">
           {title}
-        </h3>
+        </Heading>
 
         {plainDescription && (
           <p className="mt-4 line-clamp-3 text-sm font-light leading-relaxed text-[var(--color-text-secondary)]">

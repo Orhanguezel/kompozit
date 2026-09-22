@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
+import Image from '@/components/ui/MeasuredImage';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { ArrowRight, ChevronDown, Clock3, Mail, MapPin, Package, Phone } from 'lucide-react';
@@ -118,7 +118,7 @@ export function DesktopMegaMenu({ items, locale, contact }: {
                   }}>
                   <div className={styles.panelBody}>
                   <div className={styles.panelHeading}>
-                    <h2>{item.title}</h2>
+                    <p className={styles.title}>{item.title}</p>
                     {!isGroup && <Link href={item.url}>{children.find((child) => child.url === item.url)?.title || item.title}<ArrowRight size={16} /></Link>}
                   </div>
                   {isCollection ? (
@@ -126,7 +126,8 @@ export function DesktopMegaMenu({ items, locale, contact }: {
                       {productCategories.map((child) => (
                         <Link href={child.url} key={child.url} title={child.title} className={styles.card}>
                           <span className={styles.image}>
-                            {child.image ? <Image src={child.image} alt="" fill sizes="(min-width:1280px) 230px, 180px" /> : <Package aria-hidden="true" size={36} />}
+                            {/* Kartin erisilebilir adi zaten baslik metninden geliyor; gorsel dekoratif. */}
+                            {child.image ? <Image src={child.image} alt="" aria-hidden="true" fill sizes="(min-width:1280px) 230px, 180px" /> : <Package aria-hidden="true" size={36} />}
                           </span>
                           <span className={styles.cardTitle}>{child.title}<ArrowRight aria-hidden="true" size={16} /></span>
                           {child.description && <span className={styles.description}>{child.description}</span>}
@@ -139,11 +140,11 @@ export function DesktopMegaMenu({ items, locale, contact }: {
                         {children.map((child) => <Link href={child.url} key={child.url} title={child.title}>{child.title}<ArrowRight aria-hidden="true" size={16} /></Link>)}
                       </div>
                       {products && productCategories.length > 0 && <div className={styles.related}>
-                        <h3><Link href={products.url}>{products.title}</Link></h3>
+                        <p className={styles.title}><Link href={products.url}>{products.title}</Link></p>
                         {productCategories.map((child) => <Link href={child.url} key={child.url}>{child.title}</Link>)}
                       </div>}
                       <aside className={styles.contact}>
-                        <h3>{t('contact')}</h3>
+                        <p className={styles.title}>{t('contact')}</p>
                         {contact?.address && <p><MapPin size={16} /><span>{contact.address}</span></p>}
                         {contact?.hours && <p><Clock3 size={16} /><span>{contact.hours}</span></p>}
                         {contact?.phone && <a href={`tel:${contact.phone.replace(/\s/g, '')}`}><Phone size={16} /><span>{contact.phone}</span></a>}

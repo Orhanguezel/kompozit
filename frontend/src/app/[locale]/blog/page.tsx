@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -116,10 +117,11 @@ export default async function BlogPage({
               {visiblePosts.map((post: any, index: number) => (
                 <Reveal key={post.id ?? post.title} delay={100 * (index % 6)}>
                   <ListingCard
+                    headingLevel="h2"
                     href={post.slug ? localizedPath(locale, `/blog/${post.slug}`) : localizedPath(locale, '/contact')}
                     title={post.title}
                     lineLabel={t('common.listingArticleLine')}
-                    description={post.description}
+                    description={post.summary || post.description}
                     imageSrc={
                       resolvePublicAssetUrl(post.image_url ?? post.featured_image) ??
                       post.image_url ??
@@ -148,6 +150,7 @@ export default async function BlogPage({
           </div>
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="blog" />
     </div>
   );
 }

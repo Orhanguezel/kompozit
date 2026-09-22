@@ -243,14 +243,22 @@ export function Header({
           <ul className="space-y-2.5">
             {items.map((item, index) => (
               <li key={item.url} style={{ transitionDelay: `${index * 50}ms` }} className={`transition-all duration-500 ${mobileOpen ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-                <Link
-                  href={item.url!}
-                  title={`${item.title} sayfasına git`}
-                  className="block rounded-xl px-3 py-2 font-display text-2xl uppercase leading-tight tracking-[1px] text-[var(--white)] transition-colors hover:bg-white/5 hover:text-[var(--gold)] sm:text-3xl"
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.title}
-                </Link>
+                {/* Bir grup basligi kendi sayfasi olmadiginda url '#' geliyor.
+                    Link olarak basilirsa hedefsiz bag olusuyor; baslik olarak basiliyor. */}
+                {item.url === '#' ? (
+                  <p className="block rounded-xl px-3 py-2 font-display text-2xl uppercase leading-tight tracking-[1px] text-[var(--white)] sm:text-3xl">
+                    {item.title}
+                  </p>
+                ) : (
+                  <Link
+                    href={item.url!}
+                    title={`${item.title} sayfasına git`}
+                    className="block rounded-xl px-3 py-2 font-display text-2xl uppercase leading-tight tracking-[1px] text-[var(--white)] transition-colors hover:bg-white/5 hover:text-[var(--gold)] sm:text-3xl"
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                )}
                 {item.children?.length && !isSolutionsItem(item) ? (
                   <div className="ml-3 mt-2 grid gap-2 border-l border-[var(--gold)]/15 pl-4">
                     {item.children.map((child) => (

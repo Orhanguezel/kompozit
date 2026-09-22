@@ -13,6 +13,11 @@ type MediaOverlayCardProps = {
   meta?: ReactNode;
   sizes: string;
   aspectClassName?: string;
+  /**
+   * Heading level for the card title. The gallery listing passes 'h2' because
+   * the cards are the page's top-level content and H1 → H3 is a level skip.
+   */
+  headingLevel?: 'h2' | 'h3';
 };
 
 export function MediaOverlayCard({
@@ -24,6 +29,7 @@ export function MediaOverlayCard({
   meta,
   sizes,
   aspectClassName = 'aspect-[3/2]',
+  headingLevel: Heading = 'h3',
 }: MediaOverlayCardProps) {
   return (
     <Link
@@ -51,9 +57,9 @@ export function MediaOverlayCard({
               {meta}
             </div>
           ) : null}
-          <h3 className="font-[var(--font-display)] text-[1.6rem] font-normal uppercase leading-tight tracking-[0.08em] text-[var(--color-on-media)] drop-shadow-[0_2px_14px_rgba(0,0,0,1)] sm:text-[2rem]">
+          <Heading className="font-[var(--font-display)] text-[1.6rem] font-normal uppercase leading-tight tracking-[0.08em] text-[var(--color-on-media)] drop-shadow-[0_2px_14px_rgba(0,0,0,1)] sm:text-[2rem]">
             {title}
-          </h3>
+          </Heading>
           <div className="mt-3 grid grid-rows-[0fr] opacity-0 transition-all duration-500 group-hover:grid-rows-[1fr] group-hover:opacity-100">
              <div className="overflow-hidden">
                 {stripHtmlToText(description) ? (

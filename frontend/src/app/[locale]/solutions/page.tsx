@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
 
 import { getTranslations, setRequestLocale } from 'next-intl/server';
@@ -104,6 +105,7 @@ export default async function SolutionsPage({
                 return (
                   <Reveal key={item.id ?? solutionSlug ?? item.title} delay={index * 50} className="grid-item-cc">
                     <ListingCard
+                      headingLevel="h2"
                       listIndex={index + 1}
                       visualVariant={index}
                       href={solutionSlug ? localizedPath(locale, `/solutions/${solutionSlug}`) : localizedPath(locale, '/solutions')}
@@ -143,6 +145,7 @@ export default async function SolutionsPage({
           </Reveal>
         </div>
       </section>
+      <PageGuide locale={locale} pageKey="solutions" />
     </main>
   );
 }

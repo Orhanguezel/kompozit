@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -134,6 +135,7 @@ export default async function GalleryPage({
                     className={`grid-item-cc group relative overflow-hidden ${isLarge ? 'lg:row-span-2 h-[450px] lg:h-[900px]' : 'h-[450px]'}`}
                   >
                     <MediaOverlayCard
+                      headingLevel="h2"
                       href={g.slug ? localizedPath(locale, `/gallery/${g.slug}`) : localizedPath(locale, '/gallery')}
                       src={
                         resolvePublicAssetUrl(
@@ -159,6 +161,7 @@ export default async function GalleryPage({
           </div>
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="gallery" />
     </main>
   );
 }

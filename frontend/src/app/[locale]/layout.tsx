@@ -266,7 +266,8 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="anonymous" />
+        {/* preconnect yok: butun gorseller ayni origin'den (/uploads, /media, /_next/image)
+            geliyor. Kullanilmayan origin hint'i tarayiciya bos baglanti actiriyordu. */}
         <ThemeBootScript />
         <JsonLd data={orgGraph} />
       </head>

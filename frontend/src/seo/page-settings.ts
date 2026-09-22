@@ -85,6 +85,36 @@ export async function fetchPageSeo(
   return EMPTY_ENTRY;
 }
 
+/**
+ * Reads every page entry of the locale-scoped `seo_pages` setting in one
+ * request, merging the global ('*') row underneath the locale row. Used by
+ * llms.txt, which needs real page titles and descriptions for all paths and
+ * must not fire one request per page.
+ */
+export async function fetchAllPageSeo(
+  locale: string,
+): Promise<Partial<Record<PageSeoKey, PageSeoEntry>>> {
+  const [localized, global] = await Promise.all([
+    fetchSetting('seo_pages', locale),
+    fetchSetting('seo_pages', '*'),
+  ]);
+  const localePages = asObject(coerceJson(asObject(localized).value));
+  const globalPages = asObject(coerceJson(asObject(global).value));
+  const keys = new Set([...Object.keys(globalPages), ...Object.keys(localePages)]);
+
+  const out: Partial<Record<PageSeoKey, PageSeoEntry>> = {};
+  for (const key of keys) {
+    const pageKey = key as PageSeoKey;
+    const localeEntry = readEntry(localized, pageKey);
+    const entry =
+      localeEntry.title || localeEntry.description
+        ? localeEntry
+        : readEntry(global, pageKey);
+    if (entry.title || entry.description) out[pageKey] = entry;
+  }
+  return out;
+}
+
 export type PageMetadataInput = {
   locale: string;
   pathname: string;
@@ -109,7 +139,9 @@ export async function buildPageMetadataFromSettings(input: PageMetadataInput): P
   const title = entry.title || input.fallback.title;
   const description = entry.description || input.fallback.description;
   const ogFromEntry = entry.og_image ? resolvePublicAssetUrl(entry.og_image) ?? entry.og_image : '';
-  const ogImage = ogFromEntry || input.ogImage || undefined;
+  // Keep explicitly managed page artwork; otherwise generate a distinct labelled card.
+  const cardQuery = new URLSearchParams({ title, locale: input.locale, page: input.pathname });
+  const ogImage = ogFromEntry || `/share-image?${cardQuery}`;
   const noIndex = entry.no_index || input.noIndex || false;
 
   return buildPageMetadata({

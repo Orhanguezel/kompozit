@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import { APP_NAME } from '@/lib/brand-name';
 import 'server-only';
 
@@ -217,6 +218,7 @@ export default async function ProductsPage({
               {visibleProducts.map((p: any, index: number) => (
                 <Reveal key={p.id ?? p.title} delay={index * 40} className="grid-item-cc">
                   <ListingCard
+                    headingLevel="h2"
                     listIndex={index + 1}
                     visualVariant={index}
                     href={p.slug ? localizedPath(locale, `/products/${p.slug}`) : `${localizedPath(locale, '/offer')}?product=${encodeURIComponent(p.title)}`}
@@ -249,6 +251,7 @@ export default async function ProductsPage({
           <ProductB2bBanner locale={locale} content={b2bContent} />
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="products" />
     </main>
   );
 }
