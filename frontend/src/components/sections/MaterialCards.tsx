@@ -70,7 +70,7 @@ export async function MaterialCards({ locale, fromApi }: { locale: string; fromA
                 {description}
               </p>
 
-              <dl className="mt-12 grid grid-cols-2 gap-0.5 bg-[var(--gold)]/10">
+              <dl className="mt-12 grid grid-cols-1 min-[400px]:grid-cols-2 gap-0.5 bg-[var(--gold)]/10">
                 {specs.map((s) => (
                   <div key={s.key} className="bg-[var(--carbon)] p-6 transition-colors hover:bg-[var(--graphite)]">
                     <dt className="text-[0.65rem] font-bold uppercase tracking-[3px] text-[var(--silver)] opacity-60">

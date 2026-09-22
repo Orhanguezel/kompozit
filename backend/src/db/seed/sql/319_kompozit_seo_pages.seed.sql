@@ -22,25 +22,25 @@ VALUES (
   'tr',
   JSON_OBJECT(
     'home', JSON_OBJECT(
-      'title',       'Karbon Fiber, CTP ve Cam Elyaf Kompozit Üretimi',
+      'title',       'Karbon Fiber ve CTP Kompozit Üretimi',
       'description', 'MOE Kompozit; karbon fiber, CTP ve cam elyaf üretiminde numune, mühendislik ve seri üretim desteği sunan B2B kompozit markasıdır.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'about', JSON_OBJECT(
-      'title',       'Hakkımızda',
+      'title',       'Hakkımızda ve Kompozit Üretim Yaklaşımımız',
       'description', 'MOE Kompozit''in Ensotek mühendislik birikimiyle karbon fiber, CTP ve cam elyaf projelerinde nasıl çalıştığını keşfedin.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'contact', JSON_OBJECT(
-      'title',       'İletişim — Numune ve Teklif İçin Teknik İletişim',
+      'title',       'Kompozit Projeleriniz İçin İletişim',
       'description', 'Karbon fiber, CTP ve cam elyaf projeniz için teknik uygunluk, numune, termin ve teklif görüşmesi yapmak üzere bize ulaşın.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'products', JSON_OBJECT(
-      'title',       'Ürünlerimiz — Karbon Fiber, CTP ve Cam Elyaf Parçalar',
+      'title',       'Karbon Fiber, CTP ve Cam Elyaf Ürünler',
       'description', 'Karbon fiber, CTP ve cam elyaf kompozit ürünleri; hafiflik, dayanım, yüzey kalitesi ve tekrarlanabilir B2B üretim için inceleyin.',
       'og_image',    '',
       'no_index',    FALSE
@@ -52,7 +52,7 @@ VALUES (
       'no_index',    FALSE
     ),
     'solutions', JSON_OBJECT(
-      'title',       'Çözümler',
+      'title',       'Endüstriyel Kompozit Çözümleri',
       'description', 'Saksı, tank, defin grubu ve özel B2B kompozit imalat çözümlerinde malzeme seçimi, üretim disiplini ve teklif adımlarını görün.',
       'og_image',    '',
       'no_index',    FALSE
@@ -64,7 +64,7 @@ VALUES (
       'no_index',    FALSE
     ),
     'gallery', JSON_OBJECT(
-      'title',       'Galeri — Kompozit Üretim ve Proje Görselleri',
+      'title',       'Kompozit Üretim ve Proje Galerisi',
       'description', 'Kompozit üretim tesisi, kalıplama, montaj, ürün detayları ve tamamlanan proje görsellerini MOE Kompozit galerisinde inceleyin.',
       'og_image',    '',
       'no_index',    FALSE
@@ -76,13 +76,13 @@ VALUES (
       'no_index',    FALSE
     ),
     'references', JSON_OBJECT(
-      'title',       'Referanslar — Kurumsal İş Birliği ve Teslim Disiplini',
+      'title',       'Kompozit Proje Referansları ve İş Birliği',
       'description', 'MOE Kompozit referansları; kurumsal iş birlikleri, uygulama tipleri ve tekrarlanabilir kompozit üretim disiplinini özetler.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'blog', JSON_OBJECT(
-      'title',       'Blog — Kompozit Mühendislik ve Üretim Notları',
+      'title',       'Kompozit Mühendisliği ve Üretim Blogu',
       'description', 'Karbon fiber, CTP, cam elyaf, kalıplama, yüzey kalitesi ve kompozit sektör uygulamaları hakkında teknik blog içerikleri.',
       'og_image',    '',
       'no_index',    FALSE
@@ -94,7 +94,7 @@ VALUES (
       'no_index',    FALSE
     ),
     'offer', JSON_OBJECT(
-      'title',       'Teklif Talebi — Kompozit Teklif, Uygunluk ve Termin',
+      'title',       'Kompozit Üretim İçin Teklif Talebi',
       'description', 'Kompozit projeniz için ürün kategorisi, sektör, miktar, termin ve teknik dosyalarla hızlı B2B teklif talebi oluşturun.',
       'og_image',    '',
       'no_index',    FALSE
@@ -120,25 +120,25 @@ VALUES (
   'en',
   JSON_OBJECT(
     'home', JSON_OBJECT(
-      'title',       'Carbon Fiber, FRP and Fiberglass Composite Manufacturing',
+      'title',       'Carbon Fiber and FRP Manufacturing',
       'description', 'MOE Kompozit is a B2B composite brand for carbon fiber, FRP and fiberglass projects, supporting sampling, engineering and repeatable production.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'about', JSON_OBJECT(
-      'title',       'About Us',
+      'title',       'About Our Composite Manufacturing',
       'description', 'Discover how MOE Kompozit applies Ensotek engineering experience to carbon fiber, FRP and fiberglass composite projects.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'contact', JSON_OBJECT(
-      'title',       'Contact — Technical Contact for Sampling and Quotes',
+      'title',       'Contact Us for Composite Projects',
       'description', 'Contact MOE Kompozit for technical fit, sampling, lead time and quote discussions for carbon fiber, FRP and fiberglass projects.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'products', JSON_OBJECT(
-      'title',       'Our Products — Carbon Fiber, FRP and Fiberglass Parts',
+      'title',       'Carbon Fiber and Fiberglass Products',
       'description', 'Browse carbon fiber, FRP and fiberglass composite products built for lightweighting, durability, surface quality and repeatable B2B production.',
       'og_image',    '',
       'no_index',    FALSE
@@ -150,7 +150,7 @@ VALUES (
       'no_index',    FALSE
     ),
     'solutions', JSON_OBJECT(
-      'title',       'Solutions',
+      'title',       'Industrial Composite Solutions',
       'description', 'Explore planter, tank, funeral-sector and custom B2B composite solutions with material selection, production discipline and quote steps.',
       'og_image',    '',
       'no_index',    FALSE
@@ -162,7 +162,7 @@ VALUES (
       'no_index',    FALSE
     ),
     'gallery', JSON_OBJECT(
-      'title',       'Gallery — Composite Production and Project Visuals',
+      'title',       'Composite Manufacturing Gallery',
       'description', 'View composite production facility, molding, assembly, product detail and completed project visuals in the MOE Kompozit gallery.',
       'og_image',    '',
       'no_index',    FALSE
@@ -174,13 +174,13 @@ VALUES (
       'no_index',    FALSE
     ),
     'references', JSON_OBJECT(
-      'title',       'References — Enterprise Collaboration and Delivery Discipline',
+      'title',       'Composite Projects and References',
       'description', 'MOE Kompozit references summarize enterprise collaboration, application types and repeatable composite production delivery discipline.',
       'og_image',    '',
       'no_index',    FALSE
     ),
     'blog', JSON_OBJECT(
-      'title',       'Blog — Composite Engineering and Production Insights',
+      'title',       'Composite Engineering and Production Blog',
       'description', 'Technical blog content on carbon fiber, FRP, fiberglass, molding, surface quality and industrial composite applications.',
       'og_image',    '',
       'no_index',    FALSE
@@ -192,7 +192,7 @@ VALUES (
       'no_index',    FALSE
     ),
     'offer', JSON_OBJECT(
-      'title',       'Quote Request — Composite Quote, Feasibility and Lead Time',
+      'title',       'Request a Composite Manufacturing Quote',
       'description', 'Create a fast B2B quote request for your composite project with category, sector, quantity, lead time and technical files.',
       'og_image',    '',
       'no_index',    FALSE

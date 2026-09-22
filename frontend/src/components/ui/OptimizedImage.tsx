@@ -1,7 +1,9 @@
 'use client';
 
 import type { CSSProperties, ReactEventHandler } from 'react';
-import Image, { type ImageProps } from 'next/image';
+import type { ImageProps } from 'next/image';
+import Image from './MeasuredImage';
+import { measuredMedia } from '@/lib/measured-media';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -60,6 +62,7 @@ export function OptimizedImage({
       // eslint-disable-next-line @next/next/no-img-element
       <img
         src={src}
+        {...measuredMedia(src)}
         alt={alt ?? ''}
         className={cn(className)}
         style={{

@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -145,9 +146,9 @@ export default async function AboutPage({
               <div className="grid gap-12 sm:grid-cols-2">
                 <Reveal delay={100}>
                   <div className="p-10 border border-(--gold)/20 bg-(--graphite) backdrop-blur-sm">
-                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-(--white) mb-8 border-b border-(--gold)/10 pb-4">
+                    <h2 className="font-display text-[1.2rem] uppercase tracking-[3px] text-(--white) mb-8 border-b border-(--gold)/10 pb-4">
                       {t('about.sections.expertiseTitle')}
-                    </h3>
+                    </h2>
                     <ul className="space-y-4">
                        {[
                          t('about.sections.expertiseItems.one'),
@@ -165,9 +166,9 @@ export default async function AboutPage({
 
                 <Reveal delay={200}>
                   <div className="p-10 border border-(--gold)/20 bg-(--graphite) backdrop-blur-sm">
-                    <h3 className="font-display text-[1.2rem] uppercase tracking-[3px] text-(--white) mb-8 border-b border-(--gold)/10 pb-4">
+                    <h2 className="font-display text-[1.2rem] uppercase tracking-[3px] text-(--white) mb-8 border-b border-(--gold)/10 pb-4">
                       {t('about.sections.processTitle')}
-                    </h3>
+                    </h2>
                     <ul className="space-y-4">
                        {[
                          t('about.sections.processItems.one'),
@@ -189,9 +190,9 @@ export default async function AboutPage({
             <aside>
               <Reveal delay={400} className="sticky top-32 space-y-8">
                 <div className="p-10 border border-(--gold)/20 bg-(--gold)/5">
-                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-(--gold) mb-6">
+                  <h2 className="font-display text-[0.7rem] uppercase tracking-[4px] text-(--gold) mb-6">
                     {t('about.sidebar.partnershipTitle')}
-                  </h3>
+                  </h2>
                   <p className="font-display text-[1.8rem] leading-tight text-(--white) mb-10">
                     {t('about.sidebar.partnershipLead')}
                   </p>
@@ -205,9 +206,9 @@ export default async function AboutPage({
                 </div>
 
                 <div className="p-10 border border-(--gold)/10 bg-(--graphite)">
-                  <h3 className="font-display text-[0.7rem] uppercase tracking-[4px] text-(--white) mb-8">
+                  <h2 className="font-display text-[0.7rem] uppercase tracking-[4px] text-(--white) mb-8">
                     {t('about.sidebar.sectorsHeading')}
-                  </h3>
+                  </h2>
                   <ul className="space-y-5">
                     {[
                       t('about.sections.sectorsItems.one'),
@@ -226,6 +227,7 @@ export default async function AboutPage({
           </div>
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="about" />
     </main>
   );
 }

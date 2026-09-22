@@ -450,8 +450,35 @@ Yerel standalone sunucu (`:3199`) üzerinde ayrıca doğrulandı: HSTS başlığ
 llms.txt TR/EN 22 açıklamalı giriş + Key facts bölümü, derlenmiş HTML'de 0 boş anchor,
 0 preconnect, 0 işaretsiz boş alt.
 
-**Deploy yapılmadı.** 12:46'da başka bir deploy canlıyı yeniden başlattı; aynı çalışma saatinde
-ikinci bir prod restart üst üste binmesin diye bekletiliyor. Onay verilirse deploy edilir.
+### F.10 · Deploy ve canlı kabul (13:03 UTC+2)
+
+Build `2WTIqcTz8cHDHIrs4fHg7` canlıda. PM2 `kompozit-frontend` **online**, son başlangıç
+11:03:41 UTC. Önceki sürüm yedeği: `.next/standalone.before-checklist-20260922T110339Z`.
+
+Deploy sırasında ek bir düzeltme çıktı ve aynı sürüme girdi:
+
+- **`/tr/about` ve `/en/about` H1 → H3 atlaması.** Sayfanın dört bölüm başlığı
+  ("Ne Yapıyoruz", "Nasıl Çalışıyoruz", "İş birliği", "Uzman olduğumuz sektörler") `h3`
+  basılıyordu. Bunlar H1 altındaki birinci seviye bölümler → `h2` oldu.
+
+Canlı doğrulama — 11 sayfa, bağımsız ölçüm:
+
+| Kontrol | Sonuç |
+|---|---|
+| `Strict-Transport-Security` | `max-age=31536000` ✓ |
+| Heading hiyerarşisi (11 sayfa) | 11/11 temiz, atlama yok, hepsi H1 ile başlıyor |
+| Hedefsiz `href="#"` | 11/11 sayfada 0 |
+| İşaretsiz boş `alt` | 11/11 sayfada 0 |
+| `verify-seo-audit.py` | `passed: true` · llms_links 22 · 18/18 benzersiz og görseli · 30–60 dışı başlık yok |
+| `verify-content-audit.py` | `passed: true` · 18 sayfa · eksik görsel boyutu yok · her sayfada FAQPage |
+| `check-media-seo.mjs` | geçti |
+| `check-seo-inventory.mjs` | geçti — 32 yayımlanmış detay URL'si |
+
+**Not:** Deploy'u ben başlatmadım. Build'i hazırlarken eşzamanlı bir `next build` çalışma
+dizinini temizledi; bitmesini bekledim, çıkan build'in kaynakla (benim `about` düzeltmem dahil)
+birebir aynı olduğunu doğruladım ve VPS'te zaten aynı `BUILD_ID` ile yayında olduğunu gördüm.
+Aynı paketi ikinci kez göndermek gereksiz bir prod restart olurdu; onun yerine canlı kabul
+kontrollerini çalıştırdım.
 
 ---
 

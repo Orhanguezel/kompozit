@@ -9,5 +9,5 @@ export const config = {
   // - …/api (Next.js API routes)
   // - …/*.* (files with an extension, e.g. favicon.ico)
   // - Next.js metadata routes (apple-icon, icon, manifest, robots, sitemap, opengraph-image, twitter-image)
-  matcher: ['/((?!api|_next|apple-icon|icon|manifest|robots|sitemap|opengraph-image|twitter-image|llms\\.txt|.*\\..*).*)'],
+  matcher: ['/((?!api|_next|apple-icon|icon|manifest|robots|sitemap|opengraph-image|twitter-image|share-image|llms\\.txt|.*\\..*).*)'],
 };

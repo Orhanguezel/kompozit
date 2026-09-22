@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import { ContactFormSection } from '@/components/sections/ContactFormSection';
 import { Reveal } from '@/components/motion/Reveal';
 import type { ParsedContactInfo } from '@/lib/contact-info';
@@ -186,6 +187,7 @@ export function ContactPage({ locale, info, labels, preselectedProduct }: Contac
           )}
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="contact" />
     </main>
   );
 }

@@ -1,0 +1,286 @@
+{
+  "solutions": {
+    "tr": [
+      "Kompozit çözüm seçim rehberi",
+      [
+        [
+          "Kompozit çözüm seçimine nereden başlanmalı?",
+          "Kompozit çözüm seçimi, parçanın kullanım amacı ve çalışma ortamıyla başlar. Taşıyacağı yükü, bağlantı noktalarını, dış ortam veya kimyasal temas koşullarını ve yüzey beklentisini birlikte tanımlayın. Karbon fiber, CTP veya cam elyaf seçimini yalnız malzeme adına göre yapmayın. Teknik çizim, hedef adet ve teslim ihtiyacı aynı değerlendirmeye girdiğinde, farklı üretim seçeneklerini aynı kabul kriterleri üzerinden karşılaştırabilirsiniz."
+        ],
+        [
+          "Numune ile seri üretim kararı nasıl ayrılır?",
+          "Numune aşamasında geometri, montaj uyumu ve yüzey beklentisi değerlendirilir; seri üretim için ayrıca tekrar edilebilirlik, kontrol planı ve kabul kriterleri belirlenir. Tek bir numunenin görünümü, tüm üretim partisinin performansını kanıtlamaz. Teklif talebinizde numune adedi ile seri üretim ihtiyacını ayrı yazın; çizim revizyonunu ve istenen test belgelerini belirtin. Böylece kalıp, parça ve doğrulama kapsamları açıkça konuşulabilir."
+        ],
+        [
+          "Teklif öncesinde hangi seçenekler karşılaştırılmalı?",
+          "Yeni kalıp ihtiyacı, mevcut kalıbın kullanımı, numune aşaması ve seri üretim adedini aynı değerlendirmede karşılaştırın. Alternatifler arasında karar verirken sadece parça fiyatına değil; çizim kapsamına, yüzey işlemlerine, kontrol ihtiyacına ve teslimat koşullarına da bakın. Eksik bir teknik gereksinim daha sonra değişiklik doğurabilir. Bu nedenle seçenekleri teklif talebinde açık sorularla belirtin ve hangi kalemlerin kapsama dâhil olduğunu teyit edin."
+        ]
+      ]
+    ],
+    "en": [
+      "Choosing a composite solution",
+      [
+        [
+          "Where should composite selection start?",
+          "Start with the function of the part and its service environment. Describe loads, mounting interfaces, outdoor or chemical exposure and surface expectations together. Do not select carbon fiber, FRP or fiberglass from the material name alone. A drawing, target quantity and delivery requirement allow manufacturing options to be compared against the same acceptance criteria, rather than against unrelated catalogue claims."
+        ],
+        [
+          "How does a prototype differ from a production order?",
+          "A prototype helps assess geometry, assembly fit and surface expectations. A production order also needs repeatability requirements, an inspection plan and agreed acceptance criteria. The appearance of one sample does not establish the performance of a complete batch. State prototype and production quantities separately, identify the drawing revision and list required reports so tooling, parts and verification can be discussed as separate items."
+        ],
+        [
+          "Which options should be compared before a quotation?",
+          "Compare new tooling, the use of existing tools, sampling and expected production quantity within the same scope. Consider drawing requirements, finishing, inspection and delivery conditions alongside part price. A missing requirement may lead to later changes. List open questions in the enquiry and ask which items are included, so the alternatives can be evaluated on a consistent basis."
+        ]
+      ]
+    ]
+  },
+  "gallery": {
+    "tr": [
+      "Kompozit üretim ve proje galerisini değerlendirme",
+      [
+        [
+          "Üretim fotoğrafında hangi ayrıntılara bakılmalı?",
+          "Kompozit üretim ve proje görsellerini incelerken parçanın geometrisine, bağlantı bölgelerine ve görünen yüzey detaylarına bakın. Fotoğrafın bitmiş ürünü, numuneyi veya üretim aşamasını gösterip göstermediğini açıklamasıyla birlikte değerlendirin. Benzer bir şekil, aynı malzeme ya da taşıma kapasitesi anlamına gelmez. İlgilendiğiniz görselin başlığını teklif talebine ekleyerek kendi ölçülerinizi ve uygulama koşullarınızı ayrıca belirtin."
+        ],
+        [
+          "Bir fotoğraf teknik uygunluğu kanıtlar mı?",
+          "Fotoğraf, görsel karşılaştırma ve ihtiyacın anlatılması için kullanılabilir; tek başına ölçü doğruluğu, mekanik dayanım veya sertifika kapsamı göstermez. Teknik uygunluk değerlendirmesinde çizim, malzeme tanımı, tolerans ve gerekiyorsa ilgili test raporu birlikte incelenmelidir. Galeride gördüğünüz bir parçayı referans gösterirken hedef ölçüyü, bağlantı biçimini ve beklenen kullanım ortamını yazmanız, görsel benzerlikle teknik gereksinimin karıştırılmasını önler."
+        ],
+        [
+          "Galerideki bir örnek teklif talebine nasıl eklenir?",
+          "İlgilendiğiniz galerinin bağlantısını veya başlığını mesajınıza ekleyin; hangi ayrıntıyı örnek aldığınızı belirtin. Ardından kendi parçanızın ölçülerini, hedef adedini, renk ve yüzey beklentisini yazın. Görselde görünmeyen montaj yüzeyleri veya iç geometri için ayrıca çizim gerekebilir. Bu yaklaşım, fotoğrafın yalnız görsel referans olarak kullanılmasını sağlar ve teklifin sizin gereksinimlerinize göre değerlendirilmesine yardımcı olur."
+        ]
+      ]
+    ],
+    "en": [
+      "Reading the composite manufacturing gallery",
+      [
+        [
+          "What should you look for in a production photograph?",
+          "Compare part geometry, mounting areas and visible surface details. Read the accompanying description to understand whether a photograph shows a finished part, a sample or a manufacturing stage. A similar shape does not establish identical materials or load capacity. Include the gallery title in your enquiry and describe your own dimensions and operating conditions separately to make the visual reference useful."
+        ],
+        [
+          "Does a photograph establish technical suitability?",
+          "A photograph can support visual comparison and help explain a requirement, but it does not prove dimensional accuracy, mechanical performance or certification scope. Technical suitability requires the drawing, material definition, tolerances and any necessary test documentation to be considered together. When referencing a gallery image, state the target dimensions, mounting arrangement and service environment so visual similarity is not mistaken for an engineering specification."
+        ],
+        [
+          "How can you reference a gallery example in an enquiry?",
+          "Include the gallery link or title and identify the feature you want to reference. Add your own dimensions, quantity, colour and finish requirements. Mounting faces or internal geometry that are not visible in a photograph may require a separate drawing. This keeps the photograph as a visual reference while allowing the quotation to address the actual requirements of your part."
+        ]
+      ]
+    ]
+  },
+  "blog": {
+    "tr": [
+      "Kompozit mühendisliği ve üretim rehberleri",
+      [
+        [
+          "Teknik blog yazıları hangi kararlara yardımcı olur?",
+          "Kompozit mühendisliği ve üretim yazıları; malzeme seçimi, üretim yöntemi ve kalite kontrol sorularını hazırlamak için bir başlangıç noktasıdır. Yazıdaki bilgiyi kendi parça geometriniz, yük koşullarınız ve üretim adedinizle birlikte değerlendirin. Genel bir teknik açıklama, belirli bir ürünün test raporu yerine geçmez. Teklif öncesinde ilgili yazının başlığını ve açıklığa kavuşturmak istediğiniz teknik soruları paylaşabilirsiniz."
+        ],
+        [
+          "Malzeme bilgisinden ürün seçimine nasıl geçilir?",
+          "Önce parçanın görevini ve çalışma ortamını tanımlayın; ardından ilgili ürün ve çözüm sayfalarında uygulama kapsamını inceleyin. Elyaf, reçine, katman yapısı ve üretim yöntemi aynı tasarımın birlikte değerlendirilmesi gereken unsurlarıdır. Bir yazıda anlatılan malzeme avantajını bütün ürünlere otomatik olarak taşımayın. Kararınızı ürün özelindeki çizim, kabul kriterleri ve gerekiyorsa numune doğrulaması üzerinden netleştirin."
+        ],
+        [
+          "Kalite kontrol yazısı okurken hangi sorular sorulmalı?",
+          "Kalite kontrol içeriğini okurken hangi özelliğin, hangi yöntemle ve hangi kabul koşuluna göre değerlendirildiğini sorun. Boyut kontrolü ile malzeme veya parça performansının doğrulanması aynı işlem değildir. Bir yöntem adı görmek, o yöntemin belirli bir ürün için uygulandığını göstermez. Kendi projeniz için gerekli kontrol kayıtlarını teklif talebinde belirtin ve teslimatta hangi belgenin beklendiğini açıkça yazın."
+        ]
+      ]
+    ],
+    "en": [
+      "Composite engineering and production guides",
+      [
+        [
+          "Which decisions can these technical guides support?",
+          "Composite engineering and production articles provide a starting point for questions about material selection, manufacturing methods and quality control. Read them alongside your part geometry, service loads and expected order quantity. General technical guidance does not replace a test report for a specific product. Before requesting a quotation, share the relevant article title and the questions you need clarified for your application."
+        ],
+        [
+          "How do you move from material information to product selection?",
+          "Define the function of the part and its service environment first, then review relevant product and solution pages. Fiber, resin, laminate construction and manufacturing method need to be evaluated together. Do not assume that an advantage discussed for a material applies to every finished component. Confirm the decision using a product drawing, acceptance criteria and sample verification where required by the project."
+        ],
+        [
+          "What questions should you ask when reading about quality control?",
+          "Ask which characteristic is checked, which method is used and which acceptance criterion applies. Dimensional inspection and verification of material or component performance are different tasks. Mentioning a method in an article does not establish that it was used for a particular product. State the required inspection records in your enquiry and identify which documents you expect at delivery."
+        ]
+      ]
+    ]
+  },
+  "about": {
+    "tr": [
+      "Kompozit üretim yaklaşımımızı değerlendirin",
+      [
+        [
+          "Bir kompozit üretim projesinin kapsamı nasıl tanımlanır?",
+          "Kompozit üretim projesini değerlendirirken tasarım, kalıp, numune, seri üretim ve kontrol gereksinimlerini ayrı başlıklar hâlinde ele alın. Mevcut kalıbın kim tarafından sağlanacağını, teknik çizimin hangi revizyonunun esas alınacağını ve teslim edilecek parçanın kabul koşullarını açıkça belirtin. Bu çerçeve, üreticiyle yapılan görüşmede kapsamın anlaşılmasına yardımcı olur; kapasite veya termin için proje özelinde yazılı teyit gerekir."
+        ],
+        [
+          "Kalite beklentisi teklif aşamasında nasıl aktarılır?",
+          "Kalite beklentisini yalnız “yüksek kalite” ifadesiyle sınırlamayın. Kritik ölçüler, montaj yüzeyleri, görünür yüzey beklentisi ve varsa test yöntemi gibi kontrol edilebilir koşulları yazın. İstenen raporun hangi ürün veya üretim partisine ait olacağını belirtin. Belge veya sertifika talep ediyorsanız kapsamını sipariş öncesinde doğrulayın; genel bir şirket tanıtımı ürün uygunluk belgesinin yerini tutmaz."
+        ],
+        [
+          "Teknik görüşmeden sipariş kapsamına nasıl geçilir?",
+          "Görüşmede açıklığa kavuşan ihtiyaçları tek bir proje özeti altında toplayın. Çizim revizyonu, numune adedi, seri üretim miktarı, yüzey beklentisi ve belge gereksinimini birbirinden ayırın. Açık kalan soruları bu özette görünür tutun. Son teklifin aynı bilgileri içerdiğini kontrol etmek; yanlış çizim, eksik işlem veya farklı teslim varsayımıyla karar verilmesini önlemeye yardımcı olur."
+        ]
+      ]
+    ],
+    "en": [
+      "Evaluating our composite manufacturing approach",
+      [
+        [
+          "How should the scope of a composite project be defined?",
+          "Consider design, tooling, prototypes, production quantities and inspection requirements as separate parts of the project. Specify who provides the tool, which drawing revision applies and how delivered parts will be accepted. This structure helps clarify scope during discussions with a manufacturer. Capacity and delivery commitments still require written confirmation for the actual project rather than assumptions based on a general company introduction."
+        ],
+        [
+          "How should quality expectations be communicated?",
+          "Describe quality through conditions that can be checked, rather than using only the phrase high quality. Include critical dimensions, assembly surfaces, appearance requirements and any specified test method. Identify whether a requested report must apply to a product or to a particular batch. Verify the scope of certificates before ordering; a company introduction is not a product conformity document."
+        ],
+        [
+          "How do discussions become an agreed order scope?",
+          "Collect clarified requirements into one project brief. Separate the drawing revision, sample quantity, production volume, surface expectations and documentation needs. Keep unresolved questions visible in the brief. Check that the final quotation reflects the same information before proceeding. This helps avoid decisions based on a different drawing, an omitted operation or an assumption about delivery that has not been agreed."
+        ]
+      ]
+    ]
+  },
+  "contact": {
+    "tr": [
+      "Kompozit projeniz için teknik iletişim",
+      [
+        [
+          "İlk mesajda hangi bilgiler paylaşılmalı?",
+          "İletişim mesajınıza ürünün kullanım amacını, yaklaşık ölçülerini, hedef adedi ve teslim beklentinizi ekleyin. Varsa teknik çizim veya ürün sayfası bağlantısını paylaşın; bilmediğiniz özellikleri tahmin etmek yerine açık soru olarak yazın. Yeni tasarım, mevcut parçanın yenilenmesi ve seri üretim ihtiyacı farklı değerlendirmeler gerektirir. Talebinizin hangi gruba girdiğini belirtmek, teknik görüşmenin doğru konudan başlamasına yardımcı olur."
+        ],
+        [
+          "Gizli teknik dosyalar nasıl ele alınmalı?",
+          "Gizlilik gerektiren bir projede ilk mesajda yalnız genel uygulamayı ve iletişim bilgilerinizi paylaşın. Ayrıntılı çizim veya müşteri verisi göndermeden önce uygun dosya paylaşım yöntemini ve gerekli gizlilik koşullarını görüşün. Teknik değerlendirme için dosya adı, revizyon ve ölçü biriminin açık olması önemlidir. Bir telefon görüşmesinde netleşen değişiklikleri de teklif kapsamına yazılı olarak ekleyin."
+        ]
+      ]
+    ],
+    "en": [
+      "Technical contact for your composite project",
+      [
+        [
+          "What should your first enquiry include?",
+          "Include the intended application, approximate dimensions, target quantity and desired delivery date. Add a drawing or a link to the relevant product if available; turn unknown specifications into explicit questions instead of guessing. A new design, replacement part and repeat production order require different discussions. Identifying the type of request helps the technical conversation start with the right scope."
+        ],
+        [
+          "How should confidential technical files be handled?",
+          "For a confidential project, start with a general description and your contact details. Agree on an appropriate file sharing method and any confidentiality requirements before sending detailed drawings or customer data. Clearly identify filenames, drawing revisions and units when technical documents are shared. Record any changes discussed by phone in the written quotation scope so both parties work from the same requirements."
+        ]
+      ]
+    ]
+  },
+  "offer": {
+    "tr": [
+      "Kompozit üretim teklifini karşılaştırma rehberi",
+      [
+        [
+          "Karşılaştırılabilir bir teklif talebi nasıl hazırlanır?",
+          "Kompozit teklif talebinde parça adı, çizim revizyonu, ölçü birimi, adet ve teslim beklentisi aynı dosyada yer almalıdır. Kalıp veya tasarım çalışması gerekiyorsa bunu parça üretiminden ayrı belirtin. Yüzey işlemi, montaj, ambalaj ve sevkiyat gibi ek kapsamları da yazın. Farklı teklifleri değerlendirirken yalnız toplam bedeli değil, numune ve kontrol gereksinimlerinin kapsama dâhil olup olmadığını karşılaştırın."
+        ],
+        [
+          "Termin ve teknik uygunluk ne zaman netleşir?",
+          "Termin ve teknik uygunluk; çizim, malzeme gereksinimi, kalıp durumu, hedef adet ve kontrol kapsamı birlikte değerlendirildiğinde netleşir. Genel bir web sayfasındaki açıklama kesin teslim taahhüdü sayılmaz. Teklif aşamasında hedef tarihi belirtin, numune onayı ve seri üretim için gereken adımları ayrı sorun. Sonradan değişen revizyon veya miktarın bedel ve teslim planına etkisini yazılı olarak teyit edin."
+        ]
+      ]
+    ],
+    "en": [
+      "Comparing composite manufacturing quotations",
+      [
+        [
+          "How do you prepare a comparable quotation request?",
+          "Include the part name, drawing revision, units, quantity and desired delivery date in the same brief. Separate any tooling or design work from part production. State additional scope such as finishing, assembly, packaging and transport. When comparing quotations, check whether sample approval and inspection requirements are included instead of comparing total prices for potentially different scopes of work."
+        ],
+        [
+          "When can delivery and technical suitability be confirmed?",
+          "Delivery and technical suitability depend on the drawing, material requirements, tooling status, quantity and inspection scope being assessed together. A general website description is not a firm delivery commitment. State your target date and ask about sample approval and production steps separately. Confirm in writing how any later drawing revision or quantity change affects the price and delivery plan before relying on the original quotation."
+        ]
+      ]
+    ]
+  },
+  "references": {
+    "tr": [
+      "Kompozit proje referansları ve iş birliği kapsamı",
+      [
+        [
+          "Bir referans kendi projeniz için nasıl değerlendirilir?",
+          "Kompozit proje referanslarını değerlendirirken yalnız sektör adına değil, parça türüne ve işin kapsamına bakın. Benzer bir uygulamada tasarım, kalıp, üretim veya montaj sorumlulukları farklı olabilir. Referansın kendi gereksiniminizle ilişkisini teknik görüşmede sorun. Yayımlanan bir tanıtım, aynı adet, termin veya performansın her yeni projede sağlanacağı anlamına gelmez; bunlar teklif ve kabul koşullarında ayrıca netleştirilmelidir."
+        ],
+        [
+          "Proje bilgisi yayımlanırken hangi ayrım önemlidir?",
+          "Uygulama örneği, izinli müşteri referansı ve teknik test sonucu farklı bilgi türleridir. Bir ürün fotoğrafı veya sektör açıklaması, müşterinin onaylı değerlendirmesi olarak sunulmamalıdır. Referans görüşmesinde paylaşılabilecek kapsamı, müşteri gizliliğini ve varsa belge erişimini ayrıca sorun. Kendi projenizi anlatırken ilgili ürün veya çözüm sayfasını belirtmeniz, hangi deneyimin karşılaştırılmasının anlamlı olduğunu netleştirmeye yardımcı olur."
+        ]
+      ]
+    ],
+    "en": [
+      "Composite project references and collaboration",
+      [
+        [
+          "How should a reference be evaluated for your project?",
+          "Look at the type of component and the scope of work, not just the industry name. Responsibilities for design, tooling, manufacturing and assembly may differ between otherwise similar applications. Ask how a published reference relates to your requirements. A project introduction does not promise the same quantity, delivery schedule or performance for every new order; these need to be agreed in the quotation and acceptance criteria."
+        ],
+        [
+          "How do application examples differ from customer evidence?",
+          "An application example, an authorised customer reference and a technical test result are different kinds of information. A product photograph or sector description should not be presented as a customer endorsement. Ask which project details can be shared, how confidentiality is handled and whether relevant documents are available. Referencing the appropriate product or solution page helps identify which experience is actually relevant to your enquiry."
+        ]
+      ]
+    ]
+  },
+  "products": {
+    "tr": [
+      "Karbon fiber, CTP ve cam elyaf ürün seçimi",
+      [
+        [
+          "Ürün listesinden doğru parçaya nasıl ulaşılır?",
+          "Ürün listesini önce kullanım alanına göre daraltın; ardından parça geometrisini, bağlantı noktalarını ve yüzey beklentinizi karşılaştırın. Karbon fiber, CTP veya cam elyaf ifadesi tek başına ürün uygunluğunu belirlemez. Ürün detayındaki kapsamı kendi teknik çiziminizle birlikte değerlendirin. Listede gördüğünüz bir model için farklı ölçü veya adet istiyorsanız ürün adını teklif talebinde belirterek değişiklikleri ayrı ayrı yazın."
+        ],
+        [
+          "Ürün özellikleri hangi belgelerle netleştirilir?",
+          "Ölçü, ağırlık, dayanım ve çalışma koşulları ürün ve tasarım özelinde doğrulanmalıdır. Talebinizde çizim revizyonunu, ölçü birimini ve gerekli kontrol veya test belgesini belirtin. Genel bir katalog görselinden sayısal performans çıkarmayın. Belirli bir sertifika ya da rapor gerekiyorsa ilgili ürün ve teslimat kapsamını sipariş öncesinde teyit edin; numune ve seri üretim kabul kriterlerini açıkça ayırın."
+        ]
+      ]
+    ],
+    "en": [
+      "Selecting carbon fiber and fiberglass products",
+      [
+        [
+          "How do you find the right part in the product list?",
+          "Narrow the list by application, then compare geometry, mounting interfaces and finish expectations. A carbon fiber, FRP or fiberglass label alone does not establish suitability. Review the product description together with your drawing. If a listed model needs different dimensions or quantities, include its name in your quotation request and describe each requested change separately so it can be assessed."
+        ],
+        [
+          "How should product specifications be confirmed?",
+          "Dimensions, weight, performance and service conditions need to be verified for the specific product and design. Identify drawing revisions, units and any required inspection or test documents in your request. Do not infer numerical performance from a catalogue image. If a certificate or report is required, confirm its product and delivery scope before ordering, and distinguish sample acceptance criteria from those for production."
+        ]
+      ]
+    ]
+  },
+  "home": {
+    "tr": [
+      "Kompozit üretimi hakkında sık sorulan sorular",
+      [
+        [
+          "Karbon fiber ve CTP projesi için hangi bilgiler gerekir?",
+          "Karbon fiber ve CTP kompozit üretim talebinde parçanın görevini, ölçülerini, hedef adedini ve çalışma koşullarını tanımlayın. Teknik çizim varsa revizyonuyla birlikte paylaşın; yoksa netleştirilmesi gereken soruları belirtin. Numune, kalıp ve seri üretim ihtiyaçlarını ayrı yazın. Böylece ilk değerlendirme, yalnız ürün adına veya fotoğrafa değil, projenizin teknik kapsamına dayanarak yapılabilir."
+        ],
+        [
+          "Katalogdaki ürün doğrudan sipariş edilebilir mi?",
+          "Kompozit ürün kataloğu uygulama ve ürün gruplarını incelemek için kullanılır. Sipariş öncesinde seçtiğiniz parçanın ölçüsü, miktarı, yüzeyi ve teslim kapsamı teklif üzerinden netleştirilmelidir. Görsel benzerliği, teknik uygunluk veya hazır stok taahhüdü olarak değerlendirmeyin. İlgilendiğiniz ürünün bağlantısını talebinize ekleyin ve varsa farklı ölçü, malzeme veya belge gereksinimlerini açıkça belirtin."
+        ]
+      ]
+    ],
+    "en": [
+      "Composite manufacturing questions",
+      [
+        [
+          "What information is needed for a carbon fiber or FRP project?",
+          "Describe the function, dimensions, target quantity and service conditions of your part. Share the current drawing revision if available, or list the questions that still need to be resolved. Separate sample, tooling and production requirements. This allows the initial review to focus on the technical scope of the project rather than relying only on a product name or photograph."
+        ],
+        [
+          "Can a catalogue product be ordered directly?",
+          "The composite catalogue helps you explore applications and product groups. Before ordering, confirm the dimensions, quantity, finish and delivery scope through a quotation. Visual similarity should not be treated as proof of technical suitability or a promise of ready stock. Include the product link in your request and clearly identify any different dimensions, materials or documentation requirements."
+        ]
+      ]
+    ]
+  }
+}

@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -122,6 +123,7 @@ export default async function OfferPage({
         </section>
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="offer" />
     </div>
   );
 }

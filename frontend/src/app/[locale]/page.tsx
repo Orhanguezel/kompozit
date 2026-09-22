@@ -1,10 +1,12 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
+import { ProjectGuide } from '@/components/sections/ProjectGuide';
 
 import dynamic from 'next/dynamic';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '@/components/ui/MeasuredImage';
 import { ArrowRight, Shield, Zap, Settings, Truck, Cpu, Award, MoveRight } from 'lucide-react';
 
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
@@ -447,6 +449,8 @@ export default async function HomePage({
       />
 
       {sectionsToRender.map((s) => renderSection(s.id))}
+      <ProjectGuide locale={locale} />
+      <PageGuide locale={locale} pageKey="home" />
     </main>
   );
 }

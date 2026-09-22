@@ -1,3 +1,4 @@
+import { measuredMedia } from '@/lib/measured-media';
 import { APP_NAME } from '@/lib/brand-name';
 import type { Metadata } from 'next';
 import { SITE_URL } from '@/lib/utils';
@@ -5,7 +6,6 @@ import { AVAILABLE_LOCALES, FALLBACK_LOCALE } from '@/i18n/locales';
 
 const DEFAULT_SITE_NAME = APP_NAME;
 const DEFAULT_TITLE_SUFFIX = APP_NAME;
-const DEFAULT_OG_IMAGE = '/opengraph-image';
 const DEFAULT_AUTHOR_NAME = APP_NAME;
 const DEFAULT_PUBLISHER_NAME = APP_NAME;
 const TITLE_SEPARATOR = ' - ';
@@ -159,8 +159,11 @@ export function buildPageMetadata(input: {
 }): Metadata {
   const siteName = input.siteName || DEFAULT_SITE_NAME;
   const url = localizedUrl(input.locale, input.pathname);
-  const image = absoluteMediaUrl(input.ogImage || DEFAULT_OG_IMAGE);
-  const images = image ? [{ url: image }] : undefined;
+  const imagePath = input.ogImage || `/share-image?${new URLSearchParams({ title: input.title, description: input.description, locale: input.locale })}`;
+  const image = absoluteMediaUrl(imagePath);
+  const generatedImage = new URL(image!, siteUrlBase()).pathname === '/share-image';
+  const dimensions = generatedImage ? { width: 1200, height: 630 } : measuredMedia(image);
+  const images = image ? [{ url: image, alt: input.title, ...dimensions }] : undefined;
   const title = buildSeoTitle(input.title);
   const description = buildSeoDescription(input.description);
   const includeLocaleAlternates = input.includeLocaleAlternates ?? true;
@@ -190,7 +193,7 @@ export function buildPageMetadata(input: {
       card: image ? 'summary_large_image' : 'summary',
       title,
       description,
-      ...(image ? { images: [image] } : {}),
+      ...(image ? { images: [{ url: image, alt: input.title }] } : {}),
     },
     robots: input.noIndex ? { index: false, follow: true } : { index: true, follow: true },
   };

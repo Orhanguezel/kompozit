@@ -137,7 +137,7 @@ export default async function BlogPostPage({
             <div className="flex items-center gap-3">
                <div className="h-[2px] w-8 rounded-full bg-[var(--color-gold)]" />
                <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--color-gold)]">
-                 Technical Insight
+                 {locale.startsWith('en') ? 'Technical Insight' : 'Teknik Bilgi'}
                </span>
             </div>
             <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal tracking-tight text-[var(--color-text-primary)] lg:text-7xl uppercase">
@@ -154,7 +154,7 @@ export default async function BlogPostPage({
                 </p>
                )}
                <div className="size-1 rounded-full bg-[var(--color-gold)]/40" />
-               <p className="text-sm font-light text-[var(--color-text-secondary)] opacity-70">Expert Content</p>
+               <p className="text-sm font-light text-[var(--color-text-secondary)] opacity-70">{locale.startsWith('en') ? 'Publisher: ' : 'Yayınlayan: '}<Link href={localizedPath(locale, '/about')} className="underline">{org.name}</Link></p>
             </div>
           </header>
 

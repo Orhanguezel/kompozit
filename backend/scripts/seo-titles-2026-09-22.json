@@ -1,0 +1,110 @@
+[
+  {
+    "locale": "tr",
+    "page": "home",
+    "before": "Karbon Fiber, CTP ve Cam Elyaf Kompozit Üretimi",
+    "after": "Karbon Fiber ve CTP Kompozit Üretimi"
+  },
+  {
+    "locale": "tr",
+    "page": "products",
+    "before": "Ürünlerimiz — Karbon Fiber, CTP ve Cam Elyaf Parçalar",
+    "after": "Karbon Fiber, CTP ve Cam Elyaf Ürünler"
+  },
+  {
+    "locale": "tr",
+    "page": "solutions",
+    "before": "Çözümler",
+    "after": "Endüstriyel Kompozit Çözümleri"
+  },
+  {
+    "locale": "tr",
+    "page": "references",
+    "before": "Referanslar — Kurumsal İş Birliği ve Teslim Disiplini",
+    "after": "Kompozit Proje Referansları ve İş Birliği"
+  },
+  {
+    "locale": "tr",
+    "page": "gallery",
+    "before": "Galeri — Kompozit Üretim ve Proje Görselleri",
+    "after": "Kompozit Üretim ve Proje Galerisi"
+  },
+  {
+    "locale": "tr",
+    "page": "blog",
+    "before": "Blog — Kompozit Mühendislik ve Üretim Notları",
+    "after": "Kompozit Mühendisliği ve Üretim Blogu"
+  },
+  {
+    "locale": "tr",
+    "page": "about",
+    "before": "Hakkımızda",
+    "after": "Hakkımızda ve Kompozit Üretim Yaklaşımımız"
+  },
+  {
+    "locale": "tr",
+    "page": "contact",
+    "before": "İletişim — Numune ve Teklif İçin Teknik İletişim",
+    "after": "Kompozit Projeleriniz İçin İletişim"
+  },
+  {
+    "locale": "tr",
+    "page": "offer",
+    "before": "Teklif Talebi — Kompozit Teklif, Uygunluk ve Termin",
+    "after": "Kompozit Üretim İçin Teklif Talebi"
+  },
+  {
+    "locale": "en",
+    "page": "home",
+    "before": "Carbon Fiber, FRP and Fiberglass Composite Manufacturing",
+    "after": "Carbon Fiber and FRP Manufacturing"
+  },
+  {
+    "locale": "en",
+    "page": "products",
+    "before": "Our Products — Carbon Fiber, FRP and Fiberglass Parts",
+    "after": "Carbon Fiber and Fiberglass Products"
+  },
+  {
+    "locale": "en",
+    "page": "solutions",
+    "before": "Solutions",
+    "after": "Industrial Composite Solutions"
+  },
+  {
+    "locale": "en",
+    "page": "references",
+    "before": "References — Enterprise Collaboration and Delivery Discipline",
+    "after": "Composite Projects and References"
+  },
+  {
+    "locale": "en",
+    "page": "gallery",
+    "before": "Gallery — Composite Production and Project Visuals",
+    "after": "Composite Manufacturing Gallery"
+  },
+  {
+    "locale": "en",
+    "page": "blog",
+    "before": "Blog — Composite Engineering and Production Insights",
+    "after": "Composite Engineering and Production Blog"
+  },
+  {
+    "locale": "en",
+    "page": "about",
+    "before": "About Us",
+    "after": "About Our Composite Manufacturing"
+  },
+  {
+    "locale": "en",
+    "page": "contact",
+    "before": "Contact — Technical Contact for Sampling and Quotes",
+    "after": "Contact Us for Composite Projects"
+  },
+  {
+    "locale": "en",
+    "page": "offer",
+    "before": "Quote Request — Composite Quote, Feasibility and Lead Time",
+    "after": "Request a Composite Manufacturing Quote"
+  }
+]

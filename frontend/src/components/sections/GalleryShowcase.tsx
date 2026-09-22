@@ -1,5 +1,5 @@
 import 'server-only';
-import Image from 'next/image';
+import Image from '@/components/ui/MeasuredImage';
 import { getTranslations } from 'next-intl/server';
 import { Reveal } from '@/components/motion/Reveal';
 import { resolvePublicAssetUrl } from '@/lib/utils';

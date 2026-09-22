@@ -1,5 +1,5 @@
 import { APP_NAME } from '@/lib/brand-name';
-import Image from 'next/image';
+import Image from '@/components/ui/MeasuredImage';
 
 export type BrandLogoConfig = { default: string; dark: string; light: string; alt?: string };
 

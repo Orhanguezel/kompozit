@@ -811,3 +811,13 @@ body {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* Long translated headings and intrinsic grid sizing must fit narrow screens. */
+@media (max-width: 639px) {
+  .section-title-cc { font-size: clamp(2rem, 8vw, 3rem); overflow-wrap: anywhere; }
+  .industrial-grid-cc { grid-template-columns: minmax(0, 1fr); }
+  .industrial-grid-cc > *, .process-step-cc > * { min-width: 0; overflow-wrap: anywhere; }
+  .process-step-cc { grid-template-columns: minmax(0, 1fr); }
+  #advantages .grid-item-cc, [data-testid="material-cards"] .grid-item-cc { padding: 1.5rem; }
+  main h2, main h3, main a, #contact p { overflow-wrap: anywhere; }
+}

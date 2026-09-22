@@ -1,3 +1,4 @@
+import { PageGuide } from '@/components/seo/PageGuide';
 import 'server-only';
 
 import { getTranslations } from 'next-intl/server';
@@ -7,7 +8,6 @@ import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
 import { JsonLd, buildPageMetadataFromSettings, jsonld, localizedUrl } from '@/seo';
 import { fetchReferences } from '@/features/references';
-import { getFallbackReferences } from '@/lib/content-fallbacks';
 import { resolvePublicAssetUrl } from '@/lib/utils';
 import { Reveal } from '@/components/motion/Reveal';
 
@@ -43,7 +43,7 @@ export default async function ReferencesPage({
   const { locale } = await params;
   const t = await getTranslations({ locale });
   const references = await fetchReferences(locale, { limit: 24, revalidate: 300 });
-  const visibleReferences = references.length > 0 ? references : getFallbackReferences(locale);
+  const visibleReferences = references;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[var(--color-bg)] text-[var(--color-text-primary)]">
@@ -108,6 +108,7 @@ export default async function ReferencesPage({
           </div>
         </div>
       </div>
+      <PageGuide locale={locale} pageKey="references" />
     </div>
   );
 }

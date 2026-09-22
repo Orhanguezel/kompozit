@@ -1,6 +1,6 @@
 'use client';
 
-import Image from 'next/image';
+import Image from '@/components/ui/MeasuredImage';
 import { Reveal } from '@/components/motion/Reveal';
 
 interface Reference {

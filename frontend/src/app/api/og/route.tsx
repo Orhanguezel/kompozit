@@ -1,8 +1,6 @@
 import { APP_NAME } from '@/lib/brand-name';
 import { ImageResponse } from 'next/og';
-import { fetchSetting } from '@/i18n/server';
-import { asObj, siteUrlBase } from '@/seo/helpers';
-import { resolveBrandLogo } from '@/lib/brand-assets';
+import { siteUrlBase } from '@/seo/helpers';
 
 export const runtime = 'nodejs';
 
@@ -11,15 +9,10 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
 
     // Get parameters with fallbacks
-    const title = searchParams.get('title') || APP_NAME;
-    const subtitle = searchParams.get('subtitle') || 'Endüstriyel Kompozit Çözümleri';
+    const title = (searchParams.get('title') || APP_NAME).slice(0, 140);
+    const english = searchParams.get('locale') === 'en';
+    const subtitle = (searchParams.get('subtitle') || (english ? 'Industrial Composite Solutions' : 'Endüstriyel Kompozit Çözümleri')).slice(0, 120);
     const domain = searchParams.get('domain') || new URL(siteUrlBase()).hostname;
-
-    const setting = await fetchSetting('site_logo', 'tr');
-    const logo = asObj(setting?.value);
-    const selected = String(logo.url || logo.logo_url || logo.logo_light_url || '');
-    const logoPath = resolveBrandLogo(selected, 'tr', 'light');
-    const logoSrc = logoPath ? new URL(logoPath, siteUrlBase()).href : '';
 
     return new ImageResponse(
       (
@@ -59,11 +52,7 @@ export async function GET(request: Request) {
               zIndex: 10,
             }}
           >
-            {logoSrc ? (
-              <img src={logoSrc} alt={APP_NAME} width="250" style={{ objectFit: 'contain' }} />
-            ) : (
-              <div style={{ fontSize: 40, fontWeight: 'bold', color: '#ea580c' }}>{APP_NAME}</div>
-            )}
+            <div style={{ fontSize: 40, fontWeight: 'bold', color: '#ea580c' }}>{APP_NAME}</div>
           </div>
 
           {/* Middle Section - Text Content */}
@@ -80,7 +69,7 @@ export async function GET(request: Request) {
             <div
               style={{
                 display: 'flex',
-                fontSize: 84,
+                fontSize: title.length > 55 ? 54 : 64,
                 fontWeight: 800,
                 letterSpacing: '-0.02em',
                 color: '#ffffff',
@@ -149,7 +138,7 @@ export async function GET(request: Request) {
                 fontWeight: 600,
               }}
             >
-              Composite Manufacturing
+              {english ? 'Composite Manufacturing' : 'Kompozit Üretimi'}
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from '@/components/ui/MeasuredImage';
 import { ArrowRight } from 'lucide-react';
 import { localizedPath } from '@/seo/helpers';
 import { resolvePublicAssetUrl, stripHtmlToText } from '@/lib/utils';
