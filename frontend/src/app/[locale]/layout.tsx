@@ -138,7 +138,7 @@ export async function generateMetadata({
       description,
       ...(ogImage ? { images: [ogImage] } : {}),
     },
-    robots: { index: robotsIndex, follow: robotsFollow },
+    robots: { index: robotsIndex, follow: robotsFollow, 'max-image-preview': 'large' },
   };
 }
 
@@ -222,7 +222,7 @@ export default async function LocaleLayout({
   const orgLogoRaw = pickFirstString(logoConfigs.default, logoConfigs.dark, logoConfigs.light);
   const orgLogoUrl = orgLogoRaw
     ? (/^https?:\/\//i.test(orgLogoRaw) ? orgLogoRaw : `${siteUrl}${orgLogoRaw.startsWith('/') ? orgLogoRaw : `/${orgLogoRaw}`}`)
-    : `${siteUrl}/icon`;
+    : `${siteUrl}/brand/moe-2026-09-09/logo-1-${locale.startsWith('en') ? 'en' : 'tr'}-light-600.webp`;
   const sameAs = Object.values(readSettingValue(socialsSetting))
     .filter((value): value is string => typeof value === 'string' && /^https?:\/\//i.test(value));
   const orgGraph = jsonld.graph([

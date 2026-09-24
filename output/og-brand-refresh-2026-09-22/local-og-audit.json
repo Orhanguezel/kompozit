@@ -1,0 +1,2289 @@
+{
+  "target": "http://127.0.0.1:3150",
+  "pages": [
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr",
+      "final": "http://127.0.0.1:3150/tr",
+      "canonical": "https://www.karbonkompozit.com.tr/tr",
+      "title": "Karbon Fiber ve CTP Kompozit Üretimi - MOE Kompozit",
+      "meta": {
+        "og:title": "Karbon Fiber ve CTP Kompozit Üretimi - MOE Kompozit",
+        "og:description": "MOE Kompozit; karbon fiber, CTP ve cam elyaf üretiminde numune, mühendislik ve seri üretim desteği sunan B2B kompozit markasıdır.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+ve+CTP+Kompozit+%C3%9Cretimi&locale=tr&page=%2F&v=brand-20260922&design=product-collage-v6",
+        "og:image:alt": "Karbon Fiber ve CTP Kompozit Üretimi",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Karbon Fiber ve CTP Kompozit Üretimi - MOE Kompozit",
+        "twitter:description": "MOE Kompozit; karbon fiber, CTP ve cam elyaf üretiminde numune, mühendislik ve seri üretim desteği sunan B2B kompozit markasıdır.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+ve+CTP+Kompozit+%C3%9Cretimi&locale=tr&page=%2F&v=brand-20260922&design=product-collage-v6",
+        "twitter:image:alt": "Karbon Fiber ve CTP Kompozit Üretimi"
+      },
+      "h1": [
+        "Karbon Fiber, CTP ve Cam Elyaf Kompozit Çözümleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products",
+      "final": "http://127.0.0.1:3150/tr/products",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products",
+      "title": "Karbon Fiber, CTP ve Cam Elyaf Ürünler - MOE Kompozit",
+      "meta": {
+        "og:title": "Karbon Fiber, CTP ve Cam Elyaf Ürünler - MOE Kompozit",
+        "og:description": "Karbon fiber, CTP ve cam elyaf kompozit ürünleri; hafiflik, dayanım, yüzey kalitesi ve tekrarlanabilir B2B üretim için inceleyin.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber%2C+CTP+ve+Cam+Elyaf+%C3%9Cr%C3%BCnler&locale=tr&page=%2Fproducts&v=brand-20260922",
+        "og:image:alt": "Karbon Fiber, CTP ve Cam Elyaf Ürünler",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Karbon Fiber, CTP ve Cam Elyaf Ürünler - MOE Kompozit",
+        "twitter:description": "Karbon fiber, CTP ve cam elyaf kompozit ürünleri; hafiflik, dayanım, yüzey kalitesi ve tekrarlanabilir B2B üretim için inceleyin.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber%2C+CTP+ve+Cam+Elyaf+%C3%9Cr%C3%BCnler&locale=tr&page=%2Fproducts&v=brand-20260922",
+        "twitter:image:alt": "Karbon Fiber, CTP ve Cam Elyaf Ürünler"
+      },
+      "h1": [
+        "Ürünlerimiz"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/solutions",
+      "final": "http://127.0.0.1:3150/tr/solutions",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/solutions",
+      "title": "Endüstriyel Kompozit Çözümleri - MOE Kompozit",
+      "meta": {
+        "og:title": "Endüstriyel Kompozit Çözümleri - MOE Kompozit",
+        "og:description": "Saksı, tank, defin grubu ve özel B2B kompozit imalat çözümlerinde malzeme seçimi, üretim disiplini ve teklif adımlarını görün.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/solutions",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=End%C3%BCstriyel+Kompozit+%C3%87%C3%B6z%C3%BCmleri&locale=tr&page=%2Fsolutions&v=brand-20260922",
+        "og:image:alt": "Endüstriyel Kompozit Çözümleri",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Endüstriyel Kompozit Çözümleri - MOE Kompozit",
+        "twitter:description": "Saksı, tank, defin grubu ve özel B2B kompozit imalat çözümlerinde malzeme seçimi, üretim disiplini ve teklif adımlarını görün.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=End%C3%BCstriyel+Kompozit+%C3%87%C3%B6z%C3%BCmleri&locale=tr&page=%2Fsolutions&v=brand-20260922",
+        "twitter:image:alt": "Endüstriyel Kompozit Çözümleri"
+      },
+      "h1": [
+        "Uygulama çözümleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/references",
+      "final": "http://127.0.0.1:3150/tr/references",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/references",
+      "title": "Kompozit Proje Referansları ve İş Birliği - MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Proje Referansları ve İş Birliği - MOE Kompozit",
+        "og:description": "MOE Kompozit referansları; kurumsal iş birlikleri, uygulama tipleri ve tekrarlanabilir kompozit üretim disiplinini özetler.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/references",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+Proje+Referanslar%C4%B1+ve+%C4%B0%C5%9F+Birli%C4%9Fi&locale=tr&page=%2Freferences&v=brand-20260922",
+        "og:image:alt": "Kompozit Proje Referansları ve İş Birliği",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Proje Referansları ve İş Birliği - MOE Kompozit",
+        "twitter:description": "MOE Kompozit referansları; kurumsal iş birlikleri, uygulama tipleri ve tekrarlanabilir kompozit üretim disiplinini özetler.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+Proje+Referanslar%C4%B1+ve+%C4%B0%C5%9F+Birli%C4%9Fi&locale=tr&page=%2Freferences&v=brand-20260922",
+        "twitter:image:alt": "Kompozit Proje Referansları ve İş Birliği"
+      },
+      "h1": [
+        "Referanslar"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/gallery",
+      "final": "http://127.0.0.1:3150/tr/gallery",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/gallery",
+      "title": "Kompozit Üretim ve Proje Galerisi - MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Üretim ve Proje Galerisi - MOE Kompozit",
+        "og:description": "Kompozit üretim tesisi, kalıplama, montaj, ürün detayları ve tamamlanan proje görsellerini MOE Kompozit galerisinde inceleyin.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/gallery",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+%C3%9Cretim+ve+Proje+Galerisi&locale=tr&page=%2Fgallery&v=brand-20260922",
+        "og:image:alt": "Kompozit Üretim ve Proje Galerisi",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Üretim ve Proje Galerisi - MOE Kompozit",
+        "twitter:description": "Kompozit üretim tesisi, kalıplama, montaj, ürün detayları ve tamamlanan proje görsellerini MOE Kompozit galerisinde inceleyin.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+%C3%9Cretim+ve+Proje+Galerisi&locale=tr&page=%2Fgallery&v=brand-20260922",
+        "twitter:image:alt": "Kompozit Üretim ve Proje Galerisi"
+      },
+      "h1": [
+        "Galeri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/blog",
+      "final": "http://127.0.0.1:3150/tr/blog",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/blog",
+      "title": "Kompozit Mühendisliği ve Üretim Blogu - MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Mühendisliği ve Üretim Blogu - MOE Kompozit",
+        "og:description": "Karbon fiber, CTP, cam elyaf, kalıplama, yüzey kalitesi ve kompozit sektör uygulamaları hakkında teknik blog içerikleri.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/blog",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+M%C3%BChendisli%C4%9Fi+ve+%C3%9Cretim+Blogu&locale=tr&page=%2Fblog&v=brand-20260922",
+        "og:image:alt": "Kompozit Mühendisliği ve Üretim Blogu",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Mühendisliği ve Üretim Blogu - MOE Kompozit",
+        "twitter:description": "Karbon fiber, CTP, cam elyaf, kalıplama, yüzey kalitesi ve kompozit sektör uygulamaları hakkında teknik blog içerikleri.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+M%C3%BChendisli%C4%9Fi+ve+%C3%9Cretim+Blogu&locale=tr&page=%2Fblog&v=brand-20260922",
+        "twitter:image:alt": "Kompozit Mühendisliği ve Üretim Blogu"
+      },
+      "h1": [
+        "Blog"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/about",
+      "final": "http://127.0.0.1:3150/tr/about",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/about",
+      "title": "Hakkımızda ve Kompozit Üretim Yaklaşımımız - MOE Kompozit",
+      "meta": {
+        "og:title": "Hakkımızda ve Kompozit Üretim Yaklaşımımız - MOE Kompozit",
+        "og:description": "MOE Kompozit'in Ensotek mühendislik birikimiyle karbon fiber, CTP ve cam elyaf projelerinde nasıl çalıştığını keşfedin.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/about",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Hakk%C4%B1m%C4%B1zda+ve+Kompozit+%C3%9Cretim+Yakla%C5%9F%C4%B1m%C4%B1m%C4%B1z&locale=tr&page=%2Fabout&v=brand-20260922",
+        "og:image:alt": "Hakkımızda ve Kompozit Üretim Yaklaşımımız",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Hakkımızda ve Kompozit Üretim Yaklaşımımız - MOE Kompozit",
+        "twitter:description": "MOE Kompozit'in Ensotek mühendislik birikimiyle karbon fiber, CTP ve cam elyaf projelerinde nasıl çalıştığını keşfedin.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Hakk%C4%B1m%C4%B1zda+ve+Kompozit+%C3%9Cretim+Yakla%C5%9F%C4%B1m%C4%B1m%C4%B1z&locale=tr&page=%2Fabout&v=brand-20260922",
+        "twitter:image:alt": "Hakkımızda ve Kompozit Üretim Yaklaşımımız"
+      },
+      "h1": [
+        "Hakkımızda"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/contact",
+      "final": "http://127.0.0.1:3150/tr/contact",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/contact",
+      "title": "Kompozit Projeleriniz İçin İletişim - MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Projeleriniz İçin İletişim - MOE Kompozit",
+        "og:description": "Karbon fiber, CTP ve cam elyaf projeniz için teknik uygunluk, numune, termin ve teklif görüşmesi yapmak üzere bize ulaşın.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/contact",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+Projeleriniz+%C4%B0%C3%A7in+%C4%B0leti%C5%9Fim&locale=tr&page=%2Fcontact&v=brand-20260922",
+        "og:image:alt": "Kompozit Projeleriniz İçin İletişim",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Projeleriniz İçin İletişim - MOE Kompozit",
+        "twitter:description": "Karbon fiber, CTP ve cam elyaf projeniz için teknik uygunluk, numune, termin ve teklif görüşmesi yapmak üzere bize ulaşın.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+Projeleriniz+%C4%B0%C3%A7in+%C4%B0leti%C5%9Fim&locale=tr&page=%2Fcontact&v=brand-20260922",
+        "twitter:image:alt": "Kompozit Projeleriniz İçin İletişim"
+      },
+      "h1": [
+        "İletişim"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/offer",
+      "final": "http://127.0.0.1:3150/tr/offer",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/offer",
+      "title": "Kompozit Üretim İçin Teklif Talebi - MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Üretim İçin Teklif Talebi - MOE Kompozit",
+        "og:description": "Kompozit projeniz için ürün kategorisi, sektör, miktar, termin ve teknik dosyalarla hızlı B2B teklif talebi oluşturun.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/offer",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+%C3%9Cretim+%C4%B0%C3%A7in+Teklif+Talebi&locale=tr&page=%2Foffer&v=brand-20260922",
+        "og:image:alt": "Kompozit Üretim İçin Teklif Talebi",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Üretim İçin Teklif Talebi - MOE Kompozit",
+        "twitter:description": "Kompozit projeniz için ürün kategorisi, sektör, miktar, termin ve teknik dosyalarla hızlı B2B teklif talebi oluşturun.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+%C3%9Cretim+%C4%B0%C3%A7in+Teklif+Talebi&locale=tr&page=%2Foffer&v=brand-20260922",
+        "twitter:image:alt": "Kompozit Üretim İçin Teklif Talebi"
+      },
+      "h1": [
+        "Teklif Talebi"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en",
+      "final": "http://127.0.0.1:3150/en",
+      "canonical": "https://www.karbonkompozit.com.tr/en",
+      "title": "Carbon Fiber and FRP Manufacturing - MOE Kompozit",
+      "meta": {
+        "og:title": "Carbon Fiber and FRP Manufacturing - MOE Kompozit",
+        "og:description": "MOE Kompozit is a B2B composite brand for carbon fiber, FRP and fiberglass projects, supporting sampling, engineering and repeatable production.",
+        "og:url": "https://www.karbonkompozit.com.tr/en",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+FRP+Manufacturing&locale=en&page=%2F&v=brand-20260922&design=product-collage-v6",
+        "og:image:alt": "Carbon Fiber and FRP Manufacturing",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Carbon Fiber and FRP Manufacturing - MOE Kompozit",
+        "twitter:description": "MOE Kompozit is a B2B composite brand for carbon fiber, FRP and fiberglass projects, supporting sampling, engineering and repeatable production.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+FRP+Manufacturing&locale=en&page=%2F&v=brand-20260922&design=product-collage-v6",
+        "twitter:image:alt": "Carbon Fiber and FRP Manufacturing"
+      },
+      "h1": [
+        "Carbon Fiber, FRP and Fiberglass Composite Solutions"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products",
+      "final": "http://127.0.0.1:3150/en/products",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products",
+      "title": "Carbon Fiber and Fiberglass Products - MOE Kompozit",
+      "meta": {
+        "og:title": "Carbon Fiber and Fiberglass Products - MOE Kompozit",
+        "og:description": "Browse carbon fiber, FRP and fiberglass composite products built for lightweighting, durability, surface quality and repeatable B2B production.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+Fiberglass+Products&locale=en&page=%2Fproducts&v=brand-20260922",
+        "og:image:alt": "Carbon Fiber and Fiberglass Products",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Carbon Fiber and Fiberglass Products - MOE Kompozit",
+        "twitter:description": "Browse carbon fiber, FRP and fiberglass composite products built for lightweighting, durability, surface quality and repeatable B2B production.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+Fiberglass+Products&locale=en&page=%2Fproducts&v=brand-20260922",
+        "twitter:image:alt": "Carbon Fiber and Fiberglass Products"
+      },
+      "h1": [
+        "Our Products"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/solutions",
+      "final": "http://127.0.0.1:3150/en/solutions",
+      "canonical": "https://www.karbonkompozit.com.tr/en/solutions",
+      "title": "Industrial Composite Solutions - MOE Kompozit",
+      "meta": {
+        "og:title": "Industrial Composite Solutions - MOE Kompozit",
+        "og:description": "Explore planter, tank, funeral-sector and custom B2B composite solutions with material selection, production discipline and quote steps.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/solutions",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Industrial+Composite+Solutions&locale=en&page=%2Fsolutions&v=brand-20260922",
+        "og:image:alt": "Industrial Composite Solutions",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Industrial Composite Solutions - MOE Kompozit",
+        "twitter:description": "Explore planter, tank, funeral-sector and custom B2B composite solutions with material selection, production discipline and quote steps.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Industrial+Composite+Solutions&locale=en&page=%2Fsolutions&v=brand-20260922",
+        "twitter:image:alt": "Industrial Composite Solutions"
+      },
+      "h1": [
+        "Application solutions"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/references",
+      "final": "http://127.0.0.1:3150/en/references",
+      "canonical": "https://www.karbonkompozit.com.tr/en/references",
+      "title": "Composite Projects and References - MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Projects and References - MOE Kompozit",
+        "og:description": "MOE Kompozit references summarize enterprise collaboration, application types and repeatable composite production delivery discipline.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/references",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Projects+and+References&locale=en&page=%2Freferences&v=brand-20260922",
+        "og:image:alt": "Composite Projects and References",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Projects and References - MOE Kompozit",
+        "twitter:description": "MOE Kompozit references summarize enterprise collaboration, application types and repeatable composite production delivery discipline.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Projects+and+References&locale=en&page=%2Freferences&v=brand-20260922",
+        "twitter:image:alt": "Composite Projects and References"
+      },
+      "h1": [
+        "References"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/gallery",
+      "final": "http://127.0.0.1:3150/en/gallery",
+      "canonical": "https://www.karbonkompozit.com.tr/en/gallery",
+      "title": "Composite Manufacturing Gallery - MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Manufacturing Gallery - MOE Kompozit",
+        "og:description": "View composite production facility, molding, assembly, product detail and completed project visuals in the MOE Kompozit gallery.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/gallery",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Manufacturing+Gallery&locale=en&page=%2Fgallery&v=brand-20260922",
+        "og:image:alt": "Composite Manufacturing Gallery",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Manufacturing Gallery - MOE Kompozit",
+        "twitter:description": "View composite production facility, molding, assembly, product detail and completed project visuals in the MOE Kompozit gallery.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Manufacturing+Gallery&locale=en&page=%2Fgallery&v=brand-20260922",
+        "twitter:image:alt": "Composite Manufacturing Gallery"
+      },
+      "h1": [
+        "Gallery"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/blog",
+      "final": "http://127.0.0.1:3150/en/blog",
+      "canonical": "https://www.karbonkompozit.com.tr/en/blog",
+      "title": "Composite Engineering and Production Blog - MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Engineering and Production Blog - MOE Kompozit",
+        "og:description": "Technical blog content on carbon fiber, FRP, fiberglass, molding, surface quality and industrial composite applications.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/blog",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Engineering+and+Production+Blog&locale=en&page=%2Fblog&v=brand-20260922",
+        "og:image:alt": "Composite Engineering and Production Blog",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Engineering and Production Blog - MOE Kompozit",
+        "twitter:description": "Technical blog content on carbon fiber, FRP, fiberglass, molding, surface quality and industrial composite applications.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Engineering+and+Production+Blog&locale=en&page=%2Fblog&v=brand-20260922",
+        "twitter:image:alt": "Composite Engineering and Production Blog"
+      },
+      "h1": [
+        "Blog"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/about",
+      "final": "http://127.0.0.1:3150/en/about",
+      "canonical": "https://www.karbonkompozit.com.tr/en/about",
+      "title": "About Our Composite Manufacturing - MOE Kompozit",
+      "meta": {
+        "og:title": "About Our Composite Manufacturing - MOE Kompozit",
+        "og:description": "Discover how MOE Kompozit applies Ensotek engineering experience to carbon fiber, FRP and fiberglass composite projects.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/about",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=About+Our+Composite+Manufacturing&locale=en&page=%2Fabout&v=brand-20260922",
+        "og:image:alt": "About Our Composite Manufacturing",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "About Our Composite Manufacturing - MOE Kompozit",
+        "twitter:description": "Discover how MOE Kompozit applies Ensotek engineering experience to carbon fiber, FRP and fiberglass composite projects.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=About+Our+Composite+Manufacturing&locale=en&page=%2Fabout&v=brand-20260922",
+        "twitter:image:alt": "About Our Composite Manufacturing"
+      },
+      "h1": [
+        "About Us"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/contact",
+      "final": "http://127.0.0.1:3150/en/contact",
+      "canonical": "https://www.karbonkompozit.com.tr/en/contact",
+      "title": "Contact Us for Composite Projects - MOE Kompozit",
+      "meta": {
+        "og:title": "Contact Us for Composite Projects - MOE Kompozit",
+        "og:description": "Contact MOE Kompozit for technical fit, sampling, lead time and quote discussions for carbon fiber, FRP and fiberglass projects.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/contact",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Contact+Us+for+Composite+Projects&locale=en&page=%2Fcontact&v=brand-20260922",
+        "og:image:alt": "Contact Us for Composite Projects",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Contact Us for Composite Projects - MOE Kompozit",
+        "twitter:description": "Contact MOE Kompozit for technical fit, sampling, lead time and quote discussions for carbon fiber, FRP and fiberglass projects.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Contact+Us+for+Composite+Projects&locale=en&page=%2Fcontact&v=brand-20260922",
+        "twitter:image:alt": "Contact Us for Composite Projects"
+      },
+      "h1": [
+        "Contact"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/offer",
+      "final": "http://127.0.0.1:3150/en/offer",
+      "canonical": "https://www.karbonkompozit.com.tr/en/offer",
+      "title": "Request a Composite Manufacturing Quote - MOE Kompozit",
+      "meta": {
+        "og:title": "Request a Composite Manufacturing Quote - MOE Kompozit",
+        "og:description": "Create a fast B2B quote request for your composite project with category, sector, quantity, lead time and technical files.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/offer",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Request+a+Composite+Manufacturing+Quote&locale=en&page=%2Foffer&v=brand-20260922",
+        "og:image:alt": "Request a Composite Manufacturing Quote",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Request a Composite Manufacturing Quote - MOE Kompozit",
+        "twitter:description": "Create a fast B2B quote request for your composite project with category, sector, quantity, lead time and technical files.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Request+a+Composite+Manufacturing+Quote&locale=en&page=%2Foffer&v=brand-20260922",
+        "twitter:image:alt": "Request a Composite Manufacturing Quote"
+      },
+      "h1": [
+        "Quote Request"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/kompozit-tren-parcalari",
+      "final": "http://127.0.0.1:3150/tr/products/kompozit-tren-parcalari",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/kompozit-tren-parcalari",
+      "title": "Kompozit Tren Parçaları Raylı Sistem CTP Panel Üretimi MOE Ko...",
+      "meta": {
+        "og:title": "Kompozit Tren Parçaları Raylı Sistem CTP Panel Üretimi MOE Ko...",
+        "og:description": "Kompozit tren parçaları; raylı sistem iç trim, tavan, yan panel, kapak ve muhafaza ihtiyaçları için hafif, dayanıklı CTP/karbon fiber üretim çözümü.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/kompozit-tren-parcalari",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tren-parcalari.jpg",
+        "og:image:alt": "Kompozit Tren Parçaları | Raylı Sistem CTP Panel Üretimi | MOE Kompozit",
+        "og:image:width": "1672",
+        "og:image:height": "941",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Tren Parçaları Raylı Sistem CTP Panel Üretimi MOE Ko...",
+        "twitter:description": "Kompozit tren parçaları; raylı sistem iç trim, tavan, yan panel, kapak ve muhafaza ihtiyaçları için hafif, dayanıklı CTP/karbon fiber üretim çözümü.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tren-parcalari.jpg",
+        "twitter:image:alt": "Kompozit Tren Parçaları | Raylı Sistem CTP Panel Üretimi | MOE Kompozit"
+      },
+      "h1": [
+        "Kompozit Tren Parçaları"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/savunma-sanayi-kompozit-parcalari",
+      "final": "http://127.0.0.1:3150/tr/products/savunma-sanayi-kompozit-parcalari",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/savunma-sanayi-kompozit-parcalari",
+      "title": "Savunma Sanayi Kompozit Parçaları Karbon Fiber CTP Muhafaza M...",
+      "meta": {
+        "og:title": "Savunma Sanayi Kompozit Parçaları Karbon Fiber CTP Muhafaza M...",
+        "og:description": "Savunma sanayi kompozit parçaları; teknik ekipman muhafazası, karbon fiber panel, CTP gövde ve koruyucu kapak üretimi için proje bazlı çözüm.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/savunma-sanayi-kompozit-parcalari",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/savunma-sanayi-kompozit-parcalari.jpg",
+        "og:image:alt": "Savunma Sanayi Kompozit Parçaları | Karbon Fiber CTP Muhafaza | MOE Kompozit",
+        "og:image:width": "1672",
+        "og:image:height": "941",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Savunma Sanayi Kompozit Parçaları Karbon Fiber CTP Muhafaza M...",
+        "twitter:description": "Savunma sanayi kompozit parçaları; teknik ekipman muhafazası, karbon fiber panel, CTP gövde ve koruyucu kapak üretimi için proje bazlı çözüm.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/savunma-sanayi-kompozit-parcalari.jpg",
+        "twitter:image:alt": "Savunma Sanayi Kompozit Parçaları | Karbon Fiber CTP Muhafaza | MOE Kompozit"
+      },
+      "h1": [
+        "Savunma Sanayi Kompozit Parçaları"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/ctp-cop-konteyneri",
+      "final": "http://127.0.0.1:3150/tr/products/ctp-cop-konteyneri",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/ctp-cop-konteyneri",
+      "title": "CTP Çöp Konteyneri Kompozit Atık Konteyneri MOE Kompozit",
+      "meta": {
+        "og:title": "CTP Çöp Konteyneri Kompozit Atık Konteyneri MOE Kompozit",
+        "og:description": "CTP çöp konteyneri; belediye, sanayi ve peyzaj projeleri için hafif, korozyona dayanıklı, kolay temizlenen kompozit atık konteyneri çözümü.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/ctp-cop-konteyneri",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-konteyneri.jpg",
+        "og:image:alt": "CTP Çöp Konteyneri | Kompozit Atık Konteyneri | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "CTP Çöp Konteyneri Kompozit Atık Konteyneri MOE Kompozit",
+        "twitter:description": "CTP çöp konteyneri; belediye, sanayi ve peyzaj projeleri için hafif, korozyona dayanıklı, kolay temizlenen kompozit atık konteyneri çözümü.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-konteyneri.jpg",
+        "twitter:image:alt": "CTP Çöp Konteyneri | Kompozit Atık Konteyneri | MOE Kompozit"
+      },
+      "h1": [
+        "CTP Çöp Konteyneri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/kompozit-tabut",
+      "final": "http://127.0.0.1:3150/tr/products/kompozit-tabut",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/kompozit-tabut",
+      "title": "Kompozit Tabut CTP Defin Grubu Ürünü MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Tabut CTP Defin Grubu Ürünü MOE Kompozit",
+        "og:description": "Kompozit tabut üretimi; belediye ve defin hizmetleri için hafif, hijyenik, kolay temizlenebilir CTP tabut ve B2B seri üretim çözümü.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/kompozit-tabut",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tabut.jpg",
+        "og:image:alt": "Kompozit Tabut | CTP Defin Grubu Ürünü | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Tabut CTP Defin Grubu Ürünü MOE Kompozit",
+        "twitter:description": "Kompozit tabut üretimi; belediye ve defin hizmetleri için hafif, hijyenik, kolay temizlenebilir CTP tabut ve B2B seri üretim çözümü.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tabut.jpg",
+        "twitter:image:alt": "Kompozit Tabut | CTP Defin Grubu Ürünü | MOE Kompozit"
+      },
+      "h1": [
+        "Kompozit Tabut"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/kompozit-cop-kutusu",
+      "final": "http://127.0.0.1:3150/tr/products/kompozit-cop-kutusu",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/kompozit-cop-kutusu",
+      "title": "Kompozit Çöp Kutusu CTP Park ve Belediye Çöp Kutusu MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Çöp Kutusu CTP Park ve Belediye Çöp Kutusu MOE Kompozit",
+        "og:description": "Kompozit çöp kutusu; park, bahçe, kampüs ve belediye alanları için UV dayanımlı, hafif, kolay temizlenebilir CTP kent ekipmanı.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/kompozit-cop-kutusu",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-kutusu.jpg",
+        "og:image:alt": "Kompozit Çöp Kutusu | CTP Park ve Belediye Çöp Kutusu | MOE Kompozit",
+        "og:image:width": "1086",
+        "og:image:height": "1448",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Çöp Kutusu CTP Park ve Belediye Çöp Kutusu MOE Kompozit",
+        "twitter:description": "Kompozit çöp kutusu; park, bahçe, kampüs ve belediye alanları için UV dayanımlı, hafif, kolay temizlenebilir CTP kent ekipmanı.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-kutusu.jpg",
+        "twitter:image:alt": "Kompozit Çöp Kutusu | CTP Park ve Belediye Çöp Kutusu | MOE Kompozit"
+      },
+      "h1": [
+        "Kompozit Çöp Kutusu"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/belediye-cop-konteyneri",
+      "final": "http://127.0.0.1:3150/tr/products/belediye-cop-konteyneri",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/belediye-cop-konteyneri",
+      "title": "Belediye Çöp Konteyneri CTP Tekerlekli Konteyner MOE Kompozit",
+      "meta": {
+        "og:title": "Belediye Çöp Konteyneri CTP Tekerlekli Konteyner MOE Kompozit",
+        "og:description": "Belediye çöp konteyneri; tekerlekli, hafif, korozyona dayanıklı ve kolay temizlenen CTP atık konteyneri üretim çözümü.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/belediye-cop-konteyneri",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/belediye-cop-konteyneri.jpg",
+        "og:image:alt": "Belediye Çöp Konteyneri | CTP Tekerlekli Konteyner | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Belediye Çöp Konteyneri CTP Tekerlekli Konteyner MOE Kompozit",
+        "twitter:description": "Belediye çöp konteyneri; tekerlekli, hafif, korozyona dayanıklı ve kolay temizlenen CTP atık konteyneri üretim çözümü.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/belediye-cop-konteyneri.jpg",
+        "twitter:image:alt": "Belediye Çöp Konteyneri | CTP Tekerlekli Konteyner | MOE Kompozit"
+      },
+      "h1": [
+        "Belediye Çöp Konteyneri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/ctp-su-deposu",
+      "final": "http://127.0.0.1:3150/tr/products/ctp-su-deposu",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/ctp-su-deposu",
+      "title": "CTP Su Deposu FRP Kompozit Su Tankı MOE Kompozit",
+      "meta": {
+        "og:title": "CTP Su Deposu FRP Kompozit Su Tankı MOE Kompozit",
+        "og:description": "CTP su deposu; belediye, arıtma, endüstri ve tarımsal projeler için hafif, korozyona dayanıklı, proje bazlı FRP kompozit su tankı.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/ctp-su-deposu",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/su-deposu.jpg",
+        "og:image:alt": "CTP Su Deposu | FRP Kompozit Su Tankı | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "CTP Su Deposu FRP Kompozit Su Tankı MOE Kompozit",
+        "twitter:description": "CTP su deposu; belediye, arıtma, endüstri ve tarımsal projeler için hafif, korozyona dayanıklı, proje bazlı FRP kompozit su tankı.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/su-deposu.jpg",
+        "twitter:image:alt": "CTP Su Deposu | FRP Kompozit Su Tankı | MOE Kompozit"
+      },
+      "h1": [
+        "CTP Su Deposu"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/lunapark-oyuncaklari-kabini",
+      "final": "http://127.0.0.1:3150/tr/products/lunapark-oyuncaklari-kabini",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/lunapark-oyuncaklari-kabini",
+      "title": "Kompozit Lunapark Oyuncakları ve Kabinleri MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Lunapark Oyuncakları ve Kabinleri MOE Kompozit",
+        "og:description": "Lunapark ve tema parkları için kompozit kabin, gövde, oturak, dekoratif figür ve özel tasarım polyester, CTP / FRP ürünleri.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/lunapark-oyuncaklari-kabini",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+        "og:image:alt": "Kompozit Lunapark Oyuncakları ve Kabinleri | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Lunapark Oyuncakları ve Kabinleri MOE Kompozit",
+        "twitter:description": "Lunapark ve tema parkları için kompozit kabin, gövde, oturak, dekoratif figür ve özel tasarım polyester, CTP / FRP ürünleri.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+        "twitter:image:alt": "Kompozit Lunapark Oyuncakları ve Kabinleri | MOE Kompozit"
+      },
+      "h1": [
+        "Lunapark Oyuncakları"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/dekoratif-kompozit-saksi-vazo-urunleri",
+      "final": "http://127.0.0.1:3150/tr/products/dekoratif-kompozit-saksi-vazo-urunleri",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/dekoratif-kompozit-saksi-vazo-urunleri",
+      "title": "Dekoratif Kompozit Saksı ve Vazo Ürünleri MOE Kompozit",
+      "meta": {
+        "og:title": "Dekoratif Kompozit Saksı ve Vazo Ürünleri MOE Kompozit",
+        "og:description": "Peyzaj ve dış mekan projeleri için dekoratif kompozit saksı, vazo, küp ve amfora ürün grubu.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/dekoratif-kompozit-saksi-vazo-urunleri",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/urunler-11.jpeg",
+        "og:image:alt": "Dekoratif Kompozit Saksı ve Vazo Ürünleri | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "1600",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Dekoratif Kompozit Saksı ve Vazo Ürünleri MOE Kompozit",
+        "twitter:description": "Peyzaj ve dış mekan projeleri için dekoratif kompozit saksı, vazo, küp ve amfora ürün grubu.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/urunler-11.jpeg",
+        "twitter:image:alt": "Dekoratif Kompozit Saksı ve Vazo Ürünleri | MOE Kompozit"
+      },
+      "h1": [
+        "Dekoratif Kompozit Saksı ve Vazo Ürünleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/karbon-fiber-panel-prototipi",
+      "final": "http://127.0.0.1:3150/tr/products/karbon-fiber-panel-prototipi",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/karbon-fiber-panel-prototipi",
+      "title": "Karbon Fiber Panel Prototipi MOE Kompozit",
+      "meta": {
+        "og:title": "Karbon Fiber Panel Prototipi MOE Kompozit",
+        "og:description": "Karbon fiber panel prototipi, hafif ve rijit kompozit parca gelistirme surecleri icin ornek MOE Kompozit urun kaydi.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/karbon-fiber-panel-prototipi",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-panel-01.jpg",
+        "og:image:alt": "Karbon Fiber Panel Prototipi | MOE Kompozit",
+        "og:image:width": "3194",
+        "og:image:height": "2952",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Karbon Fiber Panel Prototipi MOE Kompozit",
+        "twitter:description": "Karbon fiber panel prototipi, hafif ve rijit kompozit parca gelistirme surecleri icin ornek MOE Kompozit urun kaydi.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-panel-01.jpg",
+        "twitter:image:alt": "Karbon Fiber Panel Prototipi | MOE Kompozit"
+      },
+      "h1": [
+        "Karbon Fiber Panel Prototipi"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/ctp-koruyucu-govde-paneli",
+      "final": "http://127.0.0.1:3150/tr/products/ctp-koruyucu-govde-paneli",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/ctp-koruyucu-govde-paneli",
+      "title": "CTP Koruyucu Govde Paneli MOE Kompozit",
+      "meta": {
+        "og:title": "CTP Koruyucu Govde Paneli MOE Kompozit",
+        "og:description": "CTP koruyucu govde paneli icin ornek kompozit urun kaydi. Endustriyel panel ve muhafaza uygulamalarina uygun yapi.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/ctp-koruyucu-govde-paneli",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg",
+        "og:image:alt": "CTP Koruyucu Govde Paneli | MOE Kompozit",
+        "og:image:width": "1536",
+        "og:image:height": "1024",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "CTP Koruyucu Govde Paneli MOE Kompozit",
+        "twitter:description": "CTP koruyucu govde paneli icin ornek kompozit urun kaydi. Endustriyel panel ve muhafaza uygulamalarina uygun yapi.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg",
+        "twitter:image:alt": "CTP Koruyucu Govde Paneli | MOE Kompozit"
+      },
+      "h1": [
+        "CTP Koruyucu Govde Paneli"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/products/cam-elyaf-servis-kapagi",
+      "final": "http://127.0.0.1:3150/tr/products/cam-elyaf-servis-kapagi",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/products/cam-elyaf-servis-kapagi",
+      "title": "Cam Elyaf Servis Kapagi MOE Kompozit",
+      "meta": {
+        "og:title": "Cam Elyaf Servis Kapagi MOE Kompozit",
+        "og:description": "Cam elyaf servis kapagi icin ornek kompozit urun kaydi. Dis ortam ve saha ekipmanlari icin hafif cozum.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/products/cam-elyaf-servis-kapagi",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-doku-01.jpg",
+        "og:image:alt": "Cam Elyaf Servis Kapagi | MOE Kompozit",
+        "og:image:width": "1631",
+        "og:image:height": "1080",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Cam Elyaf Servis Kapagi MOE Kompozit",
+        "twitter:description": "Cam elyaf servis kapagi icin ornek kompozit urun kaydi. Dis ortam ve saha ekipmanlari icin hafif cozum.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-doku-01.jpg",
+        "twitter:image:alt": "Cam Elyaf Servis Kapagi | MOE Kompozit"
+      },
+      "h1": [
+        "Cam Elyaf Servis Kapagi"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/composite-train-parts",
+      "final": "http://127.0.0.1:3150/en/products/composite-train-parts",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/composite-train-parts",
+      "title": "Composite Train Parts Rail System FRP Panel Manufacturing MOE...",
+      "meta": {
+        "og:title": "Composite Train Parts Rail System FRP Panel Manufacturing MOE...",
+        "og:description": "Composite train parts for rail-system interior trims, ceiling panels, side panels, covers and housings; lightweight FRP/carbon fiber manufacturing solut...",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/composite-train-parts",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tren-parcalari.jpg",
+        "og:image:alt": "Composite Train Parts | Rail System FRP Panel Manufacturing | MOE Kompozit",
+        "og:image:width": "1672",
+        "og:image:height": "941",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Train Parts Rail System FRP Panel Manufacturing MOE...",
+        "twitter:description": "Composite train parts for rail-system interior trims, ceiling panels, side panels, covers and housings; lightweight FRP/carbon fiber manufacturing solut...",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tren-parcalari.jpg",
+        "twitter:image:alt": "Composite Train Parts | Rail System FRP Panel Manufacturing | MOE Kompozit"
+      },
+      "h1": [
+        "Composite Train Parts"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/defense-industry-composite-parts",
+      "final": "http://127.0.0.1:3150/en/products/defense-industry-composite-parts",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/defense-industry-composite-parts",
+      "title": "Defense Industry Composite Parts Carbon Fiber FRP Enclosures...",
+      "meta": {
+        "og:title": "Defense Industry Composite Parts Carbon Fiber FRP Enclosures...",
+        "og:description": "Defense industry composite parts for technical equipment enclosures, carbon fiber panels, FRP bodies and protective covers; project-based manufacturing...",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/defense-industry-composite-parts",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/savunma-sanayi-kompozit-parcalari.jpg",
+        "og:image:alt": "Defense Industry Composite Parts | Carbon Fiber FRP Enclosures | MOE Kompozit",
+        "og:image:width": "1672",
+        "og:image:height": "941",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Defense Industry Composite Parts Carbon Fiber FRP Enclosures...",
+        "twitter:description": "Defense industry composite parts for technical equipment enclosures, carbon fiber panels, FRP bodies and protective covers; project-based manufacturing...",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/savunma-sanayi-kompozit-parcalari.jpg",
+        "twitter:image:alt": "Defense Industry Composite Parts | Carbon Fiber FRP Enclosures | MOE Kompozit"
+      },
+      "h1": [
+        "Defense Industry Composite Parts"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/frp-waste-container",
+      "final": "http://127.0.0.1:3150/en/products/frp-waste-container",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/frp-waste-container",
+      "title": "FRP Waste Container Composite Waste Bin MOE Kompozit",
+      "meta": {
+        "og:title": "FRP Waste Container Composite Waste Bin MOE Kompozit",
+        "og:description": "FRP waste container for municipal, industrial and landscape projects; lightweight, corrosion-resistant and easy-clean composite waste collection body.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/frp-waste-container",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-konteyneri.jpg",
+        "og:image:alt": "FRP Waste Container | Composite Waste Bin | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "FRP Waste Container Composite Waste Bin MOE Kompozit",
+        "twitter:description": "FRP waste container for municipal, industrial and landscape projects; lightweight, corrosion-resistant and easy-clean composite waste collection body.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-konteyneri.jpg",
+        "twitter:image:alt": "FRP Waste Container | Composite Waste Bin | MOE Kompozit"
+      },
+      "h1": [
+        "FRP Waste Container"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/composite-coffin",
+      "final": "http://127.0.0.1:3150/en/products/composite-coffin",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/composite-coffin",
+      "title": "Composite Coffin FRP Funeral Product MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Coffin FRP Funeral Product MOE Kompozit",
+        "og:description": "Composite coffin manufacturing for municipal and funeral-sector needs; lightweight, hygienic and easy-clean FRP coffin for B2B serial production.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/composite-coffin",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tabut.jpg",
+        "og:image:alt": "Composite Coffin | FRP Funeral Product | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Coffin FRP Funeral Product MOE Kompozit",
+        "twitter:description": "Composite coffin manufacturing for municipal and funeral-sector needs; lightweight, hygienic and easy-clean FRP coffin for B2B serial production.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/tabut.jpg",
+        "twitter:image:alt": "Composite Coffin | FRP Funeral Product | MOE Kompozit"
+      },
+      "h1": [
+        "Composite Coffin"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/composite-litter-bin",
+      "final": "http://127.0.0.1:3150/en/products/composite-litter-bin",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/composite-litter-bin",
+      "title": "Composite Litter Bin FRP Park and Municipal Trash Bin MOE Kom...",
+      "meta": {
+        "og:title": "Composite Litter Bin FRP Park and Municipal Trash Bin MOE Kom...",
+        "og:description": "Composite litter bin for parks, campuses and municipal spaces; UV-resistant, lightweight and easy-clean FRP urban furniture product.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/composite-litter-bin",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-kutusu.jpg",
+        "og:image:alt": "Composite Litter Bin | FRP Park and Municipal Trash Bin | MOE Kompozit",
+        "og:image:width": "1086",
+        "og:image:height": "1448",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Litter Bin FRP Park and Municipal Trash Bin MOE Kom...",
+        "twitter:description": "Composite litter bin for parks, campuses and municipal spaces; UV-resistant, lightweight and easy-clean FRP urban furniture product.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-kutusu.jpg",
+        "twitter:image:alt": "Composite Litter Bin | FRP Park and Municipal Trash Bin | MOE Kompozit"
+      },
+      "h1": [
+        "Composite Litter Bin"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/municipal-garbage-container",
+      "final": "http://127.0.0.1:3150/en/products/municipal-garbage-container",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/municipal-garbage-container",
+      "title": "Municipal Garbage Container FRP Wheeled Waste Container MOE K...",
+      "meta": {
+        "og:title": "Municipal Garbage Container FRP Wheeled Waste Container MOE K...",
+        "og:description": "Municipal garbage container with wheeled, lightweight, corrosion-resistant and easy-clean FRP body for outdoor waste collection programs.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/municipal-garbage-container",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/belediye-cop-konteyneri.jpg",
+        "og:image:alt": "Municipal Garbage Container | FRP Wheeled Waste Container | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Municipal Garbage Container FRP Wheeled Waste Container MOE K...",
+        "twitter:description": "Municipal garbage container with wheeled, lightweight, corrosion-resistant and easy-clean FRP body for outdoor waste collection programs.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/belediye-cop-konteyneri.jpg",
+        "twitter:image:alt": "Municipal Garbage Container | FRP Wheeled Waste Container | MOE Kompozit"
+      },
+      "h1": [
+        "Municipal Garbage Container"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/frp-water-storage-tank",
+      "final": "http://127.0.0.1:3150/en/products/frp-water-storage-tank",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/frp-water-storage-tank",
+      "title": "FRP Water Storage Tank Composite GRP Tank MOE Kompozit",
+      "meta": {
+        "og:title": "FRP Water Storage Tank Composite GRP Tank MOE Kompozit",
+        "og:description": "FRP water storage tank for municipal, treatment, industrial and agricultural projects; lightweight, corrosion-resistant and project-engineered composite...",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/frp-water-storage-tank",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/su-deposu.jpg",
+        "og:image:alt": "FRP Water Storage Tank | Composite GRP Tank | MOE Kompozit",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "FRP Water Storage Tank Composite GRP Tank MOE Kompozit",
+        "twitter:description": "FRP water storage tank for municipal, treatment, industrial and agricultural projects; lightweight, corrosion-resistant and project-engineered composite...",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/su-deposu.jpg",
+        "twitter:image:alt": "FRP Water Storage Tank | Composite GRP Tank | MOE Kompozit"
+      },
+      "h1": [
+        "FRP Water Storage Tank"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/lunapark-oyuncaklari-kabini",
+      "final": "http://127.0.0.1:3150/en/products/lunapark-oyuncaklari-kabini",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/lunapark-oyuncaklari-kabini",
+      "title": "Composite Amusement Ride Cabins and Bodies MOE Composite - MO...",
+      "meta": {
+        "og:title": "Composite Amusement Ride Cabins and Bodies MOE Composite - MO...",
+        "og:description": "Custom GRP/FRP cabins, bodies, seats, decorative figures and themed composite products for amusement and theme park projects.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/lunapark-oyuncaklari-kabini",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+        "og:image:alt": "Composite Amusement Ride Cabins and Bodies | MOE Composite",
+        "og:image:width": "1448",
+        "og:image:height": "1086",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Amusement Ride Cabins and Bodies MOE Composite - MO...",
+        "twitter:description": "Custom GRP/FRP cabins, bodies, seats, decorative figures and themed composite products for amusement and theme park projects.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+        "twitter:image:alt": "Composite Amusement Ride Cabins and Bodies | MOE Composite"
+      },
+      "h1": [
+        "Amusement Ride Cabins and Theme Park Products"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/decorative-composite-planters-vases",
+      "final": "http://127.0.0.1:3150/en/products/decorative-composite-planters-vases",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/decorative-composite-planters-vases",
+      "title": "Decorative Composite Planters and Vases MOE Kompozit",
+      "meta": {
+        "og:title": "Decorative Composite Planters and Vases MOE Kompozit",
+        "og:description": "Decorative composite planter, vase, urn and amphora product family for landscape and outdoor projects.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/decorative-composite-planters-vases",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/urunler-11.jpeg",
+        "og:image:alt": "Decorative Composite Planters and Vases | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "1600",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Decorative Composite Planters and Vases MOE Kompozit",
+        "twitter:description": "Decorative composite planter, vase, urn and amphora product family for landscape and outdoor projects.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/urunler-11.jpeg",
+        "twitter:image:alt": "Decorative Composite Planters and Vases | MOE Kompozit"
+      },
+      "h1": [
+        "Decorative Composite Planters and Vases"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/carbon-fiber-panel-prototype",
+      "final": "http://127.0.0.1:3150/en/products/carbon-fiber-panel-prototype",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/carbon-fiber-panel-prototype",
+      "title": "Carbon Fiber Panel Prototype MOE Kompozit",
+      "meta": {
+        "og:title": "Carbon Fiber Panel Prototype MOE Kompozit",
+        "og:description": "Sample carbon fiber panel prototype entry by MOE Kompozit for lightweight structural composite development.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/carbon-fiber-panel-prototype",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-panel-01.jpg",
+        "og:image:alt": "Carbon Fiber Panel Prototype | MOE Kompozit",
+        "og:image:width": "3194",
+        "og:image:height": "2952",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Carbon Fiber Panel Prototype MOE Kompozit",
+        "twitter:description": "Sample carbon fiber panel prototype entry by MOE Kompozit for lightweight structural composite development.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-panel-01.jpg",
+        "twitter:image:alt": "Carbon Fiber Panel Prototype | MOE Kompozit"
+      },
+      "h1": [
+        "Carbon Fiber Panel Prototype"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/frp-protective-enclosure-panel",
+      "final": "http://127.0.0.1:3150/en/products/frp-protective-enclosure-panel",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/frp-protective-enclosure-panel",
+      "title": "FRP Protective Enclosure Panel MOE Kompozit",
+      "meta": {
+        "og:title": "FRP Protective Enclosure Panel MOE Kompozit",
+        "og:description": "Sample FRP enclosure panel by MOE Kompozit for industrial covers and protective body components.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/frp-protective-enclosure-panel",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg",
+        "og:image:alt": "FRP Protective Enclosure Panel | MOE Kompozit",
+        "og:image:width": "1536",
+        "og:image:height": "1024",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "FRP Protective Enclosure Panel MOE Kompozit",
+        "twitter:description": "Sample FRP enclosure panel by MOE Kompozit for industrial covers and protective body components.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg",
+        "twitter:image:alt": "FRP Protective Enclosure Panel | MOE Kompozit"
+      },
+      "h1": [
+        "FRP Protective Enclosure Panel"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/products/fiberglass-service-cover",
+      "final": "http://127.0.0.1:3150/en/products/fiberglass-service-cover",
+      "canonical": "https://www.karbonkompozit.com.tr/en/products/fiberglass-service-cover",
+      "title": "Fiberglass Service Cover MOE Kompozit",
+      "meta": {
+        "og:title": "Fiberglass Service Cover MOE Kompozit",
+        "og:description": "Sample fiberglass service cover by MOE Kompozit for outdoor equipment and corrosion-resistant field applications.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/products/fiberglass-service-cover",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-doku-01.jpg",
+        "og:image:alt": "Fiberglass Service Cover | MOE Kompozit",
+        "og:image:width": "1631",
+        "og:image:height": "1080",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Fiberglass Service Cover MOE Kompozit",
+        "twitter:description": "Sample fiberglass service cover by MOE Kompozit for outdoor equipment and corrosion-resistant field applications.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-doku-01.jpg",
+        "twitter:image:alt": "Fiberglass Service Cover | MOE Kompozit"
+      },
+      "h1": [
+        "Fiberglass Service Cover"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/gallery/moe-kompozit-urun-galerisi",
+      "final": "http://127.0.0.1:3150/tr/gallery/moe-kompozit-urun-galerisi",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/gallery/moe-kompozit-urun-galerisi",
+      "title": "MOE Kompozit Ürün Galerisi",
+      "meta": {
+        "og:title": "MOE Kompozit Ürün Galerisi",
+        "og:description": "MOE Kompozit ürün ve üretim süreç fotoğrafları.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/gallery/moe-kompozit-urun-galerisi",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=MOE+Kompozit+%C3%9Cr%C3%BCn+Galerisi&description=MOE+Kompozit+%C3%BCr%C3%BCn+ve+%C3%BCretim+s%C3%BCre%C3%A7+foto%C4%9Fraflar%C4%B1.&locale=tr",
+        "og:image:alt": "MOE Kompozit Ürün Galerisi",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "MOE Kompozit Ürün Galerisi",
+        "twitter:description": "MOE Kompozit ürün ve üretim süreç fotoğrafları.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=MOE+Kompozit+%C3%9Cr%C3%BCn+Galerisi&description=MOE+Kompozit+%C3%BCr%C3%BCn+ve+%C3%BCretim+s%C3%BCre%C3%A7+foto%C4%9Fraflar%C4%B1.&locale=tr",
+        "twitter:image:alt": "MOE Kompozit Ürün Galerisi"
+      },
+      "h1": [
+        "MOE Kompozit Ürün Galerisi"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/gallery/karbon-fiber-panel-uygulama-galerisi",
+      "final": "http://127.0.0.1:3150/tr/gallery/karbon-fiber-panel-uygulama-galerisi",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/gallery/karbon-fiber-panel-uygulama-galerisi",
+      "title": "Karbon Fiber Panel Uygulama Galerisi MOE Kompozit",
+      "meta": {
+        "og:title": "Karbon Fiber Panel Uygulama Galerisi MOE Kompozit",
+        "og:description": "Karbon fiber panel uygulama galerisi. Prototip, kenar isleme ve montaj oncesi kontrol adimlarini gosterir.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/gallery/karbon-fiber-panel-uygulama-galerisi",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+Panel+Uygulama+Galerisi+%7C+MOE+Kompozit&description=Karbon+fiber+panel+uygulama+galerisi.+Prototip%2C+kenar+isleme+ve+montaj+oncesi+kontrol+adimlarini+gosterir.&locale=tr",
+        "og:image:alt": "Karbon Fiber Panel Uygulama Galerisi | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Karbon Fiber Panel Uygulama Galerisi MOE Kompozit",
+        "twitter:description": "Karbon fiber panel uygulama galerisi. Prototip, kenar isleme ve montaj oncesi kontrol adimlarini gosterir.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+Panel+Uygulama+Galerisi+%7C+MOE+Kompozit&description=Karbon+fiber+panel+uygulama+galerisi.+Prototip%2C+kenar+isleme+ve+montaj+oncesi+kontrol+adimlarini+gosterir.&locale=tr",
+        "twitter:image:alt": "Karbon Fiber Panel Uygulama Galerisi | MOE Kompozit"
+      },
+      "h1": [
+        "Karbon Fiber Panel Uygulama Galerisi"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/gallery/ctp-govde-paneli-uretim-galerisi",
+      "final": "http://127.0.0.1:3150/tr/gallery/ctp-govde-paneli-uretim-galerisi",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/gallery/ctp-govde-paneli-uretim-galerisi",
+      "title": "CTP Govde Paneli Uretim Galerisi MOE Kompozit",
+      "meta": {
+        "og:title": "CTP Govde Paneli Uretim Galerisi MOE Kompozit",
+        "og:description": "CTP govde paneli uretim galerisi. Kalip hazirlama, laminasyon ve trim asamalarini one cikarir.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/gallery/ctp-govde-paneli-uretim-galerisi",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=CTP+Govde+Paneli+Uretim+Galerisi+%7C+MOE+Kompozit&description=CTP+govde+paneli+uretim+galerisi.+Kalip+hazirlama%2C+laminasyon+ve+trim+asamalarini+one+cikarir.&locale=tr",
+        "og:image:alt": "CTP Govde Paneli Uretim Galerisi | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "CTP Govde Paneli Uretim Galerisi MOE Kompozit",
+        "twitter:description": "CTP govde paneli uretim galerisi. Kalip hazirlama, laminasyon ve trim asamalarini one cikarir.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=CTP+Govde+Paneli+Uretim+Galerisi+%7C+MOE+Kompozit&description=CTP+govde+paneli+uretim+galerisi.+Kalip+hazirlama%2C+laminasyon+ve+trim+asamalarini+one+cikarir.&locale=tr",
+        "twitter:image:alt": "CTP Govde Paneli Uretim Galerisi | MOE Kompozit"
+      },
+      "h1": [
+        "CTP Govde Paneli Uretim Galerisi"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/gallery/moe-kompozit-product-gallery",
+      "final": "http://127.0.0.1:3150/en/gallery/moe-kompozit-product-gallery",
+      "canonical": "https://www.karbonkompozit.com.tr/en/gallery/moe-kompozit-product-gallery",
+      "title": "MOE Kompozit Product Gallery",
+      "meta": {
+        "og:title": "MOE Kompozit Product Gallery",
+        "og:description": "MOE Kompozit product and manufacturing process photos.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/gallery/moe-kompozit-product-gallery",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=MOE+Kompozit+Product+Gallery&description=MOE+Kompozit+product+and+manufacturing+process+photos.&locale=en",
+        "og:image:alt": "MOE Kompozit Product Gallery",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "MOE Kompozit Product Gallery",
+        "twitter:description": "MOE Kompozit product and manufacturing process photos.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=MOE+Kompozit+Product+Gallery&description=MOE+Kompozit+product+and+manufacturing+process+photos.&locale=en",
+        "twitter:image:alt": "MOE Kompozit Product Gallery"
+      },
+      "h1": [
+        "MOE Kompozit Product Gallery"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/gallery/carbon-fiber-panel-application-gallery",
+      "final": "http://127.0.0.1:3150/en/gallery/carbon-fiber-panel-application-gallery",
+      "canonical": "https://www.karbonkompozit.com.tr/en/gallery/carbon-fiber-panel-application-gallery",
+      "title": "Carbon Fiber Panel Application Gallery MOE Kompozit",
+      "meta": {
+        "og:title": "Carbon Fiber Panel Application Gallery MOE Kompozit",
+        "og:description": "Carbon fiber panel application gallery covering prototype, trimming, and pre-assembly inspection steps.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/gallery/carbon-fiber-panel-application-gallery",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+Panel+Application+Gallery+%7C+MOE+Kompozit&description=Carbon+fiber+panel+application+gallery+covering+prototype%2C+trimming%2C+and+pre-assembly+inspection+steps.&locale=en",
+        "og:image:alt": "Carbon Fiber Panel Application Gallery | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Carbon Fiber Panel Application Gallery MOE Kompozit",
+        "twitter:description": "Carbon fiber panel application gallery covering prototype, trimming, and pre-assembly inspection steps.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+Panel+Application+Gallery+%7C+MOE+Kompozit&description=Carbon+fiber+panel+application+gallery+covering+prototype%2C+trimming%2C+and+pre-assembly+inspection+steps.&locale=en",
+        "twitter:image:alt": "Carbon Fiber Panel Application Gallery | MOE Kompozit"
+      },
+      "h1": [
+        "Carbon Fiber Panel Application Gallery"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/gallery/frp-enclosure-panel-production-gallery",
+      "final": "http://127.0.0.1:3150/en/gallery/frp-enclosure-panel-production-gallery",
+      "canonical": "https://www.karbonkompozit.com.tr/en/gallery/frp-enclosure-panel-production-gallery",
+      "title": "FRP Enclosure Panel Production Gallery MOE Kompozit",
+      "meta": {
+        "og:title": "FRP Enclosure Panel Production Gallery MOE Kompozit",
+        "og:description": "FRP enclosure panel production gallery focused on mold preparation, lamination, and trimming.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/gallery/frp-enclosure-panel-production-gallery",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=FRP+Enclosure+Panel+Production+Gallery+%7C+MOE+Kompozit&description=FRP+enclosure+panel+production+gallery+focused+on+mold+preparation%2C+lamination%2C+and+trimming.&locale=en",
+        "og:image:alt": "FRP Enclosure Panel Production Gallery | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "FRP Enclosure Panel Production Gallery MOE Kompozit",
+        "twitter:description": "FRP enclosure panel production gallery focused on mold preparation, lamination, and trimming.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=FRP+Enclosure+Panel+Production+Gallery+%7C+MOE+Kompozit&description=FRP+enclosure+panel+production+gallery+focused+on+mold+preparation%2C+lamination%2C+and+trimming.&locale=en",
+        "twitter:image:alt": "FRP Enclosure Panel Production Gallery | MOE Kompozit"
+      },
+      "h1": [
+        "FRP Enclosure Panel Production Gallery"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/blog/karbon-fiber-nedir",
+      "final": "http://127.0.0.1:3150/tr/blog/karbon-fiber-nedir",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/blog/karbon-fiber-nedir",
+      "title": "Karbon Fiber Nedir? Özellikleri ve Kullanımı - MOE Kompozit",
+      "meta": {
+        "og:title": "Karbon Fiber Nedir? Özellikleri ve Kullanımı - MOE Kompozit",
+        "og:description": "Karbon fiberin özellikleri, üretim süreci, avantajları ve endüstriyel kullanım alanları; çelik ve alüminyumla teknik karşılaştırma rehberi.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/blog/karbon-fiber-nedir",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-panel-01.jpg",
+        "og:image:alt": "Karbon Fiber Nedir? Özellikleri ve Kullanımı",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Karbon Fiber Nedir? Özellikleri ve Kullanımı - MOE Kompozit",
+        "twitter:description": "Karbon fiberin özellikleri, üretim süreci, avantajları ve endüstriyel kullanım alanları; çelik ve alüminyumla teknik karşılaştırma rehberi.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-panel-01.jpg",
+        "twitter:image:alt": "Karbon Fiber Nedir? Özellikleri ve Kullanımı"
+      },
+      "h1": [
+        "Karbon Fiber Nedir? Özellikleri ve Kullanım Alanları"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/blog/ctp-fiberglass-farklari",
+      "final": "http://127.0.0.1:3150/tr/blog/ctp-fiberglass-farklari",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/blog/ctp-fiberglass-farklari",
+      "title": "CTP ve Fiberglass Farkları: Teknik Karşılaştırma - MOE Kompozit",
+      "meta": {
+        "og:title": "CTP ve Fiberglass Farkları: Teknik Karşılaştırma - MOE Kompozit",
+        "og:description": "CTP ile fiberglass arasındaki teknik farklar, üretim yöntemleri, avantajlar ve doğru malzeme seçimi için pratik bir karşılaştırma rehberi.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/blog/ctp-fiberglass-farklari",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-detay-01.jpg",
+        "og:image:alt": "CTP ve Fiberglass Farkları: Teknik Karşılaştırma",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "CTP ve Fiberglass Farkları: Teknik Karşılaştırma - MOE Kompozit",
+        "twitter:description": "CTP ile fiberglass arasındaki teknik farklar, üretim yöntemleri, avantajlar ve doğru malzeme seçimi için pratik bir karşılaştırma rehberi.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-detay-01.jpg",
+        "twitter:image:alt": "CTP ve Fiberglass Farkları: Teknik Karşılaştırma"
+      },
+      "h1": [
+        "CTP ve Fiberglass Arasındaki Farklar"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/blog/kompozit-kalite-kontrol",
+      "final": "http://127.0.0.1:3150/tr/blog/kompozit-kalite-kontrol",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/blog/kompozit-kalite-kontrol",
+      "title": "Kompozit Kalite Kontrol Süreçleri ve Testleri - MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Kalite Kontrol Süreçleri ve Testleri - MOE Kompozit",
+        "og:description": "Kompozit üretimde kalite kontrol aşamaları, test yöntemleri, standartlar ve proses tekrarlanabilirliği için bütüncül bir yaklaşım rehberi.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/blog/kompozit-kalite-kontrol",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-hammadde-01.jpg",
+        "og:image:alt": "Kompozit Kalite Kontrol Süreçleri ve Testleri",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Kalite Kontrol Süreçleri ve Testleri - MOE Kompozit",
+        "twitter:description": "Kompozit üretimde kalite kontrol aşamaları, test yöntemleri, standartlar ve proses tekrarlanabilirliği için bütüncül bir yaklaşım rehberi.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-hammadde-01.jpg",
+        "twitter:image:alt": "Kompozit Kalite Kontrol Süreçleri ve Testleri"
+      },
+      "h1": [
+        "Kompozit Malzemelerde Kalite Kontrol Süreçleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/blog/endustriyel-kompozit-gelecek",
+      "final": "http://127.0.0.1:3150/tr/blog/endustriyel-kompozit-gelecek",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/blog/endustriyel-kompozit-gelecek",
+      "title": "Endüstriyel Kompozit Çözümlerin Geleceği - MOE Kompozit",
+      "meta": {
+        "og:title": "Endüstriyel Kompozit Çözümlerin Geleceği - MOE Kompozit",
+        "og:description": "Kompozit malzemelerin geleceği: elektrikli araçlar, rüzgâr enerjisi, 3D baskı ve geri dönüştürülebilir kompozitler dahil sektörel trendler ve inovasyon.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/blog/endustriyel-kompozit-gelecek",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "og:image:alt": "Endüstriyel Kompozit Çözümlerin Geleceği",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Endüstriyel Kompozit Çözümlerin Geleceği - MOE Kompozit",
+        "twitter:description": "Kompozit malzemelerin geleceği: elektrikli araçlar, rüzgâr enerjisi, 3D baskı ve geri dönüştürülebilir kompozitler dahil sektörel trendler ve inovasyon.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "twitter:image:alt": "Endüstriyel Kompozit Çözümlerin Geleceği"
+      },
+      "h1": [
+        "Endüstriyel Kompozit Çözümlerin Geleceği"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/blog/what-is-carbon-fiber",
+      "final": "http://127.0.0.1:3150/en/blog/what-is-carbon-fiber",
+      "canonical": "https://www.karbonkompozit.com.tr/en/blog/what-is-carbon-fiber",
+      "title": "What is Carbon Fiber? Properties and Uses - MOE Kompozit",
+      "meta": {
+        "og:title": "What is Carbon Fiber? Properties and Uses - MOE Kompozit",
+        "og:description": "Carbon fiber properties, production process, advantages and industrial applications, with a technical comparison against steel and aluminum.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/blog/what-is-carbon-fiber",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-panel-01.jpg",
+        "og:image:alt": "What is Carbon Fiber? Properties and Uses",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "What is Carbon Fiber? Properties and Uses - MOE Kompozit",
+        "twitter:description": "Carbon fiber properties, production process, advantages and industrial applications, with a technical comparison against steel and aluminum.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-panel-01.jpg",
+        "twitter:image:alt": "What is Carbon Fiber? Properties and Uses"
+      },
+      "h1": [
+        "What is Carbon Fiber? Properties and Applications"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/blog/frp-fiberglass-differences",
+      "final": "http://127.0.0.1:3150/en/blog/frp-fiberglass-differences",
+      "canonical": "https://www.karbonkompozit.com.tr/en/blog/frp-fiberglass-differences",
+      "title": "FRP vs Fiberglass: A Technical Comparison - MOE Kompozit",
+      "meta": {
+        "og:title": "FRP vs Fiberglass: A Technical Comparison - MOE Kompozit",
+        "og:description": "Technical differences between FRP and fiberglass, production methods, advantages and a practical guide to choosing the right composite material.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/blog/frp-fiberglass-differences",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-detay-01.jpg",
+        "og:image:alt": "FRP vs Fiberglass: A Technical Comparison",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "FRP vs Fiberglass: A Technical Comparison - MOE Kompozit",
+        "twitter:description": "Technical differences between FRP and fiberglass, production methods, advantages and a practical guide to choosing the right composite material.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-detay-01.jpg",
+        "twitter:image:alt": "FRP vs Fiberglass: A Technical Comparison"
+      },
+      "h1": [
+        "Differences Between FRP and Fiberglass"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/blog/composite-quality-control",
+      "final": "http://127.0.0.1:3150/en/blog/composite-quality-control",
+      "canonical": "https://www.karbonkompozit.com.tr/en/blog/composite-quality-control",
+      "title": "Composite Quality Control Processes and Testing - MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Quality Control Processes and Testing - MOE Kompozit",
+        "og:description": "Quality control stages, testing methods, standards and a holistic approach to process repeatability in composite manufacturing for reliable parts.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/blog/composite-quality-control",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-hammadde-01.jpg",
+        "og:image:alt": "Composite Quality Control Processes and Testing",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Quality Control Processes and Testing - MOE Kompozit",
+        "twitter:description": "Quality control stages, testing methods, standards and a holistic approach to process repeatability in composite manufacturing for reliable parts.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-hammadde-01.jpg",
+        "twitter:image:alt": "Composite Quality Control Processes and Testing"
+      },
+      "h1": [
+        "Quality Control Processes in Composite Materials"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/blog/industrial-composite-future",
+      "final": "http://127.0.0.1:3150/en/blog/industrial-composite-future",
+      "canonical": "https://www.karbonkompozit.com.tr/en/blog/industrial-composite-future",
+      "title": "The Future of Industrial Composite Solutions - MOE Kompozit",
+      "meta": {
+        "og:title": "The Future of Industrial Composite Solutions - MOE Kompozit",
+        "og:description": "The future of composites: sector trends and innovation including electric vehicles, wind energy, 3D printing and recyclable composite materials.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/blog/industrial-composite-future",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "og:image:alt": "The Future of Industrial Composite Solutions",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "article",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "The Future of Industrial Composite Solutions - MOE Kompozit",
+        "twitter:description": "The future of composites: sector trends and innovation including electric vehicles, wind energy, 3D printing and recyclable composite materials.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "twitter:image:alt": "The Future of Industrial Composite Solutions"
+      },
+      "h1": [
+        "The Future of Industrial Composite Solutions"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-planters",
+      "final": "http://127.0.0.1:3150/tr/solutions/solution-planters",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/solutions/solution-planters",
+      "title": "Kompozit Saksı ve Peyzaj MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Saksı ve Peyzaj MOE Kompozit",
+        "og:description": "MOE Kompozit: kompozit saksı, peyzaj kabı ve dış mekan ürünlerinde seri üretim, numune ve B2B proje desteği.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-planters",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-cam-elyaf-01.jpg",
+        "og:image:alt": "Kompozit Saksı ve Peyzaj | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Saksı ve Peyzaj MOE Kompozit",
+        "twitter:description": "MOE Kompozit: kompozit saksı, peyzaj kabı ve dış mekan ürünlerinde seri üretim, numune ve B2B proje desteği.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-cam-elyaf-01.jpg",
+        "twitter:image:alt": "Kompozit Saksı ve Peyzaj | MOE Kompozit"
+      },
+      "h1": [
+        "Kompozit saksı ve peyzaj ürünleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-coffins",
+      "final": "http://127.0.0.1:3150/tr/solutions/solution-coffins",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/solutions/solution-coffins",
+      "title": "Kompozit Tabut İmalatı MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Tabut İmalatı MOE Kompozit",
+        "og:description": "MOE Kompozit: kompozit tabut üretimi, hafif yapı, seri kapasite ve defin sektörüne yönelik B2B çözümler.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-coffins",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-doku-01.jpg",
+        "og:image:alt": "Kompozit Tabut İmalatı | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Tabut İmalatı MOE Kompozit",
+        "twitter:description": "MOE Kompozit: kompozit tabut üretimi, hafif yapı, seri kapasite ve defin sektörüne yönelik B2B çözümler.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-doku-01.jpg",
+        "twitter:image:alt": "Kompozit Tabut İmalatı | MOE Kompozit"
+      },
+      "h1": [
+        "Kompozit tabut ve defin hizmetleri ürünleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-storage-tanks",
+      "final": "http://127.0.0.1:3150/tr/solutions/solution-storage-tanks",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/solutions/solution-storage-tanks",
+      "title": "Kompozit Depo ve Tank MOE Kompozit",
+      "meta": {
+        "og:title": "Kompozit Depo ve Tank MOE Kompozit",
+        "og:description": "MOE Kompozit: kompozit tank, depo ve kimyasal dayanımlı FRP muhafaza çözümleri; B2B proje ve seri üretim.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-storage-tanks",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg",
+        "og:image:alt": "Kompozit Depo ve Tank | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kompozit Depo ve Tank MOE Kompozit",
+        "twitter:description": "MOE Kompozit: kompozit tank, depo ve kimyasal dayanımlı FRP muhafaza çözümleri; B2B proje ve seri üretim.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg",
+        "twitter:image:alt": "Kompozit Depo ve Tank | MOE Kompozit"
+      },
+      "h1": [
+        "Kompozit depo ve tank çözümleri"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-custom-b2b",
+      "final": "http://127.0.0.1:3150/tr/solutions/solution-custom-b2b",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/solutions/solution-custom-b2b",
+      "title": "Özel B2B Kompozit İmalat MOE Kompozit",
+      "meta": {
+        "og:title": "Özel B2B Kompozit İmalat MOE Kompozit",
+        "og:description": "MOE Kompozit: özel B2B kompozit imalat, OEM parça, ihracat programları ve mühendislik destekli üretim.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/solutions/solution-custom-b2b",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr_TR",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "og:image:alt": "Özel B2B Kompozit İmalat | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Özel B2B Kompozit İmalat MOE Kompozit",
+        "twitter:description": "MOE Kompozit: özel B2B kompozit imalat, OEM parça, ihracat programları ve mühendislik destekli üretim.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "twitter:image:alt": "Özel B2B Kompozit İmalat | MOE Kompozit"
+      },
+      "h1": [
+        "Özel B2B kompozit imalat ve ihracat"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/solutions/solution-planters",
+      "final": "http://127.0.0.1:3150/en/solutions/solution-planters",
+      "canonical": "https://www.karbonkompozit.com.tr/en/solutions/solution-planters",
+      "title": "Composite Planters & Landscape MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Planters & Landscape MOE Kompozit",
+        "og:description": "MOE Kompozit: composite planters, landscape containers and outdoor fiberglass manufacturing with sampling and serial production support.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/solutions/solution-planters",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-cam-elyaf-01.jpg",
+        "og:image:alt": "Composite Planters & Landscape | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Planters & Landscape MOE Kompozit",
+        "twitter:description": "MOE Kompozit: composite planters, landscape containers and outdoor fiberglass manufacturing with sampling and serial production support.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-cam-elyaf-01.jpg",
+        "twitter:image:alt": "Composite Planters & Landscape | MOE Kompozit"
+      },
+      "h1": [
+        "Composite planters and landscape products"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/solutions/solution-coffins",
+      "final": "http://127.0.0.1:3150/en/solutions/solution-coffins",
+      "canonical": "https://www.karbonkompozit.com.tr/en/solutions/solution-coffins",
+      "title": "Composite Coffins MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Coffins MOE Kompozit",
+        "og:description": "MOE Kompozit: composite coffin manufacturing, lightweight construction and B2B programs for the funeral sector.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/solutions/solution-coffins",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-doku-01.jpg",
+        "og:image:alt": "Composite Coffins | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Coffins MOE Kompozit",
+        "twitter:description": "MOE Kompozit: composite coffin manufacturing, lightweight construction and B2B programs for the funeral sector.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-doku-01.jpg",
+        "twitter:image:alt": "Composite Coffins | MOE Kompozit"
+      },
+      "h1": [
+        "Composite coffins and funeral-sector products"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/solutions/solution-storage-tanks",
+      "final": "http://127.0.0.1:3150/en/solutions/solution-storage-tanks",
+      "canonical": "https://www.karbonkompozit.com.tr/en/solutions/solution-storage-tanks",
+      "title": "Composite Storage Tanks MOE Kompozit",
+      "meta": {
+        "og:title": "Composite Storage Tanks MOE Kompozit",
+        "og:description": "MOE Kompozit: FRP composite tanks, storage vessels and chemically resistant containment for industrial B2B projects.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/solutions/solution-storage-tanks",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg",
+        "og:image:alt": "Composite Storage Tanks | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Composite Storage Tanks MOE Kompozit",
+        "twitter:description": "MOE Kompozit: FRP composite tanks, storage vessels and chemically resistant containment for industrial B2B projects.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg",
+        "twitter:image:alt": "Composite Storage Tanks | MOE Kompozit"
+      },
+      "h1": [
+        "Composite storage tanks and containment"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/solutions/solution-custom-b2b",
+      "final": "http://127.0.0.1:3150/en/solutions/solution-custom-b2b",
+      "canonical": "https://www.karbonkompozit.com.tr/en/solutions/solution-custom-b2b",
+      "title": "Custom B2B Composite Manufacturing MOE Kompozit",
+      "meta": {
+        "og:title": "Custom B2B Composite Manufacturing MOE Kompozit",
+        "og:description": "MOE Kompozit: custom B2B composite manufacturing, OEM parts, export programs and engineering-led production.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/solutions/solution-custom-b2b",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en_GB",
+        "og:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "og:image:alt": "Custom B2B Composite Manufacturing | MOE Kompozit",
+        "og:image:width": "1376",
+        "og:image:height": "768",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Custom B2B Composite Manufacturing MOE Kompozit",
+        "twitter:description": "MOE Kompozit: custom B2B composite manufacturing, OEM parts, export programs and engineering-led production.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+        "twitter:image:alt": "Custom B2B Composite Manufacturing | MOE Kompozit"
+      },
+      "h1": [
+        "Custom B2B composite manufacturing & export programs"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/legal/privacy",
+      "final": "http://127.0.0.1:3150/tr/legal/privacy",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/legal/privacy",
+      "title": "Gizlilik Politikası MOE Kompozit",
+      "meta": {
+        "og:title": "Gizlilik Politikası MOE Kompozit",
+        "og:description": "MOE Kompozit web sitesi gizlilik politikası ve kişisel veri işleme esasları.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/legal/privacy",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Gizlilik+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+gizlilik+politikas%C4%B1+ve+ki%C5%9Fisel+veri+i%C5%9Fleme+esaslar%C4%B1.&locale=tr",
+        "og:image:alt": "Gizlilik Politikası | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Gizlilik Politikası MOE Kompozit",
+        "twitter:description": "MOE Kompozit web sitesi gizlilik politikası ve kişisel veri işleme esasları.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Gizlilik+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+gizlilik+politikas%C4%B1+ve+ki%C5%9Fisel+veri+i%C5%9Fleme+esaslar%C4%B1.&locale=tr",
+        "twitter:image:alt": "Gizlilik Politikası | MOE Kompozit"
+      },
+      "h1": [
+        "Gizlilik Politikası"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/legal/terms",
+      "final": "http://127.0.0.1:3150/tr/legal/terms",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/legal/terms",
+      "title": "Kullanım Koşulları MOE Kompozit",
+      "meta": {
+        "og:title": "Kullanım Koşulları MOE Kompozit",
+        "og:description": "MOE Kompozit web sitesi kullanım koşulları, içerik hakları ve sorumluluk sınırları.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/legal/terms",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Kullan%C4%B1m+Ko%C5%9Fullar%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+kullan%C4%B1m+ko%C5%9Fullar%C4%B1%2C+i%C3%A7erik+haklar%C4%B1+ve+sorumluluk+s%C4%B1n%C4%B1rlar%C4%B1.&locale=tr",
+        "og:image:alt": "Kullanım Koşulları | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Kullanım Koşulları MOE Kompozit",
+        "twitter:description": "MOE Kompozit web sitesi kullanım koşulları, içerik hakları ve sorumluluk sınırları.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Kullan%C4%B1m+Ko%C5%9Fullar%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+kullan%C4%B1m+ko%C5%9Fullar%C4%B1%2C+i%C3%A7erik+haklar%C4%B1+ve+sorumluluk+s%C4%B1n%C4%B1rlar%C4%B1.&locale=tr",
+        "twitter:image:alt": "Kullanım Koşulları | MOE Kompozit"
+      },
+      "h1": [
+        "Kullanım Koşulları"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/legal/kvkk-aydinlatma-metni",
+      "final": "http://127.0.0.1:3150/tr/legal/kvkk-aydinlatma-metni",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/legal/kvkk-aydinlatma-metni",
+      "title": "KVKK Aydınlatma Metni MOE Kompozit",
+      "meta": {
+        "og:title": "KVKK Aydınlatma Metni MOE Kompozit",
+        "og:description": "MOE Kompozit KVKK aydınlatma metni, veri işleme amaçları ve başvuru esasları.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/legal/kvkk-aydinlatma-metni",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=KVKK+Ayd%C4%B1nlatma+Metni+%7C+MOE+Kompozit&description=MOE+Kompozit+KVKK+ayd%C4%B1nlatma+metni%2C+veri+i%C5%9Fleme+ama%C3%A7lar%C4%B1+ve+ba%C5%9Fvuru+esaslar%C4%B1.&locale=tr",
+        "og:image:alt": "KVKK Aydınlatma Metni | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "KVKK Aydınlatma Metni MOE Kompozit",
+        "twitter:description": "MOE Kompozit KVKK aydınlatma metni, veri işleme amaçları ve başvuru esasları.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=KVKK+Ayd%C4%B1nlatma+Metni+%7C+MOE+Kompozit&description=MOE+Kompozit+KVKK+ayd%C4%B1nlatma+metni%2C+veri+i%C5%9Fleme+ama%C3%A7lar%C4%B1+ve+ba%C5%9Fvuru+esaslar%C4%B1.&locale=tr",
+        "twitter:image:alt": "KVKK Aydınlatma Metni | MOE Kompozit"
+      },
+      "h1": [
+        "KVKK Aydınlatma Metni"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/tr/legal/cookies",
+      "final": "http://127.0.0.1:3150/tr/legal/cookies",
+      "canonical": "https://www.karbonkompozit.com.tr/tr/legal/cookies",
+      "title": "Çerez Politikası MOE Kompozit",
+      "meta": {
+        "og:title": "Çerez Politikası MOE Kompozit",
+        "og:description": "MOE Kompozit web sitesi çerez politikası, çerez türleri ve tercih yönetimi bilgileri.",
+        "og:url": "https://www.karbonkompozit.com.tr/tr/legal/cookies",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "tr",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=%C3%87erez+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+%C3%A7erez+politikas%C4%B1%2C+%C3%A7erez+t%C3%BCrleri+ve+tercih+y%C3%B6netimi+bilgileri.&locale=tr",
+        "og:image:alt": "Çerez Politikası | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Çerez Politikası MOE Kompozit",
+        "twitter:description": "MOE Kompozit web sitesi çerez politikası, çerez türleri ve tercih yönetimi bilgileri.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=%C3%87erez+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+%C3%A7erez+politikas%C4%B1%2C+%C3%A7erez+t%C3%BCrleri+ve+tercih+y%C3%B6netimi+bilgileri.&locale=tr",
+        "twitter:image:alt": "Çerez Politikası | MOE Kompozit"
+      },
+      "h1": [
+        "Çerez Politikası"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/legal/privacy",
+      "final": "http://127.0.0.1:3150/en/legal/privacy",
+      "canonical": "https://www.karbonkompozit.com.tr/en/legal/privacy",
+      "title": "Privacy Policy MOE Kompozit",
+      "meta": {
+        "og:title": "Privacy Policy MOE Kompozit",
+        "og:description": "Read the MOE Kompozit website privacy policy and personal data processing principles.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/legal/privacy",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Privacy+Policy+%7C+MOE+Kompozit&description=Read+the+MOE+Kompozit+website+privacy+policy+and+personal+data+processing+principles.&locale=en",
+        "og:image:alt": "Privacy Policy | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Privacy Policy MOE Kompozit",
+        "twitter:description": "Read the MOE Kompozit website privacy policy and personal data processing principles.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Privacy+Policy+%7C+MOE+Kompozit&description=Read+the+MOE+Kompozit+website+privacy+policy+and+personal+data+processing+principles.&locale=en",
+        "twitter:image:alt": "Privacy Policy | MOE Kompozit"
+      },
+      "h1": [
+        "Privacy Policy"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/legal/terms",
+      "final": "http://127.0.0.1:3150/en/legal/terms",
+      "canonical": "https://www.karbonkompozit.com.tr/en/legal/terms",
+      "title": "Terms of Use MOE Kompozit",
+      "meta": {
+        "og:title": "Terms of Use MOE Kompozit",
+        "og:description": "MOE Kompozit website terms of use, content rights, and limitation of liability.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/legal/terms",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Terms+of+Use+%7C+MOE+Kompozit&description=MOE+Kompozit+website+terms+of+use%2C+content+rights%2C+and+limitation+of+liability.&locale=en",
+        "og:image:alt": "Terms of Use | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Terms of Use MOE Kompozit",
+        "twitter:description": "MOE Kompozit website terms of use, content rights, and limitation of liability.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Terms+of+Use+%7C+MOE+Kompozit&description=MOE+Kompozit+website+terms+of+use%2C+content+rights%2C+and+limitation+of+liability.&locale=en",
+        "twitter:image:alt": "Terms of Use | MOE Kompozit"
+      },
+      "h1": [
+        "Terms of Use"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/legal/pdpl-information-notice",
+      "final": "http://127.0.0.1:3150/en/legal/pdpl-information-notice",
+      "canonical": "https://www.karbonkompozit.com.tr/en/legal/pdpl-information-notice",
+      "title": "PDPL Information Notice MOE Kompozit",
+      "meta": {
+        "og:title": "PDPL Information Notice MOE Kompozit",
+        "og:description": "MOE Kompozit PDPL information notice, processing purposes, and application principles.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/legal/pdpl-information-notice",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=PDPL+Information+Notice+%7C+MOE+Kompozit&description=MOE+Kompozit+PDPL+information+notice%2C+processing+purposes%2C+and+application+principles.&locale=en",
+        "og:image:alt": "PDPL Information Notice | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "PDPL Information Notice MOE Kompozit",
+        "twitter:description": "MOE Kompozit PDPL information notice, processing purposes, and application principles.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=PDPL+Information+Notice+%7C+MOE+Kompozit&description=MOE+Kompozit+PDPL+information+notice%2C+processing+purposes%2C+and+application+principles.&locale=en",
+        "twitter:image:alt": "PDPL Information Notice | MOE Kompozit"
+      },
+      "h1": [
+        "PDPL Information Notice"
+      ]
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/en/legal/cookies",
+      "final": "http://127.0.0.1:3150/en/legal/cookies",
+      "canonical": "https://www.karbonkompozit.com.tr/en/legal/cookies",
+      "title": "Cookie Policy MOE Kompozit",
+      "meta": {
+        "og:title": "Cookie Policy MOE Kompozit",
+        "og:description": "MOE Kompozit website cookie policy, cookie types, and preference management information.",
+        "og:url": "https://www.karbonkompozit.com.tr/en/legal/cookies",
+        "og:site_name": "MOE Kompozit",
+        "og:locale": "en",
+        "og:image": "https://www.karbonkompozit.com.tr/share-image?title=Cookie+Policy+%7C+MOE+Kompozit&description=MOE+Kompozit+website+cookie+policy%2C+cookie+types%2C+and+preference+management+information.&locale=en",
+        "og:image:alt": "Cookie Policy | MOE Kompozit",
+        "og:image:width": "1200",
+        "og:image:height": "630",
+        "og:type": "website",
+        "twitter:card": "summary_large_image",
+        "twitter:title": "Cookie Policy MOE Kompozit",
+        "twitter:description": "MOE Kompozit website cookie policy, cookie types, and preference management information.",
+        "twitter:image": "https://www.karbonkompozit.com.tr/share-image?title=Cookie+Policy+%7C+MOE+Kompozit&description=MOE+Kompozit+website+cookie+policy%2C+cookie+types%2C+and+preference+management+information.&locale=en",
+        "twitter:image:alt": "Cookie Policy | MOE Kompozit"
+      },
+      "h1": [
+        "Cookie Policy"
+      ]
+    }
+  ],
+  "images": [
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-hammadde-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-hammadde-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 369901
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+Projeleriniz+%C4%B0%C3%A7in+%C4%B0leti%C5%9Fim&locale=tr&page=%2Fcontact&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Kompozit+Projeleriniz+%C4%B0%C3%A7in+%C4%B0leti%C5%9Fim&locale=tr&page=%2Fcontact&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1142046
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=KVKK+Ayd%C4%B1nlatma+Metni+%7C+MOE+Kompozit&description=MOE+Kompozit+KVKK+ayd%C4%B1nlatma+metni%2C+veri+i%C5%9Fleme+ama%C3%A7lar%C4%B1+ve+ba%C5%9Fvuru+esaslar%C4%B1.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=KVKK+Ayd%C4%B1nlatma+Metni+%7C+MOE+Kompozit&description=MOE+Kompozit+KVKK+ayd%C4%B1nlatma+metni%2C+veri+i%C5%9Fleme+ama%C3%A7lar%C4%B1+ve+ba%C5%9Fvuru+esaslar%C4%B1.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 159771
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=%C3%87erez+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+%C3%A7erez+politikas%C4%B1%2C+%C3%A7erez+t%C3%BCrleri+ve+tercih+y%C3%B6netimi+bilgileri.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=%C3%87erez+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+%C3%A7erez+politikas%C4%B1%2C+%C3%A7erez+t%C3%BCrleri+ve+tercih+y%C3%B6netimi+bilgileri.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 153684
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Industrial+Composite+Solutions&locale=en&page=%2Fsolutions&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Industrial+Composite+Solutions&locale=en&page=%2Fsolutions&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1426087
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Terms+of+Use+%7C+MOE+Kompozit&description=MOE+Kompozit+website+terms+of+use%2C+content+rights%2C+and+limitation+of+liability.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=Terms+of+Use+%7C+MOE+Kompozit&description=MOE+Kompozit+website+terms+of+use%2C+content+rights%2C+and+limitation+of+liability.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 151107
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Projects+and+References&locale=en&page=%2Freferences&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Composite+Projects+and+References&locale=en&page=%2Freferences&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1206273
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Hakk%C4%B1m%C4%B1zda+ve+Kompozit+%C3%9Cretim+Yakla%C5%9F%C4%B1m%C4%B1m%C4%B1z&locale=tr&page=%2Fabout&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Hakk%C4%B1m%C4%B1zda+ve+Kompozit+%C3%9Cretim+Yakla%C5%9F%C4%B1m%C4%B1m%C4%B1z&locale=tr&page=%2Fabout&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1135088
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=CTP+Govde+Paneli+Uretim+Galerisi+%7C+MOE+Kompozit&description=CTP+govde+paneli+uretim+galerisi.+Kalip+hazirlama%2C+laminasyon+ve+trim+asamalarini+one+cikarir.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=CTP+Govde+Paneli+Uretim+Galerisi+%7C+MOE+Kompozit&description=CTP+govde+paneli+uretim+galerisi.+Kalip+hazirlama%2C+laminasyon+ve+trim+asamalarini+one+cikarir.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 163043
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-doku-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-doku-01.jpg",
+      "type": "image/jpeg",
+      "width": 1631,
+      "height": 1080,
+      "bytes": 664922
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=MOE+Kompozit+Product+Gallery&description=MOE+Kompozit+product+and+manufacturing+process+photos.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=MOE+Kompozit+Product+Gallery&description=MOE+Kompozit+product+and+manufacturing+process+photos.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 156720
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Cookie+Policy+%7C+MOE+Kompozit&description=MOE+Kompozit+website+cookie+policy%2C+cookie+types%2C+and+preference+management+information.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=Cookie+Policy+%7C+MOE+Kompozit&description=MOE+Kompozit+website+cookie+policy%2C+cookie+types%2C+and+preference+management+information.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 152556
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-cam-elyaf-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-cam-elyaf-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 273930
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+%C3%9Cretim+ve+Proje+Galerisi&locale=tr&page=%2Fgallery&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Kompozit+%C3%9Cretim+ve+Proje+Galerisi&locale=tr&page=%2Fgallery&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1224256
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Kullan%C4%B1m+Ko%C5%9Fullar%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+kullan%C4%B1m+ko%C5%9Fullar%C4%B1%2C+i%C3%A7erik+haklar%C4%B1+ve+sorumluluk+s%C4%B1n%C4%B1rlar%C4%B1.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=Kullan%C4%B1m+Ko%C5%9Fullar%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+kullan%C4%B1m+ko%C5%9Fullar%C4%B1%2C+i%C3%A7erik+haklar%C4%B1+ve+sorumluluk+s%C4%B1n%C4%B1rlar%C4%B1.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 157583
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Privacy+Policy+%7C+MOE+Kompozit&description=Read+the+MOE+Kompozit+website+privacy+policy+and+personal+data+processing+principles.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=Privacy+Policy+%7C+MOE+Kompozit&description=Read+the+MOE+Kompozit+website+privacy+policy+and+personal+data+processing+principles.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 153249
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-doku-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-doku-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 434437
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-panel-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/media/kompozit/karbon-fiber-panel-01.jpg",
+      "type": "image/jpeg",
+      "width": 3194,
+      "height": 2952,
+      "bytes": 794480
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Engineering+and+Production+Blog&locale=en&page=%2Fblog&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Composite+Engineering+and+Production+Blog&locale=en&page=%2Fblog&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1142728
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=MOE+Kompozit+%C3%9Cr%C3%BCn+Galerisi&description=MOE+Kompozit+%C3%BCr%C3%BCn+ve+%C3%BCretim+s%C3%BCre%C3%A7+foto%C4%9Fraflar%C4%B1.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=MOE+Kompozit+%C3%9Cr%C3%BCn+Galerisi&description=MOE+Kompozit+%C3%BCr%C3%BCn+ve+%C3%BCretim+s%C3%BCre%C3%A7+foto%C4%9Fraflar%C4%B1.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 149268
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+%C3%9Cretim+%C4%B0%C3%A7in+Teklif+Talebi&locale=tr&page=%2Foffer&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Kompozit+%C3%9Cretim+%C4%B0%C3%A7in+Teklif+Talebi&locale=tr&page=%2Foffer&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1115090
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+ve+CTP+Kompozit+%C3%9Cretimi&locale=tr&page=%2F&v=brand-20260922&design=product-collage-v6",
+      "final": "http://127.0.0.1:3150/share-image?title=Karbon+Fiber+ve+CTP+Kompozit+%C3%9Cretimi&locale=tr&page=%2F&v=brand-20260922&design=product-collage-v6",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1619136
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-panel-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-panel-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 203463
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Request+a+Composite+Manufacturing+Quote&locale=en&page=%2Foffer&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Request+a+Composite+Manufacturing+Quote&locale=en&page=%2Foffer&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1117578
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/savunma-sanayi-kompozit-parcalari.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/savunma-sanayi-kompozit-parcalari.jpg",
+      "type": "image/jpeg",
+      "width": 1672,
+      "height": 941,
+      "bytes": 317473
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/tabut.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/tabut.jpg",
+      "type": "image/jpeg",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 241213
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+Proje+Referanslar%C4%B1+ve+%C4%B0%C5%9F+Birli%C4%9Fi&locale=tr&page=%2Freferences&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Kompozit+Proje+Referanslar%C4%B1+ve+%C4%B0%C5%9F+Birli%C4%9Fi&locale=tr&page=%2Freferences&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1205291
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+Panel+Uygulama+Galerisi+%7C+MOE+Kompozit&description=Karbon+fiber+panel+uygulama+galerisi.+Prototip%2C+kenar+isleme+ve+montaj+oncesi+kontrol+adimlarini+gosterir.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=Karbon+Fiber+Panel+Uygulama+Galerisi+%7C+MOE+Kompozit&description=Karbon+fiber+panel+uygulama+galerisi.+Prototip%2C+kenar+isleme+ve+montaj+oncesi+kontrol+adimlarini+gosterir.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 167026
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/su-deposu.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/su-deposu.jpg",
+      "type": "image/jpeg",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 265836
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/kompozit-fabrika-otoklav-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 438285
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/urunler-11.jpeg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/urunler-11.jpeg",
+      "type": "image/jpeg",
+      "width": 1200,
+      "height": 1600,
+      "bytes": 556034
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=About+Our+Composite+Manufacturing&locale=en&page=%2Fabout&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=About+Our+Composite+Manufacturing&locale=en&page=%2Fabout&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1137071
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/tren-parcalari.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/tren-parcalari.jpg",
+      "type": "image/jpeg",
+      "width": 1672,
+      "height": 941,
+      "bytes": 208335
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Gizlilik+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+gizlilik+politikas%C4%B1+ve+ki%C5%9Fisel+veri+i%C5%9Fleme+esaslar%C4%B1.&locale=tr",
+      "final": "http://127.0.0.1:3150/share-image?title=Gizlilik+Politikas%C4%B1+%7C+MOE+Kompozit&description=MOE+Kompozit+web+sitesi+gizlilik+politikas%C4%B1+ve+ki%C5%9Fisel+veri+i%C5%9Fleme+esaslar%C4%B1.&locale=tr",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 154539
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Contact+Us+for+Composite+Projects&locale=en&page=%2Fcontact&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Contact+Us+for+Composite+Projects&locale=en&page=%2Fcontact&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1144083
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+Fiberglass+Products&locale=en&page=%2Fproducts&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Carbon+Fiber+and+Fiberglass+Products&locale=en&page=%2Fproducts&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1106399
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Composite+Manufacturing+Gallery&locale=en&page=%2Fgallery&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Composite+Manufacturing+Gallery&locale=en&page=%2Fgallery&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1223861
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-dokuma-hibrit-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 222446
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=End%C3%BCstriyel+Kompozit+%C3%87%C3%B6z%C3%BCmleri&locale=tr&page=%2Fsolutions&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=End%C3%BCstriyel+Kompozit+%C3%87%C3%B6z%C3%BCmleri&locale=tr&page=%2Fsolutions&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1423955
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/belediye-cop-konteyneri.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/belediye-cop-konteyneri.jpg",
+      "type": "image/jpeg",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 284092
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+      "type": "image/jpeg",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 575786
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Kompozit+M%C3%BChendisli%C4%9Fi+ve+%C3%9Cretim+Blogu&locale=tr&page=%2Fblog&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Kompozit+M%C3%BChendisli%C4%9Fi+ve+%C3%9Cretim+Blogu&locale=tr&page=%2Fblog&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1142098
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-kutusu.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-kutusu.jpg",
+      "type": "image/jpeg",
+      "width": 1086,
+      "height": 1448,
+      "bytes": 235983
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-detay-01.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/karbon-fiber-detay-01.jpg",
+      "type": "image/jpeg",
+      "width": 1376,
+      "height": 768,
+      "bytes": 219018
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber%2C+CTP+ve+Cam+Elyaf+%C3%9Cr%C3%BCnler&locale=tr&page=%2Fproducts&v=brand-20260922",
+      "final": "http://127.0.0.1:3150/share-image?title=Karbon+Fiber%2C+CTP+ve+Cam+Elyaf+%C3%9Cr%C3%BCnler&locale=tr&page=%2Fproducts&v=brand-20260922",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1105113
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=FRP+Enclosure+Panel+Production+Gallery+%7C+MOE+Kompozit&description=FRP+enclosure+panel+production+gallery+focused+on+mold+preparation%2C+lamination%2C+and+trimming.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=FRP+Enclosure+Panel+Production+Gallery+%7C+MOE+Kompozit&description=FRP+enclosure+panel+production+gallery+focused+on+mold+preparation%2C+lamination%2C+and+trimming.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 172862
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/ctp-koruyucu-govde-paneli.jpg",
+      "type": "image/jpeg",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 187288
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-konteyneri.jpg",
+      "final": "https://www.karbonkompozit.com.tr/uploads/kompozit/cop-konteyneri.jpg",
+      "type": "image/jpeg",
+      "width": 1448,
+      "height": 1086,
+      "bytes": 252387
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+Panel+Application+Gallery+%7C+MOE+Kompozit&description=Carbon+fiber+panel+application+gallery+covering+prototype%2C+trimming%2C+and+pre-assembly+inspection+steps.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=Carbon+Fiber+Panel+Application+Gallery+%7C+MOE+Kompozit&description=Carbon+fiber+panel+application+gallery+covering+prototype%2C+trimming%2C+and+pre-assembly+inspection+steps.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 172938
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=PDPL+Information+Notice+%7C+MOE+Kompozit&description=MOE+Kompozit+PDPL+information+notice%2C+processing+purposes%2C+and+application+principles.&locale=en",
+      "final": "http://127.0.0.1:3150/share-image?title=PDPL+Information+Notice+%7C+MOE+Kompozit&description=MOE+Kompozit+PDPL+information+notice%2C+processing+purposes%2C+and+application+principles.&locale=en",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 163127
+    },
+    {
+      "url": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+FRP+Manufacturing&locale=en&page=%2F&v=brand-20260922&design=product-collage-v6",
+      "final": "http://127.0.0.1:3150/share-image?title=Carbon+Fiber+and+FRP+Manufacturing&locale=en&page=%2F&v=brand-20260922&design=product-collage-v6",
+      "type": "image/png",
+      "width": 1200,
+      "height": 630,
+      "bytes": 1528017
+    }
+  ],
+  "failures": [],
+  "passed": true
+}

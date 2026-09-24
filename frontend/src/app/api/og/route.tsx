@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import { APP_NAME } from '@/lib/brand-name';
 import { ImageResponse } from 'next/og';
 import { siteUrlBase } from '@/seo/helpers';
@@ -7,6 +9,23 @@ export const runtime = 'nodejs';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
+
+    const cardLocale = searchParams.get('locale') === 'en' ? 'en' : 'tr';
+    const page = searchParams.get('page') || '';
+    const cards: Record<string, string> = {
+      '/': 'home', '/about': 'about', '/blog': 'blog', '/contact': 'contact',
+      '/gallery': 'gallery', '/offer': 'offer', '/products': 'products',
+      '/references': 'references', '/solutions': 'solutions',
+    };
+    const legacyHome = /^product-collage-v[1-6]$/.test(searchParams.get('design') || '');
+    const card = legacyHome ? 'home' : cards[page];
+    if (card) {
+      const photo = await readFile(join(process.cwd(), `public/og/og-${card}${cardLocale === 'en' ? '-en' : ''}.png`));
+      return new Response(new Uint8Array(photo), {
+        headers: { 'Content-Type': 'image/png', 'Cache-Control': 'public, max-age=3600' },
+      });
+    }
+    const logo = await readFile(join(process.cwd(), `public/brand/moe-2026-09-09/og-horizontal-${cardLocale}.png`));
 
     // Get parameters with fallbacks
     const title = (searchParams.get('title') || APP_NAME).slice(0, 140);
@@ -52,7 +71,7 @@ export async function GET(request: Request) {
               zIndex: 10,
             }}
           >
-            <div style={{ fontSize: 40, fontWeight: 'bold', color: '#ea580c' }}>{APP_NAME}</div>
+            <img src={`data:image/png;base64,${logo.toString('base64')}`} width={490} height={64} alt={english ? 'MOE Composite' : 'MOE Kompozit'} />
           </div>
 
           {/* Middle Section - Text Content */}

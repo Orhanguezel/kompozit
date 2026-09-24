@@ -1,0 +1,210 @@
+[
+  {
+    "key": "about",
+    "locale": "tr",
+    "file": "og-about.png",
+    "title": "Hakkımızda",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "blog",
+    "locale": "tr",
+    "file": "og-blog.png",
+    "title": "Kompozit Dünyasından",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "contact",
+    "locale": "tr",
+    "file": "og-contact.png",
+    "title": "İletişim",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "gallery-detail",
+    "locale": "tr",
+    "file": "og-gallery-detail.png",
+    "title": "Projeden Detaylar",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "gallery",
+    "locale": "tr",
+    "file": "og-gallery.png",
+    "title": "Üretim ve Proje Galerisi",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "legal",
+    "locale": "tr",
+    "file": "og-legal.png",
+    "title": "Yasal Bilgiler",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "offer",
+    "locale": "tr",
+    "file": "og-offer.png",
+    "title": "Projeniz İçin Teklif Alın",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "product-detail",
+    "locale": "tr",
+    "file": "og-product-detail.png",
+    "title": "Ürün Detayları",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "products",
+    "locale": "tr",
+    "file": "og-products.png",
+    "title": "Kompozit Ürünlerimiz",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "references",
+    "locale": "tr",
+    "file": "og-references.png",
+    "title": "Referanslarımız",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "solution-detail",
+    "locale": "tr",
+    "file": "og-solution-detail.png",
+    "title": "Uygulamaya Özel Çözümler",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "solutions",
+    "locale": "tr",
+    "file": "og-solutions.png",
+    "title": "Mühendislik ve Üretim Çözümleri",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "home",
+    "locale": "tr",
+    "file": "og-home.png",
+    "title": "MOE Kompozit",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "about",
+    "locale": "en",
+    "file": "og-about-en.png",
+    "title": "About Us",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "blog",
+    "locale": "en",
+    "file": "og-blog-en.png",
+    "title": "Composite Insights",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "contact",
+    "locale": "en",
+    "file": "og-contact-en.png",
+    "title": "Contact Us",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "gallery-detail",
+    "locale": "en",
+    "file": "og-gallery-detail-en.png",
+    "title": "Project Highlights",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "gallery",
+    "locale": "en",
+    "file": "og-gallery-en.png",
+    "title": "Production & Project Gallery",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "legal",
+    "locale": "en",
+    "file": "og-legal-en.png",
+    "title": "Legal Information",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "offer",
+    "locale": "en",
+    "file": "og-offer-en.png",
+    "title": "Request a Project Quote",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "product-detail",
+    "locale": "en",
+    "file": "og-product-detail-en.png",
+    "title": "Product Details",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "products",
+    "locale": "en",
+    "file": "og-products-en.png",
+    "title": "Composite Products",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "references",
+    "locale": "en",
+    "file": "og-references-en.png",
+    "title": "Our References",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "solution-detail",
+    "locale": "en",
+    "file": "og-solution-detail-en.png",
+    "title": "Application-Specific Solutions",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "solutions",
+    "locale": "en",
+    "file": "og-solutions-en.png",
+    "title": "Engineering & Manufacturing",
+    "width": 1200,
+    "height": 630
+  },
+  {
+    "key": "home",
+    "locale": "en",
+    "file": "og-home-en.png",
+    "title": "MOE Composite",
+    "width": 1200,
+    "height": 630
+  }
+]

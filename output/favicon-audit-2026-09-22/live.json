@@ -1,0 +1,110 @@
+[
+  {
+    "page": "/tr",
+    "icons": [
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png",
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png"
+    ],
+    "icon_sizes": [
+      [
+        180,
+        180
+      ],
+      [
+        180,
+        180
+      ]
+    ],
+    "logos": [
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-tr-light-600.webp",
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-tr-light-600.webp"
+    ],
+    "robots": "index, follow, max-image-preview:large",
+    "og": "https://www.karbonkompozit.com.tr/share-image?title=Karbon+Fiber+ve+CTP+Kompozit+%C3%9Cretimi&locale=tr&page=%2F&v=brand-20260922&design=product-collage-v6",
+    "og_size": [
+      1200,
+      630
+    ]
+  },
+  {
+    "page": "/en",
+    "icons": [
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png",
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png"
+    ],
+    "icon_sizes": [
+      [
+        180,
+        180
+      ],
+      [
+        180,
+        180
+      ]
+    ],
+    "logos": [
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-en-light-600.webp",
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-en-light-600.webp"
+    ],
+    "robots": "index, follow, max-image-preview:large",
+    "og": "https://www.karbonkompozit.com.tr/share-image?title=Carbon+Fiber+and+FRP+Manufacturing&locale=en&page=%2F&v=brand-20260922&design=product-collage-v6",
+    "og_size": [
+      1200,
+      630
+    ]
+  },
+  {
+    "page": "/tr/products/lunapark-oyuncaklari-kabini",
+    "icons": [
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png",
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png"
+    ],
+    "icon_sizes": [
+      [
+        180,
+        180
+      ],
+      [
+        180,
+        180
+      ]
+    ],
+    "logos": [
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-tr-light-600.webp",
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-tr-light-600.webp"
+    ],
+    "robots": "index, follow, max-image-preview:large",
+    "og": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+    "og_size": [
+      1448,
+      1086
+    ]
+  },
+  {
+    "page": "/en/products/lunapark-oyuncaklari-kabini",
+    "icons": [
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png",
+      "/brand/moe-2026-09-09/icons/apple-touch-icon.png"
+    ],
+    "icon_sizes": [
+      [
+        180,
+        180
+      ],
+      [
+        180,
+        180
+      ]
+    ],
+    "logos": [
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-en-light-600.webp",
+      "https://www.karbonkompozit.com.tr/brand/moe-2026-09-09/logo-1-en-light-600.webp"
+    ],
+    "robots": "index, follow, max-image-preview:large",
+    "og": "https://www.karbonkompozit.com.tr/uploads/kompozit/lunapark-01-renkli.jpg",
+    "og_size": [
+      1448,
+      1086
+    ]
+  }
+]

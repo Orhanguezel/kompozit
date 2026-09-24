@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
 
   async redirects() {
     return [
-      { source: '/icon', destination: `${BRAND_ASSET_ROOT}/icons/favicon-32x32.png`, permanent: false },
+      { source: '/icon', destination: `${BRAND_ASSET_ROOT}/icons/apple-touch-icon.png`, permanent: false },
       { source: '/apple-icon', destination: `${BRAND_ASSET_ROOT}/icons/apple-touch-icon.png`, permanent: false },
       { source: '/blog/:slug', destination: '/tr/blog/:slug', permanent: true },
       { source: '/sitemap.xlm', destination: '/sitemap.xml', permanent: true },

@@ -1,0 +1,106 @@
+{
+  "tool": "built-in image_gen",
+  "images": [
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.21 (1).jpeg",
+      "file": "01-geyik-kabin-grubu.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-398428f5-5a65-4f52-9bca-fce0a8ecca5e.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The two white reindeer with blue eyes and red/white partially painted sleigh cabins. Preserve the white unfinished finish and existing partial red paint, all visible products and their relative arrangement.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "90df5ce0be9f40604735aa588a2b7221dd73f12ff300c9f462a067cd989016e6",
+      "bytes": 1584642
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.21 (2).jpeg",
+      "file": "02-geyik-kabin-on.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-baa9d76e-e8fd-4762-b52c-e1f7ee9ee71c.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The frontal pair of white reindeer with blue eyes and partially painted red/white sleigh bodies behind. Keep their shapes, pose and production-stage finish.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "c2d83f9260b58183b15f8c443e7b38ff2444af0e14ac7a123d50204ffa4ea32d",
+      "bytes": 1599728
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.21.jpeg",
+      "file": "03-boyasiz-geyik-detay.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-07a79316-a74b-4f14-9515-7ec4ce7d0097.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The two unpainted white reindeer, foreground reindeer three-quarter close view. Isolate the deer pair, remove incidental cut-off Santa and cabins at edges. Do not colorize or paint eyes.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "refinement": "Fix framing only in this catalog image of TWO unpainted white fiberglass reindeer. Zoom out enough so BOTH complete antlers including tallest tip AND all feet/flanges are inside the frame with at least 8 percent clear neutral light gray margin above and below. Keep both identical products, same front three-quarter angle, white unpainted eyes and surfaces, proportions, sculpted details, pose, relative arrangement, studio floor and soft lighting exactly unchanged. Do not recolor, add objects or text. Full product catalog composition.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "9828d4d840bf02c74ea99ecbbd354f8a94926076c10260fe0415d3d59150b909",
+      "bytes": 1456746
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.22 (1).jpeg",
+      "file": "04-yilbasi-dekor-panelleri.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-92203a10-fe2a-456f-ad10-6e8fc39b635d.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The three relief decorative Christmas panels: two rounded Santa/snowman panels and the large star-shaped deer panel. Isolate these three panels; remove background Santa/deer and cabin products. Preserve every painted relief detail.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "6895af504c3e4b25198bffd22c7f9f6bb8046cce987d07557fbd4d5646bdd4f6",
+      "bytes": 2006707
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.22 (2).jpeg",
+      "file": "05-cicek-formlu-parcalar.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-c43b108b-f89e-4412-b02e-240e57f27213.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The group of large and smaller yellow/purple/blue bell-flower shaped fiberglass parts with green tops. Preserve group and all color gradients, white rims. Remove workshop stands and replace only necessary support with unobtrusive studio supports.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "b509febf916c13bc5b4b32435b476eb61cfafa94fd7f57fdda3851d9c7b10c10",
+      "bytes": 1632470
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.22 (3).jpeg",
+      "file": "06-cicek-parca-serisi.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-b9c5f836-789b-4f3e-aa1e-c0382434bb60.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: All colorful bell-flower shaped parts grouped on floor. Preserve number, original arrangement, green tops, blue yellow purple colors and white petal tips. Remove cardboard and workshop clutter.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "363053c733649ed1f982652036104a9aa3d1ba490f5da236303bda1409c2e78c",
+      "bytes": 1880069
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.22 (4).jpeg",
+      "file": "07-seker-bastonu-gumus-bakir.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-2f13fd44-54f2-435a-ab4b-e4018a3ce64d.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The central red-white striped candy cane decoration, silver and copper bulb-shaped ornaments. Preserve opening holes of ornaments and exact paint patterns. Remove cropped other candy cane on right and workshop clutter. Frame central full cane and ornament group.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "df8beb0d86ef2a750259f79df57ce373a9a3fece71a93f30808e1c673b41453b",
+      "bytes": 1550143
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.22.jpeg",
+      "file": "08-boyali-geyik-arka.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-ceec1a07-f8d2-4d2c-813b-6f7a17eec297.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The two finished brown reindeer seen FROM BEHIND. Preserve that rear angle, tails, black studded harnesses, white lower legs, black hooves, original anatomical sculpted shape and brown antlers. Isolate deer pair; remove cabins and Santa behind. Do not change to front view.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "1a66cbff164bb545c3980f0994d89abf7166443b7ebcf6d2dc9cfe75c797ff05",
+      "bytes": 1613764
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.23 (1).jpeg",
+      "file": "09-palyaco-cop-kutusu.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-abb8b47f-d1cd-4d80-af3a-4ed8ac1e33d6.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The clown-shaped waste bin, big open mouth waste opening, orange-yellow curls, pink hat, green bow, blue outfit and green shoes. Isolate entire bin with correct opening. Preserve sculptural features and existing paint colors, gently clean dirt and superficial paint scuffs for presentation without redesign.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "bacb8b6cb2348489ccb25ef13df268dd9345d8b7ed1b7a34229e1715eed9dac0",
+      "bytes": 1680023
+    },
+    {
+      "source": "WhatsApp Image 2026-09-22 at 14.01.23.jpeg",
+      "file": "10-seker-bastonu-altin.png",
+      "generated": "/home/orhan/.codex/generated_images/01a0c89e-4996-7561-ac46-a6dbf22509bb/exec-a7fbcf47-2085-4438-bffd-a1d8c480da75.png",
+      "prompt": "Use case: precise-object-edit, background and lighting cleanup for a real product catalog. Edit this supplied manufacturing photo into professional photorealistic ecommerce product photography. Subject: The red-white candy cane group and gold bulb-shaped ornaments. Preserve stripes and gold metallic finish and open holes. Remove workshop clutter and frame products with full ends visible where source allows; avoid inventing unseen features.. Neutral very light gray seamless studio floor/background, subtle natural contact shadows, balanced softbox lighting and accurate white balance. Preserve exact actual product geometry, proportions, visible construction details, materials, color and finish from the source; these are manufactured fiberglass objects, not living characters. Remove people, unrelated workshop clutter, pipes, cables, walls and distracting metal painting jigs where feasible while retaining actual product mounting flanges. Do not invent a different product, add accessories, text, logos, watermark, or repaint unfinished products. Keep original camera angle and recognizable arrangement. Products occupy roughly 80% frame with breathing room, no cut-off antlers/feet/edges. One finished catalog photo, not a collage or before-after. Landscape 4:3 for group photos, portrait 3:4 for tall subjects. Save finished local image.",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "28b512ac813ff523dc61f61047e3548a4d0418bbecf588644fa92613f7854cd8",
+      "bytes": 1524023
+    }
+  ]
+}

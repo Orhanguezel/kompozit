@@ -141,6 +141,8 @@ export async function buildPageMetadataFromSettings(input: PageMetadataInput): P
   const ogFromEntry = entry.og_image ? resolvePublicAssetUrl(entry.og_image) ?? entry.og_image : '';
   // Keep explicitly managed page artwork; otherwise generate a distinct labelled card.
   const cardQuery = new URLSearchParams({ title, locale: input.locale, page: input.pathname });
+  cardQuery.set('v', 'brand-20260922');
+  if (input.pathname === '/') cardQuery.set('design', 'product-collage-v6');
   const ogImage = ogFromEntry || `/share-image?${cardQuery}`;
   const noIndex = entry.no_index || input.noIndex || false;
 

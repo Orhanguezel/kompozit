@@ -1,3 +1,4 @@
+import { BRAND_ASSET_ROOT } from '@/lib/brand-assets';
 import type { ParsedContactInfo } from '@/lib/contact-info';
 import * as jsonld from './jsonld';
 import { absoluteUrl, localizedUrl, organizationJsonLd, siteUrlBase, stripTrailingSlash } from './helpers';
@@ -29,7 +30,7 @@ export function buildOrganizationSchemaItems(
   const siteRoot = stripTrailingSlash(siteUrlBase());
   const orgId = `${siteRoot}#/schema/organization`;
   const localBusinessId = `${siteRoot}#/schema/local-business`;
-  const logo = absoluteUrl('/icon');
+  const logo = absoluteUrl(`${BRAND_ASSET_ROOT}/logo-1-${locale.startsWith('en') ? 'en' : 'tr'}-light-600.webp`);
   const orgPayload = organizationJsonLd(locale, {
     description: input.description,
     email: input.contact.email || undefined,

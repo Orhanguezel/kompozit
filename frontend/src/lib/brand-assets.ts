@@ -5,6 +5,7 @@ export const BRAND_ASSET_ROOT = '/brand/moe-2026-09-09';
 
 const legacyLogos = new Set([
   '/uploads/kompozit/brand/logo.png',
+  '/uploads/kompozit/brand/moe_logo_refined_v2.png',
   '/uploads/kompozit/brand/logo-dark.png',
   '/uploads/kompozit/brand/logo-light.png',
   '/uploads/kompozit/brand/kompozit_logo.jpeg',
@@ -37,7 +38,7 @@ export function resolveBrandIcon(value: string, kind: 'favicon' | 'apple'): stri
   const legacy = kind === 'favicon'
     ? ['/uploads/kompozit/brand/favicon-32.png', '/media/favicon.ico', '/favicon.ico', '/icon']
     : ['/uploads/kompozit/brand/apple-touch-icon.png', '/apple-icon'];
-  if (!value) return "/neutral-icon.svg";
+  if (!value || localPath(value) === '/neutral-icon.svg') return `${BRAND_ASSET_ROOT}/icons/apple-touch-icon.png`;
   if (!legacy.includes(localPath(value))) return value;
-  return `${BRAND_ASSET_ROOT}/icons/${kind === 'apple' ? 'apple-touch-icon.png' : 'favicon.ico'}`;
+  return `${BRAND_ASSET_ROOT}/icons/apple-touch-icon.png`;
 }

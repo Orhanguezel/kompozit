@@ -1,3 +1,4 @@
+import { BRAND_ASSET_ROOT } from '@/lib/brand-assets';
 import { measuredMedia } from '@/lib/measured-media';
 import { APP_NAME } from '@/lib/brand-name';
 import type { Metadata } from 'next';
@@ -139,7 +140,7 @@ export function organizationJsonLd(locale: string, input?: {
     email: input?.email,
     telephone: input?.telephone,
     address: input?.address,
-    logo: input?.logo ? absoluteMediaUrl(input.logo) : absoluteUrl('/icon'),
+    logo: input?.logo ? absoluteMediaUrl(input.logo) : absoluteUrl(`${BRAND_ASSET_ROOT}/logo-1-${locale.startsWith('en') ? 'en' : 'tr'}-light-600.webp`),
     sameAs: input?.sameAs,
   };
 }
@@ -195,7 +196,7 @@ export function buildPageMetadata(input: {
       description,
       ...(image ? { images: [{ url: image, alt: input.title }] } : {}),
     },
-    robots: input.noIndex ? { index: false, follow: true } : { index: true, follow: true },
+    robots: input.noIndex ? { index: false, follow: true } : { index: true, follow: true, 'max-image-preview': 'large' },
   };
 }
 
