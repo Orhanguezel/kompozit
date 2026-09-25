@@ -34,6 +34,11 @@ const nextConfig: NextConfig = {
       { source: '/en/solutions/solution-storage-tanks', destination: '/en/products/frp-water-storage-tank', permanent: true },
       { source: '/en/solutions/solution-custom-b2b', destination: '/en/products?category=custom-manufacturing', permanent: true },
       { source: '/en/solutions/:slug*', destination: '/en/products', permanent: true },
+      // Yalniz stok gorsel iceren galeriler pasif (2026-09-25, seed 334); urun galerisine.
+      { source: '/tr/gallery/karbon-fiber-panel-uygulama-galerisi', destination: '/tr/gallery/moe-kompozit-urun-galerisi', permanent: true },
+      { source: '/tr/gallery/ctp-govde-paneli-uretim-galerisi', destination: '/tr/gallery/moe-kompozit-urun-galerisi', permanent: true },
+      { source: '/en/gallery/carbon-fiber-panel-application-gallery', destination: '/en/gallery/moe-kompozit-product-gallery', permanent: true },
+      { source: '/en/gallery/frp-enclosure-panel-production-gallery', destination: '/en/gallery/moe-kompozit-product-gallery', permanent: true },
       // EN kategori slug'lari TR adlariyla esitlendi (2026-09-25, seed 332).
       ...[
         ['frp-products', 'municipal-products'],
