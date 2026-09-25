@@ -14,6 +14,9 @@ import { fetchParsedContactInfo } from '@/lib/contact-info';
 import { Breadcrumbs } from '@/components/seo/Breadcrumbs';
 import { RelatedLinks } from '@/components/seo/RelatedLinks';
 import { buildMediaAlt, buildMediaCaption, buildMediaSchemaText, isMeaningfulMediaDate, resolveMediaDimensions } from '@/lib/media-seo';
+import { measuredMedia } from '@/lib/measured-media';
+import { fetchProductCatalog, isProductCatalogGallery } from '@/features/gallery/product-catalog';
+import { ProductCatalogGallery } from '@/components/sections/ProductCatalogGallery';
 
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 
@@ -39,6 +42,9 @@ async function buildMetadata({
   await requireLocalizedSlug('gallery', slug, locale);
   const gallery = await fetchGallery(slug, locale);
   if (!gallery) return {};
+  const catalogCover = isProductCatalogGallery(gallery)
+    ? (await fetchProductCatalog(locale)).groups[0]?.photos[0]?.src
+    : undefined;
   return buildPageMetadata({
     locale,
     pathname: `/gallery/${slug}`,
@@ -53,7 +59,7 @@ async function buildMetadata({
       (locale.startsWith('en')
         ? `${gallery.title}. Review visuals from composite production steps, project details and completed applications.`
         : `${gallery.title}. Kompozit uretim adimlari, proje detaylari ve tamamlanan uygulamalardan gorselleri inceleyin.`),
-    ogImage: gallery.cover_image_url || gallery.cover_image_url_resolved || gallery.cover_image,
+    ogImage: catalogCover || gallery.cover_image_url || gallery.cover_image_url_resolved || gallery.cover_image,
     includeLocaleAlternates: false,
   });
 }
@@ -69,7 +75,22 @@ export default async function GalleryDetailPage({
   const gallery = await fetchGallery(slug, locale);
   if (!gallery) notFound();
 
-  const images = Array.isArray(gallery.images)
+  // Urun katalogu galerisi: gorseller urun fotograflarindan turetilir, galeriye yuklu gorseller kullanilmaz.
+  const catalog = isProductCatalogGallery(gallery) ? await fetchProductCatalog(locale) : null;
+  const catalogImages = catalog
+    ? catalog.groups.flatMap((group) =>
+        group.photos.map((photo) => ({
+          id: photo.src,
+          image_url: photo.src,
+          image_url_resolved: resolvePublicAssetUrl(photo.src) ?? photo.src,
+          alt: photo.alt,
+          caption: photo.productTitle,
+          ...measuredMedia(photo.src),
+        })),
+      )
+    : null;
+
+  const images = catalogImages ?? (Array.isArray(gallery.images)
     ? gallery.images.map((img: Record<string, unknown>) => {
         const raw =
           (typeof img.image_url_resolved === 'string' && img.image_url_resolved) ||
@@ -84,7 +105,7 @@ export default async function GalleryDetailPage({
           height: img.height || img.asset_height,
         };
       })
-    : [];
+    : []);
   const related = await fetchRelatedContent(gallery, slug, locale);
   const contactInfo = await fetchParsedContactInfo(locale);
   const galleryUrl = localizedUrl(locale, `/gallery/${slug}`);
@@ -164,7 +185,11 @@ export default async function GalleryDetailPage({
             <div className="flex items-center gap-3">
                <div className="h-[2px] w-8 rounded-full bg-[var(--color-gold)]" />
                <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--color-gold)]">
-                 Project Insight
+                 {catalog
+                   ? locale.startsWith('en')
+                     ? `Product photos · ${catalog.photoCount} photos · ${catalog.productCount} products`
+                     : `Ürün fotoğrafları · ${catalog.photoCount} fotoğraf · ${catalog.productCount} ürün`
+                   : 'Project Insight'}
                </span>
             </div>
             <h1 className="text-balance font-[var(--font-display)] text-4xl font-normal uppercase tracking-tight text-[var(--color-text-primary)] lg:text-7xl">
@@ -177,7 +202,9 @@ export default async function GalleryDetailPage({
             )}
           </header>
 
-        {images.length > 0 ? (
+        {catalog && catalog.photoCount > 0 ? (
+          <ProductCatalogGallery locale={locale} catalog={catalog} />
+        ) : images.length > 0 ? (
           <div className="mt-8 columns-1 gap-4 sm:columns-2 lg:columns-3">
             {images
               .sort((a: any, b: any) => a.display_order - b.display_order)

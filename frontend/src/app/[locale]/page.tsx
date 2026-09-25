@@ -22,6 +22,7 @@ import { HomeTestimonial } from '@/components/sections/HomeTestimonial';
 import { HomeContact } from '@/components/sections/HomeContact';
 import { AdvantagesGrid } from '@/components/sections/AdvantagesGrid';
 import { GalleryShowcase } from '@/components/sections/GalleryShowcase';
+import { withCatalogCovers } from '@/features/gallery/product-catalog';
 import { DarkCtaPanel } from '@/components/patterns/DarkCtaPanel';
 import { ListingCard } from '@/components/patterns/ListingCard';
 import { SectionHeader } from '@/components/patterns/SectionHeader';
@@ -159,7 +160,9 @@ export default async function HomePage({
     viewAll: t('home.hero.showcaseViewAll', { count: showcaseSource.length }),
     categories: t('home.hero.showcaseCategories'),
   };
-  const visibleGalleries = galleries.length > 0 ? galleries.slice(0, 6) : getFallbackGalleries(locale);
+  const visibleGalleries = galleries.length > 0
+    ? await withCatalogCovers(galleries.slice(0, 6), locale)
+    : getFallbackGalleries(locale);
   const aboutVisualRaw = aboutApi?.imageUrl || ABOUT_VISUAL_DEFAULT_SRC;
   const aboutVisualSrc = resolvePublicAssetUrl(aboutVisualRaw) ?? aboutVisualRaw ?? GALLERY_PLACEHOLDER_SRC;
 

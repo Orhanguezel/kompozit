@@ -44,7 +44,9 @@ ON DUPLICATE KEY UPDATE
   `meta_description` = VALUES(`meta_description`);
 
 -- ----------------------------------------------------------------
--- 2. Bağımsız (standalone) ana galeri
+-- 2. Ana urun galerisi — source_type 'product_catalog' (2026-09-25):
+--    frontend gorselleri aktif urun fotograflarindan turetir; asagidaki
+--    gallery_images satirlari bu galeride gosterilmez (stok/malzeme gorselleri).
 -- ----------------------------------------------------------------
 
 INSERT INTO `galleries`
@@ -54,12 +56,13 @@ VALUES
     '97010100-8100-4100-9100-eeeeeeee0100',
     'kompozit',
     NULL,
-    'standalone',
+    'product_catalog',
     1,
     1,
     1
   )
 ON DUPLICATE KEY UPDATE
+  `source_type`   = VALUES(`source_type`),
   `is_active`     = VALUES(`is_active`),
   `is_featured`   = VALUES(`is_featured`),
   `display_order` = VALUES(`display_order`);
@@ -72,27 +75,27 @@ VALUES
     'tr',
     'MOE Kompozit Ürün Galerisi',
     'moe-kompozit-urun-galerisi',
-    'Karbon fiber, CTP ve kompozit üretim süreçlerine ait fotoğraf galerisi.',
-    'MOE Kompozit Ürün Galerisi',
-    'MOE Kompozit ürün ve üretim süreç fotoğrafları.'
+    'Ürettiğimiz kompozit ürünlerin fotoğrafları: lunapark kabinleri ve yılbaşı figürleri, belediye ürünleri, peyzaj saksıları ve projeye özel parçalar. Her fotoğraf ilgili ürün sayfasına bağlanır.',
+    'Ürün Fotoğrafları | MOE Kompozit Ürün Galerisi',
+    'Lunapark kabini, yılbaşı figürü, CTP su deposu, çöp konteyneri, tabut ve dekoratif saksı gibi ürettiğimiz kompozit ürünlerin gerçek fotoğrafları.'
   ),
   (
     '97010100-8100-4100-9100-eeeeeeee0100',
     'en',
     'MOE Kompozit Product Gallery',
     'moe-kompozit-product-gallery',
-    'Photo gallery of carbon fiber, FRP and composite manufacturing processes.',
-    'MOE Kompozit Product Gallery',
-    'MOE Kompozit product and manufacturing process photos.'
+    'Photos of the composite products we manufacture: amusement ride cabins and Christmas figures, municipal products, landscape planters and custom parts. Each photo links to its product page.',
+    'Product Photos | MOE Kompozit Product Gallery',
+    'Real photos of our composite products: amusement ride cabins, Christmas figures, FRP water tanks, waste containers, coffins and decorative planters.'
   ),
   (
     '97010100-8100-4100-9100-eeeeeeee0100',
     'de',
     'MOE Kompozit Produktgalerie',
     'moe-kompozit-produktgalerie',
-    'Fotogalerie von Karbonfaser-, GFK- und Verbundwerkstoffherstellungsprozessen.',
-    'MOE Kompozit Produktgalerie',
-    'MOE Kompozit Produkt- und Fertigungsprozessfotos.'
+    'Fotos der von uns gefertigten Verbundwerkstoffprodukte: Fahrgeschäftskabinen, Weihnachtsfiguren, kommunale Produkte, Pflanzgefäße und Sonderteile.',
+    'Produktfotos | MOE Kompozit Produktgalerie',
+    'Echte Fotos unserer GFK-Produkte: Fahrgeschäftskabinen, Weihnachtsfiguren, Wassertanks, Abfallbehälter, Särge und Pflanzgefäße.'
   )
 ON DUPLICATE KEY UPDATE
   `title`            = VALUES(`title`),

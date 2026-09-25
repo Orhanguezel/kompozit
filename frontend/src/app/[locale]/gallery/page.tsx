@@ -13,6 +13,7 @@ import { getFallbackGalleries } from '@/lib/content-fallbacks';
 
 import { Reveal } from '@/components/motion/Reveal';
 
+import { withCatalogCovers } from '@/features/gallery/product-catalog';
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 
 async function fetchGalleries(locale: string) {
@@ -59,7 +60,7 @@ export default async function GalleryPage({
 }) {
   const { locale } = await params;
   const t = await getTranslations({ locale });
-  const galleries = await fetchGalleries(locale);
+  const galleries = await withCatalogCovers(await fetchGalleries(locale), locale);
   const visibleGalleries = galleries.length > 0 ? galleries : getFallbackGalleries(locale);
 
   return (

@@ -71,7 +71,75 @@
     "width": 1376,
     "height": 768
   },
+  "/uploads/kompozit/kompozit-uretim-proses-01.jpg": {
+    "width": 1376,
+    "height": 768
+  },
   "/uploads/kompozit/lunapark-01-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-02-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-03-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-04-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-05-renkli.jpg": {
+    "width": 1086,
+    "height": 1448
+  },
+  "/uploads/kompozit/lunapark-06-renkli.jpg": {
+    "width": 1086,
+    "height": 1448
+  },
+  "/uploads/kompozit/lunapark-07-renkli.jpg": {
+    "width": 1086,
+    "height": 1448
+  },
+  "/uploads/kompozit/lunapark-08-renkli.jpg": {
+    "width": 1086,
+    "height": 1448
+  },
+  "/uploads/kompozit/lunapark-09-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-11-ham.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-12-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-13-renkli.jpg": {
+    "width": 1086,
+    "height": 1448
+  },
+  "/uploads/kompozit/lunapark-14-renkli.jpg": {
+    "width": 1086,
+    "height": 1448
+  },
+  "/uploads/kompozit/lunapark-15-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-16-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-17-renkli.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/lunapark-18-renkli.jpg": {
     "width": 1448,
     "height": 1086
   },
@@ -91,8 +159,88 @@
     "width": 1672,
     "height": 941
   },
+  "/uploads/kompozit/urunler-1.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-10.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
   "/uploads/kompozit/urunler-11.jpeg": {
     "width": 1200,
     "height": 1600
+  },
+  "/uploads/kompozit/urunler-12.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-13.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-14.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-2.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-3.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-4.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-5.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-6.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-7.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-8.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/urunler-9.jpeg": {
+    "width": 1200,
+    "height": 1600
+  },
+  "/uploads/kompozit/yilbasi-boyali-geyik-03.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/yilbasi-dekor-panelleri-05.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/yilbasi-geyik-kizak-01.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/yilbasi-geyik-kizak-02.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/yilbasi-ham-geyik-04.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/yilbasi-seker-bastonu-06.jpg": {
+    "width": 1448,
+    "height": 1086
+  },
+  "/uploads/kompozit/yilbasi-seker-bastonu-07.jpg": {
+    "width": 1448,
+    "height": 1086
   }
 }
