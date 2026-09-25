@@ -193,7 +193,7 @@ const fallbackReferences: Record<LocaleKey, FallbackReferenceItem[]> = {
     {
       title: 'Enerji Altyapi Grubu',
       description: 'Dis ortam dayanimi yuksek kabin ve tasiyici sistem bilesenleri.',
-      websiteUrl: '/tr/solutions',
+      websiteUrl: '/tr/products',
     },
     {
       title: 'Raylı Sistemler Bilesenleri',
@@ -225,7 +225,7 @@ const fallbackReferences: Record<LocaleKey, FallbackReferenceItem[]> = {
     {
       title: 'Energy Infrastructure Group',
       description: 'Enclosures and structural components with high outdoor durability.',
-      websiteUrl: '/en/solutions',
+      websiteUrl: '/en/products',
     },
     {
       title: 'Rail Systems Components',
@@ -238,85 +238,6 @@ const fallbackReferences: Record<LocaleKey, FallbackReferenceItem[]> = {
       websiteUrl: '/en/gallery',
     }
   ],
-};
-
-const fallbackSolutions: Record<LocaleKey, (FallbackGalleryItem & { slug: string; specs: string[]; category: string })[]> = {
-  tr: [
-    {
-       slug: 'solution-planters',
-       title: 'Peyzaj ve Kent Ekipmanlari (Saksı)',
-       description: 'Dis ortam kosullarina dayanikli, hafif ve yuksek yuzey kalitesine sahip buyuk olcekli kompozit saksi ve oturma gruplari.',
-       imageSrc: S.planter,
-       specs: ['Hafif Yapı', 'Korozyon Direnci', 'Özel Renk Seçeneği'],
-       category: 'Peyzaj',
-       content: '<h2>Peyzajda Kompozit Yaklasimi</h2><p>Kent mobilyalari ve buyuk olcekli saksilarda agirlik, korozyon ve yuzey deformasyonu en buyuk maliyet kalemleridir. UV dayanimi yuksek, CTP tabanli ve moduler uretime uygun peyzaj bilesenleri gelistiriyoruz.</p><h3>Muhendislik Avantajlari</h3><ul><li>Ağırlık seçilen malzeme ve tasarıma göre değerlendirilir</li><li>Kimyasal ve dış ortam dayanımı proje koşullarına göre doğrulanır</li><li>İstenilen RAL kodunda, puruzsuz yuzey bitis</li></ul>',
-    },
-    {
-       slug: 'solution-storage-tanks',
-       title: 'Moduler Depo ve Tank Cozumleri',
-       description: 'Kimyasal depolama, su yalitimi ve endustriyel hatlar icin CTP tabanli yuksek mukavemetli depo ve muhafaza urunleri.',
-       imageSrc: S.tank,
-       specs: ['CTP / FRP', 'Kimyasal Dayanım', 'Sızdırmazlık Garantisi'],
-       category: 'Depolama',
-       content: '<h2>Endustriyel Depolama ve Sizdirmazlik</h2><p>Asidik ortamlar ve kimyasal stoklama ihtiyaclarinda geleneksel metal tanklar korozyon nedeniyle hizli deforme olur. CTP (Cam Elyaf Takviyeli Plastik) tanklarimiz, kimyasal direnci ve yuksek mukavemetiyle uzun omurlu kullanim sunar.</p><h3>Uygulama Alanlari</h3><ul><li>Sarf malzemesi ve kimyasal depolama</li><li>Aritma tesisleri ve asit tanklari</li><li>Ozel olculu yangin ve kullanim suyu depolari</li></ul>',
-    },
-    {
-       slug: 'solution-coffins',
-       title: 'Defin Grubu Urunleri (Tabut)',
-       description: 'Belediyeler ve kamu kurumlari icin seri uretilen, dayanikli ve hijyenik kompozit defin ve nakil ekipmanlari.',
-       imageSrc: S.softFloral,
-       specs: ['Üst Düzey Hijyen', 'Seri Üretim', 'Lojistik Uyumluluk'],
-       category: 'Kamu',
-       content: '<h2>Kamu ve Belediye Cozumleri</h2><p>Defin ve nakil sureclerinde hijyen, hafiflik ve kolay dezenfekte edilebilirlik onceliktir. Kompozit tabut ve kabinler; gozeneksiz yapilari sayesinde mikrobiyolojik birikimi onler ve uzun yillar servis verir.</p><h3>Teknik Kapsam</h3><ul><li>Yuksek tasima kapasitesi ve hafif yapi</li><li>Kolay temizlenebilir Jel-Kot yuzey</li><li>Ust uste istiflenebilir ergonomik tasarim</li></ul>',
-    },
-    {
-       slug: 'solution-custom-b2b',
-       title: 'Ozel B2B Kompozit Imalat',
-       description: 'Savunma, enerji ve makina sektorleri icin teknik sartnameye gore ozel olarak tasarlanan ve uretilen alt bilesenler.',
-       imageSrc: S.carbon,
-       specs: ['Mühendislik Desteği', 'Karbon / Cam Elyaf', 'AS9100 Standartı'],
-       category: 'Endüstriyel',
-       content: '<h2>Savunma ve Enerji icin Hassas Imalat</h2><p>Ozel makine parcalari, muhafazalar ve tasiyici bilesenlerde karbon fiber ve hibrit yapilar, agirlik-mukavemet dengesini saglamanin tek yoludur. Projenize ozel kalip tasarimi ve seri uretim hatti kurguluyoruz.</p><h3>B2B Is Akisimiz</h3><ul><li>Teknik cizim ve tolerans analizi</li><li>Prototip uretimi ve numune dogrulama</li><li>Donemsel/Tekrarlı seri uretim hatti</li></ul>',
-    }
-  ],
-  en: [
-    {
-       slug: 'solution-planters',
-       title: 'Landscaping and Urban Equipment (Planters)',
-       description: 'Large-scale composite planters and seating groups with high surface quality, lightweight design and outdoor durability.',
-       imageSrc: S.planter,
-       specs: ['Lightweight', 'Corrosion Resistance', 'Custom Colors'],
-       category: 'Landscaping',
-       content: '<h2>Composite Approach in Landscaping</h2><p>In urban furniture and large-scale planters, weight, corrosion, and surface deformation are the biggest cost items. We develop GRP-based landscaping components suitable for UV resistance and modular production.</p><h3>Engineering Advantages</h3><ul><li>Weight depends on the selected material and design</li><li>Chemical and outdoor resistance require validation for the project conditions</li><li>Smooth surface finish in any requested RAL code</li></ul>',
-    },
-    {
-       slug: 'solution-storage-tanks',
-       title: 'Modular Tank and Storage Solutions',
-       description: 'High-strength FRP-based storage and enclosure products for chemical storage, waterproofing and industrial lines.',
-       imageSrc: S.tank,
-       specs: ['FRP / GRP', 'Chemical Resistance', 'Leak-proof Guarantee'],
-       category: 'Storage',
-       content: '<h2>Industrial Storage and Sealing</h2><p>In acidic environments and chemical storage needs, traditional metal tanks deform quickly due to corrosion. Our GRP (Glass Reinforced Plastic) tanks offer long-lasting use with their chemical resistance and high strength.</p><h3>Application Areas</h3><ul><li>Consumables and chemical storage</li><li>Treatment plants and acid tanks</li><li>Custom-sized fire and utility water tanks</li></ul>',
-    },
-    {
-       slug: 'solution-coffins',
-       title: 'Burial and Transport Equipment (Coffins)',
-       description: 'Durable, hygienic composite burial and transport equipment mass-produced for municipalities and institutions.',
-       imageSrc: S.softFloral,
-       specs: ['High Hygiene', 'Mass Production', 'Logistics Friendly'],
-       category: 'Institutional',
-       content: '<h2>Public and Municipal Solutions</h2><p>Hygiene, lightweight design, and ease of disinfection are priorities in burial and transport processes. Composite coffins and cabins prevent microbiological buildup thanks to their non-porous structure and provide service for many years.</p><h3>Technical Scope</h3><ul><li>High load capacity and lightweight structure</li><li>Easy-to-clean Gel-Coat surface</li><li>Stackable ergonomic design</li></ul>',
-    },
-    {
-       slug: 'solution-custom-b2b',
-       title: 'Custom B2B Composite Manufacturing',
-       description: 'Sub-components specifically designed and manufactured according to technical specifications for defense, energy and machinery sectors.',
-       imageSrc: S.carbon,
-       specs: ['Engineering Support', 'Carbon / Fiberglass', 'High Precision'],
-       category: 'Industrial',
-       content: '<h2>Precision Manufacturing for Defense and Energy</h2><p>In custom machine parts, enclosures, and structural components, carbon fiber and hybrid structures are the only way to achieve the weight-strength balance. We set up custom mold design and series production lines for your project.</p><h3>Our B2B Workflow</h3><ul><li>Technical drawing and tolerance analysis</li><li>Prototype production and sample validation</li><li>Periodic/Recurring series production line</li></ul>',
-    }
-  ]
 };
 
 function normalizeLocale(locale: string): LocaleKey {
@@ -337,24 +258,4 @@ export function getFallbackGalleries(locale: string) {
 
 export function getFallbackReferences(locale: string) {
   return fallbackReferences[normalizeLocale(locale)];
-}
-
-export function getFallbackSolutions(locale: string) {
-  const normalized = normalizeLocale(locale);
-  return (fallbackSolutions as any)[normalized] || [];
-}
-
-export function getFallbackSolutionBySlug(slug: string, locale: string) {
-  if (!slug) return null;
-  const normalized = normalizeLocale(locale);
-  const data = (fallbackSolutions as any)[normalized];
-  if (!data || !Array.isArray(data) || data.length === 0) return null;
-
-  const firstToken = slug.replace(/-/g, ' ').split(' ')[0] ?? '';
-  const search = firstToken.toLowerCase();
-
-  const match = data.find((item: any) =>
-    item?.title?.toLowerCase()?.includes(search)
-  );
-  return match || data[0];
 }

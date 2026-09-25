@@ -30,7 +30,6 @@ const cards = [
   ['products', ['Kompozit', 'Ürünlerimiz'], ['Composite', 'Products']],
   ['references', ['Referanslarımız'], ['Our References']],
   ['solution-detail', ['Uygulamaya Özel', 'Çözümler'], ['Application-Specific', 'Solutions']],
-  ['solutions', ['Mühendislik ve', 'Üretim Çözümleri'], ['Engineering &', 'Manufacturing']],
 ];
 const svg = body => Buffer.from(`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630">${body}</svg>`);
 const escape = s => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;');

@@ -13,8 +13,6 @@ export type PageSeoKey =
   | 'contact'
   | 'products'
   | 'product-detail'
-  | 'solutions'
-  | 'solution-detail'
   | 'gallery'
   | 'gallery-detail'
   | 'references'

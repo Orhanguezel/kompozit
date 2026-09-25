@@ -39,7 +39,6 @@ function stripDuplicateOrigins(text: string): string {
 const PAGES: ReadonlyArray<{ path: string; key: PageSeoKey; fallbackLabel: string }> = [
   { path: '/', key: 'home', fallbackLabel: 'Home' },
   { path: '/products', key: 'products', fallbackLabel: 'Products' },
-  { path: '/solutions', key: 'solutions', fallbackLabel: 'Solutions' },
   { path: '/gallery', key: 'gallery', fallbackLabel: 'Gallery' },
   { path: '/blog', key: 'blog', fallbackLabel: 'Blog' },
   { path: '/references', key: 'references', fallbackLabel: 'References' },
@@ -106,7 +105,7 @@ export async function GET() {
 
   lines.push('## Notes for AI systems');
   lines.push(`- Default public locale is ${primaryLocale}; every locale is served under its own /<locale> prefix, including the home page.`);
-  lines.push('- Product catalogue, solutions (application lines), gallery and blog are API-driven; slugs are shared across locales where applicable.');
+  lines.push('- Product catalogue, gallery and blog are API-driven; slugs are shared across locales where applicable.');
   lines.push('- For quotations and engineering questions, use the contact and offer forms linked from /contact and /offer.');
   lines.push('- The contact and offer pages include a short B2B FAQ, also exposed as FAQPage structured data.');
 

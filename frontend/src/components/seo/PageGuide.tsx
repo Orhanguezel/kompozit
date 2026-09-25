@@ -9,8 +9,8 @@ export function PageGuide({ locale, pageKey }: { locale: string; pageKey: GuideK
   const en = locale.startsWith('en');
   const [heading, entries] = guides[pageKey][en ? 'en' : 'tr'] as [string, [string, string][]];
   const links = en
-    ? [['products', 'Explore composite products'], ['solutions', 'Compare applications'], ['gallery', 'View the production gallery'], ['offer', 'Send project requirements']]
-    : [['products', 'Kompozit ürünleri inceleyin'], ['solutions', 'Uygulama alanlarını karşılaştırın'], ['gallery', 'Üretim galerisini görün'], ['offer', 'Proje gereksinimlerini gönderin']];
+    ? [['products', 'Explore composite products'], ['references', 'Review references'], ['gallery', 'View the production gallery'], ['offer', 'Send project requirements']]
+    : [['products', 'Kompozit ürünleri inceleyin'], ['references', 'Referansları inceleyin'], ['gallery', 'Üretim galerisini görün'], ['offer', 'Proje gereksinimlerini gönderin']];
   return (
     <section className="relative section-py bg-[var(--color-bg-secondary)] text-[var(--color-text-primary)]" data-page-guide={pageKey}>
       <div className="mx-auto max-w-5xl space-y-8 px-6 lg:px-12">

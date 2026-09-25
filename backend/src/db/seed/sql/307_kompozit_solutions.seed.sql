@@ -3,6 +3,7 @@
 -- MOE Kompozit — Uygulama / çözüm hatları (custom_pages)
 -- module_key = 'kompozit_solutions'
 -- Slug tr/en aynı; içerik locale satırında.
+-- 2026-09-25: bolum yayindan kaldirildi (is_published=0); /solutions URL'leri 301 ile urunlere gider.
 -- =============================================================
 
 SET NAMES utf8mb4;
@@ -35,10 +36,10 @@ INSERT INTO `custom_pages`
   `sub_category_id`
 )
 VALUES
-  ('b5010001-7001-4001-9001-555555550001', 'kompozit_solutions', 1, 1, 10, 10, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
-  ('b5010002-7002-4002-9002-555555550002', 'kompozit_solutions', 1, 1, 20, 20, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
-  ('b5010003-7003-4003-9003-555555550003', 'kompozit_solutions', 1, 1, 30, 30, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
-  ('b5010004-7004-4004-9004-555555550004', 'kompozit_solutions', 1, 1, 40, 40, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL)
+  ('b5010001-7001-4001-9001-555555550001', 'kompozit_solutions', 0, 1, 10, 10, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
+  ('b5010002-7002-4002-9002-555555550002', 'kompozit_solutions', 0, 1, 20, 20, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
+  ('b5010003-7003-4003-9003-555555550003', 'kompozit_solutions', 0, 1, 30, 30, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL),
+  ('b5010004-7004-4004-9004-555555550004', 'kompozit_solutions', 0, 1, 40, 40, NULL, NULL, NULL, NULL, '[]', '[]', NULL, NULL)
 ON DUPLICATE KEY UPDATE
   `module_key` = VALUES(`module_key`),
   `is_published` = VALUES(`is_published`),

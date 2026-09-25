@@ -12,7 +12,7 @@ class Images(HTMLParser):
 def read(url):return urllib.request.urlopen(url,timeout=15).read()
 urls=set()
 for loc in ['tr','en']:
- for path in ['', '/products','/solutions','/references','/gallery','/blog','/about','/contact','/offer']:
+ for path in ['', '/products','/references','/gallery','/blog','/about','/contact','/offer']:
   parser=Images()
   try: parser.feed(read(BASE+'/'+loc+path).decode())
   except Exception as e: print(f'Skipped page {loc}{path}: {e}'); continue

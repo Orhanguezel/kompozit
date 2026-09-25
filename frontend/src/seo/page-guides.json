@@ -1,40 +1,4 @@
 {
-  "solutions": {
-    "tr": [
-      "Kompozit çözüm seçim rehberi",
-      [
-        [
-          "Kompozit çözüm seçimine nereden başlanmalı?",
-          "Kompozit çözüm seçimi, parçanın kullanım amacı ve çalışma ortamıyla başlar. Taşıyacağı yükü, bağlantı noktalarını, dış ortam veya kimyasal temas koşullarını ve yüzey beklentisini birlikte tanımlayın. Karbon fiber, CTP veya cam elyaf seçimini yalnız malzeme adına göre yapmayın. Teknik çizim, hedef adet ve teslim ihtiyacı aynı değerlendirmeye girdiğinde, farklı üretim seçeneklerini aynı kabul kriterleri üzerinden karşılaştırabilirsiniz."
-        ],
-        [
-          "Numune ile seri üretim kararı nasıl ayrılır?",
-          "Numune aşamasında geometri, montaj uyumu ve yüzey beklentisi değerlendirilir; seri üretim için ayrıca tekrar edilebilirlik, kontrol planı ve kabul kriterleri belirlenir. Tek bir numunenin görünümü, tüm üretim partisinin performansını kanıtlamaz. Teklif talebinizde numune adedi ile seri üretim ihtiyacını ayrı yazın; çizim revizyonunu ve istenen test belgelerini belirtin. Böylece kalıp, parça ve doğrulama kapsamları açıkça konuşulabilir."
-        ],
-        [
-          "Teklif öncesinde hangi seçenekler karşılaştırılmalı?",
-          "Yeni kalıp ihtiyacı, mevcut kalıbın kullanımı, numune aşaması ve seri üretim adedini aynı değerlendirmede karşılaştırın. Alternatifler arasında karar verirken sadece parça fiyatına değil; çizim kapsamına, yüzey işlemlerine, kontrol ihtiyacına ve teslimat koşullarına da bakın. Eksik bir teknik gereksinim daha sonra değişiklik doğurabilir. Bu nedenle seçenekleri teklif talebinde açık sorularla belirtin ve hangi kalemlerin kapsama dâhil olduğunu teyit edin."
-        ]
-      ]
-    ],
-    "en": [
-      "Choosing a composite solution",
-      [
-        [
-          "Where should composite selection start?",
-          "Start with the function of the part and its service environment. Describe loads, mounting interfaces, outdoor or chemical exposure and surface expectations together. Do not select carbon fiber, FRP or fiberglass from the material name alone. A drawing, target quantity and delivery requirement allow manufacturing options to be compared against the same acceptance criteria, rather than against unrelated catalogue claims."
-        ],
-        [
-          "How does a prototype differ from a production order?",
-          "A prototype helps assess geometry, assembly fit and surface expectations. A production order also needs repeatability requirements, an inspection plan and agreed acceptance criteria. The appearance of one sample does not establish the performance of a complete batch. State prototype and production quantities separately, identify the drawing revision and list required reports so tooling, parts and verification can be discussed as separate items."
-        ],
-        [
-          "Which options should be compared before a quotation?",
-          "Compare new tooling, the use of existing tools, sampling and expected production quantity within the same scope. Consider drawing requirements, finishing, inspection and delivery conditions alongside part price. A missing requirement may lead to later changes. List open questions in the enquiry and ask which items are included, so the alternatives can be evaluated on a consistent basis."
-        ]
-      ]
-    ]
-  },
   "gallery": {
     "tr": [
       "Kompozit üretim ve proje galerisini değerlendirme",
@@ -98,7 +62,7 @@
         ],
         [
           "How do you move from material information to product selection?",
-          "Define the function of the part and its service environment first, then review relevant product and solution pages. Fiber, resin, laminate construction and manufacturing method need to be evaluated together. Do not assume that an advantage discussed for a material applies to every finished component. Confirm the decision using a product drawing, acceptance criteria and sample verification where required by the project."
+          "Define the function of the part and its service environment first, then review the relevant product pages. Fiber, resin, laminate construction and manufacturing method need to be evaluated together. Do not assume that an advantage discussed for a material applies to every finished component. Confirm the decision using a product drawing, acceptance criteria and sample verification where required by the project."
         ],
         [
           "What questions should you ask when reading about quality control?",

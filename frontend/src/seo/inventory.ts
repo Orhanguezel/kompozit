@@ -3,7 +3,6 @@ import { cache } from 'react';
 import { AVAILABLE_LOCALES } from '@/i18n/locales';
 import { API_BASE_URL } from '@/lib/utils';
 import { permanentRedirect, notFound } from 'next/navigation';
-import { KOMPOZIT_SOLUTIONS_MODULE_KEY } from '@/features/solutions';
 
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || 'https://www.karbonkompozit.com.tr').replace(/\/$/, '');
 export type SeoRecord = { id: string; slug: string; locale?: string; updated_at?: string; created_at?: string; is_active?: boolean | number; is_published?: boolean | number };
@@ -11,7 +10,6 @@ const sources: Record<string, { endpoint: string; params?: Record<string, string
   products: { endpoint: '/products', params: { item_type: 'kompozit', is_active: '1' } },
   gallery: { endpoint: '/galleries', params: { module_key: 'kompozit', is_active: '1' } },
   blog: { endpoint: '/custom-pages', params: { module_key: 'kompozit_blog', is_published: '1' } },
-  solutions: { endpoint: '/custom-pages', params: { module_key: KOMPOZIT_SOLUTIONS_MODULE_KEY, is_published: '1' } },
   legal: { endpoint: '/custom-pages', params: { module_key: 'kompozit_legal', is_published: '1' } },
 };
 export const getSeoRecords = cache(async (section: string, locale: string): Promise<SeoRecord[]> => {

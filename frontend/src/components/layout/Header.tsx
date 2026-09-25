@@ -56,12 +56,6 @@ function normalizeItems(raw: Record<string, unknown>[], locale: string): HeaderM
     .filter((i) => i.title);
 }
 
-function isSolutionsItem(item: HeaderMenuItem): boolean {
-  const path = String(item.url || '').toLowerCase();
-  const normalized = path.replace(/^\/[a-z]{2}(?=\/)/, '');
-  return normalized === '/solutions' || normalized.startsWith('/solutions?');
-}
-
 export function Header({
   menuItems,
   logo,
@@ -259,7 +253,7 @@ export function Header({
                     {item.title}
                   </Link>
                 )}
-                {item.children?.length && !isSolutionsItem(item) ? (
+                {item.children?.length ? (
                   <div className="ml-3 mt-2 grid gap-2 border-l border-[var(--gold)]/15 pl-4">
                     {item.children.map((child) => (
                       <Link

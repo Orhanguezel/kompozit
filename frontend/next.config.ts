@@ -20,6 +20,20 @@ const nextConfig: NextConfig = {
       { source: '/blog/:slug', destination: '/tr/blog/:slug', permanent: true },
       { source: '/sitemap.xlm', destination: '/sitemap.xml', permanent: true },
       { source: '/', destination: '/tr', permanent: false },
+      // Cozumler bolumu 2026-09-25'te kaldirildi; urun/kategori karsiliklarina kalici yonlendirme.
+      { source: '/solutions', destination: '/tr/products', permanent: true },
+      { source: '/tr/solutions', destination: '/tr/products', permanent: true },
+      { source: '/tr/solutions/solution-planters', destination: '/tr/products?category=peyzaj-urunleri-ctp', permanent: true },
+      { source: '/tr/solutions/solution-coffins', destination: '/tr/products/kompozit-tabut', permanent: true },
+      { source: '/tr/solutions/solution-storage-tanks', destination: '/tr/products/ctp-su-deposu', permanent: true },
+      { source: '/tr/solutions/solution-custom-b2b', destination: '/tr/products?category=ozel-uretim', permanent: true },
+      { source: '/tr/solutions/:slug*', destination: '/tr/products', permanent: true },
+      { source: '/en/solutions', destination: '/en/products', permanent: true },
+      { source: '/en/solutions/solution-planters', destination: '/en/products/decorative-composite-planters-vases', permanent: true },
+      { source: '/en/solutions/solution-coffins', destination: '/en/products/composite-coffin', permanent: true },
+      { source: '/en/solutions/solution-storage-tanks', destination: '/en/products/frp-water-storage-tank', permanent: true },
+      { source: '/en/solutions/solution-custom-b2b', destination: '/en/products?category=custom-manufacturing', permanent: true },
+      { source: '/en/solutions/:slug*', destination: '/en/products', permanent: true },
     ];
   },
 

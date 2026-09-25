@@ -25,7 +25,6 @@ export function buildDefaultMenu(locale: string, t: TranslateFn): MenuItemLike[]
   return [
     { title: t('home'), url: localizedPath(locale, '/') },
     { title: t('products'), url: localizedPath(locale, '/products') },
-    { title: t('solutions'), url: localizedPath(locale, '/solutions') },
     { title: t('gallery'), url: localizedPath(locale, '/gallery') },
     { title: t('blog'), url: localizedPath(locale, '/blog') },
     { title: t('about'), url: localizedPath(locale, '/about') },
@@ -91,7 +90,6 @@ export function buildDefaultFooterSections(
       title: footerT('sections.explore'),
       items: [
         { label: navT('products'), url: localizedPath(locale, '/products') },
-        { label: navT('solutions'), url: localizedPath(locale, '/solutions') },
         { label: navT('references'), url: localizedPath(locale, '/references') },
         { label: navT('gallery'), url: localizedPath(locale, '/gallery') },
         { label: navT('blog'), url: localizedPath(locale, '/blog') },

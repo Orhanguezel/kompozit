@@ -15,7 +15,7 @@ export async function GET(request: Request) {
     const cards: Record<string, string> = {
       '/': 'home', '/about': 'about', '/blog': 'blog', '/contact': 'contact',
       '/gallery': 'gallery', '/offer': 'offer', '/products': 'products',
-      '/references': 'references', '/solutions': 'solutions',
+      '/references': 'references',
     };
     const legacyHome = /^product-collage-v[1-6]$/.test(searchParams.get('design') || '');
     const card = legacyHome ? 'home' : cards[page];

@@ -16,12 +16,12 @@ export function ProjectGuide({ locale }: { locale: string }) {
     ['Kabul kriterleri', 'çizim / test yöntemi', 'Ölçü toleransları, yüzey beklentisi ve talep edilen kontrol raporları'],
   ];
   const links = en ? [
-    ['/solutions', 'Compare composite solutions', 'Review applications before choosing a product.'],
+    ['/products', 'Explore the product catalogue', 'Review product groups and application areas before sending a request.'],
     ['/gallery', 'Explore the production gallery', 'View available product and process photographs.'],
     ['/references', 'References and cooperation', 'Review the published reference information.'],
     ['/blog', 'Read the technical guides', 'Explore material selection and composite production topics.'],
   ] : [
-    ['/solutions', 'Kompozit çözümleri karşılaştırın', 'Ürün seçmeden önce uygulama alanlarını inceleyin.'],
+    ['/products', 'Ürün kataloğunu inceleyin', 'Talep göndermeden önce ürün gruplarını ve uygulama alanlarını görün.'],
     ['/gallery', 'Üretim galerisini inceleyin', 'Yayımlanan ürün ve süreç fotoğraflarına göz atın.'],
     ['/references', 'Referanslar ve iş birliği', 'Yayımlanmış referans bilgilerini değerlendirin.'],
     ['/blog', 'Teknik rehberleri okuyun', 'Malzeme seçimi ve kompozit üretimi hakkında bilgi edinin.'],

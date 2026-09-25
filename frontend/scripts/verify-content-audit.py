@@ -18,5 +18,5 @@ def check(path):
   assert visible==schema,(path,'FAQ schema differs from content')
  if path.endswith('/references'):assert 'Endustriyel Cozum Ortagi' not in s.get_text()
  return {'path':path,'guide_words':len(g.get_text(' ',strip=True).split()),'images':len(imgs),'missing_dimensions':missing,'faq_graphs':len(faqs)}
-paths=['/'+l+p for l in ['tr','en'] for p in ['', '/products','/solutions','/references','/gallery','/blog','/about','/contact','/offer']]
+paths=['/'+l+p for l in ['tr','en'] for p in ['', '/products','/references','/gallery','/blog','/about','/contact','/offer']]
 r=list(concurrent.futures.ThreadPoolExecutor(4).map(check,paths));print(json.dumps({'origin':base,'passed':True,'pages':r},ensure_ascii=False,indent=2))
