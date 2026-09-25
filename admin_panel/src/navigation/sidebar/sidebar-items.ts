@@ -26,7 +26,6 @@ import {
   MessageSquare,
   Navigation,
   Newspaper,
-  Puzzle,
   RefreshCcw,
   Settings,
   Share2,
@@ -142,7 +141,7 @@ export const adminNavConfig: AdminNavConfigGroup[] = [
       { key: "kompozit_products", url: "/admin/products?type=kompozit", icon: Layers },
       { key: "kompozit_categories", url: "/admin/categories?module=kompozit", icon: Folders },
       { key: "kompozit_gallery", url: "/admin/gallery", icon: Images },
-      { key: "kompozit_solutions", url: "/admin/solutions", icon: Puzzle },
+      // kompozit_solutions: public site bolumu 2026-09-25 kaldirildi; /admin/solutions yalniz URL ile acilir.
       { key: "kompozit_offers", url: "/admin/offer?source=kompozit", icon: DollarSign },
       { key: "kompozit_blog", url: "/admin/custompage?module=kompozit_blog", icon: Newspaper },
       { key: "kompozit_blog_comments", url: "/admin/reviews?target_type=custom_page", icon: MessageSquare },
