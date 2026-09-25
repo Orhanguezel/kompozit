@@ -3,6 +3,7 @@ import { AVAILABLE_LOCALES } from '@/i18n/locales';
 import { API_BASE_URL } from '@/lib/utils';
 import { fetchAllPageSeo, type PageSeoKey } from '@/seo/page-settings';
 import { localizedUrl, siteUrlBase, stripTrailingSlash } from '@/seo/helpers';
+import { fetchSoleGallerySlug } from '@/features/gallery/sole-gallery';
 
 export const revalidate = 86400;
 
@@ -87,13 +88,16 @@ export async function GET() {
   }
 
   lines.push('## Public pages');
+  // Tek galeri varken /gallery yonlendirmedir; dogrudan galeri adresi listelenir.
+  const soleGalleries = await Promise.all(AVAILABLE_LOCALES.map((loc) => fetchSoleGallerySlug(loc)));
   AVAILABLE_LOCALES.forEach((loc, index) => {
     const seo = seoByLocale[index] ?? {};
     lines.push(`### ${loc}`);
     for (const page of PAGES) {
       const entry = seo[page.key];
       const label = oneLine(entry?.title || page.fallbackLabel, 90);
-      const url = localizedUrl(loc, page.path);
+      const soleGallery = page.path === '/gallery' ? soleGalleries[index] : null;
+      const url = localizedUrl(loc, soleGallery ? `/gallery/${soleGallery}` : page.path);
       // Legal pages share one `seo_pages` entry, so its description would repeat
       // on both; the distinct fallback label already identifies them.
       const describable = page.key !== 'legal';

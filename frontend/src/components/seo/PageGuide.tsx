@@ -2,11 +2,13 @@ import Link from 'next/link';
 import guides from '@/seo/page-guides.json';
 import { APP_NAME } from '@/lib/brand-name';
 import { JsonLd, jsonld, localizedPath, localizedUrl } from '@/seo';
+import { galleryPath } from '@/features/gallery/sole-gallery';
 
 type GuideKey = keyof typeof guides;
 
-export function PageGuide({ locale, pageKey }: { locale: string; pageKey: GuideKey }) {
+export async function PageGuide({ locale, pageKey }: { locale: string; pageKey: GuideKey }) {
   const en = locale.startsWith('en');
+  const galleryHref = localizedPath(locale, await galleryPath(locale));
   const [heading, entries] = guides[pageKey][en ? 'en' : 'tr'] as [string, [string, string][]];
   const links = en
     ? [['products', 'Explore composite products'], ['references', 'Review references'], ['gallery', 'View the production gallery'], ['offer', 'Send project requirements']]
@@ -22,7 +24,7 @@ export function PageGuide({ locale, pageKey }: { locale: string; pageKey: GuideK
           </div>
         ))}
         <div className="flex flex-wrap gap-x-6 gap-y-3">
-          {links.filter(([key]) => key !== pageKey).map(([key, label]) => <Link key={key} href={localizedPath(locale, `/${key}`)} className="underline underline-offset-4">{label}</Link>)}
+          {links.filter(([key]) => key !== pageKey).map(([key, label]) => <Link key={key} href={key === 'gallery' ? galleryHref : localizedPath(locale, `/${key}`)} className="underline underline-offset-4">{label}</Link>)}
         </div>
         <p className="text-sm text-[var(--color-text-secondary)]">
           {en ? 'Published by ' : 'Yayınlayan: '}<Link href={localizedPath(locale, '/about')} className="underline">{APP_NAME}</Link>

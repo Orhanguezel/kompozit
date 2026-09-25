@@ -17,6 +17,7 @@ import { buildMediaAlt, buildMediaCaption, buildMediaSchemaText, isMeaningfulMed
 import { measuredMedia } from '@/lib/measured-media';
 import { fetchProductCatalog, isProductCatalogGallery } from '@/features/gallery/product-catalog';
 import { ProductCatalogGallery } from '@/components/sections/ProductCatalogGallery';
+import { fetchSoleGallerySlug } from '@/features/gallery/sole-gallery';
 
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 
@@ -109,9 +110,11 @@ export default async function GalleryDetailPage({
   const related = await fetchRelatedContent(gallery, slug, locale);
   const contactInfo = await fetchParsedContactInfo(locale);
   const galleryUrl = localizedUrl(locale, `/gallery/${slug}`);
+  // Tek galeri varken /gallery bu sayfaya yonlenir; ara "Galeri" basamagi gosterilmez.
+  const isSoleGallery = (await fetchSoleGallerySlug(locale)) === slug;
   const breadcrumbs = [
     { label: t('nav.home'), href: localizedPath(locale, '/') },
-    { label: t('nav.gallery'), href: localizedPath(locale, '/gallery') },
+    ...(isSoleGallery ? [] : [{ label: t('nav.gallery'), href: localizedPath(locale, '/gallery') }]),
     { label: gallery.title },
   ];
 

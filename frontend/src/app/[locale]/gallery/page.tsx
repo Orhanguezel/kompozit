@@ -14,6 +14,8 @@ import { getFallbackGalleries } from '@/lib/content-fallbacks';
 import { Reveal } from '@/components/motion/Reveal';
 
 import { withCatalogCovers } from '@/features/gallery/product-catalog';
+import { fetchSoleGallerySlug } from '@/features/gallery/sole-gallery';
+import { permanentRedirect } from 'next/navigation';
 const GALLERY_PLACEHOLDER_SRC = '/media/gallery-placeholder.svg';
 
 async function fetchGalleries(locale: string) {
@@ -59,6 +61,8 @@ export default async function GalleryPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+  const soleGallery = await fetchSoleGallerySlug(locale);
+  if (soleGallery) permanentRedirect(localizedPath(locale, `/gallery/${soleGallery}`));
   const t = await getTranslations({ locale });
   const galleries = await withCatalogCovers(await fetchGalleries(locale), locale);
   const visibleGalleries = galleries.length > 0 ? galleries : getFallbackGalleries(locale);

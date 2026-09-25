@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import { localizedPath } from '@/seo/helpers';
+import { galleryPath } from '@/features/gallery/sole-gallery';
 
 /** Project inputs, not measured material properties or certification claims. */
-export function ProjectGuide({ locale }: { locale: string }) {
+export async function ProjectGuide({ locale }: { locale: string }) {
   const en = locale.startsWith('en');
+  const gallery = await galleryPath(locale);
   const rows = en ? [
     ['Dimensions and interfaces', 'mm', 'Drawing revision, wall thickness and mounting points'],
     ['Quantity and delivery', 'pieces / date', 'Prototype quantity, production batches and target delivery'],
@@ -17,12 +19,12 @@ export function ProjectGuide({ locale }: { locale: string }) {
   ];
   const links = en ? [
     ['/products', 'Explore the product catalogue', 'Review product groups and application areas before sending a request.'],
-    ['/gallery', 'Explore the production gallery', 'View available product and process photographs.'],
+    [gallery, 'Explore the production gallery', 'View available product and process photographs.'],
     ['/references', 'References and cooperation', 'Review the published reference information.'],
     ['/blog', 'Read the technical guides', 'Explore material selection and composite production topics.'],
   ] : [
     ['/products', 'Ürün kataloğunu inceleyin', 'Talep göndermeden önce ürün gruplarını ve uygulama alanlarını görün.'],
-    ['/gallery', 'Üretim galerisini inceleyin', 'Yayımlanan ürün ve süreç fotoğraflarına göz atın.'],
+    [gallery, 'Üretim galerisini inceleyin', 'Yayımlanan ürün ve süreç fotoğraflarına göz atın.'],
     ['/references', 'Referanslar ve iş birliği', 'Yayımlanmış referans bilgilerini değerlendirin.'],
     ['/blog', 'Teknik rehberleri okuyun', 'Malzeme seçimi ve kompozit üretimi hakkında bilgi edinin.'],
   ];

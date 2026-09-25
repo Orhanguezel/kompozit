@@ -30,6 +30,7 @@ import { THEME_INTENT, THEME_TEMPLATE } from '@/theme/templates';
 import { ThemeBootScript } from '@/scripts/theme-boot';
 import { DeferredToaster } from '@/components/layout/DeferredToaster';
 import { JsonLd, jsonld } from '@/seo';
+import { fetchSoleGallerySlug, pointGalleryLinks } from '@/features/gallery/sole-gallery';
 
 function readSettingValue(input: unknown): Record<string, unknown> {
   const raw = (input as { value?: unknown } | null)?.value;
@@ -209,8 +210,9 @@ export default async function LocaleLayout({
     alt: logoAlt,
   };
   const populatedProductCategories = resolvePopulatedProductCategories(productCategories, activeProductCategoryPreviews);
-  const stableMenuItems = ensureMenuItems(menuItems, locale, navT, populatedProductCategories);
-  const stableFooterSections = ensureFooterSections(footerSections, locale, navT, footerT);
+  const soleGallery = await fetchSoleGallerySlug(locale);
+  const stableMenuItems = pointGalleryLinks(ensureMenuItems(menuItems, locale, navT, populatedProductCategories), locale, soleGallery);
+  const stableFooterSections = pointGalleryLinks(ensureFooterSections(footerSections, locale, navT, footerT), locale, soleGallery);
   const footerSocialNav = buildFooterSocialNavFromSetting(readSettingValue(socialsSetting));
   const companyProfile = readSettingValue(companyProfileSetting);
   const footerContactInfo = {

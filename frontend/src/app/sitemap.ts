@@ -3,6 +3,7 @@ import { localeAlternates, localizedUrl } from '@/seo/helpers';
 import { AVAILABLE_LOCALES, hasLocale } from '@/i18n/locales';
 import { getLocaleSettings } from '@/i18n/locale-settings';
 import { DETAIL_SECTIONS, detailSitemap } from '@/seo/inventory';
+import { fetchSoleGallerySlug } from '@/features/gallery/sole-gallery';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { activeLocales } = await getLocaleSettings();
@@ -20,8 +21,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const dynamicEntries = await Promise.all(DETAIL_SECTIONS.map(detailSitemap));
+  // Tek galeri varken /gallery yonlendirmedir; sitemap'te yer almaz.
+  const soleGallery = new Map(await Promise.all(sitemapLocales.map(async locale => [locale, await fetchSoleGallerySlug(locale)] as const)));
   return [
-    ...sitemapLocales.flatMap(locale => staticRoutes.map(route => ({
+    ...sitemapLocales.flatMap(locale => staticRoutes.filter(route => !(route.path === '/gallery' && soleGallery.get(locale))).map(route => ({
       url: localizedUrl(locale, route.path || '/'), changeFrequency: route.changeFrequency, priority: route.priority,
       alternates: { languages: localeAlternates(route.path || '/', sitemapLocales) },
     }))),
