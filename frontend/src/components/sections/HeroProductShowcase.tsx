@@ -39,27 +39,37 @@ function categorySlug(c: CategoryLike): string | null {
   return s || null;
 }
 
-/** Farkli kategorilerden, one cikanlar once, en fazla `max` urun secer. */
+function hasProductPhoto(p: ShowcaseProduct): boolean {
+  return !String(p.image_url ?? '').trim().startsWith('/media/');
+}
+
+/** Farkli kategorilerden, one cikanlar once, en fazla `max` urun secer.
+ *  Onem sirasi API'nin `order_num desc` sirasidir; ilk urun buyuk kartta gosterilir. */
 export function pickShowcaseProducts(products: ShowcaseProduct[], max = 3): ShowcaseProduct[] {
   const usable = products.filter((p) => p && p.title && p.slug && p.image_url);
   const ordered = [
     ...usable.filter((p) => Number(p.is_featured ?? 0) === 1),
     ...usable.filter((p) => Number(p.is_featured ?? 0) !== 1),
   ];
+  // Hero'da urunun kendisi gorunmeli: yuklenmis urun fotografi olanlar, genel doku/stok
+  // gorseli (/media/...) kullananlardan once secilir. Siralama icinde onem korunur.
+  const photos = ordered.filter(hasProductPhoto);
+  const pool = [...photos, ...ordered.filter((p) => !hasProductPhoto(p))];
   const picked: ShowcaseProduct[] = [];
   const seen = new Set<string>();
-  for (const p of ordered) {
+  for (const p of photos.length > 0 ? photos : pool) {
     const key = categoryName(p.category).toLowerCase() || `__${p.slug}`;
     if (seen.has(key)) continue;
     seen.add(key);
     picked.push(p);
     if (picked.length >= max) break;
   }
-  for (const p of ordered) {
+  for (const p of pool) {
     if (picked.length >= max) break;
     if (!picked.includes(p)) picked.push(p);
   }
-  return picked;
+  // Secim kategori cesitliligiyle yapilir, gosterim sirasi yine onem sirasidir.
+  return picked.sort((a, b) => ordered.indexOf(a) - ordered.indexOf(b));
 }
 
 /** Urun listesinden benzersiz kategori cipleri (gorunum sirasi korunur). */
@@ -116,22 +126,24 @@ export function HeroProductShowcase({
               className={large ? styles.tileLarge : styles.tile}
               title={title}
             >
-              <Image
-                src={src}
-                alt={stripHtmlToText(p.alt) || title}
-                fill
-                priority={large}
-                fetchPriority={large ? 'high' : 'auto'}
-                sizes={
-                  large
-                    ? '(max-width: 767px) calc(100vw - 48px), (max-width: 1023px) 58vw, 30vw'
-                    : '(max-width: 767px) calc(50vw - 30px), (max-width: 1023px) 40vw, 20vw'
-                }
-                className={styles.tileImage}
-              />
-              <span className={styles.tileShade} aria-hidden="true" />
-              <span className={styles.tileIndex} aria-hidden="true">
-                {String(index + 1).padStart(2, '0')}
+              {/* Gorsel tamamen acik kalir; ad ve kategori altta ayri seritte (2026-09-25 geri bildirimi). */}
+              <span className={styles.tileMedia}>
+                <Image
+                  src={src}
+                  alt={stripHtmlToText(p.alt) || title}
+                  fill
+                  priority={large}
+                  fetchPriority={large ? 'high' : 'auto'}
+                  sizes={
+                    large
+                      ? '(max-width: 1023px) calc(100vw - 48px), 34vw'
+                      : '(max-width: 1023px) calc(50vw - 30px), 17vw'
+                  }
+                  className={styles.tileImage}
+                />
+                <span className={styles.tileIndex} aria-hidden="true">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
               </span>
               <span className={styles.tileBody}>
                 {cat ? <span className={styles.tileCategory}>{cat}</span> : null}

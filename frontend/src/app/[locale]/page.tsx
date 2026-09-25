@@ -152,7 +152,7 @@ export default async function HomePage({
 
   const visibleProducts = products.length > 0 ? products.slice(0, 6) : getFallbackProducts(locale).slice(0, 6);
   const showcaseSource = products.length > 0 ? products : getFallbackProducts(locale);
-  const heroShowcaseProducts = pickShowcaseProducts(showcaseSource, 3);
+  const heroShowcaseProducts = pickShowcaseProducts(showcaseSource, 6);
   const heroShowcaseCategories = collectShowcaseCategories(showcaseSource, 6);
   const heroShowcaseLabels = {
     heading: t('home.hero.showcaseHeading'),

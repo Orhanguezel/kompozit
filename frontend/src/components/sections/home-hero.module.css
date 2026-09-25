@@ -164,28 +164,43 @@ section.hero {
 
 .mosaic {
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  grid-template-rows: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 12px;
   flex: 1 1 auto;
-  min-height: 520px;
+  min-height: 600px;
 }
 
+/* Kart = gorsel + altta ayri baslik seridi. Yazi gorselin ustune binmez. */
 .tile,
 .tileLarge {
-  position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+  min-width: 0;
   min-height: 0;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
-  isolation: isolate;
+  color: var(--color-text-primary);
+  transition: border-color 0.3s var(--motion-ease-out);
 }
 
-.tileLarge { grid-row: 1 / span 2; }
+.tileLarge { grid-column: 1 / span 2; grid-row: 1 / span 2; }
+
+.tile:hover,
+.tileLarge:hover { border-color: var(--color-brand); }
 
 .tile:focus-visible,
 .tileLarge:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 3px; }
+
+.tileMedia {
+  position: relative;
+  display: block;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--color-bg);
+}
 
 .tileImage {
   object-fit: cover;
@@ -196,72 +211,78 @@ section.hero {
 .tile:hover .tileImage,
 .tileLarge:hover .tileImage { transform: scale(1.04); }
 
-.tileShade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    color-mix(in srgb, var(--color-media-overlay) 88%, transparent) 0%,
-    color-mix(in srgb, var(--color-media-overlay) 40%, transparent) 42%,
-    transparent 72%
-  );
-  pointer-events: none;
-}
-
 .tileIndex {
   position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 6px 10px;
+  top: 10px;
+  left: 10px;
+  padding: 5px 8px;
   border: 1px solid color-mix(in srgb, var(--color-gold) 40%, transparent);
   background: color-mix(in srgb, var(--color-media-overlay) 60%, transparent);
   color: var(--color-gold);
   font-family: var(--font-display), sans-serif;
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-size: 10px;
+  letter-spacing: 2px;
   line-height: 1;
 }
 
 .tileBody {
-  position: absolute;
-  inset: auto 0 0 0;
+  position: relative;
   display: grid;
-  gap: 6px;
-  padding: 18px 56px 18px 18px;
-  color: var(--color-on-media);
+  flex: 0 0 auto;
+  gap: 3px;
+  padding: 9px 34px 10px 12px;
+  border-top: 1px solid var(--color-border);
 }
 
 .tileCategory {
-  color: var(--color-gold);
-  font-size: 10px;
+  overflow: hidden;
+  color: var(--color-brand);
+  font-size: 9px;
   font-weight: 600;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .tileTitle {
-  font-family: var(--font-display), sans-serif;
-  font-size: clamp(16px, 1.3vw, 22px);
-  line-height: 1.15;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  overflow-wrap: anywhere;
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
 }
 
-.tileLarge .tileBody { padding: 24px 64px 24px 24px; }
-.tileLarge .tileTitle { font-size: clamp(22px, 2vw, 34px); }
+/* Kucuk kartta kategori gizli: kategoriler zaten altta cip olarak listelenir, ad tam okunur. */
+.tile .tileCategory { display: none; }
+/* Serit hep iki satirlik: tek satirlik adlar komsu kartlarin gorsel yuksekligini bozmaz. */
+.tile .tileBody { min-height: 54px; align-content: center; }
+
+.tileLarge .tileBody { gap: 5px; padding: 14px 48px 14px 18px; }
+.tileLarge .tileCategory { font-size: 10px; letter-spacing: 3px; }
+.tileLarge .tileTitle {
+  font-family: var(--font-display), sans-serif;
+  font-size: clamp(18px, 1.5vw, 24px);
+  font-weight: 400;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
 
 .tileArrow {
   position: absolute;
-  right: 18px;
-  bottom: 20px;
-  width: 20px;
-  height: 20px;
-  color: var(--color-gold);
+  right: 12px;
+  bottom: 12px;
+  width: 16px;
+  height: 16px;
+  color: var(--color-brand);
   transition: transform 0.3s var(--motion-ease-out);
 }
 
-.tileLarge .tileArrow { right: 24px; bottom: 26px; }
+.tileLarge .tileArrow { right: 18px; bottom: 18px; width: 20px; height: 20px; }
 .tile:hover .tileArrow,
 .tileLarge:hover .tileArrow { transform: translateX(4px); }
 
@@ -301,25 +322,27 @@ section.hero {
 
 @media (max-width: 1023px) {
   .showcase { min-height: 0; padding-block: 24px 48px; padding-right: 24px; }
-  .mosaic { min-height: 440px; }
+  /* Dar sutunda 3'lu izgara kucuk kalir: buyuk kart tam genislik + 2x2, 6. urun gizlenir. */
+  .mosaic {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    min-height: 0;
+  }
+  .tileLarge { grid-column: 1 / -1; grid-row: auto; }
+  .tileLarge .tileMedia { flex: none; aspect-ratio: 16 / 10; }
+  .tile .tileMedia { flex: none; aspect-ratio: 4 / 3; }
+  .mosaic > :nth-child(n + 6) { display: none; }
 }
 
 @media (max-width: 767px) {
   .showcase { gap: 12px; padding: 0 0 28px; }
-  .mosaic {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: auto;
-    gap: 10px;
-    min-height: 0;
-  }
-  .tileLarge { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16 / 10; }
-  .tile { aspect-ratio: 1 / 1; }
-  .tileBody { padding: 12px 40px 12px 12px; gap: 4px; }
-  .tileLarge .tileBody { padding: 16px 48px 16px 16px; }
-  .tileTitle { font-size: 13px; letter-spacing: 0.5px; }
-  .tileLarge .tileTitle { font-size: clamp(18px, 5vw, 24px); }
-  .tileCategory { font-size: 9px; letter-spacing: 2px; }
-  .tileArrow { right: 12px; bottom: 14px; width: 16px; height: 16px; }
-  .tileLarge .tileArrow { right: 16px; bottom: 18px; }
+  .mosaic { gap: 10px; }
+  .tileBody { padding: 8px 30px 9px 10px; }
+  .tileLarge .tileBody { padding: 12px 44px 12px 14px; }
+  .tileTitle { font-size: 12px; }
+  .tileLarge .tileTitle { font-size: clamp(17px, 4.6vw, 22px); }
+  .tileCategory { font-size: 8px; letter-spacing: 1.5px; }
+  .tileArrow { right: 10px; bottom: 10px; width: 14px; height: 14px; }
+  .tileLarge .tileArrow { right: 14px; bottom: 14px; }
   .chips a { padding: 8px 12px; font-size: 10px; letter-spacing: 1.5px; }
 }
