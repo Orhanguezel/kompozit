@@ -30,6 +30,11 @@ UPDATE `category_i18n` SET
   `description` = 'Decorative planters, benches, park furniture, slides, litter bins, swings and seesaws made from polyester (FRP) composite.'
 WHERE `category_id` = 'cccc0004-4004-4004-8004-cccccccc0004' AND `locale` = 'en';
 
+-- Admin panelden eklenen, urunsuz ve EN cevirisiz iki kategori: kullanici karari
+-- (2026-09-25) "simdilik pasif kalsin". Fresh seed'de bu satirlar yoktur (no-op).
+UPDATE `categories` SET `is_active` = 0
+WHERE `id` IN ('1a093ede-1ddd-4769-9345-9412827c015a', '670867d0-46b2-4231-beec-e2909807b0bc');
+
 -- Header "Urunler" alt menusu (frontend canli kategorilerle ezer; kayitlar da tutarli kalsin)
 UPDATE `menu_items_i18n` SET `title` = 'Belediyeler İçin Ürünler', `url` = '/products?category=belediyeler-icin-kompozit-ctp-polyester-urunler' WHERE `menu_item_id` = 'dd020003-4003-4003-8003-dd0000000003' AND `locale` = 'tr';
 UPDATE `menu_items_i18n` SET `title` = 'Lunapark Ürünleri', `url` = '/products?category=lunapark-urunleri' WHERE `menu_item_id` = 'dd020004-4004-4004-8004-dd0000000004' AND `locale` = 'tr';
