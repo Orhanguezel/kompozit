@@ -1,5 +1,7 @@
 # GitHub Actions — Kompozit CI/CD
-# Triggers on push to main branch
+# Manual only (workflow_dispatch). Push-triggered deploys were removed 2026-09-25:
+# the job had failed on every run since June and a push must never restart prod.
+# Live deploys use Ensotek/scripts/deploy-checklist-frontend.sh (static merge before restart).
 # Builds frontend + admin_panel + backend
 # Deploys via SSH to same VPS as Ensotek
 #
@@ -11,8 +13,6 @@
 name: Deploy Kompozit
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 concurrency:
