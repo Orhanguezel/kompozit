@@ -341,7 +341,7 @@ export default async function HomePage({
               <Reveal>
                 <div className="mb-16 flex items-end justify-between border-b border-[var(--gold)]/10 pb-8">
                   <div className="max-w-2xl">
-                    <span className="section-label-cc">{t('home.products.sectionLabel') || 'Solutions'}</span>
+                    <span className="section-label-cc">{t('home.products.sectionLabel')}</span>
                     <h2 className="section-title-cc mb-0">{t('home.products.title')}</h2>
                   </div>
                   <Link

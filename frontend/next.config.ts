@@ -34,6 +34,17 @@ const nextConfig: NextConfig = {
       { source: '/en/solutions/solution-storage-tanks', destination: '/en/products/frp-water-storage-tank', permanent: true },
       { source: '/en/solutions/solution-custom-b2b', destination: '/en/products?category=custom-manufacturing', permanent: true },
       { source: '/en/solutions/:slug*', destination: '/en/products', permanent: true },
+      // EN kategori slug'lari TR adlariyla esitlendi (2026-09-25, seed 332).
+      ...[
+        ['frp-products', 'municipal-products'],
+        ['fiberglass-products', 'amusement-park-products'],
+        ['industrial-profiles', 'landscape-products'],
+      ].map(([from, to]) => ({
+        source: '/en/products',
+        has: [{ type: 'query' as const, key: 'category', value: from }],
+        destination: `/en/products?category=${to}`,
+        permanent: true,
+      })),
     ];
   },
 

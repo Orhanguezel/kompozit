@@ -2,7 +2,6 @@
   "nav": {
     "home": "Ana Sayfa",
     "products": "Ürünler",
-    "solutions": "Çözümler",
     "about": "Hakkımızda",
     "gallery": "Galeri",
     "blog": "Blog",
@@ -109,7 +108,7 @@
     "products": {
       "title": "Ürünlerimiz",
       "subtitle": "Mukavemet, hafiflik, kimyasal dayanim ve proses ihtiyacina gore gelistirilen kompozit urun gruplari",
-      "sectionLabel": "Çözümler"
+      "sectionLabel": "Ürün Kataloğu"
     },
     "whyUs": {
       "title": "Neden MOE Kompozit?",
@@ -335,12 +334,6 @@
     "requestOffer": "Bu Ürün İçin Teklif Al",
     "detailEyebrow": "Ürün detayı",
     "technicalScope": "Teknik Kapsam",
-    "solutionCategories": {
-      "planters": "Peyzaj ve Kent Ekipmanları",
-      "tanks": "Depo ve Tank Çözümleri",
-      "coffin": "Defin Grubu Ürünleri",
-      "custom": "Ozel B2B Imalat"
-    },
     "b2b": {
       "catalogEyebrow": "B2B katalog",
       "catalogTitle": "Seri üretim, özel ölçü ve teknik şartnameye göre parça ihtiyacınız mı var?",
@@ -381,18 +374,6 @@
     "viewWebsite": "Web sitesini aç",
     "viewAll": "Tüm referansları gör",
     "trustLabel": "Guven"
-  },
-  "solutions": {
-    "metaTitle": "Çözümler | MOE Kompozit",
-    "metaDescription": "Saksı ve peyzaj, tabut, depo tankı ve özel B2B kompozit imalatında uygulama çözümleri; teknik süreç ve teklif adımları.",
-    "listTitle": "Uygulama çözümleri",
-    "listDescription": "Sektöre özel kompozit hatlarımızda malzeme seçimi, üretim disiplini ve B2B teslim modelini nasıl kurguladığımızı özetliyoruz.",
-    "sectionLabel": "Endüstriyel",
-    "empty": "Henüz yayınlanmış çözüm sayfası yok. Admin panelden custom_pages ile ekleyebilirsiniz.",
-    "ctaOffer": "Projeniz için teklif alın",
-    "detailCtaTitle": "Bu çözüm hattı projenize uyuyor mu?",
-    "detailCtaDescription": "Ölçü, miktar, termin ve teknik şartnamenizi paylaşın; mühendislik değerlendirmesi ve teklif için sizi yönlendirelim.",
-    "detailHeroEyebrow": "Mühendislik çözümü"
   },
   "blog": {
     "title": "Blog",
@@ -642,7 +623,6 @@
     "defaultDescription": "Karbon fiber, CTP ve cam elyaf kompozit uretiminde muhendislik, numune dogrulama ve seri uretim planlamasi odakli B2B cozumler.",
     "homeDescription": "MOE Kompozit; karbon fiber, CTP ve cam elyaf üretiminde numune, mühendislik ve seri üretim desteği sunan B2B kompozit markasıdır.",
     "productsDescription": "Karbon fiber, CTP ve cam elyaf kompozit ürünleri; hafiflik, dayanım, yüzey kalitesi ve tekrarlanabilir B2B üretim için inceleyin.",
-    "solutionsDescription": "Saksı, tank, defin grubu ve özel B2B kompozit imalat çözümlerinde malzeme seçimi, üretim disiplini ve teklif adımlarını görün.",
     "referencesDescription": "MOE Kompozit referansları; kurumsal iş birlikleri, uygulama tipleri ve tekrarlanabilir kompozit üretim disiplinini özetler.",
     "galleryDescription": "Kompozit üretim tesisi, kalıplama, montaj, ürün detayları ve tamamlanan proje görsellerini MOE Kompozit galerisinde inceleyin.",
     "blogDescription": "Karbon fiber, CTP, cam elyaf, kalıplama, yüzey kalitesi ve kompozit sektör uygulamaları hakkında teknik blog içerikleri.",

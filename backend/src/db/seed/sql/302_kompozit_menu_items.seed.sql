@@ -63,9 +63,9 @@ VALUES
 -- ÜRÜNLER SUB
 (UUID(), 'dd020001-4001-4001-8001-dd0000000001', 'tr', 'Tüm Ürünler', '/products', NOW(3), NOW(3)),
 (UUID(), 'dd020002-4002-4002-8002-dd0000000002', 'tr', 'Karbon Fiber Ürünler', '/products?category=karbon-fiber-urunler', NOW(3), NOW(3)),
-(UUID(), 'dd020003-4003-4003-8003-dd0000000003', 'tr', 'CTP Ürünler', '/products?category=ctp-urunler', NOW(3), NOW(3)),
-(UUID(), 'dd020004-4004-4004-8004-dd0000000004', 'tr', 'Cam Elyaf Ürünler', '/products?category=cam-elyaf-urunler', NOW(3), NOW(3)),
-(UUID(), 'dd020005-4005-4005-8005-dd0000000005', 'tr', 'Endüstriyel Profiller', '/products?category=endustriyel-profiller', NOW(3), NOW(3)),
+(UUID(), 'dd020003-4003-4003-8003-dd0000000003', 'tr', 'Belediyeler İçin Ürünler', '/products?category=belediyeler-icin-kompozit-ctp-polyester-urunler', NOW(3), NOW(3)),
+(UUID(), 'dd020004-4004-4004-8004-dd0000000004', 'tr', 'Lunapark Ürünleri', '/products?category=lunapark-urunleri', NOW(3), NOW(3)),
+(UUID(), 'dd020005-4005-4005-8005-dd0000000005', 'tr', 'Peyzaj Ürünleri', '/products?category=peyzaj-urunleri-ctp', NOW(3), NOW(3)),
 
 
 -- KURUMSAL SUB
@@ -93,9 +93,9 @@ VALUES
 -- ÜRÜNLER SUB
 (UUID(), 'dd020001-4001-4001-8001-dd0000000001', 'en', 'All Products', '/products', NOW(3), NOW(3)),
 (UUID(), 'dd020002-4002-4002-8002-dd0000000002', 'en', 'Carbon Fiber Products', '/products?category=carbon-fiber-products', NOW(3), NOW(3)),
-(UUID(), 'dd020003-4003-4003-8003-dd0000000003', 'en', 'FRP Products', '/products?category=frp-products', NOW(3), NOW(3)),
-(UUID(), 'dd020004-4004-4004-8004-dd0000000004', 'en', 'Fiberglass Products', '/products?category=fiberglass-products', NOW(3), NOW(3)),
-(UUID(), 'dd020005-4005-4005-8005-dd0000000005', 'en', 'Industrial Profiles', '/products?category=industrial-profiles', NOW(3), NOW(3)),
+(UUID(), 'dd020003-4003-4003-8003-dd0000000003', 'en', 'Municipal Products', '/products?category=municipal-products', NOW(3), NOW(3)),
+(UUID(), 'dd020004-4004-4004-8004-dd0000000004', 'en', 'Amusement Park Products', '/products?category=amusement-park-products', NOW(3), NOW(3)),
+(UUID(), 'dd020005-4005-4005-8005-dd0000000005', 'en', 'Landscape Products', '/products?category=landscape-products', NOW(3), NOW(3)),
 
 
 -- KURUMSAL SUB

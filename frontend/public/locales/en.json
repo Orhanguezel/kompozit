@@ -2,7 +2,6 @@
   "nav": {
     "home": "Home",
     "products": "Products",
-    "solutions": "Solutions",
     "about": "About",
     "gallery": "Gallery",
     "blog": "Blog",
@@ -109,7 +108,7 @@
     "products": {
       "title": "Our Products",
       "subtitle": "Composite product groups developed around strength, lightweight design, chemical resistance and process needs",
-      "sectionLabel": "Solutions"
+      "sectionLabel": "Product Catalogue"
     },
     "whyUs": {
       "title": "Why MOE Kompozit?",
@@ -335,12 +334,6 @@
     "requestOffer": "Get Quote for This Product",
     "detailEyebrow": "Product detail",
     "technicalScope": "Technical scope",
-    "solutionCategories": {
-      "planters": "Landscaping & Urban Equipment",
-      "tanks": "Storage & Tank Solutions",
-      "coffin": "Burial Products",
-      "custom": "Custom B2B Manufacturing"
-    },
     "b2b": {
       "catalogEyebrow": "B2B catalog",
       "catalogTitle": "Need batch production, custom sizing or specification-driven parts?",
@@ -381,18 +374,6 @@
     "viewWebsite": "Open website",
     "viewAll": "View all references",
     "trustLabel": "Trust"
-  },
-  "solutions": {
-    "metaTitle": "Solutions | MOE Kompozit",
-    "metaDescription": "Application solutions for composite planters, funeral-sector products, storage tanks and custom B2B manufacturing—with clear engineering and quotation steps.",
-    "listTitle": "Application solutions",
-    "listDescription": "How we structure material selection, manufacturing discipline and B2B delivery across industry-specific composite product lines.",
-    "sectionLabel": "Industrial",
-    "empty": "No published solution pages yet. Add them via Admin custom pages.",
-    "ctaOffer": "Request a quote for your project",
-    "detailCtaTitle": "Does this solution line fit your project?",
-    "detailCtaDescription": "Share dimensions, volumes, timing and technical specifications—we will guide engineering review and quotation.",
-    "detailHeroEyebrow": "Engineering solution"
   },
   "blog": {
     "title": "Blog",
@@ -642,7 +623,6 @@
     "defaultDescription": "B2B composite solutions in carbon fiber, FRP and fiberglass manufacturing with engineering, sample validation and production planning support.",
     "homeDescription": "MOE Kompozit is a B2B composite brand for carbon fiber, FRP and fiberglass projects, supporting sampling, engineering and repeatable production.",
     "productsDescription": "Browse carbon fiber, FRP and fiberglass composite products built for lightweighting, durability, surface quality and repeatable B2B production.",
-    "solutionsDescription": "Explore planter, tank, funeral-sector and custom B2B composite solutions with material selection, production discipline and quote steps.",
     "referencesDescription": "MOE Kompozit references summarize enterprise collaboration, application types and repeatable composite production delivery discipline.",
     "galleryDescription": "View composite production facility, molding, assembly, product detail and completed project visuals in the MOE Kompozit gallery.",
     "blogDescription": "Technical blog content on carbon fiber, FRP, fiberglass, molding, surface quality and industrial composite applications.",
