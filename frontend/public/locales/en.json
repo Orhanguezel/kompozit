@@ -359,6 +359,27 @@
         "title": "Export-ready shipping",
         "desc": "Packaging and documentation suitable for cross-border B2B shipments."
       }
+    },
+    "quickQuote": {
+      "valueLine": "Custom production for projects and wholesale orders. Tell us the size, colour and quantity; we will prepare a tailored quote.",
+      "cta": "Get a Quote",
+      "whatsapp": "Message on WhatsApp",
+      "call": "Call",
+      "whatsappMessage": "— I would like a quote.",
+      "title": "Quick quote for this product",
+      "description": "Leave a few details and we will get back to you with pricing for your size, quantity and delivery time.",
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email",
+      "message": "Quantity, size or project notes",
+      "messagePlaceholder": "e.g. 40 pieces, 80 cm height, hotel garden",
+      "consent": "I have read and accept the",
+      "privacy": "privacy notice",
+      "submit": "Request a Quote",
+      "sending": "Sending…",
+      "success": "Your request has been received. We will get back to you shortly.",
+      "error": "Your request could not be sent. Please try again or message us on WhatsApp.",
+      "response": "We usually reply within one business day."
     }
   },
   "gallery": {

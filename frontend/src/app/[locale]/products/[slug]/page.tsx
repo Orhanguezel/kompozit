@@ -6,7 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowRight, MessagesSquare, Shield, Zap, Settings, Truck } from 'lucide-react';
+import { ArrowRight, MessagesSquare, Shield, Zap, Settings, Truck, Phone, MessageCircle } from 'lucide-react';
 import { API_BASE_URL, resolvePublicAssetUrl } from '@/lib/utils';
 import { JsonLd, buildOrganizationSchemaItems, buildPageMetadata, jsonld, localizedPath, localizedUrl } from '@/seo';
 import { BrandCtaPanel } from '@/components/patterns/BrandCtaPanel';
@@ -21,6 +21,7 @@ import { buildMediaAlt } from '@/lib/media-seo';
 import { Reveal } from '@/components/motion/Reveal';
 import { fetchProductsB2bContent } from '@/features/site-settings/products-b2b';
 import { productFaqData } from '@/seo/faq-data';
+import { QuickQuoteForm } from '@/components/products/QuickQuoteForm';
 
 async function fetchProduct(slug: string, locale: string) {
   try {
@@ -83,6 +84,12 @@ export default async function ProductDetailPage({
     fetchParsedContactInfo(locale),
   ]);
   const localeKey = locale.startsWith('en') ? 'en' : 'tr';
+  const phoneDigits = String(contactInfo?.phone ?? '').replace(/[^\d+]/g, '');
+  const whatsappDigits = String(contactInfo?.whatsapp ?? '').replace(/\D/g, '');
+  const phoneHref = phoneDigits ? `tel:${phoneDigits}` : null;
+  const whatsappHref = whatsappDigits
+    ? `https://wa.me/${whatsappDigits}?text=${encodeURIComponent(`${product.title} — ${tProd('quickQuote.whatsappMessage')}`)}`
+    : null;
   const faqEntries = productFaqData[slug]?.[localeKey] ?? [];
   const breadcrumbs = [
     { label: t('nav.home'), href: localizedPath(locale, '/') },
@@ -156,6 +163,32 @@ export default async function ProductDetailPage({
             olClassName="text-[var(--color-text-secondary)] [&_a:hover]:text-[var(--color-gold)] [&_span.font-medium]:text-[var(--color-text-primary)]"
           />
 
+          {/* Telefon: reklamdan gelen ziyaretçi ilk ekranda ne aldığını ve nasıl teklif isteyeceğini görür. */}
+          <div className="mb-8 space-y-4 lg:hidden">
+            <h1 className="text-balance font-[var(--font-display)] text-3xl font-normal tracking-tight text-[var(--color-text-primary)]">
+              {product.title}
+            </h1>
+            <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">{tProd('quickQuote.valueLine')}</p>
+            <div className="grid grid-cols-3 gap-2">
+              <a href="#hizli-teklif" className="btn-primary col-span-3 inline-flex items-center justify-center gap-2 rounded-sm px-4 py-3.5 text-sm font-bold">
+                {tProd('quickQuote.cta')}
+                <ArrowRight className="size-4" />
+              </a>
+              {whatsappHref ? (
+                <a href={whatsappHref} className="col-span-2 inline-flex items-center justify-center gap-2 rounded-sm border border-[var(--color-border)] px-3 py-3 text-sm font-semibold text-[var(--color-text-primary)]">
+                  <MessageCircle className="size-4 text-[var(--color-gold)]" />
+                  {tProd('quickQuote.whatsapp')}
+                </a>
+              ) : null}
+              {phoneHref ? (
+                <a href={phoneHref} className={`${whatsappHref ? '' : 'col-span-3 '}inline-flex items-center justify-center gap-2 rounded-sm border border-[var(--color-border)] px-3 py-3 text-sm font-semibold text-[var(--color-text-primary)]`}>
+                  <Phone className="size-4 text-[var(--color-gold)]" />
+                  {tProd('quickQuote.call')}
+                </a>
+              ) : null}
+            </div>
+          </div>
+
           <div className="grid gap-12 lg:grid-cols-[1fr_minmax(0,34rem)] xl:gap-20">
             {/* Product Image Stage */}
             <div className="relative">
@@ -166,7 +199,7 @@ export default async function ProductDetailPage({
 
             {/* Product Info */}
             <div className="space-y-10">
-              <header className="space-y-6">
+              <header className="hidden space-y-6 lg:block">
                 <div className="flex items-center gap-3">
                    <div className="h-[2px] w-8 rounded-full bg-[var(--color-gold)]" />
                    <span className="text-[10px] font-bold uppercase tracking-[0.35em] text-[var(--color-gold)]">
@@ -232,7 +265,7 @@ export default async function ProductDetailPage({
                   description={t('common.offerCtaDescription')}
                   action={(
                     <Link
-                      href={`${localizedPath(locale, '/offer')}?product=${encodeURIComponent(product.title)}`}
+                      href="#hizli-teklif"
                       className="btn-primary shimmer-btn glow-hover inline-flex items-center gap-3 rounded-sm px-10 py-5 text-sm font-bold shadow-xl shadow-black/10 transition-all active:scale-95 dark:shadow-black/30"
                     >
                       {t('nav.offer')}
@@ -242,6 +275,30 @@ export default async function ProductDetailPage({
                 />
               </div>
             </div>
+          </div>
+
+          <div className="mt-12 lg:mt-16">
+            <QuickQuoteForm
+              locale={locale}
+              productTitle={product.title}
+              productSlug={slug}
+              labels={{
+                title: tProd('quickQuote.title'),
+                description: tProd('quickQuote.description'),
+                name: tProd('quickQuote.name'),
+                phone: tProd('quickQuote.phone'),
+                email: tProd('quickQuote.email'),
+                message: tProd('quickQuote.message'),
+                messagePlaceholder: tProd('quickQuote.messagePlaceholder'),
+                consent: tProd('quickQuote.consent'),
+                privacy: tProd('quickQuote.privacy'),
+                submit: tProd('quickQuote.submit'),
+                sending: tProd('quickQuote.sending'),
+                success: tProd('quickQuote.success'),
+                error: tProd('quickQuote.error'),
+                response: tProd('quickQuote.response'),
+              }}
+            />
           </div>
 
           {product.description && (

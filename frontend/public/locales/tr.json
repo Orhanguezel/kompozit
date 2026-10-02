@@ -359,6 +359,27 @@
         "title": "İhracata uygun sevkiyat",
         "desc": "Sinir otesi B2B gonderimlere uygun paketleme ve dokumantasyon."
       }
+    },
+    "quickQuote": {
+      "valueLine": "Proje ve toptan siparişlere özel üretim. Ölçü, renk ve adet ihtiyacınızı yazın; size özel teklif hazırlayalım.",
+      "cta": "Hemen Teklif Al",
+      "whatsapp": "WhatsApp’tan yaz",
+      "call": "Ara",
+      "whatsappMessage": "için teklif almak istiyorum.",
+      "title": "Bu ürün için hızlı teklif",
+      "description": "Kısa bilgilerinizi bırakın; ölçü, adet ve teslim süresine göre size dönüş yapalım.",
+      "name": "Ad Soyad",
+      "phone": "Telefon",
+      "email": "E-posta",
+      "message": "Adet, ölçü veya proje notu",
+      "messagePlaceholder": "Örn. 40 adet, 80 cm yükseklik, otel bahçesi",
+      "consent": "Okudum ve kabul ediyorum:",
+      "privacy": "gizlilik bildirimi",
+      "submit": "Teklif İste",
+      "sending": "Gönderiliyor…",
+      "success": "Talebiniz alındı. En kısa sürede size dönüş yapacağız.",
+      "error": "Talep gönderilemedi. Lütfen tekrar deneyin ya da WhatsApp’tan yazın.",
+      "response": "Genellikle 1 iş günü içinde dönüş yapılır."
     }
   },
   "gallery": {
