@@ -14,13 +14,6 @@ type OptimizedImageProps = Omit<ImageProps, 'placeholder' | 'blurDataURL'> & {
   fallbackClassName?: string;
 };
 
-const BACKEND_PATH_RE = /^\/(media|uploads|storage)\//;
-
-function isBackendPath(src: string | undefined): boolean {
-  if (!src || typeof src !== 'string') return false;
-  return BACKEND_PATH_RE.test(src);
-}
-
 const errorFallback = (className?: string, alt?: string) => (
   <div
     className={cn(
@@ -50,13 +43,16 @@ export function OptimizedImage({
   const [error, setError] = useState(false);
 
   const src = typeof props.src === 'string' ? props.src : undefined;
-  const useNativeImg = isBackendPath(src) || props.unoptimized === true;
+  // 2026-10-02: /uploads görselleri artık optimize ediciden geçer (canlıda 200, 556 KB JPEG →
+  // telefonda 177 KB AVIF). Eski "optimizer 400" baypası ürün galerisini 6 MB'a çıkarıyordu
+  // (Lighthouse mobil 68, LCP 4,9 sn; Google Ads açılış sayfası deneyimi "düşük").
+  const useNativeImg = props.unoptimized === true;
 
   if (error) {
     return errorFallback(fallbackClassName ?? className, alt);
   }
 
-  // Backend paths: plain <img> — avoids Next.js optimizer 400 and placeholder issues
+  // Yalnız açıkça unoptimized istenen görseller düz <img>.
   if (useNativeImg && fill) {
     return (
       // eslint-disable-next-line @next/next/no-img-element
