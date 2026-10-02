@@ -1,6 +1,7 @@
 'use client';
 
 import { leadFetch } from '../../../../../packages/shared-ui/public/lib/lead-tracking';
+import { withMoeAdAttribution } from '@/lib/moe-ad-attribution';
 
 import { useState } from 'react';
 import { Send } from 'lucide-react';
@@ -64,7 +65,7 @@ export function QuickQuoteForm({
       const res = await leadFetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/offers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(withMoeAdAttribution(payload, data.get('consent_ads_measurement') === 'on')),
       });
       if (!res.ok) throw new Error('offer_failed');
       setStatus('sent');
@@ -122,6 +123,10 @@ export function QuickQuoteForm({
               {labels.consent}{' '}
               <a href={`/${locale}/legal/privacy`} className="underline">{labels.privacy}</a>
             </span>
+          </label>
+          <label className="flex items-start gap-3 text-sm text-[var(--color-text-secondary)] sm:col-span-2">
+            <input type="checkbox" name="consent_ads_measurement" className="mt-1" />
+            <span>{locale === 'en' ? 'I allow my advertising click ID, if available under my cookie choice, to be linked to this quote request for ad measurement (optional).' : 'Çerez tercihim izin veriyorsa reklam tıklama kimliğimin bu teklif talebiyle reklam ölçümü için eşleştirilmesine izin veriyorum (isteğe bağlı).'}</span>
           </label>
           {status === 'error' ? (
             <p role="alert" className="text-sm font-semibold text-red-500 sm:col-span-2">{labels.error}</p>

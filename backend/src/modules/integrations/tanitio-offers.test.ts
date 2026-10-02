@@ -13,7 +13,10 @@ test('MOE offer feed is private and returns only non-personal reconciliation fie
       if (sql.includes('COUNT')) return [{ total: 1 }];
       return [{ id: '0d42f3ab-3275-406a-81ce-14db8e70b161', status: 'new', locale: 'tr',
         created_at: '2026-09-09 14:16:53.635', updated_at: '2026-09-09 14:16:53.635',
-        customer_name: 'must never leave the site', email: 'private@example.com' }];
+        customer_name: 'must never leave the site', email: 'private@example.com',
+        form_data: JSON.stringify({ attribution: { analytics_consent: true, utm_source: 'google', utm_campaign: 'b2b' },
+          ad_attribution: { consent: true, consentVersion: 'ensotek.analytics-consent.v1', formConsentVersion: 'moe-offer-ads-v1', gclid: 'GCLID_123456' },
+          notes: 'private project requirements' }) }];
     },
   });
   const path = '/api/integrations/tanitio/offers';
@@ -25,8 +28,11 @@ test('MOE offer feed is private and returns only non-personal reconciliation fie
   const response = await app.inject({ url: path, headers });
   assert.equal(response.statusCode, 200, response.body);
   assert.equal(response.headers['cache-control'], 'private, no-store');
-  assert.deepEqual(Object.keys(response.json().items[0]).sort(), ['createdAt', 'id', 'locale', 'status', 'updatedAt']);
+  assert.deepEqual(Object.keys(response.json().items[0]).sort(), ['adClick', 'createdAt', 'id', 'locale', 'status', 'updatedAt', 'utm']);
   assert.equal(response.json().items[0].createdAt, '2026-09-09T14:16:53.635Z');
+  assert.deepEqual(response.json().items[0].utm, { utm_source: 'google', utm_campaign: 'b2b' });
+  assert.deepEqual(response.json().items[0].adClick, { consent: true, gclid: 'GCLID_123456' });
+  assert.ok(!response.body.includes('private@example.com') && !response.body.includes('private project requirements'));
   assert.ok(queries.every(sql => sql.includes("source='kompozit'")));
   await app.close();
 });

@@ -4,6 +4,7 @@ import { LeadEvents } from '../../../../../packages/shared-ui/public/components/
 import dynamic from 'next/dynamic';
 import { useLocale } from 'next-intl';
 import { ConsentGate } from '../../../../../packages/shared-ui/public/components/analytics/ConsentGate';
+import { MoeAdClickCapture } from '@/components/analytics/MoeAdClickCapture';
 
 // Public tag destinations returned by MOE's Google Ads conversion actions.
 const adsConversions = {
@@ -46,6 +47,7 @@ export function ClientShell({ whatsappPhone }: { whatsappPhone?: string }) {
   const locale = useLocale();
   return (
     <>
+      <MoeAdClickCapture />
       <ScrollToTop />
       <WebVitals />
       <ConsentGate locale={locale} advertising>

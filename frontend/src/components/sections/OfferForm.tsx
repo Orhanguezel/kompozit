@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 import { Wrench, Settings2, Layers3, Paperclip, ChevronRight } from 'lucide-react';
 import api from '@/lib/axios';
+import { withMoeAdAttribution } from '@/lib/moe-ad-attribution';
 import { storageService } from '@/features/storage';
 
 type Tab = 'service' | 'product' | 'sparepart';
@@ -22,6 +23,7 @@ export function OfferFormClient({
   const tc = useTranslations('common');
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
   const [sending, setSending] = useState(false);
+  const [adsMeasurementConsent, setAdsMeasurementConsent] = useState(false);
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -116,7 +118,7 @@ export function OfferFormClient({
         };
       }
 
-      await api.post('/offers', {
+      await api.post('/offers', withMoeAdAttribution({
         customer_name: name,
         email,
         phone: phone || null,
@@ -126,7 +128,7 @@ export function OfferFormClient({
         source: 'kompozit',
         locale,
         form_data,
-      });
+      }, adsMeasurementConsent));
 
       toast.success(t('success'));
       resetForm();
@@ -145,6 +147,7 @@ export function OfferFormClient({
     setCompany('');
     setDetails('');
     setFiles([]);
+    setAdsMeasurementConsent(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
     setProductInterest(preselectedProduct || '');
     setProductCategory('');
@@ -480,6 +483,11 @@ export function OfferFormClient({
               </div>
             )}
           </div>
+
+          <label className="flex items-start gap-3 text-sm text-[var(--color-text-secondary)]">
+            <input type="checkbox" checked={adsMeasurementConsent} onChange={event => setAdsMeasurementConsent(event.target.checked)} className="mt-1" />
+            <span>{locale === 'en' ? 'I allow the advertising click ID, if available under my cookie choice, to be linked to this quote request for ad measurement (optional).' : 'Çerez tercihim izin veriyorsa reklam tıklama kimliğimin bu teklif talebiyle reklam ölçümü için eşleştirilmesine izin veriyorum (isteğe bağlı).'}</span>
+          </label>
 
           {/* Submit Button */}
           <div className="flex flex-col items-center justify-between gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row">

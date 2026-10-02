@@ -1,6 +1,7 @@
 'use client';
 
 import { leadFetch } from '../../../../../packages/shared-ui/public/lib/lead-tracking';
+import { withMoeAdAttribution } from '@/lib/moe-ad-attribution';
 
 import { useLocale } from 'next-intl';
 import React, { useState } from 'react';
@@ -74,7 +75,7 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
       const res = await leadFetch(`${process.env.NEXT_PUBLIC_API_URL || '/api'}/offers`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(withMoeAdAttribution(payload, formData.get('consent_ads_measurement') === 'on')),
       });
 
       if (!res.ok) throw new Error('Failed to send');
@@ -230,6 +231,10 @@ export function HomeContact({ labels, contactInfo }: HomeContactProps) {
                   <label className="flex items-start gap-3 text-sm">
                     <input type="checkbox" name="consent_marketing" className="mt-1" />
                     <span>{locale === 'en' ? 'I would like to receive marketing updates (optional).' : 'Pazarlama duyuruları almak istiyorum (isteğe bağlı).'}</span>
+                  </label>
+                  <label className="flex items-start gap-3 text-sm">
+                    <input type="checkbox" name="consent_ads_measurement" className="mt-1" />
+                    <span>{locale === 'en' ? 'I allow my advertising click ID, if available under my cookie choice, to be linked to this request for ad measurement (optional).' : 'Çerez tercihim izin veriyorsa reklam tıklama kimliğimin bu taleple reklam ölçümü için eşleştirilmesine izin veriyorum (isteğe bağlı).'}</span>
                   </label>
                   <p role="status" aria-live="polite">{result}</p>
                   <button
